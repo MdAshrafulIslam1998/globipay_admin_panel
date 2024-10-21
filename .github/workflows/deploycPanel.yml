@@ -10,11 +10,13 @@ jobs:
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
+      - name: Build Flutter Web Project
+        run: flutter build web
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./ # Use the path to your local build directory
-          server-dir: /public_html/globipay_admin_panel/
+          local-dir: build/web/ # The Flutter build output directory
+          server-dir: /public_html/globipay_admin_panel/ # Destination on cPanel
