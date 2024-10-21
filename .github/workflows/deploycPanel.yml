@@ -34,3 +34,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: build/web/  # Built web files from Flutter
           server-dir: /public_html/globipay_admin_panel/  # Destination on the server
+          debug: true
