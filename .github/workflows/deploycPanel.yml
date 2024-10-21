@@ -34,5 +34,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: build/web/
-          server-dir: /public_html/globipay_admin_panel/
+          server-dir: /globipay_admin_panel/
           debug: true
