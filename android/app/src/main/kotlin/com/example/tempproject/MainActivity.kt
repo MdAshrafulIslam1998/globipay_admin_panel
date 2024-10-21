@@ -1,4 +1,4 @@
-package com.example.globipay_admin_panel
+package com.example.tempproject
 
 import io.flutter.embedding.android.FlutterActivity
 

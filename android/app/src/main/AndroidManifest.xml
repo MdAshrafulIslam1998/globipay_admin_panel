@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="globipay_admin_panel"
+        android:label="tempproject"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
