@@ -1,0 +1,130 @@
+Project Structure
+
+.flutter-plugins
+.flutter-plugins-dependencies
+.gitignore
+.metadata
+analysis_options.yaml
+generate_tree.dart
+lib
+├── app.dart
+├── core
+│   ├── base
+│   │   ├── base_controller.dart
+│   │   ├── base_page_state.dart
+│   │   ├── base_remote_source.dart
+│   │   ├── base_response.dart
+│   │   ├── base_view.dart
+│   │   ├── base_view_state.dart
+│   ├── constants
+│   │   ├── app_constant.dart
+│   │   ├── app_edge_insets.dart
+│   │   ├── app_images.dart
+│   │   ├── app_language.dart
+│   │   ├── app_radius.dart
+│   │   ├── app_spaces.dart
+│   │   ├── enum
+│   │   │   ├── network_status.dart
+│   │   ├── storage_keys.dart
+│   ├── data
+│   │   ├── local
+│   │   │   ├── repository
+│   │   │   │   ├── token_repository.dart
+│   │   │   ├── repository_impl
+│   │   │   │   └── token_repository_impl.dart
+│   │   ├── model
+│   │   │   └── icon_button_model.dart
+│   │   │   └── pagination.dart
+│   │   │   └── pagination.g.dart
+│   │   │   └── pagination_request.dart
+│   │   │   └── pagination_request.g.dart
+│   │   │   └── user.dart
+│   │   │   └── user.g.dart
+│   ├── di
+│   │   ├── di_setup.dart
+│   │   ├── injector.dart
+│   ├── exception
+│   │   ├── app_exceptions.dart
+│   ├── network
+│   │   ├── dio_provider.dart
+│   │   ├── error_handlers.dart
+│   │   ├── exceptions
+│   │   │   ├── api_exception.dart
+│   │   │   ├── app_exception.dart
+│   │   │   ├── bad_request_exception.dart
+│   │   │   ├── base_api_exception.dart
+│   │   │   ├── base_exception.dart
+│   │   │   ├── conflict_exception.dart
+│   │   │   ├── json_format_exception.dart
+│   │   │   ├── network_exception.dart
+│   │   │   ├── not_found_exception.dart
+│   │   │   ├── service_unavailable_exception.dart
+│   │   │   ├── timeout_exception.dart
+│   │   │   ├── token_exception.dart
+│   │   │   ├── unauthorize_exception.dart
+│   │   ├── request_headers.dart
+│   ├── services
+│   │   ├── navigator
+│   │   │   ├── app_navigator_service.dart
+│   │   ├── storage
+│   │   │   └── app_preferences_service.dart
+│   │   │   └── secure_storage.dart
+│   ├── theme
+│   │   ├── color_palettes.dart
+│   │   ├── theme.dart
+│   │   ├── theme_style
+│   │   │   └── button_theme.dart
+│   │   │   └── text_theme.dart
+│   ├── utils
+│   │   ├── app_utils.dart
+│   │   ├── custom_dialog.dart
+│   │   ├── storage
+│   │   │   └── app_secure_storage.dart
+│   │   │   └── app_storage.dart
+│   ├── widgets
+│   │   └── app_loader.dart
+│   │   └── app_print.dart
+│   │   └── button
+│   │   │   ├── app_button.dart
+│   │   │   ├── app_outline_button.dart
+│   │   └── elevated_container.dart
+│   │   └── image
+│   │   │   ├── app_network_image.dart
+│   │   │   ├── app_svg_image.dart
+│   │   └── text
+│   │   │   ├── app_text.dart
+│   │   │   ├── app_text_type.dart
+│   │   │   ├── header_widget.dart
+│   │   └── text_filed
+│   │   │   └── input_field.dart
+│   │   │   └── input_regex.dart
+├── data
+│   ├── api
+│   │   ├── app_api.dart
+│   ├── remote
+│   │   ├── app_remote_data_source.dart
+│   │   ├── app_remote_data_source_impl.dart
+│   ├── repository
+│   │   ├── app_repository.dart
+│   ├── repository_impl
+│   │   └── app_repository_impl.dart
+├── di
+│   ├── app_injector.dart
+│   ├── app_injector.g.dart
+├── flavors
+│   ├── app_properties.dart
+│   ├── flavor_config.dart
+├── main.dart
+├── modules
+│   ├── splash_screen.dart
+│   ├── test_controller.dart
+├── router
+│   └── app_router.dart
+│   └── app_routes.dart
+│   └── app_routes_list.dart
+│   └── router_config.dart
+│   └── route_path.dart
+project_structure.txt
+pubspec.lock
+pubspec.yaml
+README.md
