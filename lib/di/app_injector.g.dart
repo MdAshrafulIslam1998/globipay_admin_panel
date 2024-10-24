@@ -10,7 +10,9 @@ class _$AppInjector extends AppInjector {
   @override
   void _controllerComponents() {
     final KiwiContainer container = KiwiContainer();
-    container.registerFactory((c) => TestController());
+    container
+      ..registerFactory((c) => TestController())
+      ..registerFactory((c) => DashboardController());
   }
 
   @override

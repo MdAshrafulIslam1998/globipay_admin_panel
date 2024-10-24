@@ -1,17 +1,9 @@
-/**
- * Created by Abdullah on 21/8/24.
- */
-
-
-
-abstract class RoutePath{
-  static const String start = _RoutePath._start;
-
-
-
+abstract class RoutePath {
+  static const String splash = _RoutePath._splash;
+  static const String dashboard = _RoutePath._dashboard;
 }
 
-
-class _RoutePath{
-  static const String _start = '/';
+class _RoutePath {
+  static const String _splash = '/';
+  static const String _dashboard = '/dashboard';
 }

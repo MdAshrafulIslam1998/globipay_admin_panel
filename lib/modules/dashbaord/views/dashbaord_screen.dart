@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'dashbaord_screen_builder.dart';
+import 'package:globipay_admin_panel/modules/dashbaord/views/dashbaord_screen_builder.dart';
 
-class DashbaordScreen extends StatelessWidget {
-    const DashbaordScreen({Key? key}) : super(key: key);
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
 
-    @override
-    Widget build(BuildContext context) {
-        return DashbaordScreenBuilder();
-    }
+  @override
+  Widget build(BuildContext context) {
+    return DashboardScreenBuilder();
+  }
 }
