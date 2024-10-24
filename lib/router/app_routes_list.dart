@@ -17,6 +17,7 @@ abstract class AppRoutesList {
         name: RoutePath.dashboard,
         builder: (context, state) => const DashboardScreen(),
       ),
+     
     ];
   }
 }
