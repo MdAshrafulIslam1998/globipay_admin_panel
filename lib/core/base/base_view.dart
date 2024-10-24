@@ -10,7 +10,6 @@ import 'package:globipay_admin_panel/core/widgets/app_loader.dart';
 import 'package:globipay_admin_panel/flavors/app_properties.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
 import 'base_page_state.dart';
 
 /// A base class for all views/screens in the app.

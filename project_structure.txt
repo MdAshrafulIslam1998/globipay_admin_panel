@@ -78,6 +78,7 @@ lib
 │   ├── utils
 │   │   ├── app_utils.dart
 │   │   ├── custom_dialog.dart
+│   │   ├── page_transition.dart
 │   │   ├── storage
 │   │   │   └── app_secure_storage.dart
 │   │   │   └── app_storage.dart
@@ -111,6 +112,9 @@ lib
 ├── di
 │   ├── app_injector.dart
 │   ├── app_injector.g.dart
+├── entity
+│   ├── request
+│   ├── response
 ├── flavors
 │   ├── app_properties.dart
 │   ├── flavor_config.dart
@@ -118,6 +122,12 @@ lib
 ├── modules
 │   ├── splash_screen.dart
 │   ├── test_controller.dart
+│   ├── transaction_history
+│   │   └── controller
+│   │   │   ├── transaction_history_controller.dart
+│   │   └── views
+│   │   │   └── transaction_history_screen.dart
+│   │   │   └── transaction_history_screen_builder.dart
 ├── router
 │   └── app_router.dart
 │   └── app_routes.dart

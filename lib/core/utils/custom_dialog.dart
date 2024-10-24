@@ -1,33 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
-import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:globipay_admin_panel/router/route_utils.dart';
 
 /**
  * Created by Abdullah on 21/8/24.
  */
 
-showCustomDialog(message,
-    {title,
-      String? positiveButtonText,
-      String? negativeButtonText,
-      bool isCancelAble=true,
-      Function()? positiveButtonAction,
-      Function()? negativeButtonAction,
-      bool willPopOnPositiveAction=true,
-      bool willPopOnNegativeAction=true,
-      GlobalKey? key}) {
+showCustomDialog(
+  String message, {
+  String? title,
+  String? positiveButtonText,
+  String? negativeButtonText,
+  bool isCancelAble = true,
+  Function()? positiveButtonAction,
+  Function()? negativeButtonAction,
+  bool willPopOnPositiveAction = true,
+  bool willPopOnNegativeAction = true,
+  GlobalKey? key,
+}) {
   showDialog(
-    barrierDismissible: false,
+    barrierDismissible: isCancelAble,
     builder: (BuildContext context) {
-      return PopScope(
-        canPop: false,
-        onPopInvoked: (didPop) {
-          if (didPop) {
-            return;
-          }
-          return;
-        },
+      return WillPopScope(
+        onWillPop: () async => isCancelAble,
         child: CupertinoAlertDialog(
           key: key,
           title: Text(
@@ -35,9 +31,7 @@ showCustomDialog(message,
           ),
           content: Padding(
             padding: EdgeInsets.only(top: 10),
-            child: Text(
-             message
-            ),
+            child: Text(message),
           ),
           actions: <Widget>[
             if (negativeButtonAction != null)
@@ -49,27 +43,29 @@ showCustomDialog(message,
                   ),
                 ),
                 onPressed: () {
-                  AppRoutes.pop();
+                  if (willPopOnNegativeAction) {
+                    RouteUtils.pop(context); // Updated pop method
+                  }
+                  negativeButtonAction?.call();
                 },
-                child: Text(
-                  "Cancel",
+                child: Text(negativeButtonText ?? "Cancel"),
+              ),
+            if (positiveButtonAction != null)
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0),
+                  ),
                 ),
+                onPressed: () {
+                  if (willPopOnPositiveAction) {
+                    RouteUtils.pop(context); // Updated pop method
+                  }
+                  positiveButtonAction?.call();
+                },
+                child: Text(positiveButtonText ?? "Ok"),
               ),
-            if(isCancelAble)ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
-                ),
-              ),
-              child: Text(
-                "Ok",
-              ),
-              onPressed: () {
-                AppRoutes.pop();
-                positiveButtonAction?.call();
-              },
-            ),
           ],
         ),
       );

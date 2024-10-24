@@ -61,6 +61,8 @@ dependencies:
   palette_generator: ^0.3.0
   carousel_slider: ^5.0.0
   audioplayers: ^6.0.1
+  json_annotation: ^4.8.1
+
 
 
 
@@ -72,6 +74,7 @@ dev_dependencies:
   build_runner: ^2.3.3
   kiwi_generator: ^4.2.1
   flutter_secure_storage: ^9.2.2
+  json_serializable: ^6.7.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

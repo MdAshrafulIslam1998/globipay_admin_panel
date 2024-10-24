@@ -69,4 +69,6 @@ abstract class ColorPalettes{
   static const Color whiteColor = Colors.white;
   static const Color greyColor = Color(0xFFE9E9E9);
   static const Color blackColor = Colors.black;
+
+  static var primary;
 }

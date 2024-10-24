@@ -12,7 +12,4 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   final String BASE_URL = FlavorConfig.instance.url;
 
 
-
-
-
 }

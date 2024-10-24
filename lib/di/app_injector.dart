@@ -1,4 +1,10 @@
+import 'package:flutter/cupertino.dart';
+import 'package:globipay_admin_panel/modules/404_not_found/controller/not_found_controller.dart';
+import 'package:globipay_admin_panel/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:globipay_admin_panel/modules/settings/controller/settings_controller.dart';
+import 'package:globipay_admin_panel/modules/splash/controller/splash_controller.dart';
 import 'package:globipay_admin_panel/modules/test_controller.dart';
+import 'package:globipay_admin_panel/modules/transaction_history/controller/transaction_history_controller.dart';
 import 'package:kiwi/kiwi.dart';
 import '../core/di/injector.dart';
 
@@ -22,6 +28,11 @@ abstract class AppInjector extends Injector {
 
 
   @Register.factory(TestController)
+  @Register.factory(TransactionHistoryController)
+  @Register.factory(NotFoundController)
+  @Register.factory(DashboardController)
+  @Register.factory(SettingsController)
+  @Register.factory(SplashController)
   void _controllerComponents();
 
 
