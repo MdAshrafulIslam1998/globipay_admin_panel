@@ -13,7 +13,9 @@ class _$AppInjector extends AppInjector {
     container
       ..registerFactory((c) => TestController())
       ..registerFactory((c) => DashboardController())
-      ..registerFactory((c) => UsersController());
+      ..registerFactory((c) => UsersController())
+      ..registerFactory((c) => BasePanelController())
+      ..registerFactory((c) => ActiveUsersController());
   }
 
   @override

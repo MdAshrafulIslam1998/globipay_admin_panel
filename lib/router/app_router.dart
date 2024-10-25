@@ -5,10 +5,4 @@
 import 'package:globipay_admin_panel/router/app_routes_list.dart';
 import 'package:globipay_admin_panel/router/router_config.dart';
 
-
-final router = routerConfig(
-    routesList: AppRoutesList.allRoutes());
-
-
-
-
+final router = routerConfig(routesList: AppRoutesList.allRoutes());

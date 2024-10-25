@@ -1,6 +1,8 @@
 import 'package:globipay_admin_panel/core/data/model/user.dart';
-import 'package:globipay_admin_panel/modules/dashbaord/controller/dashbaord_controller.dart';
+import 'package:globipay_admin_panel/modules/base_panel/controller/base_panel_controller.dart';
+import 'package:globipay_admin_panel/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:globipay_admin_panel/modules/test_controller.dart';
+import 'package:globipay_admin_panel/modules/users/active_users/controller/active_users_controller.dart';
 import 'package:globipay_admin_panel/modules/users/controller/users_controller.dart';
 import 'package:kiwi/kiwi.dart';
 import '../core/di/injector.dart';
@@ -27,6 +29,8 @@ abstract class AppInjector extends Injector {
   @Register.factory(TestController)
   @Register.factory(DashboardController)
   @Register.factory(UsersController)
+  @Register.factory(BasePanelController)
+  @Register.factory(ActiveUsersController)
   void _controllerComponents();
 
 
