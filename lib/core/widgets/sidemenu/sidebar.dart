@@ -16,6 +16,9 @@ class Sidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String currentRoute = GoRouterState.of(context).location;
+
+
     return Drawer(
       // width: Responsive.isMobile(context) ? double.infinity : null,
       // width: MediaQuery.of(context).size.width < 1300 ? 260 : null,
@@ -45,7 +48,7 @@ class Sidebar extends StatelessWidget {
                 child: ListView(
                   children: [
                     MenuTile(
-                      isActive: true,
+                      isActive: currentRoute == RoutePath.dashboard,
                       title: "Dashboard",
                       activeIconSrc: "assets/icons/home_filled.svg",
                       inactiveIconSrc: "assets/icons/home_light.svg",
@@ -53,10 +56,22 @@ class Sidebar extends StatelessWidget {
                         context.go(RoutePath.dashboard);
                       },
                     ),
-                    
-                    ExpansionTile(
-                      leading:
-                          Icon(CupertinoIcons.person_fill),
+                     // Users Section with ExpansionTile
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        dividerColor: Colors.transparent,
+                      ),
+                      child: ExpansionTile(
+                        leading:
+                          SvgPicture.asset(
+                        'assets/icons/profile_circled_filled.svg',
+                        height: 24,
+                        width: 24,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.iconBlack,
+                          BlendMode.srcIn,
+                        ),
+                      ),
                       title: Text(
                         "Users",
                         style: TextStyle(
@@ -67,14 +82,17 @@ class Sidebar extends StatelessWidget {
                       children: [
                         MenuTile(
                           isSubmenu: true,
+                          isActive: currentRoute == RoutePath.activeUsers,
                           title: "Active Users",
+                          activeIconSrc: "assets/icons/person_check_filled.svg",
+                          inactiveIconSrc: "assets/icons/person_check_light.svg",
                           count: 16,
                           onPressed: () {
-                            context.go(RoutePath.activeUsers);;
+                            context.go(RoutePath.activeUsers);
                           },
                         ),
-
                       ],
+                      )
                     ),
                   ],
                 ),

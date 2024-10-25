@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UsersController extends GetxController {
-    var featureName = "Users";
+class SettingsController extends GetxController {
+    var featureName = "Settings";
     
     // Add your controller logic here
 }

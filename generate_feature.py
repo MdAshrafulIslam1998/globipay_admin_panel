@@ -17,7 +17,6 @@ class {feature}Controller extends GetxController {{
 screen_builder_template = """import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import '{feature_snake}_controller.dart';
 
 class {feature}ScreenBuilder extends StatelessWidget {{
     const {feature}ScreenBuilder({{Key? key}}) : super(key: key);
@@ -27,7 +26,7 @@ class {feature}ScreenBuilder extends StatelessWidget {{
         // Add your screen builder logic here
         return Scaffold(
             appBar: AppBar(title: Text('{feature}')),
-            body: Center(child: Text('Build the UI here')),
+            body: Center(child: Text('This is {feature} Page. Build the UI here')),
         );
     }}
 }}
