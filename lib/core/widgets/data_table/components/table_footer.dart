@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/widgets/data_table/controller/table_controller.dart';
 
+
 class TableFooter extends StatelessWidget {
   final TableController controller;
   

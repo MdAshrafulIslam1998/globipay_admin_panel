@@ -3,6 +3,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/data/model/data_table/table_config_model.dart';
 import 'package:globipay_admin_panel/core/widgets/data_table/controller/table_controller.dart';
 
+
 class TableHeader extends StatelessWidget {
   final TableController controller;
   final TableConfigModel config;
