@@ -24,7 +24,7 @@ class TableActionButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(model.icon, size: 18),
+          model.icon, // This is the updated line
           const SizedBox(width: 8),
           Text(model.text),
         ],

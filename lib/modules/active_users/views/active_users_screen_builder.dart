@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart'; // Update import to include CellButtonModel
 import 'package:globipay_admin_panel/core/data/model/data_table/table_button_model.dart';
@@ -60,14 +61,24 @@ class ActiveUsersScreenBuilder extends BaseView<ActiveUsersController> {
   List<TableButtonModel> get _exportButtons => [
         TableButtonModel(
           text: 'Export Excel',
-          icon: Icons.file_download,
+          icon: SvgPicture.asset(
+            'assets/icons/excel_light.svg',
+            height: 15, // Adjust height as necessary
+            width: 15, // Adjust width as necessary
+            color: Colors.green, // Set the desired color here
+          ),
           backgroundColor: Colors.green.shade50,
           textColor: Colors.green,
           onPressed: controller.exportToExcel,
         ),
         TableButtonModel(
           text: 'Export PDF',
-          icon: Icons.picture_as_pdf,
+          icon: SvgPicture.asset(
+            'assets/icons/pdf_light.svg',
+            height: 18, // Adjust height as necessary
+            width: 18, // Adjust width as necessary
+            color: Colors.red, // Set the desired color here
+          ),
           backgroundColor: Colors.red.shade50,
           textColor: Colors.red,
           onPressed: controller.exportToPDF,

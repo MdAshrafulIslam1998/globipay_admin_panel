@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TableButtonModel {
   final String text;
-  final IconData icon;
+  final Widget  icon;
   final Color backgroundColor;
   final Color textColor;
   final double borderRadius;
