@@ -10,7 +10,7 @@ class PendingTransactionsScreenBuilder extends StatelessWidget {
         // Add your screen builder logic here
         return Scaffold(
             appBar: AppBar(title: Text('PendingTransactions')),
-            body: Center(child: Text('Build the UI here')),
+            body: Center(child: Text('This is PendingTransactions Page. Build the UI here')),
         );
     }
 }

@@ -21,7 +21,7 @@ class ActiveUserModel {
   });
 
   Map<String, dynamic> toMap(Function(int id) onPressed,
-      {required String buttonText}) {
+      {required String buttonText, required String messegeButtonText,required Function(int id) onMessagePressed}) {
     return {
       'id': id,
       'name': name,
@@ -35,6 +35,13 @@ class ActiveUserModel {
         color: Colors.blue,
         onPressed: () {
           onPressed(id);
+        },
+      ),
+      'messege': CellButtonModel(
+        text: messegeButtonText, // Use the passed button text
+        color: Colors.red,
+        onPressed: () {
+          onMessagePressed(id);
         },
       ),
     };

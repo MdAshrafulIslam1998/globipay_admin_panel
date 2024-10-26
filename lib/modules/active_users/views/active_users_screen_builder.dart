@@ -34,7 +34,7 @@ class ActiveUsersScreenBuilder extends BaseView<ActiveUsersController> {
         TableColumnModel(
           label: 'Status',
           key: 'status',
-          sortable: false,
+          sortable: true,
         ),
         TableColumnModel(
           label: 'Last Active',
@@ -54,6 +54,11 @@ class ActiveUsersScreenBuilder extends BaseView<ActiveUsersController> {
         TableColumnModel(
           label: 'Actions',
           key: 'actions',
+          sortable: false,
+        ),
+        TableColumnModel(
+          label: 'Messege',
+          key: 'messege',
           sortable: false,
         ),
       ];
@@ -90,12 +95,7 @@ class ActiveUsersScreenBuilder extends BaseView<ActiveUsersController> {
     return Obx(() => EnhancedDataTable(
           title: 'Active Users Management',
           columns: _columns,
-          data: controller.users.map((user) {
-            return user.toMap((id) {
-              // Handle button press if needed
-              print('Button pressed for user $id');
-            }, buttonText: controller.getButtonText(user)); // Pass button text
-          }).toList(),
+          data: controller.getTableData(),
           exportButtons: _exportButtons,
           searchModel: const TableSearchModel(
             placeholder: 'Search users...',

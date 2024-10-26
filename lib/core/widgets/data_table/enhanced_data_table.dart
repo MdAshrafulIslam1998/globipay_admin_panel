@@ -27,7 +27,6 @@ class EnhancedDataTable extends StatelessWidget {
   final List<TableButtonModel> exportButtons;
   final TableSearchModel searchModel;
   final TablePaginationModel paginationModel;
-
   final EnhancedTableController controller;
 
   EnhancedDataTable({

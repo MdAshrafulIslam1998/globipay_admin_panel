@@ -211,18 +211,22 @@ class ActiveUsersController extends BaseController {
       ),
     ];
 
-    final tableData = users.map((user) {
+     tableController.initialize(getTableData(), 10);
+
+  }
+
+  List<dynamic> getTableData() => users.map((user) {
       String buttonText =
           getButtonText(user); // Get the button text based on user data
-
       return user.toMap((id) {
         // Action for the button press can be defined here
-        viewUserDetails(id);
-      }, buttonText: buttonText); // Pass the button text
+        onButtonAction(id);
+      }, buttonText: buttonText, messegeButtonText: 'Message', onMessagePressed: (id) {
+        print("on Message Press key $id");
+      },); // Pass the button text
     }).toList();
+  
 
-    tableController.initialize(tableData, 10);
-  }
 
   String getButtonText(ActiveUserModel user) {
     // Customize button text based on user properties
@@ -233,9 +237,9 @@ class ActiveUsersController extends BaseController {
     }
   }
 
-  void viewUserDetails(int userId) {
+  void onButtonAction(int id) {
     // Handle viewing user details
-    print('Viewing details for user $userId');
+    print('on Press key $id');
   }
 
   void exportToExcel() {
@@ -377,7 +381,6 @@ class ActiveUsersController extends BaseController {
   }
 }
 
-
   void exportToPDF() async {
     final pdf = pw.Document();
 
@@ -493,4 +496,5 @@ class ActiveUsersController extends BaseController {
       ..click();
     html.Url.revokeObjectUrl(url);
   }
+
 }
