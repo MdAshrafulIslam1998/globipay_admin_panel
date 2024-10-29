@@ -6,39 +6,47 @@ import 'package:globipay_admin_panel/core/widgets/data_table/controller/enhanced
 class EditCoinController extends BaseController {
   final RxList<EditCoinModel> coins = <EditCoinModel>[].obs;
   final tableController = Get.put(EnhancedTableController());
+  var tableData = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Call fetchCoins() to initialize data
-    fetchCoins();
+    requestForCoin();
   }
 
-  void fetchCoins() {
-    // Mock data for demonstration. Replace with actual data fetching logic.
-    coins.value = [
-      EditCoinModel(
-        id: 1,
-        fullName: 'Alice Johnson',
-        email: 'alice@example.com',
-        amount: {'S': 30.00, 'V': 100.00, '&': 300.00},
-        status: 'Active',
-      ),
-      // Add more entries as needed
-    ];
 
-    tableController.initialize(getTableData(), 1);
-  }
-
-  // Retrieve data for EnhancedDataTable in the format it requires
-  List<Map<String, dynamic>> getTableData() {
-    return coins.map((coin) {
+  void generateTableData(List<EditCoinModel> coins) {
+    tableData.value = coins.map((coin) {
       return coin.toMap(
         onEditPressed: handleEditProfile,
         onViewPressed: handleViewProfile,
       );
     }).toList();
+
+    tableController.initialize(tableData, 10);
+
   }
+
+  void requestForCoin() {
+    // TODO implement coin request logic
+    // TODO For Dummy purpose
+
+    var list = <EditCoinModel>[];
+    for (var i = 0; i < 100; i++) {
+      list.add(
+        EditCoinModel(
+          id: 1,
+          fullName: 'Alice Johnson $i',
+          email: 'alice@example.com',
+          amount: {'S': 30.00 + i, 'V': 100.00 + i, '&': 300.00 + i},
+          status: 'Active',
+        ),
+      );
+    }
+    coins.value = list;
+    generateTableData(list);
+  }
+
 
   // Action handlers for Edit and View profile
   void handleEditProfile(int id) {
@@ -53,21 +61,24 @@ class EditCoinController extends BaseController {
 
   // Filters for All, Dollar, Rupee, Taka
   void filterAll() {
-    // Adjust the filtering logic as per requirement
-    fetchCoins();
+    requestForCoin();
   }
 
   void filterByDollar() {
     // Filter coins by dollar amount (e.g., check if amount['S'] exists and > 0)
     coins.value = coins.where((coin) => coin.amount.containsKey('S')).toList();
+    generateTableData(coins);
   }
 
   void filterByRupee() {
     coins.value = coins.where((coin) => coin.amount.containsKey('V')).toList();
+    generateTableData(coins);
+
   }
 
   void filterByTaka() {
     coins.value = coins.where((coin) => coin.amount.containsKey('&')).toList();
+    generateTableData(coins);
   }
 
   // Export functions for Excel and PDF

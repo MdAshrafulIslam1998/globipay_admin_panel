@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/data/model/coin_data_model.dart';
 import 'package:globipay_admin_panel/core/data/model/data_table/table_button_model.dart';
 import 'package:globipay_admin_panel/core/data/model/data_table/table_column_model.dart';
 import 'package:globipay_admin_panel/core/data/model/data_table/table_pagination_model.dart';
@@ -130,7 +131,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
     return Obx(() => EnhancedDataTable(
           title: 'Active Users Management',
           columns: _columns,
-          data: controller.getTableData(),
+          data: controller.tableData.value,
           exportButtons: _buttons,
           searchModel: const TableSearchModel(
             placeholder: 'Search users...',
