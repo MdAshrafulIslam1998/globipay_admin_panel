@@ -91,6 +91,17 @@ class Sidebar extends StatelessWidget {
                             context.go(RoutePath.activeUsers);
                           },
                         ),
+                        MenuTile(
+                          isSubmenu: true,
+                          isActive: currentRoute == RoutePath.editCoin,
+                          title: "Edit Coins",
+                          activeIconSrc: "assets/icons/edit_coin_filled.svg",
+                          inactiveIconSrc: "assets/icons/edit_coin_light.svg",
+                          count: 16,
+                          onPressed: () {
+                            context.go(RoutePath.editCoin);
+                          },
+                        ),
                       ],
                       )
                     ),

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:globipay_admin_panel/core/theme/theme.dart';
 import 'package:globipay_admin_panel/router/app_router.dart';
 import 'flavors/app_properties.dart';
 /**

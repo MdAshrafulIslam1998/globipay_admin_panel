@@ -3,6 +3,7 @@ import 'package:globipay_admin_panel/modules/base_panel/controller/base_panel_co
 import 'package:globipay_admin_panel/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:globipay_admin_panel/modules/test_controller.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:globipay_admin_panel/modules/edit_coin/controller/edit_coin_controller.dart';
 import 'package:globipay_admin_panel/modules/pending_transactions/controller/pending_transactions_controller.dart';
 import 'package:globipay_admin_panel/modules/settings/controller/settings_controller.dart';
 import 'package:globipay_admin_panel/modules/transactions/controller/transactions_controller.dart';
@@ -36,7 +37,7 @@ abstract class AppInjector extends Injector {
   @Register.factory(TransactionsController)
   @Register.factory(InactiveUsersController)
   @Register.factory(ActiveUsersController)
-  @Register.factory(PendingTransactionsController)
+  @Register.factory(EditCoinController)
   void _controllerComponents();
 
 

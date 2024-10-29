@@ -5,7 +5,7 @@ import 'package:globipay_admin_panel/modules/inactive_users/views/inactive_users
 import 'package:globipay_admin_panel/modules/transactions/views/transactions_screen.dart';
 import 'package:globipay_admin_panel/modules/pending_transactions/views/pending_transactions_screen.dart';
 import 'package:globipay_admin_panel/modules/settings/views/settings_screen.dart';
-import 'package:globipay_admin_panel/modules/pending_transactions/views/pending_transactions_screen.dart';
+import 'package:globipay_admin_panel/modules/edit_coin/views/edit_coin_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'route_path.dart';
 
@@ -44,6 +44,10 @@ abstract class AppRoutesList {
         GoRoute(
           path: RoutePath.pendingTransactions,
           builder: (context, state) => PendingTransactionsScreen(),
+        ),
+        GoRoute(
+          path: RoutePath.editCoin,
+          builder: (context, state) => EditCoinScreen(),
         ),
         ],
       ),
