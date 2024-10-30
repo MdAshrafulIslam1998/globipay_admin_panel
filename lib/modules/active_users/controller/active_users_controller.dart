@@ -19,6 +19,7 @@ class ActiveUsersController extends BaseController {
   var featureName = "Active Users";
   final RxList<ActiveUserModel> users = <ActiveUserModel>[].obs;
   final tableController = Get.put(EnhancedTableController());
+  var tableData = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
@@ -26,360 +27,189 @@ class ActiveUsersController extends BaseController {
     loadUsers();
   }
 
-  void loadUsers() {
-    // Simulating API call with more sample data
-    users.value = [
-      ActiveUserModel(
-        id: 1,
-        name: 'John Doe',
-        email: 'john@example.com',
-        status: 'Online',
-        lastActive: DateTime.now(),
-        role: 'Admin',
-        activityCount: 45,
-      ),
-      ActiveUserModel(
-        id: 2,
-        name: 'Jane Smith',
-        email: 'jane@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 2)),
-        role: 'User',
-        activityCount: 32,
-      ),
-      ActiveUserModel(
-        id: 3,
-        name: 'Alice Johnson',
-        email: 'alice@example.com',
-        status: 'Online',
-        lastActive: DateTime.now().subtract(const Duration(minutes: 15)),
-        role: 'Moderator',
-        activityCount: 57,
-      ),
-      ActiveUserModel(
-        id: 4,
-        name: 'Bob Brown',
-        email: 'bob@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 4)),
-        role: 'User',
-        activityCount: 20,
-      ),
-      ActiveUserModel(
-        id: 5,
-        name: 'Charlie Wilson',
-        email: 'charlie@example.com',
-        status: 'Online',
-        lastActive: DateTime.now().subtract(const Duration(minutes: 5)),
-        role: 'Admin',
-        activityCount: 75,
-      ),
-      ActiveUserModel(
-        id: 6,
-        name: 'Diane Lee',
-        email: 'diane@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 6)),
-        role: 'User',
-        activityCount: 29,
-      ),
-      ActiveUserModel(
-        id: 7,
-        name: 'Evelyn King',
-        email: 'evelyn@example.com',
-        status: 'Online',
-        lastActive: DateTime.now().subtract(const Duration(hours: 1)),
-        role: 'User',
-        activityCount: 48,
-      ),
-      ActiveUserModel(
-        id: 8,
-        name: 'Frank Martin',
-        email: 'frank@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 7)),
-        role: 'Admin',
-        activityCount: 61,
-      ),
-      ActiveUserModel(
-        id: 9,
-        name: 'Grace Young',
-        email: 'grace@example.com',
-        status: 'Online',
-        lastActive: DateTime.now().subtract(const Duration(minutes: 25)),
-        role: 'Moderator',
-        activityCount: 83,
-      ),
-      ActiveUserModel(
-        id: 10,
-        name: 'Henry Davis',
-        email: 'henry@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 10)),
-        role: 'User',
-        activityCount: 14,
-      ),
-      ActiveUserModel(
-        id: 11,
-        name: 'Ivy Gonzalez',
-        email: 'ivy@example.com',
-        status: 'Online',
-        lastActive: DateTime.now().subtract(const Duration(minutes: 30)),
-        role: 'User',
-        activityCount: 67,
-      ),
-      ActiveUserModel(
-        id: 12,
-        name: 'Jack Miller',
-        email: 'jack@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 12)),
-        role: 'Admin',
-        activityCount: 90,
-      ),
-      ActiveUserModel(
-        id: 13,
-        name: 'Kathy Anderson',
-        email: 'kathy@example.com',
-        status: 'Online',
-        lastActive: DateTime.now().subtract(const Duration(minutes: 10)),
-        role: 'User',
-        activityCount: 36,
-      ),
-      ActiveUserModel(
-        id: 14,
-        name: 'Leo Perez',
-        email: 'leo@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 15)),
-        role: 'User',
-        activityCount: 25,
-      ),
-      ActiveUserModel(
-        id: 15,
-        name: 'Mona Hall',
-        email: 'mona@example.com',
-        status: 'Online',
-        lastActive: DateTime.now().subtract(const Duration(minutes: 20)),
-        role: 'Admin',
-        activityCount: 78,
-      ),
-      ActiveUserModel(
-        id: 16,
-        name: 'Nina Clark',
-        email: 'nina@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 16)),
-        role: 'User',
-        activityCount: 12,
-      ),
-      ActiveUserModel(
-        id: 17,
-        name: 'Oscar Lewis',
-        email: 'oscar@example.com',
-        status: 'Online',
-        lastActive: DateTime.now().subtract(const Duration(minutes: 45)),
-        role: 'Moderator',
-        activityCount: 60,
-      ),
-      ActiveUserModel(
-        id: 18,
-        name: 'Paul Walker',
-        email: 'paul@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 18)),
-        role: 'User',
-        activityCount: 11,
-      ),
-      ActiveUserModel(
-        id: 19,
-        name: 'Quinn Wright',
-        email: 'quinn@example.com',
-        status: 'Online',
-        lastActive: DateTime.now().subtract(const Duration(minutes: 5)),
-        role: 'User',
-        activityCount: 65,
-      ),
-      ActiveUserModel(
-        id: 20,
-        name: 'Rachel Harris',
-        email: 'rachel@example.com',
-        status: 'Offline',
-        lastActive: DateTime.now().subtract(const Duration(hours: 20)),
-        role: 'Admin',
-        activityCount: 88,
-      ),
-    ];
-
-     tableController.initialize(getTableData(), 10);
-
-  }
-
-  List<dynamic> getTableData() => users.map((user) {
-      String buttonText =
-          getButtonText(user); // Get the button text based on user data
-      return user.toMap((id) {
-        // Action for the button press can be defined here
-        onButtonAction(id);
-      }, buttonText: buttonText, messegeButtonText: 'Message', onMessagePressed: (id) {
-        print("on Message Press key $id");
-      },); // Pass the button text
+  void generateTableData(List<ActiveUserModel> users) {
+    tableData.value = users.map((user) {
+      return user.toMap(
+        onChatPressed: handleChatPressed,
+        onProfilePressed: handleProfilePressed,
+      );
     }).toList();
-  
-
-
-  String getButtonText(ActiveUserModel user) {
-    // Customize button text based on user properties
-    if (user.status == 'Online') {
-      return 'Disconnect'; // Example text for online users
-    } else {
-      return 'Reconnect'; // Example text for offline users
-    }
+    tableController.initialize(tableData, 10);
   }
 
-  void onButtonAction(int id) {
-    // Handle viewing user details
-    print('on Press key $id');
+  void loadUsers() {
+    // TODO implement coin request logic
+    // TODO For Dummy purpose
+
+    var list = <ActiveUserModel>[];
+    for (var i = 0; i < 100; i++) {
+      list.add(
+        ActiveUserModel(
+          id: 1,
+          name: 'Alice Johnson $i',
+          email: 'john@example.com',
+          status: 'Online',
+          lastActive: DateTime.now(),
+          role: 'Admin',
+          activityCount: 45 + i,
+        ),
+      );
+    }
+    users.value = list;
+    generateTableData(list);
+  }
+
+  void filterAll() {
+    loadUsers();
+  }
+
+  void handleChatPressed(int id) {
+    print("Chat with user with id: $id");
+  }
+
+  void handleProfilePressed(int id) {
+    print("View profile for user with id: $id");
   }
 
   void exportToExcel() {
-  try {
-    // Create a new Excel document
-    var excel = Excel.createExcel();
-    String sheetName = 'Active Users';
-    Sheet sheetObject = excel.sheets.values.first; // Work with the default sheet
+    try {
+      // Create a new Excel document
+      var excel = Excel.createExcel();
+      String sheetName = 'Active Users';
+      Sheet sheetObject =
+          excel.sheets.values.first; // Work with the default sheet
 
-    // Define styles
-    var headerStyle = CellStyle(
-      backgroundColorHex: '#1E88E5', // Blue background
-      fontColorHex: '#FFFFFF', // White text
-      bold: true,
-    );
+      // Define styles
+      var headerStyle = CellStyle(
+        backgroundColorHex: '#1E88E5', // Blue background
+        fontColorHex: '#FFFFFF', // White text
+        bold: true,
+      );
 
-    var dataStyle = CellStyle(
-      textWrapping: TextWrapping.WrapText,
-    );
+      var dataStyle = CellStyle(
+        textWrapping: TextWrapping.WrapText,
+      );
 
-    // Add title row
-    sheetObject.merge(
-        CellIndex.indexByString("A1"), CellIndex.indexByString("G1"));
-    var titleCell = sheetObject.cell(CellIndex.indexByString("A1"));
-    titleCell.value =
-        'Active Users Report - ${DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())}';
-    titleCell.cellStyle = CellStyle(
-      bold: true,
-      fontSize: 14,
-    );
+      // Add title row
+      sheetObject.merge(
+          CellIndex.indexByString("A1"), CellIndex.indexByString("G1"));
+      var titleCell = sheetObject.cell(CellIndex.indexByString("A1"));
+      titleCell.value =
+          'Active Users Report - ${DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())}';
+      titleCell.cellStyle = CellStyle(
+        bold: true,
+        fontSize: 14,
+      );
 
-    // Add summary section
-    int totalUsers = users.length;
-    int activeUsers = users.where((user) => user.status == 'Online').length;
-    int offlineUsers = users.where((user) => user.status == 'Offline').length;
+      // Add summary section
+      int totalUsers = users.length;
+      int activeUsers = users.where((user) => user.status == 'Online').length;
+      int offlineUsers = users.where((user) => user.status == 'Offline').length;
 
-    var summaryRows = [
-      ['Summary'],
-      ['Total Users:', totalUsers],
-      ['Active Users:', activeUsers],
-      ['Offline Users:', offlineUsers],
-      [], // Empty row for spacing
-    ];
-
-    int currentRow = 2; // Start after title
-    for (var summaryRow in summaryRows) {
-      for (var i = 0; i < summaryRow.length; i++) {
-        var cell = sheetObject.cell(
-            CellIndex.indexByColumnRow(columnIndex: i, rowIndex: currentRow));
-        cell.value = summaryRow[i];
-        if (i == 0) cell.cellStyle = CellStyle(bold: true);
-      }
-      currentRow++;
-    }
-
-    // Add headers
-    var headers = [
-      'ID',
-      'Name',
-      'Email',
-      'Status',
-      'Last Active',
-      'Role',
-      'Activity Count'
-    ];
-
-    // Add headers row
-    for (var i = 0; i < headers.length; i++) {
-      var cell = sheetObject.cell(CellIndex.indexByColumnRow(
-        columnIndex: i,
-        rowIndex: currentRow,
-      ));
-      cell.value = headers[i];
-      cell.cellStyle = headerStyle;
-    }
-    currentRow++;
-
-    // Add data rows with applied styling
-    for (var user in users) {
-      var rowData = [
-        user.id,
-        user.name,
-        user.email,
-        user.status,
-        user.lastActive != null
-            ? DateFormat('yyyy-MM-dd HH:mm').format(user.lastActive!)
-            : '',
-        user.role,
-        user.activityCount,
+      var summaryRows = [
+        ['Summary'],
+        ['Total Users:', totalUsers],
+        ['Active Users:', activeUsers],
+        ['Offline Users:', offlineUsers],
+        [], // Empty row for spacing
       ];
 
-      for (var i = 0; i < rowData.length; i++) {
+      int currentRow = 2; // Start after title
+      for (var summaryRow in summaryRows) {
+        for (var i = 0; i < summaryRow.length; i++) {
+          var cell = sheetObject.cell(
+              CellIndex.indexByColumnRow(columnIndex: i, rowIndex: currentRow));
+          cell.value = summaryRow[i];
+          if (i == 0) cell.cellStyle = CellStyle(bold: true);
+        }
+        currentRow++;
+      }
+
+      // Add headers
+      var headers = [
+        'ID',
+        'Name',
+        'Email',
+        'Status',
+        'Last Active',
+        'Role',
+        'Activity Count'
+      ];
+
+      // Add headers row
+      for (var i = 0; i < headers.length; i++) {
         var cell = sheetObject.cell(CellIndex.indexByColumnRow(
           columnIndex: i,
           rowIndex: currentRow,
         ));
-        cell.value = rowData[i];
-
-        // Apply specific styling based on column type
-        if (i == 3) {
-          // Status column styling
-          if (rowData[i] == 'Online') {
-            cell.cellStyle = CellStyle(
-              backgroundColorHex: '#C8E6C9', // Light green
-              bold: true,
-            );
-          } else {
-            cell.cellStyle = CellStyle(
-              backgroundColorHex: '#FFCDD2', // Light red
-              bold: true,
-            );
-          }
-        } else {
-          cell.cellStyle = dataStyle;
-        }
+        cell.value = headers[i];
+        cell.cellStyle = headerStyle;
       }
       currentRow++;
+
+      // Add data rows with applied styling
+      for (var user in users) {
+        var rowData = [
+          user.id,
+          user.name,
+          user.email,
+          user.status,
+          user.lastActive != null
+              ? DateFormat('yyyy-MM-dd HH:mm').format(user.lastActive!)
+              : '',
+          user.role,
+          user.activityCount,
+        ];
+
+        for (var i = 0; i < rowData.length; i++) {
+          var cell = sheetObject.cell(CellIndex.indexByColumnRow(
+            columnIndex: i,
+            rowIndex: currentRow,
+          ));
+          cell.value = rowData[i];
+
+          // Apply specific styling based on column type
+          if (i == 3) {
+            // Status column styling
+            if (rowData[i] == 'Online') {
+              cell.cellStyle = CellStyle(
+                backgroundColorHex: '#C8E6C9', // Light green
+                bold: true,
+              );
+            } else {
+              cell.cellStyle = CellStyle(
+                backgroundColorHex: '#FFCDD2', // Light red
+                bold: true,
+              );
+            }
+          } else {
+            cell.cellStyle = dataStyle;
+          }
+        }
+        currentRow++;
+      }
+
+      // Generate the Excel file
+      final List<int>? fileBytes = excel.encode();
+
+      if (fileBytes != null) {
+        // Create download link for web
+        final blob = html.Blob([
+          fileBytes
+        ], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor = html.AnchorElement(href: url)
+          ..setAttribute("download",
+              "ActiveUsersReport_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.xlsx")
+          ..click();
+
+        // Clean up
+        html.Url.revokeObjectUrl(url);
+      }
+    } catch (e) {
+      print('Error generating Excel file: $e');
     }
-
-    // Generate the Excel file
-    final List<int>? fileBytes = excel.encode();
-
-    if (fileBytes != null) {
-      // Create download link for web
-      final blob = html.Blob([
-        fileBytes
-      ], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      final url = html.Url.createObjectUrlFromBlob(blob);
-      final anchor = html.AnchorElement(href: url)
-        ..setAttribute("download",
-            "ActiveUsersReport_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.xlsx")
-        ..click();
-
-      // Clean up
-      html.Url.revokeObjectUrl(url);
-    }
-  } catch (e) {
-    print('Error generating Excel file: $e');
   }
-}
 
   void exportToPDF() async {
     final pdf = pw.Document();
@@ -496,5 +326,4 @@ class ActiveUsersController extends BaseController {
       ..click();
     html.Url.revokeObjectUrl(url);
   }
-
 }

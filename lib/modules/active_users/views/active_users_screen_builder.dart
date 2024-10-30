@@ -95,7 +95,7 @@ class ActiveUsersScreenBuilder extends BaseView<ActiveUsersController> {
     return Obx(() => EnhancedDataTable(
           title: 'Active Users Management',
           columns: _columns,
-          data: controller.getTableData(),
+          data: controller.tableData.value,
           exportButtons: _exportButtons,
           searchModel: const TableSearchModel(
             placeholder: 'Search users...',

@@ -20,8 +20,10 @@ class ActiveUserModel {
     required this.activityCount,
   });
 
-  Map<String, dynamic> toMap(Function(int id) onPressed,
-      {required String buttonText, required String messegeButtonText,required Function(int id) onMessagePressed}) {
+  Map<String, dynamic> toMap({
+    required Function(int id) onChatPressed,
+    required Function(int id) onProfilePressed,
+  }) {
     return {
       'id': id,
       'name': name,
@@ -30,18 +32,18 @@ class ActiveUserModel {
       'lastActive': lastActive,
       'role': role,
       'activityCount': activityCount,
-      'actions': CellButtonModel(
-        text: buttonText, // Use the passed button text
+      'chat': CellButtonModel(
+        text: 'View Chat', // Use the passed button text
         color: Colors.blue,
         onPressed: () {
-          onPressed(id);
+          onChatPressed(id);
         },
       ),
-      'messege': CellButtonModel(
-        text: messegeButtonText, // Use the passed button text
+      'profile': CellButtonModel(
+        text: 'View User Profile', // Use the passed button text
         color: Colors.red,
         onPressed: () {
-          onMessagePressed(id);
+          onProfilePressed(id);
         },
       ),
     };
