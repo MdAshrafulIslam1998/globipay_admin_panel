@@ -97,6 +97,7 @@ class ActiveUsersScreenBuilder extends BaseView<ActiveUsersController> {
           columns: _columns,
           data: controller.tableData.value,
           exportButtons: _exportButtons,
+          controller: controller.tableController,
           searchModel: const TableSearchModel(
             placeholder: 'Search users...',
             borderRadius: 8,

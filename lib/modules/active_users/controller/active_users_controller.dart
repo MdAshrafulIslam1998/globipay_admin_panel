@@ -18,8 +18,12 @@ import 'package:excel/excel.dart';
 class ActiveUsersController extends BaseController {
   var featureName = "Active Users";
   final RxList<ActiveUserModel> users = <ActiveUserModel>[].obs;
-  final tableController = Get.put(EnhancedTableController());
   var tableData = <Map<String, dynamic>>[].obs;
+
+
+  EnhancedTableController tableController = Get.put(EnhancedTableController(), permanent: false, tag: 'active_users');
+
+  ActiveUsersController() ;
 
   @override
   void onInit() {

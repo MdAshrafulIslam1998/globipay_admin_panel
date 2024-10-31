@@ -38,7 +38,8 @@ class EnhancedDataTable extends StatelessWidget {
     this.exportButtons = const [],
     TableSearchModel? searchModel,
     TablePaginationModel? paginationModel,
-  })  : controller = Get.put(EnhancedTableController()),
+    required this.controller,
+  })  :
         this.searchModel = searchModel ?? const TableSearchModel(),
         this.paginationModel = paginationModel ?? const TablePaginationModel(),
         super(key: key) {

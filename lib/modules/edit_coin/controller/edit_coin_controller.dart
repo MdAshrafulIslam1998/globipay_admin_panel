@@ -1,17 +1,24 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/data/model/coin_data_model.dart';
+import 'package:globipay_admin_panel/core/data/model/data_table/table_button_model.dart';
+import 'package:globipay_admin_panel/core/data/model/data_table/table_column_model.dart';
 import 'package:globipay_admin_panel/core/widgets/data_table/controller/enhanced_table_controller.dart';
 
 class EditCoinController extends BaseController {
   final RxList<EditCoinModel> coins = <EditCoinModel>[].obs;
-  final tableController = Get.put(EnhancedTableController());
   var tableData = <Map<String, dynamic>>[].obs;
+
+
+  EnhancedTableController tableController = Get.put(EnhancedTableController(), permanent: false, tag: 'edit_coin');
 
   @override
   void onInit() {
     super.onInit();
-    requestForCoin();
   }
 
 
@@ -91,4 +98,114 @@ class EditCoinController extends BaseController {
     // Implement PDF export logic here
     print("Exporting data to PDF");
   }
+
+  List<TableColumnModel> get columns => [
+    TableColumnModel(
+      label: 'Full Name',
+      key: 'fullName',
+      sortable: true,
+    ),
+    TableColumnModel(
+      label: 'Email',
+      key: 'email',
+      sortable: true,
+    ),
+    TableColumnModel(
+      label: 'Amount',
+      key: 'amount',
+      sortable: true,
+    ),
+    TableColumnModel(
+      label: 'Status',
+      key: 'status',
+      sortable: true,
+    ),
+    TableColumnModel(
+      label: 'Edit',
+      key: 'edit',
+      sortable: false,
+    ),
+    TableColumnModel(
+      label: 'Details',
+      key: 'details',
+      sortable: false,
+    ),
+  ];
+
+  List<TableButtonModel> get buttons => [
+    // New buttons: All, $, V, &
+    TableButtonModel(
+      text: 'All',
+      icon: SvgPicture.asset(
+        'assets/icons/check_all_light.svg',
+        height: 15,
+        width: 15,
+        color: Colors.green,
+      ),
+      backgroundColor: Colors.grey.shade200,
+      textColor: Colors.black,
+      onPressed: () => filterAll(),
+    ),
+    TableButtonModel(
+      text: '\$',
+      icon: SvgPicture.asset(
+        'assets/icons/dollar_light.svg',
+        height: 15,
+        width: 15,
+        color: Colors.green,
+      ),
+      backgroundColor: Colors.grey.shade200,
+      textColor: Colors.black,
+      onPressed: () => filterByDollar(),
+    ),
+    TableButtonModel(
+      text: 'V',
+      icon: SvgPicture.asset(
+        'assets/icons/repee_light.svg',
+        height: 15,
+        width: 15,
+        color: Colors.green,
+      ),
+      backgroundColor: Colors.grey.shade200,
+      textColor: Colors.black,
+      onPressed: () => filterByRupee(),
+    ),
+    TableButtonModel(
+      text: '&',
+      icon: SvgPicture.asset(
+        'assets/icons/tag_light.svg',
+        height: 15,
+        width: 15,
+        color: Colors.green,
+      ),
+      backgroundColor: Colors.grey.shade200,
+      textColor: Colors.black,
+      onPressed: () => filterByTaka(),
+    ),
+    // Export and PDF buttons
+    TableButtonModel(
+      text: 'Export Excel',
+      icon: SvgPicture.asset(
+        'assets/icons/excel_light.svg',
+        height: 15,
+        width: 15,
+        color: Colors.green,
+      ),
+      backgroundColor: Colors.green.shade50,
+      textColor: Colors.green,
+      onPressed: exportToExcel,
+    ),
+    TableButtonModel(
+      text: 'Export PDF',
+      icon: SvgPicture.asset(
+        'assets/icons/pdf_light.svg',
+        height: 18,
+        width: 18,
+        color: Colors.red,
+      ),
+      backgroundColor: Colors.red.shade50,
+      textColor: Colors.red,
+      onPressed: exportToPDF,
+    ),
+  ];
 }
