@@ -2,7 +2,7 @@ name: Publish Website to CPanel
 on:
   push:
     branches:
-      - all_ash
+      - sync_fusion_ash
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
@@ -10,22 +10,22 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
       # Set up Flutter environment with the recommended version
       - name: Set up Flutter environment
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'  # Updated to the version that includes Dart 3.5.3
-          channel: 'stable'
-      
+          flutter-version: "3.24.3" # Updated to the version that includes Dart 3.5.3
+          channel: "stable"
+
       # Install Flutter dependencies
       - name: Install dependencies
         run: flutter pub get
-        
+
       # Build the Flutter project for the web
       - name: Build Flutter Web Project
         run: flutter build web
-        
+
       # Deploy to FTP server
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
