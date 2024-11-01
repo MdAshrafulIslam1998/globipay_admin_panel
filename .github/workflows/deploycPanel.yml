@@ -2,7 +2,7 @@ name: Publish Website to CPanel
 on:
   push:
     branches:
-      - all_ash
+      - sync_fusion_ash
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
@@ -35,4 +35,3 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: build/web/
           server-dir: /globipay_admin_panel/
-          debug: true
