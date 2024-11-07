@@ -67,6 +67,7 @@ dependencies:
   excel: ^2.0.8
   path_provider: ^2.0.15
   syncfusion_flutter_datagrid: ^27.1.58
+  font_awesome_flutter: ^10.1.0
 
 
 
