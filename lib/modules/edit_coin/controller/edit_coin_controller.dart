@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:http/http.dart' as http;
 
 class EditCoinController extends BaseController {
   var coins = <Map<String, dynamic>>[].obs;

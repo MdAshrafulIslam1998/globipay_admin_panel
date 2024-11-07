@@ -5,6 +5,7 @@ import 'package:globipay_admin_panel/modules/edit_coin/controller/edit_coin_cont
 import 'package:globipay_admin_panel/modules/edit_coin/controller/edit_coin_datasource.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:http/http.dart' as http;
 
 class EditCoinScreenBuilder extends BaseView<EditCoinController> {
   EditCoinScreenBuilder({Key? key}) : super(key: key) {
