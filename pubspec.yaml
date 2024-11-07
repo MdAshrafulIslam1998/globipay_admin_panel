@@ -66,6 +66,7 @@ dependencies:
   printing: ^5.9.0
   excel: ^2.0.8
   path_provider: ^2.0.15
+  syncfusion_flutter_datagrid: ^27.1.58
 
 
 
