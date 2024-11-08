@@ -68,6 +68,8 @@ dependencies:
   path_provider: ^2.0.15
   syncfusion_flutter_datagrid: ^27.1.58
   font_awesome_flutter: ^10.1.0
+  syncfusion_flutter_datagrid_export: ^27.1.58
+  syncfusion_flutter_pdf: ^27.1.58
 
 
 

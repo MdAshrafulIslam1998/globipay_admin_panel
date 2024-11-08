@@ -6,11 +6,16 @@ import 'package:globipay_admin_panel/modules/edit_coin/controller/edit_coin_data
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:syncfusion_flutter_datagrid_export/export.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class EditCoinScreenBuilder extends BaseView<EditCoinController> {
   EditCoinScreenBuilder({Key? key}) : super(key: key) {
     controller.onInit();
   }
+
+  final GlobalKey<SfDataGridState> _dataGridKey = GlobalKey<SfDataGridState>();
 
   @override
   PreferredSizeWidget? appBar() {
@@ -24,6 +29,42 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
 
       return Column(
         children: [
+          Container(
+            margin: const EdgeInsets.all(12.0),
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  height: 40.0,
+                  width: 150.0,
+                  child: MaterialButton(
+                    color: Colors.blue,
+                    child: const Center(
+                      child: Text(
+                        'Export to Excel',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    onPressed: () => exportDataGridToExcel(),
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.all(20)),
+                SizedBox(
+                  height: 40.0,
+                  width: 150.0,
+                  child: MaterialButton(
+                    color: Colors.blue,
+                    child: const Center(
+                      child: Text(
+                        'Export to PDF',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    onPressed: () => _exportDataGridToPdf(),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: SfDataGridTheme(
               data: SfDataGridThemeData(
@@ -32,6 +73,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
                 gridLineColor: Colors.grey.shade300,
               ),
               child: SfDataGrid(
+                key: _dataGridKey,
                 source: EditCoinDataSource(controller, coinsList),
                 columns: _buildColumns(),
                 columnWidthMode: ColumnWidthMode.fill,
@@ -123,5 +165,34 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
         ),
       ),
     ];
+  }
+
+  Future<void> exportDataGridToExcel() async {
+    // final Workbook workbook =
+    //     _dataGridKey.currentState!.exportToExcelWorkbook();
+    // final List<int> bytes = workbook.saveAsStream();
+    // await File('DataGrid.xlsx').writeAsBytes(bytes, flush: true);
+    // workbook.dispose();
+  }
+
+  Future<void> _exportDataGridToPdf() async {
+    final PdfDocument document =
+        await _dataGridKey.currentState!.exportToPdfDocument(
+      // Customize the PDF export options as needed
+      // PdfExportSettings(
+      //     // exportColumnHeaders: true,
+      //     // exportColumnWidths: true,
+      //     // exportColumnVisibility: true,
+      //     // exportColumnSizes: true,
+      //     // exportSortColumns: true,
+      //     // exportSelectedData: true,
+      //     // exportColumnSortDirection: true,
+      //     // exportFeatureSettings: PdfExportFeatureSettings()
+      //     ),
+    );
+
+    final List<int> bytes = await document.save();
+    await File('DataGrid.pdf').writeAsBytes(bytes, flush: true);
+    document.dispose();
   }
 }
