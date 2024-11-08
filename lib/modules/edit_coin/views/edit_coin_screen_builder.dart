@@ -6,16 +6,42 @@ import 'package:globipay_admin_panel/modules/edit_coin/controller/edit_coin_data
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:http/http.dart' as http;
+import 'dart:html' as html;
 import 'dart:io';
 import 'package:syncfusion_flutter_datagrid_export/export.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
 
 class EditCoinScreenBuilder extends BaseView<EditCoinController> {
+  final GlobalKey<SfDataGridState> _key = GlobalKey<SfDataGridState>();
+
   EditCoinScreenBuilder({Key? key}) : super(key: key) {
     controller.onInit();
   }
+  Future<void> exportDataGridToExcel() async {
+    // Create a workbook and worksheet
+    final xlsio.Workbook workbook = xlsio.Workbook();
+    final xlsio.Worksheet worksheet = workbook.worksheets[0];
 
-  final GlobalKey<SfDataGridState> _dataGridKey = GlobalKey<SfDataGridState>();
+    // Export the DataGrid to the worksheet
+    _key.currentState?.exportToExcelWorksheet(worksheet);
+
+    // Save the workbook as a stream of bytes
+    final List<int> bytes = workbook.saveAsStream();
+    workbook.dispose();
+
+    // Create a Blob and a download link
+    final blob = html.Blob([bytes],
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    // Create a temporary anchor element and trigger download
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute("download", "DataGrid.xlsx")
+      ..click();
+
+    // Cleanup: Revoke the object URL after download
+    html.Url.revokeObjectUrl(url);
+  }
 
   @override
   PreferredSizeWidget? appBar() {
@@ -44,22 +70,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    onPressed: () => exportDataGridToExcel(),
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.all(20)),
-                SizedBox(
-                  height: 40.0,
-                  width: 150.0,
-                  child: MaterialButton(
-                    color: Colors.blue,
-                    child: const Center(
-                      child: Text(
-                        'Export to PDF',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    onPressed: () => _exportDataGridToPdf(),
+                    onPressed: exportDataGridToExcel,
                   ),
                 ),
               ],
@@ -73,7 +84,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
                 gridLineColor: Colors.grey.shade300,
               ),
               child: SfDataGrid(
-                key: _dataGridKey,
+                key: _key,
                 source: EditCoinDataSource(controller, coinsList),
                 columns: _buildColumns(),
                 columnWidthMode: ColumnWidthMode.fill,
@@ -84,7 +95,6 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
           SfDataPagerTheme(
             data: SfDataPagerThemeData(
               selectedItemColor: Color(0xFF7B61FF),
-              // Other theme customizations
             ),
             child: SfDataPager(
               controller: controller.dataPagerController,
@@ -94,7 +104,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
                   .toDouble(),
               direction: Axis.horizontal,
             ),
-          )
+          ),
         ],
       );
     });
@@ -165,34 +175,5 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
         ),
       ),
     ];
-  }
-
-  Future<void> exportDataGridToExcel() async {
-    // final Workbook workbook =
-    //     _dataGridKey.currentState!.exportToExcelWorkbook();
-    // final List<int> bytes = workbook.saveAsStream();
-    // await File('DataGrid.xlsx').writeAsBytes(bytes, flush: true);
-    // workbook.dispose();
-  }
-
-  Future<void> _exportDataGridToPdf() async {
-    final PdfDocument document =
-        await _dataGridKey.currentState!.exportToPdfDocument(
-      // Customize the PDF export options as needed
-      // PdfExportSettings(
-      //     // exportColumnHeaders: true,
-      //     // exportColumnWidths: true,
-      //     // exportColumnVisibility: true,
-      //     // exportColumnSizes: true,
-      //     // exportSortColumns: true,
-      //     // exportSelectedData: true,
-      //     // exportColumnSortDirection: true,
-      //     // exportFeatureSettings: PdfExportFeatureSettings()
-      //     ),
-    );
-
-    final List<int> bytes = await document.save();
-    await File('DataGrid.pdf').writeAsBytes(bytes, flush: true);
-    document.dispose();
   }
 }
