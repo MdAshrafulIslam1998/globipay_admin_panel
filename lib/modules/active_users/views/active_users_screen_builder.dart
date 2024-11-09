@@ -1,42 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:globipay_admin_panel/core/base/base_view.dart';
-import 'package:globipay_admin_panel/modules/active_users/controller/active_users_datasource.dart';
-import 'package:globipay_admin_panel/modules/edit_coin/controller/edit_coin_datasource.dart';
+import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/modules/active_users/controller/active_users_controller.dart';
+import 'package:globipay_admin_panel/modules/active_users/table/user_data_pager_delegator.dart';
+import 'package:globipay_admin_panel/modules/active_users/table/user_data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-class ActiveUsersScreenBuilder extends BaseView<ActiveUsersController> {
-  ActiveUsersScreenBuilder({Key? key}) : super(key: key) {
-    controller.onInit();
-  }
+class ActiveUsersScreenBuilder extends StatefulWidget {
+  const ActiveUsersScreenBuilder({super.key});
 
   @override
-  PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Active Users'));
+  State<ActiveUsersScreenBuilder> createState() =>
+      _ActiveUsersScreenBuilderState();
+}
+
+class _ActiveUsersScreenBuilderState
+    extends BaseViewState<ActiveUsersScreenBuilder, ActiveUsersController> {
+  double datapagerHeight = 70.0;
+
+  @override
+  void initState() {
+    controller.onInit();
+    super.initState();
   }
+
+
+
 
   @override
   Widget body(BuildContext context) {
-    return Obx(() {
-      // Convert the RxList to a standard List
-      List<Map<String, dynamic>> coinsList = controller.coins.toList();
-
-      // Pass the controller and coinsList to the DataGridSource
-      return SfDataGrid(
-        source: ActiveUsersDatasource(controller, coinsList),  // Pass controller here
-        columns: [
-          GridColumn(columnName: 'fullName', label: Text('Full Name')),
-          GridColumn(columnName: 'email', label: Text('Email')),
-          GridColumn(columnName: 'amount', label: Text('Amount')),
-          GridColumn(columnName: 'level', label: Text('Level')),
-          GridColumn(columnName: 'status', label: Text('Status')),
-          GridColumn(columnName: 'edit', label: Text('Edit')),
-          GridColumn(columnName: 'details', label: Text('Details')),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('User DataGrid with DataPager'),
+      ),
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Page Size: '),
+              Obx(() => DropdownButton<int>(
+                value: controller.pageSize.value,
+                items: [10, 20, 30].map((size) {
+                  return DropdownMenuItem<int>(
+                    value: size,
+                    child: Text(size.toString()),
+                  );
+                }).toList(),
+                onChanged: (newSize) {
+                  if (newSize != null) {
+                    controller.pageSize.value = newSize;
+                    controller.fetchUsers(1, newSize); // Reset to first page
+                  }
+                },
+              )),
+            ],
+          ),
+          SizedBox(height: 10),
+          // DataGrid for displaying user data
+          Expanded(
+            child: Obx(() => SfDataGrid(
+              source: UserDataSource(controller.users),
+              columns: [
+                GridColumn(
+                  columnName: 'id',
+                  label: Text('ID', textAlign: TextAlign.center),
+                ),
+                GridColumn(
+                  columnName: 'name',
+                  label: Text('Name', textAlign: TextAlign.center),
+                ),
+                GridColumn(
+                  columnName: 'designation',
+                  label: Text('Designation', textAlign: TextAlign.center),
+                ),
+                GridColumn(
+                  columnName: 'age',
+                  label: Text('Age', textAlign: TextAlign.center),
+                ),
+              ],
+            )),
+          ),
+          // SfDataPager with delegate
+          Obx(() => SfDataPager(
+            delegate: UserDataPagerDelegate(controller),
+            pageCount: (controller.totalItems.value / controller.pageSize.value).ceilToDouble(),
+          )),
         ],
-        columnWidthMode: ColumnWidthMode.fill,
-      );
-    });
+      ),
+    );
   }
 }
+
