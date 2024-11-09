@@ -7,6 +7,8 @@ import 'package:globipay_admin_panel/modules/active_users/table/user_data_pager_
 import 'package:globipay_admin_panel/modules/active_users/table/user_data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
+import '../user.dart';
+
 class ActiveUsersScreenBuilder extends StatefulWidget {
   const ActiveUsersScreenBuilder({super.key});
 
@@ -25,71 +27,193 @@ class _ActiveUsersScreenBuilderState
     super.initState();
   }
 
-
-
-
   @override
   Widget body(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('User DataGrid with DataPager'),
-      ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Container(
+      color: Colors.grey[100],
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('Page Size: '),
-              Obx(() => DropdownButton<int>(
-                value: controller.pageSize.value,
-                items: [10, 20, 30].map((size) {
-                  return DropdownMenuItem<int>(
-                    value: size,
-                    child: Text(size.toString()),
-                  );
-                }).toList(),
-                onChanged: (newSize) {
-                  if (newSize != null) {
-                    controller.pageSize.value = newSize;
-                    controller.fetchUsers(1, newSize); // Reset to first page
-                  }
-                },
-              )),
+              // Header Section
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Total Users Count
+                    Obx(
+                      () => Text(
+                        'Total Users: ${controller.totalItems}',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    // Page Size Selector
+                    Row(
+                      children: [
+                        Text(
+                          'Entries per page: ',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Theme.of(context).primaryColor,
+                              width: 1,
+                            ),
+                          ),
+                          child: Obx(() => DropdownButton<int>(
+                                value: controller.pageSize.value,
+                                underline: Container(),
+                                items: [10, 20, 30].map((size) {
+                                  return DropdownMenuItem<int>(
+                                    value: size,
+                                    child: Text(size.toString()),
+                                  );
+                                }).toList(),
+                                onChanged: (newSize) {
+                                  if (newSize != null) {
+                                    controller.pageSize.value = newSize;
+                                    controller.fetchUsers(1, newSize);
+                                  }
+                                },
+                              )),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              // DataGrid
+              Expanded(
+                child: Obx(
+                  () => SfDataGrid(
+                    gridLinesVisibility: GridLinesVisibility.both,
+                    headerGridLinesVisibility: GridLinesVisibility.both,
+                    columnWidthMode: ColumnWidthMode.fill,
+                    source: UserDataSource(controller.users,
+                      onActionTap: (User user, String action) {
+                        switch (action) {
+                          case 'view':
+                          // Handle view
+                            break;
+                          case 'edit':
+                          // Handle edit
+                            break;
+                          case 'message':
+                          // Handle message
+                            break;
+                        }
+                      },
+                    ),
+                    columns: [
+                      GridColumn(
+                        columnName: 'id',
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'ID',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      GridColumn(
+                        columnName: 'name',
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Name',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      GridColumn(
+                        columnName: 'designation',
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Designation',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      GridColumn(
+                        columnName: 'age',
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Age',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+
+                      GridColumn(
+                        columnName: 'actions',
+                        width: 160, // Fixed width for actions column
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Actions',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
+              // Pager
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.grey[300]!,
+                      width: 1,
+                    ),
+                  ),
+                ),
+                child: Obx(
+                  () => SfDataPager(
+                    delegate: UserDataPagerDelegate(controller),
+                    pageCount: (controller.totalItems.value /
+                            controller.pageSize.value)
+                        .ceilToDouble(),
+                  ),
+                ),
+              ),
             ],
           ),
-          SizedBox(height: 10),
-          // DataGrid for displaying user data
-          Expanded(
-            child: Obx(() => SfDataGrid(
-              source: UserDataSource(controller.users),
-              columns: [
-                GridColumn(
-                  columnName: 'id',
-                  label: Text('ID', textAlign: TextAlign.center),
-                ),
-                GridColumn(
-                  columnName: 'name',
-                  label: Text('Name', textAlign: TextAlign.center),
-                ),
-                GridColumn(
-                  columnName: 'designation',
-                  label: Text('Designation', textAlign: TextAlign.center),
-                ),
-                GridColumn(
-                  columnName: 'age',
-                  label: Text('Age', textAlign: TextAlign.center),
-                ),
-              ],
-            )),
-          ),
-          // SfDataPager with delegate
-          Obx(() => SfDataPager(
-            delegate: UserDataPagerDelegate(controller),
-            pageCount: (controller.totalItems.value / controller.pageSize.value).ceilToDouble(),
-          )),
-        ],
+        ),
       ),
     );
   }
 }
-
