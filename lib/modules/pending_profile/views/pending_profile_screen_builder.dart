@@ -8,105 +8,227 @@ class PendingProfileScreenBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen size
+    final screenSize = MediaQuery.of(context).size;
+    
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
         title: Text(
-          "Profile Documents",
-          style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
+          "Profile Verification",
+          style: GoogleFonts.poppins(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF3B82F6),
+          ),
         ),
-        backgroundColor: Colors.blueAccent,
-        elevation: 2,
+        backgroundColor: const Color(0xFFF7F2FA), // #F7F2FA color applied
+        elevation: 0,
         centerTitle: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(16),
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-        child: Obx(() {
-          if (controller.profileData.value == null) {
-            return Center(child: CircularProgressIndicator());
-          }
+      body: Center( // Center the content
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: 1200, // Maximum width for the content
+            maxHeight: screenSize.height, // Use full screen height
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Obx(() {
+              if (controller.profileData.value == null) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xFF3B82F6),
+                  ),
+                );
+              }
 
-          var profile = controller.profileData.value!;
-          return Container(
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  spreadRadius: 3,
-                  blurRadius: 10,
-                  offset: Offset(0, 6),
+              var profile = controller.profileData.value!;
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      spreadRadius: 2,
+                      blurRadius: 20,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildSectionTitle("Profile Information"),
-                  const SizedBox(height: 20),
-                  
-                  // Profile Information in two columns of 3 items each, left-aligned
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildInfoTile("Full Name", profile.fullName),
-                            _buildInfoTile("Gender", profile.gender),
-                            _buildInfoTile("Email", profile.email),
-                          ],
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Status Banner
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFEF3C7),
+                            border: Border(
+                              bottom: BorderSide(
+                                color: const Color(0xFFD97706).withOpacity(0.2),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Pending Review",
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFFD97706),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildInfoTile("Phone", profile.phone),
-                            _buildInfoTile("Date of Birth", profile.dob),
-                            _buildInfoTile("Address", profile.address),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  
-                  const Divider(thickness: 1, height: 40),
-                  _buildSectionTitle("Profile Documents"),
-                  const SizedBox(height: 20),
-                  
-                  // Profile Document Images, larger and rectangular
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildImageTile(profile.selfiePath, "Profile Picture"),
-                      _buildImageTile(profile.frontIdPath, "NID Front"),
-                      _buildImageTile(profile.backIdPath, "NID Back"),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
 
-                  // Compact Action Buttons aligned to the left side
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _buildActionButton("Approve", Colors.green, controller.onApprove),
-                      const SizedBox(width: 8),
-                      _buildActionButton("Pending", Colors.amber[700]!, controller.onPending),
-                      const SizedBox(width: 8),
-                      _buildActionButton("Delete", Colors.red, controller.onRemove),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildSectionTitle("Personal Information"),
+                              const SizedBox(height: 24),
+
+                              // Profile Information Grid - More compact
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        _buildInfoCard(
+                                          Icons.person_outline,
+                                          "Full Name",
+                                          profile.fullName,
+                                        ),
+                                        const SizedBox(height: 12),
+                                        _buildInfoCard(
+                                          Icons.mail_outline,
+                                          "Email",
+                                          profile.email,
+                                        ),
+                                        const SizedBox(height: 12),
+                                        _buildInfoCard(
+                                          Icons.calendar_today_outlined,
+                                          "Date of Birth",
+                                          profile.dob,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 24),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        _buildInfoCard(
+                                          Icons.wc,
+                                          "Gender",
+                                          profile.gender,
+                                        ),
+                                        const SizedBox(height: 12),
+                                        _buildInfoCard(
+                                          Icons.phone_outlined,
+                                          "Phone",
+                                          profile.phone,
+                                        ),
+                                        const SizedBox(height: 12),
+                                        _buildInfoCard(
+                                          Icons.location_on_outlined,
+                                          "Address",
+                                          profile.address,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              const SizedBox(height: 32),
+                              _buildSectionTitle("Verification Documents"),
+                              const SizedBox(height: 24),
+
+                              // Documents Grid - Adjusted for better fit
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: _buildDocumentCard(
+                                      profile.selfiePath,
+                                      "Profile Picture",
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: _buildDocumentCard(
+                                      profile.frontIdPath,
+                                      "ID Card Front",
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: _buildDocumentCard(
+                                      profile.backIdPath,
+                                      "ID Card Back",
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              const SizedBox(height: 32),
+                              // Compact, Left-aligned Action Buttons
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 120, // Fixed width for buttons
+                                    child: _buildActionButton(
+                                      "Approve",
+                                      const Color(0xFF22C55E),
+                                      controller.onApprove,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  SizedBox(
+                                    width: 120,
+                                    child: _buildActionButton(
+                                      "Pending",
+                                      const Color(0xFFD97706),
+                                      controller.onPending,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  SizedBox(
+                                    width: 120,
+                                    child: _buildActionButton(
+                                      "Delete",
+                                      const Color(0xFFEF4444),
+                                      controller.onRemove,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          );
-        }),
+                ),
+              );
+            }),
+          ),
+        ),
       ),
     );
   }
@@ -114,27 +236,53 @@ class PendingProfileScreenBuilder extends StatelessWidget {
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
-      style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.blueAccent),
+      style: GoogleFonts.poppins(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF1E293B),
+      ),
     );
   }
 
-  Widget _buildInfoTile(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+  Widget _buildInfoCard(IconData icon, String label, String value) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const Color(0xFFE2E8F0),
+          width: 1,
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.grey[600])),
-          const SizedBox(height: 6),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-            decoration: BoxDecoration(
-              color: Colors.blueAccent.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Text(
-              value,
-              style: GoogleFonts.poppins(fontSize: 15, color: Colors.black87),
+          Row(
+            children: [
+              Icon(
+                icon,
+                size: 20,
+                color: const Color(0xFF3B82F6),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF64748B),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFF1E293B),
             ),
           ),
         ],
@@ -142,36 +290,52 @@ class PendingProfileScreenBuilder extends StatelessWidget {
     );
   }
 
-  Widget _buildImageTile(String url, String label) {
-    return Column(
-      children: [
-        Text(label, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey[700])),
-        const SizedBox(height: 12),
-        Container(
-          width: 140,
-          height: 100,
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                spreadRadius: 1,
-                blurRadius: 6,
-                offset: Offset(0, 3),
+  Widget _buildDocumentCard(String url, String label) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const Color(0xFFE2E8F0),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Text(
+              label,
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: const Color(0xFF64748B),
               ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              url,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Icon(Icons.broken_image, color: Colors.grey, size: 50),
             ),
           ),
-        ),
-      ],
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(
+              bottom: Radius.circular(16),
+            ),
+            child: Image.network(
+              url,
+              height: 180, // Slightly reduced height
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                height: 180,
+                color: const Color(0xFFE2E8F0),
+                child: Icon(
+                  Icons.broken_image,
+                  size: 48,
+                  color: const Color(0xFF64748B),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -180,13 +344,19 @@ class PendingProfileScreenBuilder extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
-        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        elevation: 3,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        elevation: 0,
       ),
       child: Text(
         label,
-        style: GoogleFonts.poppins(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600),
+        style: GoogleFonts.poppins(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
       ),
     );
   }
