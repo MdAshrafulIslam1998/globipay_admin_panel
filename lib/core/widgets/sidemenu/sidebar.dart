@@ -113,6 +113,17 @@ class Sidebar extends StatelessWidget {
                             context.go(RoutePath.pendingProfile);
                           },
                         ),
+                         MenuTile(
+                          isSubmenu: false,
+                          isActive: currentRoute == RoutePath.notificationSetter,
+                          title: "Notification Setter",
+                          activeIconSrc: "assets/icons/apple_filled.svg",
+                          inactiveIconSrc: "assets/icons/apple_light.svg",
+                          count: 16,
+                          onPressed: () {
+                            context.go(RoutePath.notificationSetter);
+                          },
+                        ),
                       ],
                       )
                     ),

@@ -15,6 +15,7 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => DashboardController())
       ..registerFactory((c) => BasePanelController())
       ..registerFactory((c) => ActiveUsersController())
+      ..registerFactory((c) => NotificationSetterController())
       ..registerFactory((c) => PendingProfileController())
       ..registerFactory((c) => EditCoinController());
   }
