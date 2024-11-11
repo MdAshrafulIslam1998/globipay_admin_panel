@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/theme/theme.dart';
 import 'package:globipay_admin_panel/router/app_router.dart';
 import 'flavors/app_properties.dart';
-/**
- * Created by Abdullah on 10/10/24.
- */
+
 
 void main() {
   runApp(const App());
