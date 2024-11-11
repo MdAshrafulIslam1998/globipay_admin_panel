@@ -81,7 +81,7 @@ class Sidebar extends StatelessWidget {
                       ),
                       children: [
                         MenuTile(
-                          isSubmenu: true,
+                          isSubmenu: false,
                           isActive: currentRoute == RoutePath.activeUsers,
                           title: "Active Users",
                           activeIconSrc: "assets/icons/person_check_filled.svg",
@@ -92,7 +92,7 @@ class Sidebar extends StatelessWidget {
                           },
                         ),
                         MenuTile(
-                          isSubmenu: true,
+                          isSubmenu: false,
                           isActive: currentRoute == RoutePath.editCoin,
                           title: "Edit Coins",
                           activeIconSrc: "assets/icons/edit_coin_filled.svg",
@@ -100,6 +100,17 @@ class Sidebar extends StatelessWidget {
                           count: 16,
                           onPressed: () {
                             context.go(RoutePath.editCoin);
+                          },
+                        ),
+                        MenuTile(
+                          isSubmenu: false,
+                          isActive: currentRoute == RoutePath.pendingProfile,
+                          title: "Pending Profile",
+                          activeIconSrc: "assets/icons/android_filled.svg",
+                          inactiveIconSrc: "assets/icons/android_light.svg",
+                          count: 16,
+                          onPressed: () {
+                            context.go(RoutePath.pendingProfile);
                           },
                         ),
                       ],
