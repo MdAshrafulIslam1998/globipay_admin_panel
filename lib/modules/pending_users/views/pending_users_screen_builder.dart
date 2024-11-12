@@ -3,31 +3,25 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
-import 'package:globipay_admin_panel/modules/active_users_new/controller/active_users_new_controller.dart';
-import 'package:globipay_admin_panel/modules/active_users_new/table/user_new_data_pager_delegate.dart';
-import 'package:globipay_admin_panel/modules/active_users_new/table/user_new_data_source.dart';
+import 'package:globipay_admin_panel/modules/pending_users/controller/pending_users_controller.dart';
+import 'package:globipay_admin_panel/modules/pending_users/table/pending_users_data_pager_delegate.dart';
+import 'package:globipay_admin_panel/modules/pending_users/table/pending_users_data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-class ActiveUsersNewScreenBuilder extends StatefulWidget {
-  const ActiveUsersNewScreenBuilder({super.key});
+class PendingUsersScreenBuilder extends StatefulWidget {
+  const PendingUsersScreenBuilder({super.key});
 
   @override
-  State<ActiveUsersNewScreenBuilder> createState() =>
-      _ActiveUsersNewScreenBuilderState();
+  State<PendingUsersScreenBuilder> createState() =>
+      _PendingUsersScreenBuilderState();
 }
 
-
-class _ActiveUsersNewScreenBuilderState extends BaseViewState<
-    ActiveUsersNewScreenBuilder, ActiveUsersNewController> {
+class _PendingUsersScreenBuilderState
+    extends BaseViewState<PendingUsersScreenBuilder, PendingUsersController> {
   @override
   void initState() {
     controller.onInit();
     super.initState();
-  }
-
-  @override
-  PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Active Users New'));
   }
 
   @override
@@ -37,20 +31,21 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
-          elevation: 4,
+          elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Header Section
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor.withOpacity(0.1),
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
                   ),
                 ),
                 child: Row(
@@ -58,25 +53,24 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                   children: [
                     Obx(
                       () => Text(
-                        'Total Users: ${controller.totalItems}',
+                        'Total Pending Users: ${controller.totalItems}',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                     Row(
                       children: [
                         Text(
-                          'Entries per page: ',
+                          'Show entries: ',
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
@@ -106,76 +100,84 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                   ],
                 ),
               ),
+              // DataGrid
               Expanded(
                 child: Obx(
                   () => SfDataGrid(
-                    columnWidthMode: ColumnWidthMode.fill,
-                    source: UserDataSource(
+                    source: PendingUserDataSource(
                       controller.users,
                       onActionTap: (user, action) {
                         switch (action) {
-                          case 'details':
-                            print('Details action for ${user.name}');
-                            break;
-                          case 'delete':
-                            print('Delete action for ${user.name}');
-                            break;
-                          case 'message':
-                            print('Message action for ${user.name}');
+                          case 'document':
+                            print('document action for ${user.name}');
                             break;
                         }
                       },
                     ),
                     gridLinesVisibility: GridLinesVisibility.both,
                     headerGridLinesVisibility: GridLinesVisibility.both,
+                    columnWidthMode: ColumnWidthMode.fill,
                     columns: [
                       GridColumn(
-                        columnName: 'name',
-                        label: _buildHeaderCell('Full Name'),
+                        columnName: 'fullName',
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Full Name',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
                       GridColumn(
                         columnName: 'email',
-                        label: _buildHeaderCell('Email'),
-                      ),
-                      GridColumn(
-                        columnName: 'amount',
-                        label: _buildHeaderCell('Amount'),
-                      ),
-                      GridColumn(
-                        columnName: 'levelName',
-                        label: _buildHeaderCell('Level'),
-                        width: 100,
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Email',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
                       GridColumn(
                         columnName: 'date',
-                        label: _buildHeaderCell('Date'),
-                        width: 120,
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Date',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
                       GridColumn(
                         columnName: 'status',
-                        label: _buildHeaderCell('Status'),
-                        width: 100,
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Status',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
                       GridColumn(
-                        columnName: 'details',
-                        label: _buildHeaderCell('Details'),
-                        width: 80,
-                      ),
-                      GridColumn(
-                        columnName: 'delete',
-                        label: _buildHeaderCell('Delete'),
-                        width: 80,
-                      ),
-                      GridColumn(
-                        columnName: 'message',
-                        label: _buildHeaderCell('Message'),
-                        width: 80,
+                        columnName: 'document',
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Document',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
                     ],
-                    rowHeight: 50,
                   ),
                 ),
               ),
+              // Pager
               Container(
                 decoration: BoxDecoration(
                   border: Border(
@@ -186,32 +188,18 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                   ),
                 ),
                 child: Obx(
-                () => SfDataPager(
-                  delegate: UserDataPagerDelegate(controller),
-                  pageCount: max(
-                    1,
-                    (controller.totalItems.value / controller.pageSize.value).ceilToDouble(),
-                  ), // Ensure minimum pageCount is 1
+                  () => SfDataPager(
+                    delegate: PendingUserDataPagerDelegate(controller),
+                    pageCount: max(
+                      1,
+                      (controller.totalItems.value / controller.pageSize.value)
+                          .ceilToDouble(),
+                    ), // Ensure minimum pageCount is 1
+                  ),
                 ),
-              ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeaderCell(String text) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      alignment: Alignment.center,
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
-          color: Color(0xFF2C3E50),
         ),
       ),
     );
