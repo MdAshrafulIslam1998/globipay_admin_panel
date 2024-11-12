@@ -124,6 +124,17 @@ class Sidebar extends StatelessWidget {
                                 context.go(RoutePath.blockedUsers);
                               },
                             ),
+                            MenuTile(
+                              isSubmenu: false,
+                              isActive: currentRoute == RoutePath.userLevels,
+                              title: "Users Levels",
+                              activeIconSrc: "assets/icons/fire_filled.svg",
+                              inactiveIconSrc: "assets/icons/fire_light.svg",
+                              count: 16,
+                              onPressed: () {
+                                context.go(RoutePath.userLevels);
+                              },
+                            ),
                           ],
                         )),
                   ],
