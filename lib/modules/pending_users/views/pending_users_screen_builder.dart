@@ -25,6 +25,11 @@ class _PendingUsersScreenBuilderState
   }
 
   @override
+  PreferredSizeWidget? appBar() {
+    return AppBar(title: Text('Pending Users'));
+  }
+
+  @override
   Widget body(BuildContext context) {
     return Container(
       color: Colors.grey[100],

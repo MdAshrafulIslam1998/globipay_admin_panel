@@ -10,28 +10,12 @@ class PendingProfileScreenBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get screen size
     final screenSize = MediaQuery.of(context).size;
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      appBar: AppBar(
-        title: Text(
-          "Profile Verification",
-          style: GoogleFonts.poppins(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF3B82F6),
-          ),
-        ),
-        backgroundColor: const Color(0xFFF7F2FA), // #F7F2FA color applied
-        elevation: 0,
-        centerTitle: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(16),
-          ),
-        ),
-      ),
-      body: Center( // Center the content
+      appBar: appBar(), // Use the new appBar method here
+      body: Center(
+        // Center the content
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxWidth: 1200, // Maximum width for the content
@@ -230,6 +214,17 @@ class PendingProfileScreenBuilder extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  PreferredSizeWidget? appBar() {
+    return AppBar(
+      title: Text(
+        'Pending Profile',
+      ),
+      backgroundColor: const Color(0xFFF7F2FA),
+      
     );
   }
 

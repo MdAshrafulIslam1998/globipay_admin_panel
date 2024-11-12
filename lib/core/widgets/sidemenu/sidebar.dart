@@ -48,8 +48,8 @@ class Sidebar extends StatelessWidget {
                     MenuTile(
                       isActive: currentRoute == RoutePath.dashboard,
                       title: "Dashboard",
-                      activeIconSrc: "assets/icons/home_filled.svg",
-                      inactiveIconSrc: "assets/icons/home_light.svg",
+                      activeIconSrc: "assets/icons/fire_filled.svg",
+                      inactiveIconSrc: "assets/icons/fire_light.svg",
                       onPressed: () {
                         context.go(RoutePath.dashboard);
                       },
@@ -61,7 +61,7 @@ class Sidebar extends StatelessWidget {
                         ),
                         child: ExpansionTile(
                           leading: SvgPicture.asset(
-                            'assets/icons/profile_circled_filled.svg',
+                            'assets/icons/fire_light.svg',
                             height: 24,
                             width: 24,
                             colorFilter: const ColorFilter.mode(
@@ -80,24 +80,13 @@ class Sidebar extends StatelessWidget {
                           children: [
                             MenuTile(
                               isSubmenu: false,
-                              isActive: currentRoute == RoutePath.activeUsers,
-                              title: "Active Users",
-                              activeIconSrc:
-                                  "assets/icons/person_check_filled.svg",
-                              inactiveIconSrc:
-                                  "assets/icons/person_check_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.activeUsers);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
                               isActive:
                                   currentRoute == RoutePath.activeUsersNew,
-                              title: "Active Users New",
-                              activeIconSrc: "assets/icons/alarm_filled.svg",
-                              inactiveIconSrc: "assets/icons/alarm_light.svg",
+                              title: "Active Users",
+                              activeIconSrc:
+                                  "assets/icons/fire_filled.svg",
+                              inactiveIconSrc:
+                                  "assets/icons/fire_light.svg",
                               count: 16,
                               onPressed: () {
                                 context.go(RoutePath.activeUsersNew);
@@ -108,9 +97,9 @@ class Sidebar extends StatelessWidget {
                               isActive: currentRoute == RoutePath.pendingUsers,
                               title: "Pending Users",
                               activeIconSrc:
-                                  "assets/icons/basketball_filled.svg",
+                                  "assets/icons/fire_filled.svg",
                               inactiveIconSrc:
-                                  "assets/icons/basketball_light.svg",
+                                  "assets/icons/fire_light.svg",
                               count: 16,
                               onPressed: () {
                                 context.go(RoutePath.pendingUsers);
@@ -118,39 +107,14 @@ class Sidebar extends StatelessWidget {
                             ),
                             MenuTile(
                               isSubmenu: false,
-                              isActive: currentRoute == RoutePath.editCoin,
-                              title: "Edit Coins",
-                              activeIconSrc:
-                                  "assets/icons/edit_coin_filled.svg",
-                              inactiveIconSrc:
-                                  "assets/icons/edit_coin_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.editCoin);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
                               isActive:
                                   currentRoute == RoutePath.pendingProfile,
                               title: "Pending Profile",
-                              activeIconSrc: "assets/icons/android_filled.svg",
-                              inactiveIconSrc: "assets/icons/android_light.svg",
+                              activeIconSrc: "assets/icons/fire_filled.svg",
+                              inactiveIconSrc: "assets/icons/fire_light.svg",
                               count: 16,
                               onPressed: () {
                                 context.go(RoutePath.pendingProfile);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
-                              isActive:
-                                  currentRoute == RoutePath.notificationSetter,
-                              title: "Notification Setter",
-                              activeIconSrc: "assets/icons/apple_filled.svg",
-                              inactiveIconSrc: "assets/icons/apple_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.notificationSetter);
                               },
                             ),
                           ],
