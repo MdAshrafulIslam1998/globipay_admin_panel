@@ -6,6 +6,7 @@ import 'package:globipay_admin_panel/modules/pending_profile/views/pending_profi
 import 'package:globipay_admin_panel/modules/notification_setter/views/notification_setter_screen.dart';
 import 'package:globipay_admin_panel/modules/active_users_new/views/active_users_new_screen.dart';
 import 'package:globipay_admin_panel/modules/pending_users/views/pending_users_screen.dart';
+import 'package:globipay_admin_panel/modules/blocked_users/views/blocked_users_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'route_path.dart';
 
@@ -44,6 +45,10 @@ abstract class AppRoutesList {
         GoRoute(
           path: RoutePath.pendingUsers,
           builder: (context, state) => PendingUsersScreen(),
+        ),
+        GoRoute(
+          path: RoutePath.blockedUsers,
+          builder: (context, state) => BlockedUsersScreen(),
         ),
         ],
       ),

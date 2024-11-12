@@ -83,10 +83,8 @@ class Sidebar extends StatelessWidget {
                               isActive:
                                   currentRoute == RoutePath.activeUsersNew,
                               title: "Active Users",
-                              activeIconSrc:
-                                  "assets/icons/fire_filled.svg",
-                              inactiveIconSrc:
-                                  "assets/icons/fire_light.svg",
+                              activeIconSrc: "assets/icons/fire_filled.svg",
+                              inactiveIconSrc: "assets/icons/fire_light.svg",
                               count: 16,
                               onPressed: () {
                                 context.go(RoutePath.activeUsersNew);
@@ -96,10 +94,8 @@ class Sidebar extends StatelessWidget {
                               isSubmenu: false,
                               isActive: currentRoute == RoutePath.pendingUsers,
                               title: "Pending Users",
-                              activeIconSrc:
-                                  "assets/icons/fire_filled.svg",
-                              inactiveIconSrc:
-                                  "assets/icons/fire_light.svg",
+                              activeIconSrc: "assets/icons/fire_filled.svg",
+                              inactiveIconSrc: "assets/icons/fire_light.svg",
                               count: 16,
                               onPressed: () {
                                 context.go(RoutePath.pendingUsers);
@@ -115,6 +111,17 @@ class Sidebar extends StatelessWidget {
                               count: 16,
                               onPressed: () {
                                 context.go(RoutePath.pendingProfile);
+                              },
+                            ),
+                            MenuTile(
+                              isSubmenu: false,
+                              isActive: currentRoute == RoutePath.blockedUsers,
+                              title: "Blocked Users",
+                              activeIconSrc: "assets/icons/fire_filled.svg",
+                              inactiveIconSrc: "assets/icons/fire_light.svg",
+                              count: 16,
+                              onPressed: () {
+                                context.go(RoutePath.blockedUsers);
                               },
                             ),
                           ],
