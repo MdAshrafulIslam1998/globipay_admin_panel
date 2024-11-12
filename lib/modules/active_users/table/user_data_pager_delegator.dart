@@ -10,7 +10,8 @@ class UserDataPagerDelegate extends DataPagerDelegate {
   Future<bool> handlePageChange(int oldPageIndex, int newPageIndex) async {
     try {
       // Fetch new data based on the new page index
-      await userController.fetchUsers(newPageIndex + 1, userController.pageSize.value);
+      await userController.fetchUsers(
+          newPageIndex + 1, userController.pageSize.value);
       return true; // Indicate that the page change was successful
     } catch (e) {
       // Handle any error that might occur during the fetch
@@ -20,6 +21,10 @@ class UserDataPagerDelegate extends DataPagerDelegate {
 
   @override
   int get rowCount => userController.totalItems.value;
+
+  @override
+  int get pageCount =>
+      rowCount > 0 ? (rowCount / userController.pageSize.value).ceil() : 0;
 
   @override
   int get pageSize => userController.pageSize.value;
