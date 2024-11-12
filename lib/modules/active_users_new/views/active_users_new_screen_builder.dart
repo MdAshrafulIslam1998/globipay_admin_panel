@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/modules/active_users_new/controller/active_users_new_controller.dart';
@@ -15,14 +14,18 @@ class ActiveUsersNewScreenBuilder extends StatefulWidget {
       _ActiveUsersNewScreenBuilderState();
 }
 
+
 class _ActiveUsersNewScreenBuilderState extends BaseViewState<
     ActiveUsersNewScreenBuilder, ActiveUsersNewController> {
-  double datapagerHeight = 70.0;
-
   @override
   void initState() {
     controller.onInit();
     super.initState();
+  }
+
+  @override
+  PreferredSizeWidget? appBar() {
+    return AppBar(title: Text('Active Users New'));
   }
 
   @override
@@ -32,16 +35,15 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
-          elevation: 2,
+          elevation: 4,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Header Section
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor.withOpacity(0.1),
                   borderRadius: const BorderRadius.only(
@@ -52,17 +54,16 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Total Users Count
                     Obx(
                       () => Text(
                         'Total Users: ${controller.totalItems}',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
                         ),
                       ),
                     ),
-                    // Page Size Selector
                     Row(
                       children: [
                         Text(
@@ -73,7 +74,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
@@ -93,8 +94,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                                 }).toList(),
                                 onChanged: (newSize) {
                                   if (newSize != null) {
-                                    controller.pageSize.value = newSize;
-                                    controller.fetchUsers(1, newSize);
+                                    controller.updatePageSize(newSize);
                                   }
                                 },
                               )),
@@ -104,130 +104,76 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                   ],
                 ),
               ),
-              // DataGrid
               Expanded(
                 child: Obx(
-                  () => ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.7,
+                  () => SfDataGrid(
+                    columnWidthMode: ColumnWidthMode.fill,
+                    source: UserDataSource(
+                      controller.users,
+                      onActionTap: (user, action) {
+                        switch (action) {
+                          case 'details':
+                            print('Details action for ${user.name}');
+                            break;
+                          case 'delete':
+                            print('Delete action for ${user.name}');
+                            break;
+                          case 'message':
+                            print('Message action for ${user.name}');
+                            break;
+                        }
+                      },
                     ),
-                    child: SfDataGrid(
-                      gridLinesVisibility: GridLinesVisibility.both,
-                      headerGridLinesVisibility: GridLinesVisibility.both,
-                      columnWidthMode: ColumnWidthMode.fill,
-                      source: UserDataSource(
-                        controller.users,
-                        onActionTap: (user, action) {
-                          switch (action) {
-                            case 'view':
-                              // Handle view
-                              break;
-                            case 'edit':
-                              // Handle edit
-                              break;
-                            case 'message':
-                              // Handle message
-                              break;
-                          }
-                        },
+                    gridLinesVisibility: GridLinesVisibility.both,
+                    headerGridLinesVisibility: GridLinesVisibility.both,
+                    columns: [
+                      GridColumn(
+                        columnName: 'name',
+                        label: _buildHeaderCell('Full Name'),
                       ),
-                      columns: [
-                        GridColumn(
-                          columnName: 'userId',
-                          label: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'ID',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                        GridColumn(
-                          columnName: 'name',
-                          label: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Name',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                        GridColumn(
-                          columnName: 'email',
-                          label: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Email',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                        GridColumn(
-                          columnName: 'amount',
-                          label: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Amount',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                        GridColumn(
-                          columnName: 'levelName',
-                          label: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Level',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                        GridColumn(
-                          columnName: 'status',
-                          label: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Status',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                        GridColumn(
-                          columnName: 'date',
-                          label: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Date',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                        GridColumn(
-                          columnName: 'actions',
-                          width: 160,
-                          label: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Actions',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ],
-                      rowHeight: 50,
-                    ),
+                      GridColumn(
+                        columnName: 'email',
+                        label: _buildHeaderCell('Email'),
+                      ),
+                      GridColumn(
+                        columnName: 'amount',
+                        label: _buildHeaderCell('Amount'),
+                      ),
+                      GridColumn(
+                        columnName: 'levelName',
+                        label: _buildHeaderCell('Level'),
+                        width: 100,
+                      ),
+                      GridColumn(
+                        columnName: 'date',
+                        label: _buildHeaderCell('Date'),
+                        width: 120,
+                      ),
+                      GridColumn(
+                        columnName: 'status',
+                        label: _buildHeaderCell('Status'),
+                        width: 100,
+                      ),
+                      GridColumn(
+                        columnName: 'details',
+                        label: _buildHeaderCell('Details'),
+                        width: 80,
+                      ),
+                      GridColumn(
+                        columnName: 'delete',
+                        label: _buildHeaderCell('Delete'),
+                        width: 80,
+                      ),
+                      GridColumn(
+                        columnName: 'message',
+                        label: _buildHeaderCell('Message'),
+                        width: 80,
+                      ),
+                    ],
+                    rowHeight: 50,
                   ),
                 ),
               ),
-              // Pager
               Container(
                 decoration: BoxDecoration(
                   border: Border(
@@ -248,6 +194,21 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeaderCell(String text) {
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          color: Color(0xFF2C3E50),
         ),
       ),
     );
