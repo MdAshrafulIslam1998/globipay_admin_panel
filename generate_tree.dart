@@ -38,7 +38,7 @@ void main() {
 
   // List of folders to ignore
     // List of folders to ignore
-  final List<String> ignoreFolders = ['build', '.git', 'node_modules','.github','.vscode','.dart_tool','android','ios','linux','macos','web'];
+  final List<String> ignoreFolders = ['build', '.git', 'node_modules','.github','.vscode','.dart_tool','android','ios','linux','macos','web','assets'];
 
   // Write project structure header
   buffer.writeln('Project Structure');
