@@ -4,6 +4,7 @@ import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/contro
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/controller/dashboard_controller.dart';
 import 'package:globipay_admin_panel/modules/test_controller.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:globipay_admin_panel/modules/media_section/automated_reply/controller/automated_reply_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promo_banner_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/create_category/controller/create_category_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_amount/controller/user_amount_controller.dart';
@@ -39,6 +40,7 @@ abstract class AppInjector extends Injector {
   @Register.factory(DashboardController)
   @Register.factory(BasePanelController)
   @Register.factory(ActiveUsersController)
+  @Register.factory(AutomatedReplyController)
   @Register.factory(PromoBannerController)
   @Register.factory(CreateCategoryController)
   @Register.factory(TransactionHistoryController)

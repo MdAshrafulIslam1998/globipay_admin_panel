@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PromoBannerController extends GetxController {
+class PromoBannerController extends BaseController {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController bodyController = TextEditingController();
 

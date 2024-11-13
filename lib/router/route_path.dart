@@ -1,6 +1,7 @@
 abstract class RoutePath {
   static const String dashboard = _RoutePath._dashboard;
   static const String activeUsers = _RoutePath._activeUsers;
+  static const String automatedReply = _RoutePath._automatedReply;
   static const String promoBanner = _RoutePath._promoBanner;
   static const String createCategory = _RoutePath._createCategory;
   static const String transHistory = _RoutePath._transHistory;
@@ -17,6 +18,7 @@ abstract class RoutePath {
 class _RoutePath {
   static const String _dashboard = '/';
   static const String _activeUsers = '/activeUsers';
+  static const String _automatedReply = '/automatedReply';
   static const String _promoBanner = '/promoBanner';
   static const String _createCategory = '/createCategory';
   static const String _transHistory = '/transHistory';
