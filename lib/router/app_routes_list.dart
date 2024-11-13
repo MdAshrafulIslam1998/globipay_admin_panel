@@ -12,6 +12,7 @@ import 'package:globipay_admin_panel/modules/users_section/blocked_users/views/b
 import 'package:globipay_admin_panel/modules/users_section/user_levels/views/user_levels_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_amount/views/user_amount_screen.dart';
 import 'package:globipay_admin_panel/modules/amount_section/create_category/views/create_category_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/promo_banner_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'route_path.dart';
 
@@ -70,6 +71,10 @@ abstract class AppRoutesList {
         GoRoute(
           path: RoutePath.createCategory,
           builder: (context, state) => CreateCategoryScreen(),
+        ),
+        GoRoute(
+          path: RoutePath.promoBanner,
+          builder: (context, state) => PromoBannerScreen(),
         ),
         ],
       ),
