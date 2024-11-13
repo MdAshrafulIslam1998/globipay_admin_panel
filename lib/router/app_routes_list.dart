@@ -8,6 +8,7 @@ import 'package:globipay_admin_panel/modules/active_users_new/views/active_users
 import 'package:globipay_admin_panel/modules/pending_users/views/pending_users_screen.dart';
 import 'package:globipay_admin_panel/modules/blocked_users/views/blocked_users_screen.dart';
 import 'package:globipay_admin_panel/modules/user_levels/views/user_levels_screen.dart';
+import 'package:globipay_admin_panel/modules/user_amount/views/user_amount_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'route_path.dart';
 
@@ -54,6 +55,10 @@ abstract class AppRoutesList {
         GoRoute(
           path: RoutePath.userLevels,
           builder: (context, state) => UserLevelsScreen(),
+        ),
+        GoRoute(
+          path: RoutePath.userAmount,
+          builder: (context, state) => UserAmountScreen(),
         ),
         ],
       ),

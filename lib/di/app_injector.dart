@@ -3,6 +3,7 @@ import 'package:globipay_admin_panel/modules/base_panel/controller/base_panel_co
 import 'package:globipay_admin_panel/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:globipay_admin_panel/modules/test_controller.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:globipay_admin_panel/modules/user_amount/controller/user_amount_controller.dart';
 import 'package:globipay_admin_panel/modules/user_levels/controller/user_levels_controller.dart';
 import 'package:globipay_admin_panel/modules/blocked_users/controller/blocked_users_controller.dart';
 import 'package:globipay_admin_panel/modules/pending_users/controller/pending_users_controller.dart';
@@ -35,6 +36,7 @@ abstract class AppInjector extends Injector {
   @Register.factory(DashboardController)
   @Register.factory(BasePanelController)
   @Register.factory(ActiveUsersController)
+  @Register.factory(UserAmountController)
   @Register.factory(UserLevelsController)
   @Register.factory(BlockedUsersController)
   @Register.factory(PendingUsersController)
