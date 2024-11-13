@@ -221,7 +221,8 @@ class Sidebar extends StatelessWidget {
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.notificationSetter,
+                            isActive:
+                                currentRoute == RoutePath.notificationSetter,
                             title: "Notification Setter",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
@@ -250,6 +251,17 @@ class Sidebar extends StatelessWidget {
                             count: 16,
                             onPressed: () {
                               context.go(RoutePath.automatedReply);
+                            },
+                          ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.aboutUs,
+                            title: "About Us",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.aboutUs);
                             },
                           ),
                         ],

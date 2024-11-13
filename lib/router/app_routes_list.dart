@@ -14,6 +14,7 @@ import 'package:globipay_admin_panel/modules/users_section/user_amount/views/use
 import 'package:globipay_admin_panel/modules/amount_section/create_category/views/create_category_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/promo_banner_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/automated_reply/views/automated_reply_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/about_us/views/about_us_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'route_path.dart';
 
@@ -80,6 +81,10 @@ abstract class AppRoutesList {
         GoRoute(
           path: RoutePath.automatedReply,
           builder: (context, state) => AutomatedReplyScreen(),
+        ),
+        GoRoute(
+          path: RoutePath.aboutUs,
+          builder: (context, state) => AboutUsScreen(),
         ),
         ],
       ),
