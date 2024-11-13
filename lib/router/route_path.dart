@@ -1,6 +1,8 @@
 abstract class RoutePath {
   static const String dashboard = _RoutePath._dashboard;
   static const String activeUsers = _RoutePath._activeUsers;
+  static const String createCategory = _RoutePath._createCategory;
+  static const String transHistory = _RoutePath._transHistory;
   static const String userAmount = _RoutePath._userAmount;
   static const String userLevels = _RoutePath._userLevels;
   static const String blockedUsers = _RoutePath._blockedUsers;
@@ -14,6 +16,8 @@ abstract class RoutePath {
 class _RoutePath {
   static const String _dashboard = '/';
   static const String _activeUsers = '/activeUsers';
+  static const String _createCategory = '/createCategory';
+  static const String _transHistory = '/transHistory';
   static const String _userAmount = '/userAmount';
   static const String _userLevels = '/userLevels';
   static const String _blockedUsers = '/blockedUsers';

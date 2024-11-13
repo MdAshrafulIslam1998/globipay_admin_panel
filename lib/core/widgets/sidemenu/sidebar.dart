@@ -146,6 +146,28 @@ class Sidebar extends StatelessWidget {
                                 context.go(RoutePath.userAmount);
                               },
                             ),
+                            MenuTile(
+                              isSubmenu: false,
+                              isActive: currentRoute == RoutePath.transHistory,
+                              title: "Transaction History",
+                              activeIconSrc: "assets/icons/fire_filled.svg",
+                              inactiveIconSrc: "assets/icons/fire_light.svg",
+                              count: 16,
+                              onPressed: () {
+                                context.go(RoutePath.transHistory);
+                              },
+                            ),
+                            MenuTile(
+                              isSubmenu: false,
+                              isActive: currentRoute == RoutePath.createCategory,
+                              title: "Create Category",
+                              activeIconSrc: "assets/icons/fire_filled.svg",
+                              inactiveIconSrc: "assets/icons/fire_light.svg",
+                              count: 16,
+                              onPressed: () {
+                                context.go(RoutePath.createCategory);
+                              },
+                            ),
                           ],
                         )),
                   ],

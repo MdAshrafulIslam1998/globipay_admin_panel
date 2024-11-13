@@ -15,6 +15,8 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => DashboardController())
       ..registerFactory((c) => BasePanelController())
       ..registerFactory((c) => ActiveUsersController())
+      ..registerFactory((c) => CreateCategoryController())
+      ..registerFactory((c) => TransactionHistoryController())
       ..registerFactory((c) => UserAmountController())
       ..registerFactory((c) => UserLevelsController())
       ..registerFactory((c) => BlockedUsersController())

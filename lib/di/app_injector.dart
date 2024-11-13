@@ -1,16 +1,18 @@
-import 'package:globipay_admin_panel/modules/active_users/controller/active_users_controller.dart';
-import 'package:globipay_admin_panel/modules/base_panel/controller/base_panel_controller.dart';
-import 'package:globipay_admin_panel/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:globipay_admin_panel/modules/amount_section/trans_history/controller/trans_history_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users/controller/active_users_controller.dart';
+import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/controller/base_panel_controller.dart';
+import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/controller/dashboard_controller.dart';
 import 'package:globipay_admin_panel/modules/test_controller.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:globipay_admin_panel/modules/user_amount/controller/user_amount_controller.dart';
-import 'package:globipay_admin_panel/modules/user_levels/controller/user_levels_controller.dart';
-import 'package:globipay_admin_panel/modules/blocked_users/controller/blocked_users_controller.dart';
-import 'package:globipay_admin_panel/modules/pending_users/controller/pending_users_controller.dart';
-import 'package:globipay_admin_panel/modules/active_users_new/controller/active_users_new_controller.dart';
-import 'package:globipay_admin_panel/modules/notification_setter/controller/notification_setter_controller.dart';
-import 'package:globipay_admin_panel/modules/pending_profile/controller/pending_profile_controller.dart';
-import 'package:globipay_admin_panel/modules/edit_coin/controller/edit_coin_controller.dart';
+import 'package:globipay_admin_panel/modules/amount_section/create_category/controller/create_category_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/user_amount/controller/user_amount_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/user_levels/controller/user_levels_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/blocked_users/controller/blocked_users_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/pending_users/controller/pending_users_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
+import 'package:globipay_admin_panel/modules/media_section/notification_setter/controller/notification_setter_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/pending_profile/controller/pending_profile_controller.dart';
+import 'package:globipay_admin_panel/modules/amount_section/edit_coin/controller/edit_coin_controller.dart';
 import '../core/di/injector.dart';
 
 /**
@@ -36,6 +38,8 @@ abstract class AppInjector extends Injector {
   @Register.factory(DashboardController)
   @Register.factory(BasePanelController)
   @Register.factory(ActiveUsersController)
+  @Register.factory(CreateCategoryController)
+  @Register.factory(TransactionHistoryController)
   @Register.factory(UserAmountController)
   @Register.factory(UserLevelsController)
   @Register.factory(BlockedUsersController)

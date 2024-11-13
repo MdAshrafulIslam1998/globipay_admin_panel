@@ -1,14 +1,17 @@
-import 'package:globipay_admin_panel/modules/base_panel/views/base_panel_screen.dart';
-import 'package:globipay_admin_panel/modules/dashboard/views/dashboard_screen.dart';
-import 'package:globipay_admin_panel/modules/active_users/views/active_users_screen.dart';
-import 'package:globipay_admin_panel/modules/edit_coin/views/edit_coin_screen.dart';
-import 'package:globipay_admin_panel/modules/pending_profile/views/pending_profile_screen.dart';
-import 'package:globipay_admin_panel/modules/notification_setter/views/notification_setter_screen.dart';
-import 'package:globipay_admin_panel/modules/active_users_new/views/active_users_new_screen.dart';
-import 'package:globipay_admin_panel/modules/pending_users/views/pending_users_screen.dart';
-import 'package:globipay_admin_panel/modules/blocked_users/views/blocked_users_screen.dart';
-import 'package:globipay_admin_panel/modules/user_levels/views/user_levels_screen.dart';
-import 'package:globipay_admin_panel/modules/user_amount/views/user_amount_screen.dart';
+import 'package:get/get.dart';
+import 'package:globipay_admin_panel/modules/amount_section/trans_history/views/trans_history_screen.dart';
+import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/views/base_panel_screen.dart';
+import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/views/dashboard_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users/views/active_users_screen.dart';
+import 'package:globipay_admin_panel/modules/amount_section/edit_coin/views/edit_coin_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/pending_profile/views/pending_profile_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/notification_setter/views/notification_setter_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users_new/views/active_users_new_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/pending_users/views/pending_users_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/blocked_users/views/blocked_users_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/user_levels/views/user_levels_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/user_amount/views/user_amount_screen.dart';
+import 'package:globipay_admin_panel/modules/amount_section/create_category/views/create_category_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'route_path.dart';
 
@@ -59,6 +62,14 @@ abstract class AppRoutesList {
         GoRoute(
           path: RoutePath.userAmount,
           builder: (context, state) => UserAmountScreen(),
+        ),
+        GoRoute(
+          path: RoutePath.transHistory,
+          builder: (context, state) => TransactionHistoryScreen(),
+        ),
+        GoRoute(
+          path: RoutePath.createCategory,
+          builder: (context, state) => CreateCategoryScreen(),
         ),
         ],
       ),
