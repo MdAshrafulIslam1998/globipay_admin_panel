@@ -48,128 +48,228 @@ class Sidebar extends StatelessWidget {
                     MenuTile(
                       isActive: currentRoute == RoutePath.dashboard,
                       title: "Dashboard",
-                      activeIconSrc: "assets/icons/fire_filled.svg",
-                      inactiveIconSrc: "assets/icons/fire_light.svg",
+                      activeIconSrc: "assets/icons/bulb_filled.svg",
+                      inactiveIconSrc: "assets/icons/bulb_light.svg",
                       onPressed: () {
                         context.go(RoutePath.dashboard);
                       },
                     ),
                     // Users Section with ExpansionTile
                     Theme(
-                        data: Theme.of(context).copyWith(
-                          dividerColor: Colors.transparent,
+                      data: Theme.of(context).copyWith(
+                        dividerColor: Colors.transparent,
+                      ),
+                      child: ExpansionTile(
+                        leading: SvgPicture.asset(
+                          'assets/icons/bulb_filled.svg',
+                          height: 24,
+                          width: 24,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.iconBlack,
+                            BlendMode.srcIn,
+                          ),
                         ),
-                        child: ExpansionTile(
-                          leading: SvgPicture.asset(
-                            'assets/icons/fire_light.svg',
-                            height: 24,
-                            width: 24,
-                            colorFilter: const ColorFilter.mode(
-                              AppColors.iconBlack,
-                              BlendMode.srcIn,
-                            ),
+                        title: Text(
+                          "Users",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color,
                           ),
-                          title: Text(
-                            "Users",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color:
-                                  Theme.of(context).textTheme.bodyMedium!.color,
-                            ),
+                        ),
+                        children: [
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.activeUsersNew,
+                            title: "Active Users",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.activeUsersNew);
+                            },
                           ),
-                          children: [
-                            MenuTile(
-                              isSubmenu: false,
-                              isActive:
-                                  currentRoute == RoutePath.activeUsersNew,
-                              title: "Active Users",
-                              activeIconSrc: "assets/icons/fire_filled.svg",
-                              inactiveIconSrc: "assets/icons/fire_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.activeUsersNew);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
-                              isActive: currentRoute == RoutePath.pendingUsers,
-                              title: "Pending Users",
-                              activeIconSrc: "assets/icons/fire_filled.svg",
-                              inactiveIconSrc: "assets/icons/fire_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.pendingUsers);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
-                              isActive:
-                                  currentRoute == RoutePath.pendingProfile,
-                              title: "Pending Profile",
-                              activeIconSrc: "assets/icons/fire_filled.svg",
-                              inactiveIconSrc: "assets/icons/fire_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.pendingProfile);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
-                              isActive: currentRoute == RoutePath.blockedUsers,
-                              title: "Blocked Users",
-                              activeIconSrc: "assets/icons/fire_filled.svg",
-                              inactiveIconSrc: "assets/icons/fire_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.blockedUsers);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
-                              isActive: currentRoute == RoutePath.userLevels,
-                              title: "Users Levels",
-                              activeIconSrc: "assets/icons/fire_filled.svg",
-                              inactiveIconSrc: "assets/icons/fire_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.userLevels);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
-                              isActive: currentRoute == RoutePath.userAmount,
-                              title: "User Amount",
-                              activeIconSrc: "assets/icons/fire_filled.svg",
-                              inactiveIconSrc: "assets/icons/fire_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.userAmount);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
-                              isActive: currentRoute == RoutePath.transHistory,
-                              title: "Transaction History",
-                              activeIconSrc: "assets/icons/fire_filled.svg",
-                              inactiveIconSrc: "assets/icons/fire_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.transHistory);
-                              },
-                            ),
-                            MenuTile(
-                              isSubmenu: false,
-                              isActive: currentRoute == RoutePath.createCategory,
-                              title: "Create Category",
-                              activeIconSrc: "assets/icons/fire_filled.svg",
-                              inactiveIconSrc: "assets/icons/fire_light.svg",
-                              count: 16,
-                              onPressed: () {
-                                context.go(RoutePath.createCategory);
-                              },
-                            ),
-                          ],
-                        )),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.pendingUsers,
+                            title: "Pending Users",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.pendingUsers);
+                            },
+                          ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.pendingProfile,
+                            title: "Pending Profile",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.pendingProfile);
+                            },
+                          ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.blockedUsers,
+                            title: "Blocked Users",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.blockedUsers);
+                            },
+                          ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.userLevels,
+                            title: "Users Levels",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.userLevels);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Amount Section with ExpansionTile
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        dividerColor: Colors.transparent,
+                      ),
+                      child: ExpansionTile(
+                        leading: SvgPicture.asset(
+                          'assets/icons/bulb_filled.svg',
+                          height: 24,
+                          width: 24,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.iconBlack,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        title: Text(
+                          "Amount",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color,
+                          ),
+                        ),
+                        children: [
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.userAmount,
+                            title: "User Amount",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.userAmount);
+                            },
+                          ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.transHistory,
+                            title: "Transaction History",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.transHistory);
+                            },
+                          ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.createCategory,
+                            title: "Create Category",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.createCategory);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        dividerColor: Colors.transparent,
+                      ),
+                      child: ExpansionTile(
+                        leading: SvgPicture.asset(
+                          'assets/icons/bulb_filled.svg',
+                          height: 24,
+                          width: 24,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.iconBlack,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        title: Text(
+                          "Media",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color,
+                          ),
+                        ),
+                        children: [
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.notificationSetter,
+                            title: "Notification Setter",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.notificationSetter);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        dividerColor: Colors.transparent,
+                      ),
+                      child: ExpansionTile(
+                        leading: SvgPicture.asset(
+                          'assets/icons/bulb_filled.svg',
+                          height: 24,
+                          width: 24,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.iconBlack,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        title: Text(
+                          "Staff",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color,
+                          ),
+                        ),
+                        children: [
+                          // MenuTile(
+                          //   isSubmenu: false,
+                          //   isActive: currentRoute == RoutePath.editCoin,
+                          //   title: "Edit Coin",
+                          //   activeIconSrc: "assets/icons/fire_filled.svg",
+                          //   inactiveIconSrc: "assets/icons/fire_light.svg",
+                          //   count: 16,
+                          //   onPressed: () {
+                          //     context.go(RoutePath.editCoin);
+                          //   },
+                          // ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
