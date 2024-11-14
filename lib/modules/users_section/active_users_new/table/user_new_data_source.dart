@@ -14,19 +14,24 @@ class UserDataSource extends DataGridSource {
   List<DataGridRow> _dataGridRows = [];
 
   void buildDataGridRows() {
-    _dataGridRows = users.map((user) => DataGridRow(cells: [
-          DataGridCell<String>(columnName: 'name', value: user.name),
-          DataGridCell<String>(columnName: 'email', value: user.email),
-          DataGridCell<double>(columnName: 'amount', value: user.amount),
-          DataGridCell<String>(columnName: 'levelName', value: user.levelName),
-          DataGridCell<String>(
-              columnName: 'date',
-              value: DateFormat('dd-MM-yyyy').format(user.date)),
-          DataGridCell<String>(columnName: 'status', value: user.status),
-          DataGridCell<User>(columnName: 'details', value: user),
-          DataGridCell<User>(columnName: 'delete', value: user),
-          DataGridCell<User>(columnName: 'message', value: user),
-        ])).toList();
+    _dataGridRows = users
+        .map((user) => DataGridRow(cells: [
+              DataGridCell<String>(columnName: 'name', value: user.name),
+              DataGridCell<String>(columnName: 'email', value: user.email),
+              DataGridCell<double>(columnName: 'primary', value: user.primary),
+              DataGridCell<double>(
+                  columnName: 'secondary', value: user.secondary),
+              DataGridCell<String>(
+                  columnName: 'levelName', value: user.levelName),
+              DataGridCell<String>(
+                  columnName: 'date',
+                  value: DateFormat('dd-MM-yyyy').format(user.date)),
+              DataGridCell<String>(columnName: 'status', value: user.status),
+              DataGridCell<User>(columnName: 'details', value: user),
+              DataGridCell<User>(columnName: 'delete', value: user),
+              DataGridCell<User>(columnName: 'message', value: user),
+            ]))
+        .toList();
   }
 
   @override
@@ -62,7 +67,8 @@ class UserDataSource extends DataGridSource {
             Colors.blue,
             Icons.visibility,
             () {
-              print('Details button clicked for user: ${(cell.value as User).name}');
+              print(
+                  'Details button clicked for user: ${(cell.value as User).name}');
               onActionTap?.call(cell.value as User, 'details');
             },
           ),
@@ -74,7 +80,8 @@ class UserDataSource extends DataGridSource {
             Colors.red,
             Icons.delete,
             () {
-              print('Delete button clicked for user: ${(cell.value as User).name}');
+              print(
+                  'Delete button clicked for user: ${(cell.value as User).name}');
               onActionTap?.call(cell.value as User, 'delete');
             },
           ),
@@ -86,21 +93,36 @@ class UserDataSource extends DataGridSource {
             Colors.orange,
             Icons.message,
             () {
-              print('Message button clicked for user: ${(cell.value as User).name}');
+              print(
+                  'Message button clicked for user: ${(cell.value as User).name}');
               onActionTap?.call(cell.value as User, 'message');
             },
           ),
         );
-      } else if (cell.columnName == 'amount') {
+      } else if (cell.columnName == 'primary') {
         return Container(
           padding: const EdgeInsets.all(8.0),
           alignment: Alignment.center,
           child: Text(
-            '\$${cell.value.toStringAsFixed(2)}',
+            '\$ ${cell.value.toStringAsFixed(2)}',
             style: const TextStyle(
               fontFamily: 'Roboto',
               fontSize: 14,
               color: Colors.green,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        );
+      } else if (cell.columnName == 'secondary') {
+        return Container(
+          padding: const EdgeInsets.all(8.0),
+          alignment: Alignment.center,
+          child: Text(
+            '\$ ${cell.value.toStringAsFixed(2)}',
+            style: const TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 14,
+              color: Colors.blue,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -112,17 +134,13 @@ class UserDataSource extends DataGridSource {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: cell.value.toString().toLowerCase() == 'active'
-                  ? Colors.green.withOpacity(0.1)
-                  : Colors.red.withOpacity(0.1),
+              color: Colors.green.withOpacity(0.1), // Light green background
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
               cell.value.toString(),
               style: TextStyle(
-                color: cell.value.toString().toLowerCase() == 'active'
-                    ? Colors.green
-                    : Colors.red,
+                color: Colors.green, // Always green text
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
               ),

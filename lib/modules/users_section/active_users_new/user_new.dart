@@ -2,7 +2,8 @@ class User {
   final String userId;
   final String name;
   final String email;
-  final double amount;
+  final double primary;
+  final double secondary;
   final int levelId;
   final String levelName;
   final String status;
@@ -12,7 +13,8 @@ class User {
     required this.userId,
     required this.name,
     required this.email,
-    required this.amount,
+    required this.primary,
+    required this.secondary,
     required this.levelId,
     required this.levelName,
     required this.status,
@@ -24,7 +26,8 @@ class User {
       userId: json['user_id'],
       name: json['name'],
       email: json['email'],
-      amount: json['amount'],
+      primary: json['primary'],
+      secondary: json['secondary'],
       levelId: json['level_id'],
       levelName: json['level_name'],
       status: json['status'],

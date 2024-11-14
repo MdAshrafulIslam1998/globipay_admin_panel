@@ -1,8 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users_new/user_api_service.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/user_new.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/user_new_response_model.dart';
-
 
 class ActiveUsersNewController extends BaseController {
   var users = <User>[].obs;
@@ -11,63 +11,36 @@ class ActiveUsersNewController extends BaseController {
   var pageSize = 10.obs;
   var isLoading = false.obs;
 
+  final UserApiService _apiService = UserApiService();
+
   Future<void> fetchUsers(int page, int limit) async {
+    print("Fetching users with page: $page, limit: $limit");
     try {
       isLoading.value = true;
+      var userResponse = await _apiService.fetchUsers(page, limit);
 
-      // Simulated delay to mimic an API call
-      await Future.delayed(const Duration(seconds: 1));
-
-      // Mock response data
-      var mockResponse = {
-        "responseCode": "S100000",
-        "responseMessage": "User list fetched successfully",
-        "data": {
-          "users": [
-            {
-              "user_id": "1a2b3c4d-5678-90ef-gh12-3456789abcd",
-              "name": "Rajesh Mojumder",
-              "email": "rajeshmojumder0@gmail.com",
-              "amount": 300.00,
-              "level_id": 2,
-              "level_name": "level 2",
-              "status": "Active",
-              "date": "2024-09-09T03:04:15.000Z"
-            },
-            {
-              "user_id": "2b3c4d5e-6789-01fg-hi23-4567890bcde",
-              "name": "Arzan Hosen",
-              "email": "arzanhosen04@gmail.com",
-              "amount": 900.00,
-              "level_id": 13,
-              "level_name": "level 13",
-              "status": "Active",
-              "date": "2024-09-05T03:50:52.000Z"
-            },
-          ],
-          "pagination": {
-            "total": 20,
-            "total_pages": 1,
-            "current_page": 1,
-            "limit": 5
-          }
-        }
-      };
-
-      var userResponse = UserResponse.fromJson(mockResponse);
       if (userResponse != null) {
+        print(
+            "Users fetched successfully. Total users received: ${userResponse.users.length}");
         users.assignAll(userResponse.users);
         totalItems.value = userResponse.pagination.total;
         currentPage.value = userResponse.pagination.currentPage;
+      } else {
+        print("API call returned null response.");
       }
     } catch (e) {
-      print("Error fetching users: $e");
+      print("Error fetching users: ${e.toString()}");
+      if (e is DioError) {
+        print("DioError type: ${e.type}, message: ${e.message}");
+      }
     } finally {
       isLoading.value = false;
+      print("Loading state is now ${isLoading.value}");
     }
   }
 
   void updatePageSize(int newSize) {
+    print("Updating page size to $newSize and fetching users from page 1");
     pageSize.value = newSize;
     fetchUsers(1, newSize);
   }
@@ -75,6 +48,8 @@ class ActiveUsersNewController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    print(
+        "Controller initialized. Fetching users for page ${currentPage.value} with page size ${pageSize.value}");
     fetchUsers(currentPage.value, pageSize.value);
   }
 }

@@ -138,8 +138,12 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                         label: _buildHeaderCell('Email'),
                       ),
                       GridColumn(
-                        columnName: 'amount',
-                        label: _buildHeaderCell('Amount'),
+                        columnName: 'primary',
+                        label: _buildHeaderCell('Primary'),
+                      ),
+                      GridColumn(
+                        columnName: 'secondary',
+                        label: _buildHeaderCell('Secondary'),
                       ),
                       GridColumn(
                         columnName: 'levelName',
