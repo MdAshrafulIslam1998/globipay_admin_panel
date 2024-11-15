@@ -1,6 +1,7 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/blocked_users/blocked_user.dart';
+import 'package:globipay_admin_panel/modules/users_section/blocked_users/blocked_user_api_service.dart';
 import 'package:globipay_admin_panel/modules/users_section/blocked_users/blocked_user_response.dart';
 
 class BlockedUsersController extends BaseController {
@@ -10,62 +11,35 @@ class BlockedUsersController extends BaseController {
   var pageSize = 10.obs;
   var isLoading = false.obs;
 
+  final BlockedUserApiService _apiService = BlockedUserApiService();
+
   Future<void> fetchUsers(int page, int limit) async {
+    print("🔴::Fetching Blocked users::🔴");
+    print("🔻api/user/blockedusersweb");
+    print("🔻Page: $page, Limit: $limit");
+
     try {
       isLoading.value = true;
+      BlockedUserResponse? userResponse =
+          await _apiService.fetchBlockedUsers(page, limit);
 
-      // Mock response data
-      var mockResponse = {
-        "responseCode": "S100000",
-        "responseMessage": "User list fetched successfully",
-        "data": {
-          "users": [
-            {
-              "user_id": "8f9a0b1c-2345-67de-8901-abcdef234567",
-              "name": "Erfder",
-              "email": "sdadasd@gmail.com",
-              "amount": 150.00,
-              "level_id": 3,
-              "level_name": "level 3",
-              "status": "Blocked",
-              "date": "2024-09-09T03:04:15.000Z"
-            },
-            {
-              "user_id": "9b0c1d2e-3456-78ef-9012-bcdef3456789",
-              "name": "Jaamal",
-              "email": "ardsddsfdasden04@gmail.com",
-              "amount": 400.00,
-              "level_id": 5,
-              "level_name": "level 5",
-              "status": "Blocked",
-              "date": "2024-09-05T03:50:52.000Z"
-            }
-          ],
-          "pagination": {
-            "total": 2,
-            "total_pages": 1,
-            "current_page": 1,
-            "limit": 10
-          }
-        }
-      };
-
-      var userResponse = BlockedUserResponse.fromJson(mockResponse);
-
-      // Ensure we have valid data
-      if (userResponse.users.isNotEmpty) {
+      if (userResponse != null && userResponse.users.isNotEmpty) {
         users.assignAll(userResponse.users);
         totalItems.value = userResponse.pagination.total;
         currentPage.value = userResponse.pagination.currentPage;
+
+        // Log user count and names
+        print("🔻Number of users fetched: ${userResponse.users.length}");
+        print("🔻Fetched user names:");
+        userResponse.users.forEach((user) => print("- ${user.name}"));
       } else {
-        // Handle empty response
         users.clear();
         totalItems.value = 0;
         currentPage.value = 1;
+        print("🔻No users found in response.");
       }
     } catch (e) {
-      print("Error fetching blocked users: $e");
-      // Handle error state
+      print("🔻Error fetching blocked users: $e");
       users.clear();
       totalItems.value = 0;
       currentPage.value = 1;

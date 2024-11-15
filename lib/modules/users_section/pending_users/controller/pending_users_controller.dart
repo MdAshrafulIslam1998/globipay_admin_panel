@@ -1,6 +1,7 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/pending_user.dart';
+import 'package:globipay_admin_panel/modules/users_section/pending_users/pending_user_api_service.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/pending_user_response.dart';
 
 class PendingUsersController extends BaseController {
@@ -10,63 +11,36 @@ class PendingUsersController extends BaseController {
   var pageSize = 10.obs;
   var isLoading = false.obs;
 
+  final PendingUserApiService _apiService = PendingUserApiService();
+
   Future<void> fetchUsers(int page, int limit) async {
+
+    print("🔴::Fetching Pending users::🔴");
+    print("🔻api/user/pendingusersweb");
+    print("🔻Page: $page, Limit: $limit");
+
     try {
       isLoading.value = true;
+      PendingUserResponse? userResponse =
+          await _apiService.fetchPendingUsers(page, limit);
 
-      // Mock response data
-      var mockResponse = {
-        "responseCode": "S100000",
-        "responseMessage": "User list fetched successfully",
-        "data": {
-          "users": [
-            {
-              "user_id": "5f6a7b8c-1234-56de-7890-abcdef123456",
-              "name": "Jamell Katebin",
-              "email": "tofayel.officialsdfsl1@gmail.com",
-              "amount": 250.00,
-              "level_id": 4,
-              "level_name": "level 4",
-              "status": "Pending",
-              "date": "2024-09-04T19:56:44.000Z"
-            },
-            {
-              "user_id": "6b7c8d9e-2345-67ef-8901-bcdef2345678",
-              "name": "Mahin Rahman",
-              "email": "mahin.rahman@example.com",
-              "amount": 500.00,
-              "level_id": 7,
-              "level_name": "level 7",
-              "status": "Pending",
-              "date": "2024-09-05T14:20:30.000Z"
-            }
-          ],
-          "pagination": {
-            "total": 2,
-            "total_pages": 1,
-            "current_page": page,
-            "limit": limit
-          }
-        }
-      };
-
-      var userResponse = PendingUserResponse.fromJson(mockResponse);
-      
-      // Ensure we have valid data
-      if (userResponse.users.isNotEmpty) {
+      if (userResponse != null && userResponse.users.isNotEmpty) {
         users.assignAll(userResponse.users);
         totalItems.value = userResponse.pagination.total;
         currentPage.value = userResponse.pagination.currentPage;
+
+        // Log user count and names
+        print("🔻Number of users fetched: ${userResponse.users.length}");
+        print("🔻Fetched user names:");
+        userResponse.users.forEach((user) => print("- ${user.name}"));
       } else {
-        // Handle empty response
         users.clear();
         totalItems.value = 0;
         currentPage.value = 1;
+        print("🔻No users found in response.");
       }
-      
     } catch (e) {
-      print("Error fetching pending users: $e");
-      // Handle error state
+      print("🔻Error fetching pending users: $e");
       users.clear();
       totalItems.value = 0;
       currentPage.value = 1;
