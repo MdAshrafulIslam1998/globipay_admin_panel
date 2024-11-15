@@ -9,7 +9,7 @@ class UserLevelDataPagerDelegate extends DataPagerDelegate {
   @override
   Future<bool> handlePageChange(int oldPageIndex, int newPageIndex) async {
     try {
-      await userController.fetchUsers(newPageIndex + 1, userController.pageSize.value);
+      await userController.fetchUsersLevel(newPageIndex + 1, userController.pageSize.value);
       return true;
     } catch (e) {
       return false;

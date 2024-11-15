@@ -14,20 +14,24 @@ class UserLevelDataSource extends DataGridSource {
   List<DataGridRow> _dataGridRows = [];
 
   void buildDataGridRows() {
-    _dataGridRows = users.map((user) => DataGridRow(cells: [
-          DataGridCell<String>(columnName: 'name', value: user.name),
-          DataGridCell<String>(columnName: 'email', value: user.email),
-          DataGridCell<double>(columnName: 'amount', value: user.amount),
-          DataGridCell<String>(columnName: 'level', value: user.levelName),
-          DataGridCell<String>(
-            columnName: 'date',
-            value: DateFormat('dd-MM-yyyy').format(user.date),
-          ),
-          DataGridCell<String>(columnName: 'status', value: user.status),
-          DataGridCell<String>(columnName: 'edit', value: 'edit'),
-          DataGridCell<String>(columnName: 'details', value: 'details'),
-          DataGridCell<String>(columnName: 'delete', value: 'delete'),
-        ])).toList();
+    _dataGridRows = users
+        .map((user) => DataGridRow(cells: [
+              DataGridCell<String>(columnName: 'name', value: user.name),
+              DataGridCell<String>(columnName: 'email', value: user.email),
+              DataGridCell<double>(columnName: 'primary', value: user.primary),
+              DataGridCell<double>(
+                  columnName: 'secondary', value: user.secondary),
+              DataGridCell<String>(
+                  columnName: 'levelName', value: user.levelName),
+              DataGridCell<String>(
+                  columnName: 'date',
+                  value: DateFormat('dd-MM-yyyy').format(user.date)),
+              DataGridCell<String>(columnName: 'status', value: user.status),
+              DataGridCell<String>(columnName: 'edit', value: 'edit'),
+              DataGridCell<String>(columnName: 'details', value: 'details'),
+              DataGridCell<String>(columnName: 'delete', value: 'delete'),
+            ]))
+        .toList();
   }
 
   @override
@@ -38,13 +42,13 @@ class UserLevelDataSource extends DataGridSource {
     return DataGridRowAdapter(
       cells: row.getCells().map<Widget>((dataGridCell) {
         final user = users[rows.indexOf(row)];
-        
+
         if (dataGridCell.columnName == 'edit') {
           return IconButton(
             icon: const Icon(Icons.edit, color: Colors.green),
             onPressed: () {
               onActionTap?.call(user, 'edit');
-              print("Edit button clicked for ${user.name}");
+              
             },
           );
         } else if (dataGridCell.columnName == 'details') {
@@ -52,7 +56,7 @@ class UserLevelDataSource extends DataGridSource {
             icon: const Icon(Icons.info, color: Colors.blue),
             onPressed: () {
               onActionTap?.call(user, 'details');
-              print("Details button clicked for ${user.name}");
+              
             },
           );
         } else if (dataGridCell.columnName == 'delete') {
@@ -60,7 +64,7 @@ class UserLevelDataSource extends DataGridSource {
             icon: const Icon(Icons.delete, color: Colors.red),
             onPressed: () {
               onActionTap?.call(user, 'delete');
-              print("Delete button clicked for ${user.name}");
+              
             },
           );
         } else {

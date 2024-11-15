@@ -14,7 +14,9 @@ class ActiveUsersNewController extends BaseController {
   final UserApiService _apiService = UserApiService();
 
   Future<void> fetchUsers(int page, int limit) async {
-    print("Fetching users with page: $page, limit: $limit");
+    print("🔴::Fetching Active Users::🔴");
+    print("🔻api/user/verifiedusersweb");
+    print("🔻Page: $page, Limit: $limit");
     try {
       isLoading.value = true;
       var userResponse = await _apiService.fetchUsers(page, limit);
@@ -25,6 +27,12 @@ class ActiveUsersNewController extends BaseController {
         users.assignAll(userResponse.users);
         totalItems.value = userResponse.pagination.total;
         currentPage.value = userResponse.pagination.currentPage;
+
+         print("🔻Number of users fetched: ${userResponse.users.length}");
+        print("🔻Fetched user names:");
+        userResponse.users.forEach((User) => print("- ${User.name}"));
+
+
       } else {
         print("API call returned null response.");
       }
@@ -48,8 +56,6 @@ class ActiveUsersNewController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    print(
-        "Controller initialized. Fetching users for page ${currentPage.value} with page size ${pageSize.value}");
     fetchUsers(currentPage.value, pageSize.value);
   }
 }
