@@ -8,13 +8,13 @@ class PendingUsersController extends BaseController {
   var users = <PendingUser>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
-  var pageSize = 10.obs;
+  var pageSize = 5.obs;
   var isLoading = false.obs;
 
   final PendingUserApiService _apiService = PendingUserApiService();
 
   Future<void> fetchUsers(int page, int limit) async {
-
+    print("\n ▌│█║▌║▌║▌│█║▌║▌║▌│█║▌║▌║ \n");
     print("🔴::Fetching Pending users::🔴");
     print("🔻api/user/pendingusersweb");
     print("🔻Page: $page, Limit: $limit");

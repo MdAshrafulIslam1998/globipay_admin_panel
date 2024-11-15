@@ -6,7 +6,7 @@ class ActiveUsersController extends BaseController {
   var users = <User>[].obs;              // Observable list of users to display in the grid
   var totalItems = 0.obs;                 // Total number of items from the API
   var currentPage = 1.obs;                // Current page index
-  var pageSize = 10.obs;                  // Page size (can be 10, 20, 30, etc.)
+  var pageSize = 5.obs;                  // Page size (can be 10, 20, 30, etc.)
   var isLoading = false.obs;              // Loading indicator
 
   // Fetch users from API based on page and page size

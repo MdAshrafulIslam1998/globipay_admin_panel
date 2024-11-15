@@ -28,7 +28,7 @@ class Transaction {
     return Transaction(
       id: json['id'],
       catId: json['cat_id'],
-      categoryName: json['catagory_name'],
+      categoryName: json['category_name'],
       uid: json['uid'],
       coin: json['coin'],
       date: DateTime.parse(json['date']),

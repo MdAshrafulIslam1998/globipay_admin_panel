@@ -7,7 +7,7 @@ class UserAmountController extends BaseController {
   var users = <UserAmount>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
-  var pageSize = 10.obs;
+  var pageSize = 5.obs;
   var isLoading = false.obs;
 
   final UserAmountApiService _apiService = UserAmountApiService();
@@ -15,7 +15,7 @@ class UserAmountController extends BaseController {
   Future<void> fetchUserAmounts(int page, int limit) async {
     try {
       isLoading.value = true;
-
+      print("\n ▌│█║▌║▌║▌│█║▌║▌║▌│█║▌║▌║ \n");
       print("🔴 Fetching User Amount Details 🔴");
       print("🔻 Endpoint: api/amountdetailsweb");
       print("🔻 Page: $page, Limit: $limit");

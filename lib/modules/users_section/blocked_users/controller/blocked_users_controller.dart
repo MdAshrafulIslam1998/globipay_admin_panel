@@ -8,12 +8,13 @@ class BlockedUsersController extends BaseController {
   var users = <BlockedUser>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
-  var pageSize = 10.obs;
+  var pageSize = 5.obs;
   var isLoading = false.obs;
 
   final BlockedUserApiService _apiService = BlockedUserApiService();
 
   Future<void> fetchUsers(int page, int limit) async {
+    print("\n ▌│█║▌║▌║▌│█║▌║▌║▌│█║▌║▌║ \n");
     print("🔴::Fetching Blocked users::🔴");
     print("🔻api/user/blockedusersweb");
     print("🔻Page: $page, Limit: $limit");

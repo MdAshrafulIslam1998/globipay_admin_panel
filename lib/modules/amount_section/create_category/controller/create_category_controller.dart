@@ -8,7 +8,7 @@ class CreateCategoryController extends BaseController {
   var categories = <Category>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
-  var pageSize = 15.obs;
+  var pageSize = 5.obs;
   var isLoading = false.obs;
 
   // For new category form

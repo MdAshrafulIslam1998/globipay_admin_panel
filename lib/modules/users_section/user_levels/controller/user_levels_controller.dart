@@ -8,12 +8,13 @@ class UserLevelsController extends BaseController {
   var UserLevels = <UserLevel>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
-  var pageSize = 10.obs;
+  var pageSize = 5.obs;
   var isLoading = false.obs;
 
   final UserLevelApiService _apiService = UserLevelApiService();
 
   Future<void> fetchUsersLevel(int page, int limit) async {
+    print("\n ▌│█║▌║▌║▌│█║▌║▌║▌│█║▌║▌║ \n");
     print("🔴::Fetching User levels::🔴");
     print("🔻api/user/verifiedusersweb");
     print("🔻Page: $page, Limit: $limit");

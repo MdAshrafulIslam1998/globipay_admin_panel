@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_pager_delegate.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_source.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/controller/user_levels_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/table/user_levels_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/table/user_levels_data_source.dart';
@@ -90,7 +88,7 @@ class _UserlevelsScreenBuilderState extends BaseViewState<
                           child: Obx(() => DropdownButton<int>(
                                 value: controller.pageSize.value,
                                 underline: Container(),
-                                items: [10, 20, 30].map((size) {
+                                items: [5, 10, 20, 30].map((size) {
                                   return DropdownMenuItem<int>(
                                     value: size,
                                     child: Text(size.toString()),

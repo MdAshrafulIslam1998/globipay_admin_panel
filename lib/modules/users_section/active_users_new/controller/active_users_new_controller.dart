@@ -8,12 +8,13 @@ class ActiveUsersNewController extends BaseController {
   var users = <User>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
-  var pageSize = 10.obs;
+  var pageSize = 5.obs;
   var isLoading = false.obs;
 
   final UserApiService _apiService = UserApiService();
 
   Future<void> fetchUsers(int page, int limit) async {
+    print("\n ▌│█║▌║▌║▌│█║▌║▌║▌│█║▌║▌║ \n");
     print("🔴::Fetching Active Users::🔴");
     print("🔻api/user/verifiedusersweb");
     print("🔻Page: $page, Limit: $limit");

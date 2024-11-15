@@ -86,7 +86,7 @@ class _UserAmountScreenBuilderState
                           child: Obx(() => DropdownButton<int>(
                                 value: controller.pageSize.value,
                                 underline: Container(),
-                                items: [10, 20, 30].map((size) {
+                                items: [5, 10, 20, 30].map((size) {
                                   return DropdownMenuItem<int>(
                                     value: size,
                                     child: Text(size.toString()),

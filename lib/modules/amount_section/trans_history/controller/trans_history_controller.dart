@@ -1,78 +1,49 @@
-// 1. transaction_history_controller.dart
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/trans_history.dart';
-import 'package:globipay_admin_panel/modules/amount_section/trans_history/trans_history_response.dart';
-
+import 'package:globipay_admin_panel/modules/amount_section/trans_history/transaction_history_api_service.dart';
 
 class TransactionHistoryController extends BaseController {
   var transactions = <Transaction>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
-  var pageSize = 10.obs;
+  var pageSize = 5.obs;
   var isLoading = false.obs;
 
+  final TransactionHistoryApiService _apiService = TransactionHistoryApiService();
+
   Future<void> fetchTransactions(int page, int limit) async {
+    print("\n ▌│█║▌║▌║▌│█║▌║▌║▌│█║▌║▌║");
+    print("\n 🔴 Fetching Transaction History 🔴");
+    print("🔻 Endpoint: /api/transaction/alltransactions");
+    print("🔻 Page: $page, Limit: $limit");
+
     try {
       isLoading.value = true;
+      var transactionResponse = await _apiService.fetchTransactions(page, limit);
 
-      // Simulated delay to mimic an API call
-      await Future.delayed(const Duration(seconds: 1));
-
-      // Mock response data
-      var mockResponse = {
-        "responseCode": "S100000",
-        "responseMessage": "Transaction history fetched successfully",
-        "data": {
-          "transactions": [
-            {
-              "id": 16,
-              "cat_id": 3,
-              "catagory_name": "Apple pay",
-              "uid": "b7746c19-7a61-11ef-8211-80fa5b888c9a",
-              "coin": 55,
-              "date": "2024-09-25T16:23:56.000Z",
-              "name": "John Doe",
-              "email": "john@example.com",
-              "created_by": "Admin",
-              "coin_type": "SECONDARY"
-            },
-            {
-              "id": 17,
-              "cat_id": 4,
-              "catagory_name": "Google pay",
-              "uid": "b7746c19-7a61-11ef-8211-80fa5b888c9a",
-              "coin": 55,
-              "date": "2024-09-25T16:23:56.000Z",
-              "name": "John Doe",
-              "email": "john@example.com",
-              "created_by": "Admin",
-              "coin_type": "PRIMARY"
-            }
-          ],
-          "pagination": {
-            "total": 13,
-            "total_pages": 2,
-            "current_page": 2,
-            "limit": 10
-          }
-        }
-      };
-
-      var transactionResponse = TransactionResponse.fromJson(mockResponse);
       if (transactionResponse != null) {
+        print("✅ Transactions fetched successfully.");
         transactions.assignAll(transactionResponse.transactions);
         totalItems.value = transactionResponse.pagination.total;
         currentPage.value = transactionResponse.pagination.currentPage;
+
+        print("🔻 Number of transactions fetched: ${transactionResponse.transactions.length}");
+        transactionResponse.transactions.forEach(
+            (transaction) => print("- ${transaction.name} (${transaction.coinType} - ${transaction.categoryName})"));
+      } else {
+        print("API call returned null response.");
       }
     } catch (e) {
-      print("Error fetching transactions: $e");
+      print("Error fetching transactions: ${e.toString()}");
     } finally {
       isLoading.value = false;
+      print("Loading state is now ${isLoading.value}");
     }
   }
 
   void updatePageSize(int newSize) {
+    print("Updating page size to $newSize and fetching transactions from page 1");
     pageSize.value = newSize;
     fetchTransactions(1, newSize);
   }
