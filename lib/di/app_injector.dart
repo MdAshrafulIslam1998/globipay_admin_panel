@@ -8,7 +8,7 @@ import 'package:globipay_admin_panel/modules/media_section/about_us/controller/a
 import 'package:globipay_admin_panel/modules/media_section/automated_reply/controller/automated_reply_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promo_banner_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/create_category/controller/create_category_controller.dart';
-import 'package:globipay_admin_panel/modules/users_section/user_amount/controller/user_amount_controller.dart';
+import 'package:globipay_admin_panel/modules/amount_section/user_amount/controller/user_amount_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/controller/user_levels_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/blocked_users/controller/blocked_users_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/controller/pending_users_controller.dart';

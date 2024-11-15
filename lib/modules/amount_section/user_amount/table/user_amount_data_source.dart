@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:globipay_admin_panel/modules/users_section/user_amount/user_amount.dart';
+import 'package:globipay_admin_panel/modules/amount_section/user_amount/user_amount.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class UserAmountDataSource extends DataGridSource {
@@ -19,6 +19,7 @@ class UserAmountDataSource extends DataGridSource {
           DataGridCell<Map<String, Map<String, int>>>(
               columnName: 'amount', value: user.amount),
           DataGridCell<String>(columnName: 'status', value: user.status),
+          DataGridCell<String>(columnName: 'level', value: user.levelName),
           DataGridCell<String>(columnName: 'edit', value: 'edit'),
           DataGridCell<String>(columnName: 'details', value: 'details'),
         ])).toList();

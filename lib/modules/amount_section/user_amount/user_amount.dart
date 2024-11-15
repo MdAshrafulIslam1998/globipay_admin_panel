@@ -3,6 +3,7 @@ class UserAmount {
   final String name;
   final String email;
   final String status;
+  final String levelName;
   final Map<String, Map<String, int>> amount;
 
   UserAmount({
@@ -10,6 +11,7 @@ class UserAmount {
     required this.name,
     required this.email,
     required this.status,
+    required this.levelName,
     required this.amount,
   });
 
@@ -19,6 +21,7 @@ class UserAmount {
       name: json['name'],
       email: json['email'],
       status: json['status'],
+      levelName: json['level_name'],
       amount: Map<String, Map<String, int>>.from(
         (json['amount'] as Map).map((key, value) => MapEntry(
           key,

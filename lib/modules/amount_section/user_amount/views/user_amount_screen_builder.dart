@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
-import 'package:globipay_admin_panel/modules/users_section/user_amount/controller/user_amount_controller.dart';
-import 'package:globipay_admin_panel/modules/users_section/user_amount/table/user_amount_data_pager_delegate.dart';
-import 'package:globipay_admin_panel/modules/users_section/user_amount/table/user_amount_data_source.dart';
+import 'package:globipay_admin_panel/modules/amount_section/user_amount/controller/user_amount_controller.dart';
+import 'package:globipay_admin_panel/modules/amount_section/user_amount/table/user_amount_data_pager_delegate.dart';
+import 'package:globipay_admin_panel/modules/amount_section/user_amount/table/user_amount_data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class UserAmountScreenBuilder extends StatefulWidget {
@@ -175,6 +175,17 @@ class _UserAmountScreenBuilderState
                           alignment: Alignment.center,
                           child: const Text(
                             'Status',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      GridColumn(
+                        columnName: 'level',
+                        label: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Level',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),

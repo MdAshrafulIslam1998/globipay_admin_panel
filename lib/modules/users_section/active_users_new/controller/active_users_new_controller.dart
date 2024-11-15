@@ -23,7 +23,7 @@ class ActiveUsersNewController extends BaseController {
 
       if (userResponse != null) {
         print(
-            "Users fetched successfully. Total users received: ${userResponse.users.length}");
+            "✅ Users fetched successfully. Total users received: ${userResponse.users.length}");
         users.assignAll(userResponse.users);
         totalItems.value = userResponse.pagination.total;
         currentPage.value = userResponse.pagination.currentPage;

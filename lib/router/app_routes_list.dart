@@ -10,7 +10,7 @@ import 'package:globipay_admin_panel/modules/users_section/active_users_new/view
 import 'package:globipay_admin_panel/modules/users_section/pending_users/views/pending_users_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/blocked_users/views/blocked_users_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/views/user_levels_screen.dart';
-import 'package:globipay_admin_panel/modules/users_section/user_amount/views/user_amount_screen.dart';
+import 'package:globipay_admin_panel/modules/amount_section/user_amount/views/user_amount_screen.dart';
 import 'package:globipay_admin_panel/modules/amount_section/create_category/views/create_category_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/promo_banner_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/automated_reply/views/automated_reply_screen.dart';

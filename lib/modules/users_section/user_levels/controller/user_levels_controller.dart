@@ -23,6 +23,7 @@ class UserLevelsController extends BaseController {
       var userLevelResponse = await _apiService.fetchUsersLevel(page, limit);
 
       if (userLevelResponse != null) {
+        print("✅ Users fetched successfully.");
         print("🔻Number of users fetched: ${userLevelResponse.users.length}");
         print("🔻Fetched user names:");
         userLevelResponse.users.forEach((UserLevel) => print("- ${UserLevel.name}"));

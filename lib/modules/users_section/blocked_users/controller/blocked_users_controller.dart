@@ -27,6 +27,7 @@ class BlockedUsersController extends BaseController {
         users.assignAll(userResponse.users);
         totalItems.value = userResponse.pagination.total;
         currentPage.value = userResponse.pagination.currentPage;
+        print("✅ Users fetched successfully.");
 
         // Log user count and names
         print("🔻Number of users fetched: ${userResponse.users.length}");
