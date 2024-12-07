@@ -2,7 +2,7 @@ name: Publish Website to CPanel
 on:
   push:
     branches:
-      - other_pages_ash
+      - production
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
