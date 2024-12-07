@@ -6,6 +6,8 @@ import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_source.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class ActiveUsersNewScreenBuilder extends StatefulWidget {
@@ -115,7 +117,9 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                       onActionTap: (user, action) {
                         switch (action) {
                           case 'details':
-                            print('Details action for ${user.name}');
+                            AppRoutes.pushNamed(
+                              RoutePath.pendingProfile,
+                            );
                             break;
                           case 'delete':
                             print('Delete action for ${user.name}');

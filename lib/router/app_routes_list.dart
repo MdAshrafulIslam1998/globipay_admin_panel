@@ -40,6 +40,7 @@ abstract class AppRoutesList {
         ),
         GoRoute(
           path: RoutePath.pendingProfile,
+          name: RoutePath.pendingProfile,
           builder: (context, state) => PendingProfileScreen(),
         ),
         GoRoute(
