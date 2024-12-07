@@ -8,7 +8,7 @@ class UserApiService {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI3NzQ2YzE5LTdhNjEtMTFlZi04MjExLTgwZmE1Yjg4OGM5YSIsImlhdCI6MTczMzU5NTEzNywiZXhwIjoxNzMzNzAzMTM3fQ.S-VvAvA4XBE2cW5VDWjGF4f-JfNXfWgeluivkO3JB-I";
 
   Future<UserResponse?> fetchUsers(int page, int limit) async {
-    final String url = 'http://localhost:3000/api/user/verifiedusersweb';
+    final String url = 'https://www.projectzerotwofour.cloudns.ch/api/user/verifiedusersweb';
     
     try {
       final response = await dio.get(
