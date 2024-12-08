@@ -1,58 +1,50 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
+import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/data/api/app_api.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/pending_user.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/pending_user_api_service.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/pending_user_response.dart';
 
 class PendingUsersController extends BaseController {
-  var users = <PendingUser>[].obs;
+
+  final AppRepository _repository;
+
+  PendingUsersController(this._repository);
+
+
+  //Rx Variables
+  var users = <UserResponseItemEntity>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
   var pageSize = 5.obs;
   var isLoading = false.obs;
 
-  final PendingUserApiService _apiService = PendingUserApiService();
+  PaginationRequest paginationRequest(int page, int limit) => PaginationRequest(
+    page: page,
+    limit: limit,
+  );
 
-  Future<void> fetchUsers(int page, int limit) async {
-    print("\n ▌│█║▌║▌║▌│█║▌║▌║▌│█║▌║▌║ \n");
-    print("🔴::Fetching Pending users::🔴");
-    print("🔻api/user/pendingusersweb");
-    print("🔻Page: $page, Limit: $limit");
 
-    try {
-      isLoading.value = true;
-      PendingUserResponse? userResponse =
-          await _apiService.fetchPendingUsers(page, limit);
-
-      if (userResponse != null && userResponse.users.isNotEmpty) {
-        users.assignAll(userResponse.users);
-        totalItems.value = userResponse.pagination.total;
-        currentPage.value = userResponse.pagination.currentPage;
-        print("✅ Users fetched successfully.");
-
-        // Log user count and names
-        print("🔻Number of users fetched: ${userResponse.users.length}");
-        print("🔻Fetched user names:");
-        userResponse.users.forEach((user) => print("- ${user.name}"));
-      } else {
-        users.clear();
-        totalItems.value = 0;
-        currentPage.value = 1;
-        print("🔻No users found in response.");
-      }
-    } catch (e) {
-      print("🔻Error fetching pending users: $e");
-      users.clear();
-      totalItems.value = 0;
-      currentPage.value = 1;
-    } finally {
-      isLoading.value = false;
-    }
+  parseUserList(UserResponseEntity response) {
+    users.value = response.users ?? [];
+    totalItems.value = response.pagination?.total ?? 0;
+    currentPage.value = response.pagination?.currentPage ?? 1;
   }
-
   void updatePageSize(int newSize) {
     pageSize.value = newSize;
     fetchUsers(1, newSize);
+  }
+
+  Future<void> fetchUsers(int page, int limit) async {
+    final request = paginationRequest(page, limit);
+    final repo = _repository.requestForUserList(request, path: AppApi.pendingUserPath);
+    callService(repo, onSuccess: (response) {
+      parseUserList(response);
+    });
   }
 
   @override

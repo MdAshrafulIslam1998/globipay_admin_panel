@@ -8,15 +8,15 @@ part of 'pagination.dart';
 
 Pagination _$PaginationFromJson(Map<String, dynamic> json) => Pagination(
       total: (json['total'] as num?)?.toInt(),
-      totalPages: (json['totalPages'] as num?)?.toInt(),
-      currentPage: (json['currentPage'] as num?)?.toInt(),
+      totalPages: (json['total_pages'] as num?)?.toInt(),
+      currentPage: (json['current_page'] as num?)?.toInt(),
       limit: (json['limit'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$PaginationToJson(Pagination instance) =>
     <String, dynamic>{
       'total': instance.total,
-      'totalPages': instance.totalPages,
-      'currentPage': instance.currentPage,
+      'total_pages': instance.totalPages,
+      'current_page': instance.currentPage,
       'limit': instance.limit,
     };

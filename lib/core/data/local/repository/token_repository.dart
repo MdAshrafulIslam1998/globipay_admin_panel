@@ -8,5 +8,10 @@ abstract class TokenRepository {
   Future<void> clearToken();
   Future<void> saveUserID(String userID);
   Future<String> getUserID();
+  Future<void> saveRole(String role);
+  Future<String> getRole();
+
+  Future<void> saveStuffId(String id);
+  Future<String> getStuffId();
 
 }

@@ -11,7 +11,8 @@ class _$AppInjector extends AppInjector {
   void _controllerComponents() {
     final KiwiContainer container = KiwiContainer();
     container
-      ..registerFactory((c) => TestController())
+      ..registerFactory((c) => LoginController(
+          c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => DashboardController())
       ..registerFactory((c) => BasePanelController())
       ..registerFactory((c) => ActiveUsersController())
@@ -22,14 +23,26 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => TransactionHistoryController())
       ..registerFactory((c) => UserAmountController())
       ..registerFactory((c) => UserLevelsController())
-      ..registerFactory((c) => BlockedUsersController())
-      ..registerFactory((c) => PendingUsersController())
-      ..registerFactory((c) => ActiveUsersNewController())
+      ..registerFactory(
+          (c) => BlockedUsersController(c.resolve<AppRepository>()))
+      ..registerFactory(
+          (c) => PendingUsersController(c.resolve<AppRepository>()))
+      ..registerFactory(
+          (c) => ActiveUsersNewController(c.resolve<AppRepository>()))
       ..registerFactory((c) => NotificationSetterController())
       ..registerFactory((c) => PendingProfileController())
-      ..registerFactory((c) => EditCoinController());
+      ..registerFactory((c) => EditCoinController())
+      ..registerSingleton((c) => AppSecureStorage());
   }
 
   @override
-  void _repositoryComponents() {}
+  void _repositoryComponents() {
+    final KiwiContainer container = KiwiContainer();
+    container
+      ..registerSingleton<AppRepository>(
+          (c) => AppRepositoryImpl(c.resolve<AppRemoteDataSource>()))
+      ..registerSingleton<AppRemoteDataSource>((c) => AppRemoteDataSourceImpl())
+      ..registerSingleton<TokenRepository>(
+          (c) => TokenRepositoryImpl(c.resolve<AppSecureStorage>()));
+  }
 }

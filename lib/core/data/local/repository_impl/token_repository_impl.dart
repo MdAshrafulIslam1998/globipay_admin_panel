@@ -8,6 +8,8 @@ import 'package:globipay_admin_panel/core/utils/storage/app_secure_storage.dart'
 class TokenRepositoryImpl implements TokenRepository {
   final tokenKey = "TOKEN_KEY";
   final userKey = "USER_ID";
+  final role = "USER_ROLE";
+  final stuff = "STUFF_ID";
 
   AppSecureStorage storage;
 
@@ -49,4 +51,41 @@ class TokenRepositoryImpl implements TokenRepository {
     ) ??
         '';
   }
+
+
+  @override
+  Future<void> saveRole(String userRole) async {
+    await storage.write(
+      key: role,
+      value: userRole,
+    );
+  }
+
+  @override
+  Future<String> getRole() async {
+    return await storage.read(
+      key: role,
+    ) ??
+        '';
+  }
+
+  @override
+  Future<void> saveStuffId(String stuffID) async {
+    await storage.write(
+      key: stuff,
+      value: stuffID,
+    );
+  }
+
+  @override
+  Future<String> getStuffId() async {
+    return await storage.read(
+      key: stuff,
+    ) ??
+        '';
+  }
+
+
+
+
 }

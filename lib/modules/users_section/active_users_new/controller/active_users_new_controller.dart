@@ -1,51 +1,44 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/user_api_service.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/user_new.dart';
+import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
+
 
 class ActiveUsersNewController extends BaseController {
-  var users = <User>[].obs;
+
+  final AppRepository _repository;
+
+  ActiveUsersNewController(this._repository);
+
+
+  //Rx Variables
+  var users = <UserResponseItemEntity>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
   var pageSize = 5.obs;
   var isLoading = false.obs;
 
-  final UserApiService _apiService = UserApiService();
+  PaginationRequest paginationRequest(int page, int limit) => PaginationRequest(
+        page: page,
+        limit: limit,
+  );
+
+
+  parseUserList(UserResponseEntity response) {
+    users.value = response.users ?? [];
+    totalItems.value = response.pagination?.total ?? 0;
+    currentPage.value = response.pagination?.currentPage ?? 1;
+  }
 
   Future<void> fetchUsers(int page, int limit) async {
-    print("\n ▌│█║▌║▌║▌│█║▌║▌║▌│█║▌║▌║ \n");
-    print("🔴::Fetching Active Users::🔴");
-    print("🔻api/user/verifiedusersweb");
-    print("🔻Page: $page, Limit: $limit");
-    try {
-      isLoading.value = true;
-      var userResponse = await _apiService.fetchUsers(page, limit);
-
-      if (userResponse != null) {
-        print(
-            "✅ Users fetched successfully. Total users received: ${userResponse.users.length}");
-        users.assignAll(userResponse.users);
-        totalItems.value = userResponse.pagination.total;
-        currentPage.value = userResponse.pagination.currentPage;
-
-         print("🔻Number of users fetched: ${userResponse.users.length}");
-        print("🔻Fetched user names:");
-        userResponse.users.forEach((User) => print("- ${User.name}"));
-
-
-      } else {
-        print("API call returned null response.");
-      }
-    } catch (e) {
-      print("Error fetching users: ${e.toString()}");
-      if (e is DioError) {
-        print("DioError type: ${e.type}, message: ${e.message}");
-      }
-    } finally {
-      isLoading.value = false;
-      print("Loading state is now ${isLoading.value}");
-    }
+    final request = paginationRequest(page, limit);
+    final repo = _repository.requestForUserList(request);
+    callService(repo, onSuccess: (response) {
+      parseUserList(response);
+    });
   }
 
   void updatePageSize(int newSize) {

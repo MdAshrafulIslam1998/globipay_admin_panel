@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/user_new.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:intl/intl.dart';
 
 class UserDataSource extends DataGridSource {
-  final List<User> users;
-  final Function(User user, String action)? onActionTap;
+  final List<UserResponseItemEntity> users;
+  final Function(UserResponseItemEntity user, String action)? onActionTap;
   final List<String> visibleColumns; // Add visibleColumns
 
   UserDataSource(this.users, {this.onActionTap, required this.visibleColumns}) {
@@ -33,15 +33,15 @@ class UserDataSource extends DataGridSource {
                   case 'date':
                     return DataGridCell<String>(
                         columnName: 'date',
-                        value: DateFormat('dd-MM-yyyy').format(user.date));
+                        value: DateFormat('dd-MM-yyyy').format(DateTime.parse(user.date ?? '')));
                   case 'status':
                     return DataGridCell<String>(columnName: 'status', value: user.status);
                   case 'details':
-                    return DataGridCell<User>(columnName: 'details', value: user);
+                    return DataGridCell<UserResponseItemEntity>(columnName: 'details', value: user);
                   case 'delete':
-                    return DataGridCell<User>(columnName: 'delete', value: user);
+                    return DataGridCell<UserResponseItemEntity>(columnName: 'delete', value: user);
                   case 'message':
-                    return DataGridCell<User>(columnName: 'message', value: user);
+                    return DataGridCell<UserResponseItemEntity>(columnName: 'message', value: user);
                   default:
                     throw Exception('Invalid column: $columnName');
                 }
@@ -83,8 +83,8 @@ class UserDataSource extends DataGridSource {
             Colors.blue,
             Icons.visibility,
             () {
-              print('Details button clicked for user: ${(cell.value as User).name}');
-              onActionTap?.call(cell.value as User, 'details');
+              print('Details button clicked for user: ${(cell.value as UserResponseItemEntity).name}');
+              onActionTap?.call(cell.value as UserResponseItemEntity, 'details');
             },
           ),
         );
@@ -95,8 +95,8 @@ class UserDataSource extends DataGridSource {
             Colors.red,
             Icons.delete,
             () {
-              print('Delete button clicked for user: ${(cell.value as User).name}');
-              onActionTap?.call(cell.value as User, 'delete');
+              print('Delete button clicked for user: ${(cell.value as UserResponseItemEntity).name}');
+              onActionTap?.call(cell.value as UserResponseItemEntity, 'delete');
             },
           ),
         );
@@ -107,8 +107,8 @@ class UserDataSource extends DataGridSource {
             Colors.orange,
             Icons.message,
             () {
-              print('Message button clicked for user: ${(cell.value as User).name}');
-              onActionTap?.call(cell.value as User, 'message');
+              print('Message button clicked for user: ${(cell.value as UserResponseItemEntity).name}');
+              onActionTap?.call(cell.value as UserResponseItemEntity, 'message');
             },
           ),
         );

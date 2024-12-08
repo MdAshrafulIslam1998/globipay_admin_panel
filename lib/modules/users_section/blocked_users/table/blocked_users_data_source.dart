@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users/user.dart';
 import 'package:globipay_admin_panel/modules/users_section/blocked_users/blocked_user.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class BlockedUserDataSource extends DataGridSource {
-  final List<BlockedUser> users;
+  final List<UserResponseItemEntity> users;
   final Function(BlockedUser user, String action)? onActionTap;
 
   BlockedUserDataSource(this.users, {this.onActionTap}) {
@@ -21,9 +23,9 @@ class BlockedUserDataSource extends DataGridSource {
               DataGridCell<String>(columnName: 'email', value: user.email),
               DataGridCell<String>(
                   columnName: 'date',
-                  value: DateFormat('dd-MM-yyyy').format(user.date)),
+                  value: DateFormat('dd-MM-yyyy').format(DateTime.parse(user.date ?? ''))),
               DataGridCell<String>(columnName: 'status', value: user.status),
-              DataGridCell<BlockedUser>(columnName: 'document', value: user),
+              DataGridCell<UserResponseItemEntity>(columnName: 'document', value: user),
             ]))
         .toList();
   }

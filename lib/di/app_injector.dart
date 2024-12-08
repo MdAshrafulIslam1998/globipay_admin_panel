@@ -1,8 +1,15 @@
+import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
+import 'package:globipay_admin_panel/core/data/local/repository_impl/token_repository_impl.dart';
+import 'package:globipay_admin_panel/core/utils/storage/app_secure_storage.dart';
+import 'package:globipay_admin_panel/data/remote/app_remote_data_source.dart';
+import 'package:globipay_admin_panel/data/remote/app_remote_data_source_impl.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/data/repository_impl/app_repository_impl.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/controller/trans_history_controller.dart';
+import 'package:globipay_admin_panel/modules/authetication/login/controller/login_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users/controller/active_users_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/controller/base_panel_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/controller/dashboard_controller.dart';
-import 'package:globipay_admin_panel/modules/test_controller.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:globipay_admin_panel/modules/media_section/about_us/controller/about_us_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/automated_reply/controller/automated_reply_controller.dart';
@@ -37,7 +44,7 @@ abstract class AppInjector extends Injector {
   }
 
 
-  @Register.factory(TestController)
+  @Register.factory(LoginController)
   @Register.factory(DashboardController)
   @Register.factory(BasePanelController)
   @Register.factory(ActiveUsersController)
@@ -54,8 +61,14 @@ abstract class AppInjector extends Injector {
   @Register.factory(NotificationSetterController)
   @Register.factory(PendingProfileController)
   @Register.factory(EditCoinController)
+
+  //Singleton
+  @Register.singleton(AppSecureStorage)
   void _controllerComponents();
 
 
+  @Register.singleton(AppRepository, from: AppRepositoryImpl)
+  @Register.singleton(AppRemoteDataSource, from: AppRemoteDataSourceImpl)
+  @Register.singleton(TokenRepository, from: TokenRepositoryImpl)
   void _repositoryComponents();
 }

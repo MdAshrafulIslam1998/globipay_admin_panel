@@ -100,17 +100,7 @@ class Sidebar extends StatelessWidget {
                               context.go(RoutePath.pendingUsers);
                             },
                           ),
-                          MenuTile(
-                            isSubmenu: false,
-                            isActive: currentRoute == RoutePath.pendingProfile,
-                            title: "Pending Profile",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
-                            onPressed: () {
-                              context.go(RoutePath.pendingProfile);
-                            },
-                          ),
+
                           MenuTile(
                             isSubmenu: false,
                             isActive: currentRoute == RoutePath.blockedUsers,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/pending_user.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class PendingUserDataSource extends DataGridSource {
-  final List<PendingUser> users;
-  final Function(PendingUser user, String action)? onActionTap;
+  final List<UserResponseItemEntity> users;
+  final Function(UserResponseItemEntity user, String action)? onActionTap;
 
   PendingUserDataSource(this.users, {this.onActionTap}) {
     buildDataGridRows();
@@ -21,9 +22,9 @@ class PendingUserDataSource extends DataGridSource {
               DataGridCell<String>(columnName: 'email', value: user.email),
               DataGridCell<String>(
                   columnName: 'date',
-                  value: DateFormat('dd-MM-yyyy').format(user.date)),
+                  value: DateFormat('dd-MM-yyyy').format(DateTime.parse(user.date ?? ''))),
               DataGridCell<String>(columnName: 'status', value: user.status),
-              DataGridCell<PendingUser>(columnName: 'document', value: user),
+              DataGridCell<UserResponseItemEntity>(columnName: 'document', value: user),
             ]))
         .toList();
   }
@@ -82,7 +83,7 @@ class PendingUserDataSource extends DataGridSource {
               () {
                 print(
                     'Document button clicked for user: ${(cell.value as PendingUser).name}');
-                onActionTap?.call(cell.value as PendingUser, 'Document');
+                onActionTap?.call(cell.value as UserResponseItemEntity, 'Document');
               },
             ),
           );

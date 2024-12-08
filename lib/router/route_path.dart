@@ -1,4 +1,5 @@
 abstract class RoutePath {
+  static const String start = _RoutePath._start;
   static const String dashboard = _RoutePath._dashboard;
   static const String activeUsers = _RoutePath._activeUsers;
   static const String aboutUs = _RoutePath._aboutUs;
@@ -14,11 +15,14 @@ abstract class RoutePath {
   static const String notificationSetter = _RoutePath._notificationSetter;
   static const String pendingProfile = _RoutePath._pendingProfile;
   static const String editCoin = _RoutePath._editCoin;
+  static const String login = _RoutePath._login;
 }
 
 class _RoutePath {
-  static const String _dashboard = '/';
+  static const String _start = '/';
+  static const String _dashboard = '/dashboard';
   static const String _activeUsers = '/activeUsers';
+  static const String _signUp = '/signUp';
   static const String _aboutUs = '/aboutUs';
   static const String _automatedReply = '/automatedReply';
   static const String _promoBanner = '/promoBanner';
@@ -32,4 +36,5 @@ class _RoutePath {
   static const String _notificationSetter = '/notificationSetter';
   static const String _pendingProfile = '/pendingProfile';
   static const String _editCoin = '/editCoin';
+  static const String _login = '/login';
 }
