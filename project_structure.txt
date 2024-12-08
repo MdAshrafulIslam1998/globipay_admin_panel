@@ -5,6 +5,7 @@ Project Structure
 .gitignore
 .metadata
 analysis_options.yaml
+generate_feature.py
 generate_tree.dart
 lib
 ├── app.dart
@@ -23,8 +24,12 @@ lib
 │   │   ├── app_language.dart
 │   │   ├── app_radius.dart
 │   │   ├── app_spaces.dart
+│   │   ├── config.dart
+│   │   ├── defaults.dart
 │   │   ├── enum
 │   │   │   ├── network_status.dart
+│   │   ├── extensions.dart
+│   │   ├── ghaps.dart
 │   │   ├── storage_keys.dart
 │   ├── data
 │   │   ├── local
@@ -33,11 +38,14 @@ lib
 │   │   │   ├── repository_impl
 │   │   │   │   └── token_repository_impl.dart
 │   │   ├── model
+│   │   │   └── coin_data.dart
+│   │   │   └── coin_response.dart
 │   │   │   └── icon_button_model.dart
 │   │   │   └── pagination.dart
 │   │   │   └── pagination.g.dart
 │   │   │   └── pagination_request.dart
 │   │   │   └── pagination_request.g.dart
+│   │   │   └── sidebar_menu_item.dart
 │   │   │   └── user.dart
 │   │   │   └── user.g.dart
 │   ├── di
@@ -70,6 +78,8 @@ lib
 │   │   │   └── app_preferences_service.dart
 │   │   │   └── secure_storage.dart
 │   ├── theme
+│   │   ├── app_colors.dart
+│   │   ├── app_theme.dart
 │   │   ├── color_palettes.dart
 │   │   ├── theme.dart
 │   │   ├── theme_style
@@ -78,19 +88,36 @@ lib
 │   ├── utils
 │   │   ├── app_utils.dart
 │   │   ├── custom_dialog.dart
+│   │   ├── responsive.dart
 │   │   ├── storage
 │   │   │   └── app_secure_storage.dart
 │   │   │   └── app_storage.dart
 │   ├── widgets
 │   │   └── app_loader.dart
 │   │   └── app_print.dart
+│   │   └── app_text_form_field_theme.dart
+│   │   └── avatar
+│   │   │   ├── customer_avaatar.dart
+│   │   │   ├── customer_rounded_avatar.dart
 │   │   └── button
 │   │   │   ├── app_button.dart
 │   │   │   ├── app_outline_button.dart
 │   │   └── elevated_container.dart
+│   │   └── header.dart
 │   │   └── image
 │   │   │   ├── app_network_image.dart
 │   │   │   ├── app_svg_image.dart
+│   │   └── section_title.dart
+│   │   └── sidemenu
+│   │   │   ├── customer_info.dart
+│   │   │   ├── icon_tile.dart
+│   │   │   ├── menu_tile.dart
+│   │   │   ├── sidebar.dart
+│   │   │   ├── tab_sidebar.dart
+│   │   │   ├── theme_icon_tile.dart
+│   │   └── tabs
+│   │   │   ├── tab_with_growth.dart
+│   │   │   ├── tab_with_icon.dart
 │   │   └── text
 │   │   │   ├── app_text.dart
 │   │   │   ├── app_text_type.dart
@@ -119,14 +146,171 @@ lib
 │   ├── flavor_config.dart
 ├── main.dart
 ├── modules
-│   ├── splash_screen.dart
+│   ├── amount_section
+│   │   ├── create_category
+│   │   │   ├── category.dart
+│   │   │   ├── category_response.dart
+│   │   │   ├── controller
+│   │   │   │   ├── create_category_controller.dart
+│   │   │   ├── table
+│   │   │   │   ├── create_category_data_pager_delegate.dart
+│   │   │   │   ├── create_category_data_source.dart
+│   │   │   ├── views
+│   │   │   │   └── create_category_screen.dart
+│   │   │   │   └── create_category_screen_builder.dart
+│   │   ├── edit_coin
+│   │   │   ├── controller
+│   │   │   │   ├── edit_coin_controller.dart
+│   │   │   │   ├── edit_coin_datasource.dart
+│   │   │   ├── views
+│   │   │   │   └── edit_coin_screen.dart
+│   │   │   │   └── edit_coin_screen_builder.dart
+│   │   ├── trans_history
+│   │   │   ├── controller
+│   │   │   │   ├── trans_history_controller.dart
+│   │   │   ├── table
+│   │   │   │   ├── trans_history_data_pager_delegate.dart
+│   │   │   │   ├── trans_history_data_source.dart
+│   │   │   ├── transaction_history_api_service.dart
+│   │   │   ├── trans_history.dart
+│   │   │   ├── trans_history_response.dart
+│   │   │   ├── views
+│   │   │   │   └── trans_history_screen.dart
+│   │   │   │   └── trans_history_screen_builder.dart
+│   │   ├── user_amount
+│   │   │   └── controller
+│   │   │   │   ├── user_amount_controller.dart
+│   │   │   └── table
+│   │   │   │   ├── user_amount_data_pager_delegate.dart
+│   │   │   │   ├── user_amount_data_source.dart
+│   │   │   └── user_amount.dart
+│   │   │   └── user_amount_api_service.dart
+│   │   │   └── user_amount_response.dart
+│   │   │   └── views
+│   │   │   │   └── user_amount_screen.dart
+│   │   │   │   └── user_amount_screen_builder.dart
+│   ├── dashboard_section
+│   │   ├── base_panel
+│   │   │   ├── controller
+│   │   │   │   ├── base_panel_controller.dart
+│   │   │   ├── views
+│   │   │   │   └── base_panel_screen.dart
+│   │   │   │   └── base_panel_screen_builder.dart
+│   │   ├── dashboard
+│   │   │   └── controller
+│   │   │   │   ├── dashboard_controller.dart
+│   │   │   └── views
+│   │   │   │   └── dashboard_screen.dart
+│   │   │   │   └── dashboard_screen_builder.dart
+│   │   │   │   └── table_properties.dart
+│   ├── media_section
+│   │   ├── about_us
+│   │   │   ├── controller
+│   │   │   │   ├── about_us_controller.dart
+│   │   │   ├── views
+│   │   │   │   └── about_us_screen.dart
+│   │   │   │   └── about_us_screen_builder.dart
+│   │   ├── automated_reply
+│   │   │   ├── category.dart
+│   │   │   ├── category_response.dart
+│   │   │   ├── controller
+│   │   │   │   ├── automated_reply_controller.dart
+│   │   │   ├── views
+│   │   │   │   └── automated_reply_screen.dart
+│   │   │   │   └── automated_reply_screen_builder.dart
+│   │   ├── notification_setter
+│   │   │   ├── controller
+│   │   │   │   ├── notification_setter_controller.dart
+│   │   │   ├── selected_user.dart
+│   │   │   ├── views
+│   │   │   │   └── notification_setter_screen.dart
+│   │   │   │   └── notification_setter_screen_builder.dart
+│   │   ├── promo_banner
+│   │   │   └── controller
+│   │   │   │   ├── promo_banner_controller.dart
+│   │   │   └── views
+│   │   │   │   └── promo_banner_screen.dart
+│   │   │   │   └── promo_banner_screen_builder.dart
+│   ├── roles_permissions.dart
+│   ├── staff_section
 │   ├── test_controller.dart
+│   ├── users_section
+│   │   └── active_users
+│   │   │   ├── controller
+│   │   │   │   ├── active_users_controller.dart
+│   │   │   ├── table
+│   │   │   │   ├── user_data_pager_delegator.dart
+│   │   │   │   ├── user_data_source.dart
+│   │   │   ├── user.dart
+│   │   │   ├── user_response.dart
+│   │   │   ├── views
+│   │   │   │   └── active_users_screen.dart
+│   │   │   │   └── active_users_screen_builder.dart
+│   │   └── active_users_new
+│   │   │   ├── controller
+│   │   │   │   ├── active_users_new_controller.dart
+│   │   │   ├── table
+│   │   │   │   ├── user_new_data_pager_delegate.dart
+│   │   │   │   ├── user_new_data_source.dart
+│   │   │   ├── test_api.dart
+│   │   │   ├── user_api_service.dart
+│   │   │   ├── user_new.dart
+│   │   │   ├── user_new_response_model.dart
+│   │   │   ├── views
+│   │   │   │   └── active_users_new_screen.dart
+│   │   │   │   └── active_users_new_screen_builder.dart
+│   │   └── blocked_users
+│   │   │   ├── blocked_user.dart
+│   │   │   ├── blocked_user_api_service.dart
+│   │   │   ├── blocked_user_response.dart
+│   │   │   ├── controller
+│   │   │   │   ├── blocked_users_controller.dart
+│   │   │   ├── table
+│   │   │   │   ├── blocked_users_data_pager_delegate.dart
+│   │   │   │   ├── blocked_users_data_source.dart
+│   │   │   ├── views
+│   │   │   │   └── blocked_users_screen.dart
+│   │   │   │   └── blocked_users_screen_builder.dart
+│   │   └── pending_profile
+│   │   │   ├── controller
+│   │   │   │   ├── pending_profile_controller.dart
+│   │   │   ├── pending_profile.dart
+│   │   │   ├── pending_profile_response.dart
+│   │   │   ├── views
+│   │   │   │   └── pending_profile_screen.dart
+│   │   │   │   └── pending_profile_screen_builder.dart
+│   │   └── pending_users
+│   │   │   ├── controller
+│   │   │   │   ├── pending_users_controller.dart
+│   │   │   ├── pending_user.dart
+│   │   │   ├── pending_user_api_service.dart
+│   │   │   ├── pending_user_response.dart
+│   │   │   ├── table
+│   │   │   │   ├── pending_users_data_pager_delegate.dart
+│   │   │   │   ├── pending_users_data_source.dart
+│   │   │   ├── views
+│   │   │   │   └── pending_users_screen.dart
+│   │   │   │   └── pending_users_screen_builder.dart
+│   │   └── user_levels
+│   │   │   └── controller
+│   │   │   │   ├── user_levels_controller.dart
+│   │   │   └── table
+│   │   │   │   ├── user_levels_data_pager_delegate.dart
+│   │   │   │   ├── user_levels_data_source.dart
+│   │   │   └── user_levels.dart
+│   │   │   └── user_levels_response.dart
+│   │   │   └── user_level_api_service.dart
+│   │   │   └── views
+│   │   │   │   └── user_levels_screen.dart
+│   │   │   │   └── user_levels_screen_builder.dart
 ├── router
 │   └── app_router.dart
 │   └── app_routes.dart
 │   └── app_routes_list.dart
 │   └── router_config.dart
 │   └── route_path.dart
+project_structure.txt
 pubspec.lock
 pubspec.yaml
 README.md
+update_files.py

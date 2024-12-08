@@ -9,6 +9,7 @@ import 'package:globipay_admin_panel/modules/users_section/active_users_new/tabl
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:globipay_admin_panel/modules/role_manager.dart';
 
 class ActiveUsersNewScreenBuilder extends StatefulWidget {
   const ActiveUsersNewScreenBuilder({super.key});
@@ -18,9 +19,11 @@ class ActiveUsersNewScreenBuilder extends StatefulWidget {
       _ActiveUsersNewScreenBuilderState();
 }
 
-
 class _ActiveUsersNewScreenBuilderState extends BaseViewState<
     ActiveUsersNewScreenBuilder, ActiveUsersNewController> {
+  final String currentRole = RoleManager.manager; // Example role
+  late List<String> visibleColumns;
+
   @override
   void initState() {
     controller.onInit();
@@ -34,6 +37,8 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
 
   @override
   Widget body(BuildContext context) {
+    final visibleColumns = RoleManager.getVisibleColumns(currentRole); // Get columns for the role
+
     return Container(
       color: Colors.grey[100],
       child: Padding(
@@ -117,9 +122,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                       onActionTap: (user, action) {
                         switch (action) {
                           case 'details':
-                            AppRoutes.pushNamed(
-                              RoutePath.pendingProfile,
-                            );
+                            AppRoutes.pushNamed(RoutePath.pendingProfile);
                             break;
                           case 'delete':
                             print('Delete action for ${user.name}');
@@ -129,57 +132,11 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                             break;
                         }
                       },
+                       visibleColumns: visibleColumns,
                     ),
                     gridLinesVisibility: GridLinesVisibility.both,
                     headerGridLinesVisibility: GridLinesVisibility.both,
-                    columns: [
-                      GridColumn(
-                        columnName: 'name',
-                        label: _buildHeaderCell('Full Name'),
-                      ),
-                      GridColumn(
-                        columnName: 'email',
-                        label: _buildHeaderCell('Email'),
-                      ),
-                      GridColumn(
-                        columnName: 'primary',
-                        label: _buildHeaderCell('Primary'),
-                      ),
-                      GridColumn(
-                        columnName: 'secondary',
-                        label: _buildHeaderCell('Secondary'),
-                      ),
-                      GridColumn(
-                        columnName: 'levelName',
-                        label: _buildHeaderCell('Level'),
-                        width: 100,
-                      ),
-                      GridColumn(
-                        columnName: 'date',
-                        label: _buildHeaderCell('Date'),
-                        width: 120,
-                      ),
-                      GridColumn(
-                        columnName: 'status',
-                        label: _buildHeaderCell('Status'),
-                        width: 100,
-                      ),
-                      GridColumn(
-                        columnName: 'details',
-                        label: _buildHeaderCell('Details'),
-                        width: 80,
-                      ),
-                      GridColumn(
-                        columnName: 'delete',
-                        label: _buildHeaderCell('Delete'),
-                        width: 80,
-                      ),
-                      GridColumn(
-                        columnName: 'message',
-                        label: _buildHeaderCell('Message'),
-                        width: 80,
-                      ),
-                    ],
+                    columns: _buildColumns(visibleColumns),
                     rowHeight: 50,
                   ),
                 ),
@@ -194,20 +151,61 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                   ),
                 ),
                 child: Obx(
-                () => SfDataPager(
-                  delegate: UserDataPagerDelegate(controller),
-                  pageCount: max(
-                    1,
-                    (controller.totalItems.value / controller.pageSize.value).ceilToDouble(),
-                  ), // Ensure minimum pageCount is 1
+                  () => SfDataPager(
+                    delegate: UserDataPagerDelegate(controller),
+                    pageCount: max(
+                      1,
+                      (controller.totalItems.value / controller.pageSize.value)
+                          .ceilToDouble(),
+                    ), // Ensure minimum pageCount is 1
+                  ),
                 ),
-              ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  List<GridColumn> _buildColumns(List<String> visibleColumns) {
+    final columnDefinitions = {
+      'name': 'Full Name',
+      'email': 'Email',
+      'primary': 'Primary',
+      'secondary': 'Secondary',
+      'levelName': 'Level',
+      'date': 'Date',
+      'status': 'Status',
+      'details': 'Details',
+      'delete': 'Delete',
+      'message': 'Message',
+    };
+
+    return visibleColumns.map((colName) {
+      return GridColumn(
+        columnName: colName,
+        label: _buildHeaderCell(columnDefinitions[colName] ?? colName),
+        width: _getColumnWidth(colName),
+      );
+    }).toList();
+  }
+
+  double _getColumnWidth(String columnName) {
+    switch (columnName) {
+      case 'levelName':
+        return 100;
+      case 'date':
+        return 220;
+      case 'status':
+        return 100;
+      case 'details':
+      case 'delete':
+      case 'message':
+        return 80;
+      default:
+        return 80.0;
+    }
   }
 
   Widget _buildHeaderCell(String text) {

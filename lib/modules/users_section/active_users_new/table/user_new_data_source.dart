@@ -6,31 +6,47 @@ import 'package:intl/intl.dart';
 class UserDataSource extends DataGridSource {
   final List<User> users;
   final Function(User user, String action)? onActionTap;
+  final List<String> visibleColumns; // Add visibleColumns
 
-  UserDataSource(this.users, {this.onActionTap}) {
+  UserDataSource(this.users, {this.onActionTap, required this.visibleColumns}) {
     buildDataGridRows();
   }
 
   List<DataGridRow> _dataGridRows = [];
 
   void buildDataGridRows() {
+    // Build rows based on the visible columns
     _dataGridRows = users
-        .map((user) => DataGridRow(cells: [
-              DataGridCell<String>(columnName: 'name', value: user.name),
-              DataGridCell<String>(columnName: 'email', value: user.email),
-              DataGridCell<double>(columnName: 'primary', value: user.primary),
-              DataGridCell<double>(
-                  columnName: 'secondary', value: user.secondary),
-              DataGridCell<String>(
-                  columnName: 'levelName', value: user.levelName),
-              DataGridCell<String>(
-                  columnName: 'date',
-                  value: DateFormat('dd-MM-yyyy').format(user.date)),
-              DataGridCell<String>(columnName: 'status', value: user.status),
-              DataGridCell<User>(columnName: 'details', value: user),
-              DataGridCell<User>(columnName: 'delete', value: user),
-              DataGridCell<User>(columnName: 'message', value: user),
-            ]))
+        .map((user) => DataGridRow(
+              cells: visibleColumns.map((columnName) {
+                switch (columnName) {
+                  case 'name':
+                    return DataGridCell<String>(columnName: 'name', value: user.name);
+                  case 'email':
+                    return DataGridCell<String>(columnName: 'email', value: user.email);
+                  case 'primary':
+                    return DataGridCell<double>(columnName: 'primary', value: user.primary);
+                  case 'secondary':
+                    return DataGridCell<double>(columnName: 'secondary', value: user.secondary);
+                  case 'levelName':
+                    return DataGridCell<String>(columnName: 'levelName', value: user.levelName);
+                  case 'date':
+                    return DataGridCell<String>(
+                        columnName: 'date',
+                        value: DateFormat('dd-MM-yyyy').format(user.date));
+                  case 'status':
+                    return DataGridCell<String>(columnName: 'status', value: user.status);
+                  case 'details':
+                    return DataGridCell<User>(columnName: 'details', value: user);
+                  case 'delete':
+                    return DataGridCell<User>(columnName: 'delete', value: user);
+                  case 'message':
+                    return DataGridCell<User>(columnName: 'message', value: user);
+                  default:
+                    throw Exception('Invalid column: $columnName');
+                }
+              }).toList(),
+            ))
         .toList();
   }
 
@@ -67,8 +83,7 @@ class UserDataSource extends DataGridSource {
             Colors.blue,
             Icons.visibility,
             () {
-              print(
-                  'Details button clicked for user: ${(cell.value as User).name}');
+              print('Details button clicked for user: ${(cell.value as User).name}');
               onActionTap?.call(cell.value as User, 'details');
             },
           ),
@@ -80,8 +95,7 @@ class UserDataSource extends DataGridSource {
             Colors.red,
             Icons.delete,
             () {
-              print(
-                  'Delete button clicked for user: ${(cell.value as User).name}');
+              print('Delete button clicked for user: ${(cell.value as User).name}');
               onActionTap?.call(cell.value as User, 'delete');
             },
           ),
@@ -93,8 +107,7 @@ class UserDataSource extends DataGridSource {
             Colors.orange,
             Icons.message,
             () {
-              print(
-                  'Message button clicked for user: ${(cell.value as User).name}');
+              print('Message button clicked for user: ${(cell.value as User).name}');
               onActionTap?.call(cell.value as User, 'message');
             },
           ),
