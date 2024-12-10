@@ -41,49 +41,6 @@ class _ChatMessageListScreenBuilderState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                 AppRoutes.pop();
-                },
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Obx(()=>
-                            AppText(
-                              controller.userName.value,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),),
-                            SizedBox(width: 6),
-                            Icon(Icons.arrow_forward_ios_outlined,
-                                color: Colors.blue, size: 16),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Image.asset(AppImages.support),
-                  SizedBox(width: 16),
-                  Image.asset(AppImages.notification),
-                ],
-              ),
-            ],
-          ),
-        ),
 
         AppSpaces.spaceBetweenChild,
 

@@ -21,6 +21,7 @@ import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:storage_client/storage_client.dart';
 
 /**
  * Created by Abdullah on 16/10/24 08:01 PM.
@@ -287,14 +288,15 @@ class ChatController extends BaseController {
   }
 
   Future<String> uploadMediaFile(File file, String folder) async {
-    final fileName =
+    return "";
+    /*final fileName =
         '${DateTime.now().millisecondsSinceEpoch}_${file.path.split('/').last}';
     final response = await supabase.storage.from(folder).upload(fileName, file);
     if (response == null) {
       return supabase.storage.from(folder).getPublicUrl(fileName);
     } else {
       throw Exception("Failed to upload file");
-    }
+    }*/
   }
 
   //Load all messages
@@ -528,7 +530,7 @@ class ChatController extends BaseController {
   }
 
   Future<String?> uploadImage(File imageFile) async {
-    try {
+    /*try {
       final supabase = Supabase.instance.client;
 
       // Define the unique file name for the image
@@ -553,7 +555,7 @@ class ChatController extends BaseController {
     } catch (e) {
       print('Error uploading image: $e');
       return null;
-    }
+    }*/
   }
 
   Future<File?> pickFile() async {

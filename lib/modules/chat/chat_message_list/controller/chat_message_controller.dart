@@ -61,11 +61,11 @@ class ChatMessageController extends BaseController {
 
   void fetchCustomerChatSessions() async {
     try {
-      final userID = await tokenRepository.getUserID();
+      //final userID = await tokenRepository.getUserID();
 
       // Execute the remote procedure call
       final response = await supabase
-          .rpc('user_chat_session', params: {'input_user_id': userID});
+          .rpc('user_chat_session', params: {'input_user_id': "f5480e3f-dfdd-4c6f-bb89-542203170985"});
 
       // Since the response is a list, check if it is empty
       if (response == null || (response as List).isEmpty) {

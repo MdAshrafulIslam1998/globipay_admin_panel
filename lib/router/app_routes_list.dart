@@ -1,6 +1,11 @@
 import 'package:get/get.dart';
+import 'package:globipay_admin_panel/data/models/call_model.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/views/trans_history_screen.dart';
 import 'package:globipay_admin_panel/modules/authetication/login/views/login_screen.dart';
+import 'package:globipay_admin_panel/modules/chat/call/audio_call/views/audio_call_screen.dart';
+import 'package:globipay_admin_panel/modules/chat/call/call_waiting/views/call_waiting_screen.dart';
+import 'package:globipay_admin_panel/modules/chat/chat_message_list/views/chat_message_list_screen.dart';
+import 'package:globipay_admin_panel/modules/chat/chat_screen/views/chat_screen_screen.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/views/base_panel_screen.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/views/dashboard_screen.dart';
 import 'package:globipay_admin_panel/modules/splash/splash_screen.dart';
@@ -18,6 +23,7 @@ import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/pr
 import 'package:globipay_admin_panel/modules/media_section/automated_reply/views/automated_reply_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/about_us/views/about_us_screen.dart';
 import 'package:go_router/go_router.dart';
+import '../modules/chat/call/video_call/video_call_screen.dart';
 import 'route_path.dart';
 
 abstract class AppRoutesList {
@@ -114,6 +120,35 @@ abstract class AppRoutesList {
             builder: (context, state) => AboutUsScreen(),
           ),
 
+          GoRoute(
+            path: RoutePath.chatMessageList,
+            name: RoutePath.chatMessageList,
+            builder: (context, state) => const ChatMessageListScreen(),
+          ),
+
+          GoRoute(
+            path: RoutePath.chat,
+            name: RoutePath.chat,
+            builder: (context, state) => ChatScreenScreen(),
+          ),
+
+          GoRoute(
+            path: RoutePath.audioCall,
+            name: RoutePath.audioCall,
+            builder: (context, state) => const AudioCallScreen(),
+          ),
+
+          GoRoute(
+            path: RoutePath.videoCall,
+            name: RoutePath.videoCall,
+            builder: (context, state) => VideoCallScreen(data: state.extra),
+          ),
+
+          GoRoute(
+            path: RoutePath.callPickUp,
+            name: RoutePath.callPickUp,
+            builder: (context, state) => CallWaitingScreen(data: state.extra as CallModel),
+          ),
 
         ],
       ),

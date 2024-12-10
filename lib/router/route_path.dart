@@ -20,6 +20,7 @@ abstract class RoutePath {
   static const String videoCall = _RoutePath._videoCall;
   static const String callPickUp = _RoutePath._callPickUp;
   static const String chat = _RoutePath._chat;
+  static const String chatMessageList = _RoutePath._chatMessageList;
 
 }
 
@@ -46,5 +47,7 @@ class _RoutePath {
   static const String _videoCall = '/videoCall';
   static const String _callPickUp = '/callPickUp';
   static const String _chat = '/chat';
+  static const String _chatMessageList = '/chatMessageList';
+
 
 }

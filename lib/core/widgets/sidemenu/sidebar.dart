@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:globipay_admin_panel/core/constants/config.dart';
 import 'package:globipay_admin_panel/core/constants/defaults.dart';
 import 'package:globipay_admin_panel/core/constants/ghaps.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:go_router/go_router.dart';
 import '../../theme/app_colors.dart';
@@ -145,11 +146,14 @@ class Sidebar extends StatelessWidget {
                             isSubmenu: false,
                             isActive: currentRoute == RoutePath.activeUsersNew,
                             title: "Chat List",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            leading: Icon(
+                              CupertinoIcons.chat_bubble_text,
+                              color: AppColors.iconBlack,
+                            ),
+
                             count: 16,
                             onPressed: () {
-                              context.go(RoutePath.activeUsersNew);
+                              AppRoutes.pushNamed(RoutePath.chatMessageList);
                             },
                           ),
                           MenuTile(

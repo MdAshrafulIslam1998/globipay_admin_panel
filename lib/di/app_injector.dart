@@ -7,6 +7,11 @@ import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/data/repository_impl/app_repository_impl.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/controller/trans_history_controller.dart';
 import 'package:globipay_admin_panel/modules/authetication/login/controller/login_controller.dart';
+import 'package:globipay_admin_panel/modules/chat/call/video_call/controller/video_cal_controller.dart';
+import 'package:globipay_admin_panel/modules/chat/call/video_call/widgets/controller/call_controller_widget_controller.dart';
+import 'package:globipay_admin_panel/modules/chat/chat_message_list/controller/chat_message_controller.dart';
+import 'package:globipay_admin_panel/modules/chat/chat_screen/controller/chat_controller.dart';
+import 'package:globipay_admin_panel/modules/chat/controller/chat_shared_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users/controller/active_users_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/controller/base_panel_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/controller/dashboard_controller.dart';
@@ -44,6 +49,10 @@ abstract class AppInjector extends Injector {
   }
 
 
+  @Register.factory(CallControllerWidgetController)
+  @Register.factory(VideoCallController)
+  @Register.factory(ChatController)
+  @Register.factory(ChatMessageController)
   @Register.factory(LoginController)
   @Register.factory(DashboardController)
   @Register.factory(BasePanelController)
@@ -63,6 +72,7 @@ abstract class AppInjector extends Injector {
   @Register.factory(EditCoinController)
 
   //Singleton
+  @Register.singleton(ChatSharedController)
   @Register.singleton(AppSecureStorage)
   void _controllerComponents();
 
