@@ -60,14 +60,9 @@ class Sidebar extends StatelessWidget {
                         dividerColor: Colors.transparent,
                       ),
                       child: ExpansionTile(
-                        leading: SvgPicture.asset(
-                          'assets/icons/bulb_filled.svg',
-                          height: 24,
-                          width: 24,
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.iconBlack,
-                            BlendMode.srcIn,
-                          ),
+                        leading: const Icon(
+                          CupertinoIcons.person_2,
+                          color: AppColors.iconBlack,
                         ),
                         title: Text(
                           "Users",
@@ -126,6 +121,75 @@ class Sidebar extends StatelessWidget {
                         ],
                       ),
                     ),
+
+                    // Chat Sections
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        dividerColor: Colors.transparent,
+                      ),
+                      child: ExpansionTile(
+                        leading: const Icon(
+                          CupertinoIcons.chat_bubble_2,
+                          color: AppColors.iconBlack,
+                        ),
+                        title: Text(
+                          "Chat",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color:
+                            Theme.of(context).textTheme.bodyMedium!.color,
+                          ),
+                        ),
+                        children: [
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.activeUsersNew,
+                            title: "Chat List",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.activeUsersNew);
+                            },
+                          ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.pendingUsers,
+                            title: "Pending Users",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.pendingUsers);
+                            },
+                          ),
+
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.blockedUsers,
+                            title: "Blocked Users",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.blockedUsers);
+                            },
+                          ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.userLevels,
+                            title: "Users Levels",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.userLevels);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+
                     // Amount Section with ExpansionTile
                     Theme(
                       data: Theme.of(context).copyWith(

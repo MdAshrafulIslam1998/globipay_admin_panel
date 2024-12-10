@@ -16,6 +16,8 @@ class MenuTile extends StatelessWidget {
     this.isSubmenu = false,
     this.count,
     this.countBg = AppColors.secondaryMintGreen,
+    this.trailing,
+    this.leading,
   });
 
   final String title;
@@ -24,6 +26,8 @@ class MenuTile extends StatelessWidget {
   final bool isActive, isSubmenu;
   final int? count;
   final Color countBg;
+  final Widget? trailing;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +41,7 @@ class MenuTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppDefaults.borderRadius),
           ),
           onTap: onPressed,
-          leading: activeIconSrc != null
-              ? SvgPicture.asset(
+          leading: leading ?? SvgPicture.asset(
                   (isActive || inactiveIconSrc == null)
                       ? activeIconSrc!
                       : inactiveIconSrc!,
@@ -49,8 +52,7 @@ class MenuTile extends StatelessWidget {
                           ? Theme.of(context).iconTheme.color!
                           : Theme.of(context).textTheme.bodyMedium!.color!,
                       BlendMode.srcIn),
-                )
-              : null,
+                ),
           title: Text(
             title,
             style: TextStyle(
@@ -58,8 +60,7 @@ class MenuTile extends StatelessWidget {
               color: isActive ? AppColors.titleLight : AppColors.textLight,
             ),
           ),
-          trailing: count != null
-              ? Container(
+          trailing: trailing ?? Container(
                   padding: const EdgeInsets.symmetric(
                       horizontal: AppDefaults.padding / 2,
                       vertical: AppDefaults.padding / 4),
@@ -73,7 +74,7 @@ class MenuTile extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 )
-              : null,
+          ,
         ),
       ),
     );

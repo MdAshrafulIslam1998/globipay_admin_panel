@@ -1,0 +1,16 @@
+/**
+ * Created by Abdullah on 19/10/24.
+ */
+
+import 'date_chip_text.dart';
+
+///all the algorithms of the plugin
+///[dateChipText] to get the text which is need to show on the [DateChip]
+abstract class Algo {
+  Algo._();
+
+  static String dateChipText(final DateTime date) {
+    final dateChipText = new DateChipText(date);
+    return dateChipText.getText();
+  }
+}

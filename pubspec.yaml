@@ -70,6 +70,9 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   syncfusion_flutter_datagrid_export: ^27.1.58
   syncfusion_flutter_pdf: ^27.1.58
+  permission_handler: ^10.2.0
+  agora_rtc_engine: ^6.3.2
+  file_picker: ^8.1.3
 
 
 

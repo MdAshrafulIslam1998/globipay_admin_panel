@@ -32,4 +32,12 @@ class AppUtils {
 
     return selectedEmojis.join(' '); // Join them into a single string
   }
+
+
+  static String formatDuration(int seconds) {
+    final minutes = (seconds ~/ 60).toString().padLeft(2, '0');
+    final secs = (seconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$secs';
+  }
+
 }
