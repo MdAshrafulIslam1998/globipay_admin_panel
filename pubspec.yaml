@@ -76,6 +76,7 @@ dependencies:
 
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -96,3 +97,16 @@ flutter:
     - assets/images/
     - assets/images/illustration/
     - assets/logo/
+  fonts:
+    - family: iAWriterQuattroS
+      fonts:
+        - asset: assets/fonts/iAWriterQuattroS-Regular.ttf
+    - family: Recursive
+      fonts:
+        - asset: assets/fonts/Recursive-Bold.ttf
+    - family: iAWriterQuattroSBold
+      fonts:
+        - asset: assets/fonts/iAWriterQuattroS-Bold.ttf
+    - family: newyork
+      fonts:
+        - asset: assets/fonts/new-york-medium_bold.ttf

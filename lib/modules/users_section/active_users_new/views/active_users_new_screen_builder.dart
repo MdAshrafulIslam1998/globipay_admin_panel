@@ -8,8 +8,10 @@ import 'package:globipay_admin_panel/modules/users_section/active_users_new/tabl
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_source.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:globipay_admin_panel/modules/role_manager.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 
 class ActiveUsersNewScreenBuilder extends StatefulWidget {
   const ActiveUsersNewScreenBuilder({super.key});
@@ -21,8 +23,20 @@ class ActiveUsersNewScreenBuilder extends StatefulWidget {
 
 class _ActiveUsersNewScreenBuilderState extends BaseViewState<
     ActiveUsersNewScreenBuilder, ActiveUsersNewController> {
-  final String currentRole = RoleManager.manager; // Example role
-  late List<String> visibleColumns;
+  final String currentRole = RoleManager.admin;
+
+  late Map<String, double> columnWidths = {
+    'name': double.nan,
+    'email': double.nan,
+    'primary': double.nan,
+    'secondary': double.nan,
+    'levelName': double.nan,
+    'date': double.nan,
+    'status': double.nan,
+    'details': double.nan,
+    'delete': double.nan,
+    'message': double.nan,
+  };
 
   @override
   void initState() {
@@ -32,33 +46,48 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
 
   @override
   PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Active Users New'));
+    return AppBar(title: Text('Active Users'));
   }
 
   @override
   Widget body(BuildContext context) {
-    final visibleColumns = RoleManager.getVisibleColumns(currentRole); // Get columns for the role
+    final visibleColumns = RoleManager.getVisibleColumns(currentRole);
 
     return Container(
-      color: Colors.grey[100],
+      color: const Color.fromARGB(255, 240, 238, 255),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
-          elevation: 4,
+          elevation: 6,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Header
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color.fromARGB(255, 28, 170, 61),
+                      const Color.fromARGB(255, 127, 224, 135),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 8,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,28 +96,31 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                       () => Text(
                         'Total Users: ${controller.totalItems}',
                         style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontFamily: 'newyork',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                     Row(
                       children: [
-                        Text(
-                          'Entries per page: ',
+                        const Text(
+                          'Show entries:   ',
                           style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w500,
+                            fontFamily: 'newyork',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Theme.of(context).primaryColor,
+                              color: Colors.white,
                               width: 1,
                             ),
                           ),
@@ -98,7 +130,17 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                                 items: [5, 10, 20, 30].map((size) {
                                   return DropdownMenuItem<int>(
                                     value: size,
-                                    child: Text(size.toString()),
+                                    child: Text(
+                                      size.toString(),
+                                      style: TextStyle(
+                                        fontSize: 13, // Adjust the font size
+                                        fontWeight: FontWeight
+                                            .bold, // Change font weight (e.g., bold)
+                                        color: const Color.fromARGB(143, 0, 0, 0), // Set text color
+                                        fontFamily:
+                                            'newyork', // Specify a custom font family if needed
+                                      ),
+                                    ),
                                   );
                                 }).toList(),
                                 onChanged: (newSize) {
@@ -113,10 +155,10 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                   ],
                 ),
               ),
+              // DataGrid
               Expanded(
                 child: Obx(
                   () => SfDataGrid(
-                    columnWidthMode: ColumnWidthMode.fill,
                     source: UserDataSource(
                       controller.users,
                       onActionTap: (user, action) {
@@ -132,17 +174,33 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                             break;
                         }
                       },
-                       visibleColumns: visibleColumns,
+                      visibleColumns: visibleColumns,
                     ),
+                    allowColumnsResizing: true,
+                    onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
+                      setState(() {
+                        columnWidths[details.column.columnName] = details.width;
+                      });
+                      return true;
+                    },
                     gridLinesVisibility: GridLinesVisibility.both,
                     headerGridLinesVisibility: GridLinesVisibility.both,
+                    columnWidthMode: ColumnWidthMode.fill,
                     columns: _buildColumns(visibleColumns),
                     rowHeight: 50,
+                    headerRowHeight: 60,
                   ),
                 ),
               ),
+              // Pagination
               Container(
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 232, 236, 233),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
                   border: Border(
                     top: BorderSide(
                       color: Colors.grey[300]!,
@@ -151,13 +209,23 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                   ),
                 ),
                 child: Obx(
-                  () => SfDataPager(
-                    delegate: UserDataPagerDelegate(controller),
-                    pageCount: max(
-                      1,
-                      (controller.totalItems.value / controller.pageSize.value)
-                          .ceilToDouble(),
-                    ), // Ensure minimum pageCount is 1
+                  () => SfDataPagerTheme(
+                    data: SfDataPagerThemeData(
+                      itemColor: Colors.white, // Unselected button color
+                      selectedItemColor: const Color.fromARGB(
+                          164, 12, 87, 62), // Selected button color
+                      itemBorderRadius: BorderRadius.circular(50),
+                      backgroundColor: const Color.fromARGB(255, 232, 236, 233),
+                    ),
+                    child: SfDataPager(
+                      delegate: UserDataPagerDelegate(controller),
+                      pageCount: max(
+                        1,
+                        (controller.totalItems.value /
+                                controller.pageSize.value)
+                            .ceilToDouble(),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -170,53 +238,43 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
 
   List<GridColumn> _buildColumns(List<String> visibleColumns) {
     final columnDefinitions = {
-      'name': 'Full Name',
-      'email': 'Email',
-      'primary': 'Primary',
-      'secondary': 'Secondary',
-      'levelName': 'Level',
-      'date': 'Date',
-      'status': 'Status',
-      'details': 'Details',
-      'delete': 'Delete',
-      'message': 'Message',
+      'name': {'title': 'Full Name', 'paddingPercent': 20},
+      'email': {'title': 'Email', 'paddingPercent': 25},
+      'primary': {'title': 'Primary', 'paddingPercent': 10},
+      'secondary': {'title': 'Secondary', 'paddingPercent': 10},
+      'levelName': {'title': 'Level', 'paddingPercent': 10},
+      'date': {'title': 'Date', 'paddingPercent': 10},
+      'status': {'title': 'Status', 'paddingPercent': 5},
+      'details': {'title': 'Details', 'paddingPercent': 5},
+      'delete': {'title': 'Delete', 'paddingPercent': 5},
+      'message': {'title': 'Message', 'paddingPercent': 5},
     };
 
     return visibleColumns.map((colName) {
+      final columnData = columnDefinitions[colName];
+      final title = (columnData?['title'] as String?) ?? colName;
+      final paddingPercent = (columnData?['paddingPercent'] as int?) ?? 10;
+
       return GridColumn(
         columnName: colName,
-        label: _buildHeaderCell(columnDefinitions[colName] ?? colName),
-        width: _getColumnWidth(colName),
+        width: columnWidths[colName]!,
+        label: _buildHeaderCell(title, paddingPercent),
       );
     }).toList();
   }
 
-  double _getColumnWidth(String columnName) {
-    switch (columnName) {
-      case 'levelName':
-        return 100;
-      case 'date':
-        return 220;
-      case 'status':
-        return 100;
-      case 'details':
-      case 'delete':
-      case 'message':
-        return 80;
-      default:
-        return 80.0;
-    }
-  }
+  Widget _buildHeaderCell(String text, int paddingPercent) {
+    final double horizontalPadding = paddingPercent.toDouble();
 
-  Widget _buildHeaderCell(String text) {
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       alignment: Alignment.center,
       child: Text(
         text,
         style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
+          fontFamily: 'newyork',
+          fontSize: 15,
+          fontWeight: FontWeight.w900,
           color: Color(0xFF2C3E50),
         ),
       ),

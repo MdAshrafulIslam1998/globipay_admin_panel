@@ -13,12 +13,11 @@ class ActiveUsersNewController extends BaseController {
 
   ActiveUsersNewController(this._repository);
 
-
   //Rx Variables
   var users = <UserResponseItemEntity>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
-  var pageSize = 5.obs;
+  var pageSize = 10.obs;
   var isLoading = false.obs;
 
   PaginationRequest paginationRequest(int page, int limit) => PaginationRequest(
@@ -53,3 +52,5 @@ class ActiveUsersNewController extends BaseController {
     fetchUsers(currentPage.value, pageSize.value);
   }
 }
+
+
