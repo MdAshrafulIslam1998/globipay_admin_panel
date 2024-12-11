@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
+import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
@@ -10,8 +11,11 @@ import 'package:globipay_admin_panel/entity/response/user_response/user_response
 class ActiveUsersNewController extends BaseController {
 
   final AppRepository _repository;
+  final TokenRepository tokenRepository;
+  String currentRole = '';
 
-  ActiveUsersNewController(this._repository);
+
+  ActiveUsersNewController(this._repository, this.tokenRepository);
 
   //Rx Variables
   var users = <UserResponseItemEntity>[].obs;
@@ -46,8 +50,13 @@ class ActiveUsersNewController extends BaseController {
     fetchUsers(1, newSize);
   }
 
+  Future<String> getRole()async{
+    return await tokenRepository.getRole().toString();
+  }
+
   @override
-  void onInit() {
+  void onInit() async{
+    currentRole = await tokenRepository.getRole();
     super.onInit();
     fetchUsers(currentPage.value, pageSize.value);
   }

@@ -23,7 +23,7 @@ class ActiveUsersNewScreenBuilder extends StatefulWidget {
 
 class _ActiveUsersNewScreenBuilderState extends BaseViewState<
     ActiveUsersNewScreenBuilder, ActiveUsersNewController> {
-  final String currentRole = RoleManager.admin;
+  
 
   late Map<String, double> columnWidths = {
     'name': double.nan,
@@ -52,7 +52,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
 
   @override
   Widget body(BuildContext context) {
-    final visibleColumns = RoleManager.getVisibleColumns(currentRole);
+    final visibleColumns = RoleManager.getVisibleColumns(controller.currentRole);
 
     return Container(
       color: const Color.fromARGB(255, 240, 238, 255),
@@ -137,7 +137,8 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                                         fontSize: 13, // Adjust the font size
                                         fontWeight: FontWeight
                                             .bold, // Change font weight (e.g., bold)
-                                        color: const Color.fromARGB(143, 0, 0, 0), // Set text color
+                                        color: const Color.fromARGB(
+                                            143, 0, 0, 0), // Set text color
                                         fontFamily:
                                             'newyork', // Specify a custom font family if needed
                                       ),
