@@ -20,7 +20,6 @@ import 'package:globipay_admin_panel/modules/chat/controller/chat_shared_control
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:storage_client/storage_client.dart';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
@@ -384,40 +383,42 @@ class ChatController extends BaseController {
 
   // Image Message
 
-  void onSendMessageFromPhotoLibrary() async {
-    selectAndUploadFile();
-  }
+
 
   void onSendMessageUsingCamera() {
     requestCameraPermission();
   }
 
-  void selectAndUploadImage() async {
-    final imageFile = await pickImageFromGallery();
+  void onSendMessageFromPhotoLibrary() async {
+    selectAndUploadFile();
+  }
 
-    if (imageFile != null) {
-      final imageUrl = await uploadImage(imageFile);
+
+  void selectAndUploadImage() async {
+    final Uint8List? imageBytes = await pickImageFromGallery();
+
+    if (imageBytes != null) {
+      final String? imageUrl = await uploadImage(imageBytes);
       if (imageUrl != null) {
         await sendMediaMessage(imageUrl, textType: 'image');
+      } else {
+        appPrint("Failed to upload the image.");
       }
     } else {
       appPrint("No image selected");
     }
   }
 
-  Future<File?> pickImageFromGallery() async {
-    final ImagePicker _picker = ImagePicker();
-
+// Function to pick an image from the gallery
+  Future<Uint8List?> pickImageFromGallery() async {
     try {
-      final XFile? pickedFile = await _picker.pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1080, // Optionally, specify a maximum width
-        maxHeight: 1080, // Optionally, specify a maximum height
-        imageQuality: 80, // Compress image quality to 80%
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: false,
       );
 
-      if (pickedFile != null) {
-        return File(pickedFile.path);
+      if (result != null) {
+        return result.files.single.bytes; // Return the image bytes
       }
     } catch (e) {
       appPrint("Error picking image: $e");
@@ -425,6 +426,41 @@ class ChatController extends BaseController {
 
     return null;
   }
+
+  Future<String?> uploadImage(Uint8List imageFile) async {
+    try {
+      final supabase = Supabase.instance.client;
+
+      // Define a unique file name for the image
+      final String fileName =
+          'images/${DateTime.now().millisecondsSinceEpoch}.png';
+
+      // Upload the file to Supabase storage
+      final  response = await supabase.storage.from('chats').uploadBinary(
+        fileName,
+        imageFile,
+        fileOptions: FileOptions(contentType: 'image/png'), // Set MIME type for PNG
+      );
+
+      // Check if the upload was successful
+      if (response != null) {
+        // Get the public URL of the uploaded image
+        final String publicUrl = supabase.storage.from('chats').getPublicUrl(fileName);
+        return publicUrl; // Return the URL of the uploaded image
+      } else {
+        print('Image upload failed: ${response}');
+        return null;
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+      return null;
+    }
+  }
+
+
+
+
+
 
   void _showPermissionDeniedDialog(String permission) {
     showDialog(
@@ -478,7 +514,7 @@ class ChatController extends BaseController {
   // Camera Related stuffs
   void requestCameraPermission() async {
     // Check the current permission status
-    var cameraStatus = await Permission.camera.status;
+    /*var cameraStatus = await Permission.camera.status;
 
     if (cameraStatus.isGranted) {
       // Permission already granted, open the camera
@@ -509,10 +545,10 @@ class ChatController extends BaseController {
     } else if (cameraStatus.isPermanentlyDenied) {
       // Permission permanently denied; provide instructions to open settings
       _showOpenSettingsDialog("Camera");
-    }
+    }*/
   }
 
-  Future<File?> captureImage() async {
+  /*Future<File?> captureImage() async {
     final picker = ImagePicker();
 
     // Open the camera to capture an image
@@ -528,10 +564,10 @@ class ChatController extends BaseController {
     }
 
     return null; // Return null if no image is captured
-  }
+  }*/
 
-  Future<String?> uploadImage(File imageFile) async {
-    /*try {
+/*Future<String?> uploadImage(File imageFile) async {
+    try {
       final supabase = Supabase.instance.client;
 
       // Define the unique file name for the image
@@ -556,8 +592,8 @@ class ChatController extends BaseController {
     } catch (e) {
       print('Error uploading image: $e');
       return null;
-    }*/
-  }
+    }
+  }*/
 
   Future<Uint8List?> pickFile() async {
     try {
