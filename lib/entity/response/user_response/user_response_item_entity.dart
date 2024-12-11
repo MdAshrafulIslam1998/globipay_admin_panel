@@ -13,6 +13,8 @@ class UserResponseItemEntity {
   String? name;
   @JsonKey(name: "email")
   String? email;
+  @JsonKey(name: "phone")
+  String? phone;
   @JsonKey(name: "level_id")
   int? levelId;
   @JsonKey(name: "level_name")
@@ -30,6 +32,7 @@ class UserResponseItemEntity {
     this.userId,
     this.name,
     this.email,
+    this.phone,
     this.levelId,
     this.levelName,
     this.status,

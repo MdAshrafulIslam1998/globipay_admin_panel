@@ -121,7 +121,7 @@ class _PendingUsersScreenBuilderState
                     ),
                     gridLinesVisibility: GridLinesVisibility.both,
                     headerGridLinesVisibility: GridLinesVisibility.both,
-                    columnWidthMode: ColumnWidthMode.fill,
+                    columnWidthMode: ColumnWidthMode.auto,
                     columns: [
                       GridColumn(
                         columnName: 'fullName',
