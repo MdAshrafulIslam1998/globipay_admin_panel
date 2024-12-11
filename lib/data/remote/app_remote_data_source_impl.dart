@@ -1,5 +1,7 @@
 import 'package:globipay_admin_panel/core/base/base_remote_source.dart';
+import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/core/di/injector.dart';
 import 'package:globipay_admin_panel/data/api/app_api.dart';
 import 'package:globipay_admin_panel/entity/request/login/login_request.dart';
 import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
@@ -16,9 +18,12 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     implements AppRemoteDataSource {
   final String BASE_URL = FlavorConfig.instance.url;
 
+  final TokenRepository tokenRepository = Injector.resolve<TokenRepository>();
+
   @override
-  Future<UserResponseEntity> requestForUserList(PaginationRequest request, {String? path}) {
-    var endpoint = '$BASE_URL/${path ?? AppApi.userVerifiedProfile}';
+  Future<UserResponseEntity> requestForUserList(PaginationRequest request, {String? path}) async{
+    final staffId = await tokenRepository.getStuffId();
+    var endpoint = '$BASE_URL/${path ?? AppApi.userVerifiedProfile}/$staffId';
     var dioCall = dioClientWithAuth.get(
       endpoint,
       queryParameters: request.toJson(),
