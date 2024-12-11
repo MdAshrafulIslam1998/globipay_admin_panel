@@ -28,6 +28,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
   late Map<String, double> columnWidths = {
     'name': double.nan,
     'email': double.nan,
+    'phone': double.nan,
     'primary': double.nan,
     'secondary': double.nan,
     'levelName': double.nan,
@@ -240,6 +241,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
     final columnDefinitions = {
       'name': {'title': 'Full Name', 'paddingPercent': 20},
       'email': {'title': 'Email', 'paddingPercent': 25},
+      'phone': {'title': 'Phone', 'paddingPercent': 25},
       'primary': {'title': 'Primary', 'paddingPercent': 10},
       'secondary': {'title': 'Secondary', 'paddingPercent': 10},
       'levelName': {'title': 'Level', 'paddingPercent': 10},

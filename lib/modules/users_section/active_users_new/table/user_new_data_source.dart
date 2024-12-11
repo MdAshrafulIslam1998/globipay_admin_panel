@@ -27,6 +27,9 @@ class UserDataSource extends DataGridSource {
                   case 'email':
                     return DataGridCell<String>(
                         columnName: 'email', value: user.email);
+                  case 'phone':
+                    return DataGridCell<String>(
+                        columnName: 'phone', value: user.phone);
                   case 'primary':
                     return DataGridCell<double>(
                         columnName: 'primary', value: user.primary);
@@ -105,6 +108,21 @@ class UserDataSource extends DataGridSource {
             }),
           );
         } else if (cell.columnName == 'levelName') {
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(left: 14.0), // Add padding right
+            child: Text(
+              cell.value.toString(),
+              overflow: TextOverflow
+                  .ellipsis, // Ensure text is truncated with ellipsis
+              style: TextStyle(
+                fontFamily: 'iAWriterQuattroS',
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        } else if (cell.columnName == 'phone') {
           return Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.only(left: 14.0), // Add padding right
