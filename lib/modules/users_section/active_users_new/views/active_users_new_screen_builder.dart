@@ -52,7 +52,6 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
 
   @override
   Widget body(BuildContext context) {
-    final visibleColumns = RoleManager.getVisibleColumns(controller.currentRole);
 
     return Container(
       color: const Color.fromARGB(255, 240, 238, 255),
@@ -176,7 +175,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                             break;
                         }
                       },
-                      visibleColumns: visibleColumns,
+                      visibleColumns: controller.visibleColumns.value,
                     ),
                     allowColumnsResizing: true,
                     onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
@@ -188,7 +187,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                     gridLinesVisibility: GridLinesVisibility.both,
                     headerGridLinesVisibility: GridLinesVisibility.both,
                     columnWidthMode: ColumnWidthMode.fill,
-                    columns: _buildColumns(visibleColumns),
+                    columns: _buildColumns(controller.visibleColumns.value),
                     rowHeight: 50,
                     headerRowHeight: 60,
                   ),
