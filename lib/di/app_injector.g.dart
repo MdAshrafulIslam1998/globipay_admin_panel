@@ -33,7 +33,7 @@ class _$AppInjector extends AppInjector {
       ..registerFactory(
           (c) => PendingUsersController(c.resolve<AppRepository>()))
       ..registerFactory(
-          (c) => ActiveUsersNewController(c.resolve<AppRepository>()))
+          (c) => ActiveUsersNewController(c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => NotificationSetterController())
       ..registerFactory((c) => PendingProfileController())
       ..registerFactory((c) => EditCoinController())
