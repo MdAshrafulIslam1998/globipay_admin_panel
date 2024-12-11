@@ -6,6 +6,7 @@ import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
+import 'package:globipay_admin_panel/modules/role_manager.dart';
 
 
 class ActiveUsersNewController extends BaseController {
@@ -23,6 +24,7 @@ class ActiveUsersNewController extends BaseController {
   var currentPage = 1.obs;
   var pageSize = 10.obs;
   var isLoading = false.obs;
+  RxList<String> visibleColumns = RxList<String>();
 
   PaginationRequest paginationRequest(int page, int limit) => PaginationRequest(
         page: page,
@@ -55,10 +57,13 @@ class ActiveUsersNewController extends BaseController {
   }
 
   @override
-  void onInit() async{
-    currentRole = await tokenRepository.getRole();
+  void onInit(){
+   tokenRepository.getRole().then((role){
+     visibleColumns.value = RoleManager.getVisibleColumns(role);
+     fetchUsers(currentPage.value, pageSize.value);
+   });
+
     super.onInit();
-    fetchUsers(currentPage.value, pageSize.value);
   }
 }
 
