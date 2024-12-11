@@ -53,7 +53,7 @@ class ChatMessageController extends BaseController {
 
   void goToChatScreen()async{
 
-    final userID = await tokenRepository.getUserID();
+    final userID = await tokenRepository.getStuffId();
     sharedController.setCurrentUserId(userID);
     AppRoutes.pushNamed(RoutePath.chat);
 
@@ -65,7 +65,7 @@ class ChatMessageController extends BaseController {
 
       // Execute the remote procedure call
       final response = await supabase
-          .rpc('user_chat_session', params: {'input_user_id': "f5480e3f-dfdd-4c6f-bb89-542203170985"});
+          .rpc('a_chat_session',);
 
       // Since the response is a list, check if it is empty
       if (response == null || (response as List).isEmpty) {
@@ -91,7 +91,7 @@ class ChatMessageController extends BaseController {
 
 
 
-  void onMessageItemClicked(ChatSessionResponse message){
+  void onMessageItemClicked(ChatSessionResponse message) async{
 
    appPrint("Session ID  : ${message.session_id}");
 

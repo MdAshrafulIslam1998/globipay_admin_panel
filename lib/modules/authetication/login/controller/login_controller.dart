@@ -39,7 +39,7 @@ class LoginController extends BaseController {
     final token = data.token;
     await tokenRepository.saveToken(token ?? "");
     await tokenRepository.saveRole(data.role.toString());
-    await tokenRepository.saveStuffId(data.stuff_id ?? "");
+    await tokenRepository.saveStuffId(data.staff_id ?? "");
     AppRoutes.pushAndReplaceNamed(RoutePath.dashboard);
   }
 

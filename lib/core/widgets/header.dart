@@ -1,15 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:globipay_admin_panel/core/constants/defaults.dart';
 import 'package:globipay_admin_panel/core/constants/ghaps.dart';
 import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/utils/responsive.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:go_router/go_router.dart';
 
 class Header extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,26 +19,25 @@ class Header extends StatelessWidget {
         bottom: false,
         child: Row(
           children: [
-
-              Expanded(
-                flex: 1,
-                child: TextFormField(
-                  // style: Theme.of(context).textTheme.labelLarge,
-                  decoration: InputDecoration(
-                    hintText: "Search...",
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(
-                          left: AppDefaults.padding,
-                          right: AppDefaults.padding / 2),
-                      child: SvgPicture.asset("assets/icons/search_light.svg"),
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context).scaffoldBackgroundColor,
-                    border: AppDefaults.outlineInputBorder,
-                    focusedBorder: AppDefaults.focusedOutlineInputBorder,
+            Expanded(
+              flex: 1,
+              child: TextFormField(
+                // style: Theme.of(context).textTheme.labelLarge,
+                decoration: InputDecoration(
+                  hintText: "Search...",
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(
+                        left: AppDefaults.padding,
+                        right: AppDefaults.padding / 2),
+                    child: SvgPicture.asset("assets/icons/search_light.svg"),
                   ),
+                  filled: true,
+                  fillColor: Theme.of(context).scaffoldBackgroundColor,
+                  border: AppDefaults.outlineInputBorder,
+                  focusedBorder: AppDefaults.focusedOutlineInputBorder,
                 ),
               ),
+            ),
             Expanded(
               flex: 2,
               child: Row(
@@ -64,37 +62,15 @@ class Header extends StatelessWidget {
                             "assets/icons/notification_light.svg"),
                       ),
                     ),
-                  if (!Responsive.isMobile(context)) gapW16,
-                  if (!Responsive.isMobile(context))
-                    IconButton(
-                      onPressed: () {},
-                      icon: const CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "https://cdn.create.vista.com/api/media/small/339818716/stock-photo-doubtful-hispanic-man-looking-with-disbelief-expression"),
-                      ),
-                    ),
-                  TextButton(
-                    onPressed: () => context.go('/sign-in'),
-                    style: TextButton.styleFrom(
-                      foregroundColor:
-                          Theme.of(context).textTheme.titleLarge!.color,
-                      minimumSize: const Size(80, 56),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(AppDefaults.borderRadius),
-                        ),
-                      ),
-                      textStyle: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    child: const Text("Sign In"),
-                  ),
                   gapW16,
-                  ElevatedButton(
-                    onPressed: () => context.go('/register'),
-                    child: const Text("Sign Up"),
-                  ),
+
+                  IconButton(
+                    color: Colors.purple,
+                    onPressed: () {
+                     onLogout();
+                    },
+                    icon: const Icon(Icons.logout),
+                  )
                 ],
               ),
             ),
@@ -102,5 +78,11 @@ class Header extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+  void onLogout(){
+    AppRoutes.pushNamed(RoutePath.login);
+   
   }
 }

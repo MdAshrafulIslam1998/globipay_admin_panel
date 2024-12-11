@@ -22,7 +22,8 @@ import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:storage_client/storage_client.dart';
-
+import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
 /**
  * Created by Abdullah on 16/10/24 08:01 PM.
  */
@@ -558,17 +559,19 @@ class ChatController extends BaseController {
     }*/
   }
 
-  Future<File?> pickFile() async {
+  Future<Uint8List?> pickFile() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.image,
         allowMultiple: false,
       );
 
-      if (result != null && result.files.single.path != null) {
-        return File(result.files.single.path!);
+      if (result != null) {
+        // Use the bytes property to access the file data
+        return result.files.single.bytes;
       } else {
         // User canceled the picker
+        print("No file selected.");
         return null;
       }
     } catch (e) {
@@ -580,7 +583,7 @@ class ChatController extends BaseController {
   void selectAndUploadFile() async {
     final file = await pickFile();
 
-    if (file != null) {
+    /*if (file != null) {
       final fileUrl = await uploadImage(file);
       if (fileUrl != null) {
         appPrint("File uploaded successfully: $fileUrl");
@@ -588,7 +591,7 @@ class ChatController extends BaseController {
       }
     } else {
       appPrint("No file selected");
-    }
+    }*/
   }
 
 

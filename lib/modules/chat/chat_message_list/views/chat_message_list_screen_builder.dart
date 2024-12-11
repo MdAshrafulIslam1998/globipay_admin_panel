@@ -107,8 +107,13 @@ class ChatListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: ColorPalettes.colorPrimary.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
