@@ -54,12 +54,13 @@ class ActiveUsersNewController extends BaseController {
 
   Future<String> getRole()async{
     return await tokenRepository.getRole().toString();
+
   }
 
   @override
   void onInit(){
    tokenRepository.getRole().then((role){
-     visibleColumns.value = RoleManager.getVisibleColumns(role);
+     visibleColumns.value = RoleManager.getVisibleColumns('4');
      fetchUsers(currentPage.value, pageSize.value);
    });
 
