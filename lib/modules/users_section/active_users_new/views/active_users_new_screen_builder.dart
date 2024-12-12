@@ -12,7 +12,6 @@ import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:globipay_admin_panel/modules/role_manager.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 
 class ActiveUsersNewScreenBuilder extends StatefulWidget {
