@@ -1,6 +1,7 @@
 import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
+import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 
 import 'enum/role_name.dart';
 
@@ -9,21 +10,20 @@ import 'enum/role_name.dart';
  */
 
 abstract class TableHeaderVisibility {
-  static TokenRepository tokenRepository = Injector.resolve<TokenRepository>();
 
-  static getTableVisibleColumn(TableName tableName) async {
-    tokenRepository.getRole().then((role) {
+  static getTableVisibleColumn({required TableName tableName}) async {
+    final tokenRepository = Injector.resolve<TokenRepository>();
+    final currentRole = await tokenRepository.getRole();
+    appPrint("Current Role: $currentRole");
       switch (tableName) {
         case TableName.USER_ACTIVE_TABLE:
-          return _USER_ACTIVE_TABLE[role];
+          return _USER_ACTIVE_TABLE[currentRole];
         case TableName.USER_PENDING_TABLE:
-          return _USER_PENDING_TABLE[role];
+          return _USER_PENDING_TABLE[currentRole];
 
         default:
           return [];
       }
-    });
-
   }
 
   static Map<String, List<String>> _USER_ACTIVE_TABLE = {
