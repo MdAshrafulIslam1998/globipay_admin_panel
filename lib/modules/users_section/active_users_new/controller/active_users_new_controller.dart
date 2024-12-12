@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
+import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
@@ -8,13 +9,10 @@ import 'package:globipay_admin_panel/entity/response/user_response/user_response
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/role_manager.dart';
 
-
 class ActiveUsersNewController extends BaseController {
-
   final AppRepository _repository;
   final TokenRepository tokenRepository;
   String currentRole = '';
-
 
   ActiveUsersNewController(this._repository, this.tokenRepository);
 
@@ -29,8 +27,7 @@ class ActiveUsersNewController extends BaseController {
   PaginationRequest paginationRequest(int page, int limit) => PaginationRequest(
         page: page,
         limit: limit,
-  );
-
+      );
 
   parseUserList(UserResponseEntity response) {
     users.value = response.users ?? [];
@@ -52,9 +49,8 @@ class ActiveUsersNewController extends BaseController {
     fetchUsers(1, newSize);
   }
 
-  Future<String> getRole()async{
+  Future<String> getRole() async {
     return await tokenRepository.getRole().toString();
-
   }
 
   @override
@@ -66,6 +62,10 @@ class ActiveUsersNewController extends BaseController {
 
     super.onInit();
   }
+
+  getVisibleColumns() async {
+    var role = await tokenRepository.getRole();
+    visibleColumns.value = RoleManager.getVisibleColumns(
+        role: role, tableName: TableName.USER_ACTIVE_TABLE.name);
+  }
 }
-
-

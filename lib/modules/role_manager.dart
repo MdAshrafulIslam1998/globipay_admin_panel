@@ -13,4 +13,6 @@ class RoleManager {
   static List<String> getVisibleColumns(String role, String tablename) {
     return roleColumnVisibility[role] ?? [];
   }
+
+
 }

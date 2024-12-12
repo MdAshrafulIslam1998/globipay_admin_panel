@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
+import 'package:globipay_admin_panel/core/constants/table_header_visibility.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_source.dart';
@@ -161,7 +163,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                 child: Obx(
                   () => SfDataGrid(
                     source: UserDataSource(
-                      controller.users,
+                      controller.users.value,
                       onActionTap: (user, action) {
                         switch (action) {
                           case 'details':
