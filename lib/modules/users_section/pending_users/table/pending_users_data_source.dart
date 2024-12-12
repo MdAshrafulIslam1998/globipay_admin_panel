@@ -1,31 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
-import 'package:globipay_admin_panel/modules/users_section/pending_users/pending_user.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class PendingUserDataSource extends DataGridSource {
   final List<UserResponseItemEntity> users;
   final Function(UserResponseItemEntity user, String action)? onActionTap;
+  final List<String> visibleColumns;
 
-  PendingUserDataSource(this.users, {this.onActionTap}) {
+  PendingUserDataSource(this.users, {this.onActionTap, required this.visibleColumns}) {
     buildDataGridRows();
   }
 
   List<DataGridRow> _dataGridRows = [];
 
   void buildDataGridRows() {
-    // Make sure these cells match exactly with the GridColumns defined in the screen builder
     _dataGridRows = users
-        .map((user) => DataGridRow(cells: [
-              DataGridCell<String>(columnName: 'fullName', value: user.name),
-              DataGridCell<String>(columnName: 'email', value: user.email),
-              DataGridCell<String>(
-                  columnName: 'date',
-                  value: DateFormat('dd-MM-yyyy').format(DateTime.parse(user.date ?? ''))),
-              DataGridCell<String>(columnName: 'status', value: user.status),
-              DataGridCell<UserResponseItemEntity>(columnName: 'document', value: user),
-            ]))
+        .map((user) => DataGridRow(
+              cells: visibleColumns.map((columnName) {
+                switch (columnName) {
+                  case 'name':
+                    return DataGridCell<String>(
+                        columnName: 'name', value: user.name);
+                  case 'email':
+                    return DataGridCell<String>(
+                        columnName: 'email', value: user.email);
+                  case 'date':
+                    return DataGridCell<String>(
+                        columnName: 'date',
+                        value: DateFormat('dd-MM-yyyy')
+                            .format(DateTime.parse(user.date ?? '')));
+                  case 'status':
+                    return DataGridCell<String>(
+                        columnName: 'status', value: user.status);
+                  case 'document':
+                    return DataGridCell<UserResponseItemEntity>(
+                        columnName: 'document', value: user);
+                  default:
+                    throw Exception('Invalid column: $columnName');
+                }
+              }).toList(),
+            ))
         .toList();
   }
 
@@ -41,11 +56,7 @@ class PendingUserDataSource extends DataGridSource {
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.all(8),
-          child: Icon(
-            icon,
-            size: 18,
-            color: color,
-          ),
+          child: Icon(icon, size: 18, color: color),
         ),
       ),
     );
@@ -55,48 +66,83 @@ class PendingUserDataSource extends DataGridSource {
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
       cells: row.getCells().map<Widget>((cell) {
-        if (cell.columnName == 'status') {
+        if (cell.columnName == 'document') {
           return Container(
-            padding: const EdgeInsets.all(8.0),
             alignment: Alignment.center,
+            padding: const EdgeInsets.only(left: 14.0), // Add padding right
+            child: buildActionButton(Colors.blue, Icons.visibility, () {
+              print(
+                  'Document button clicked for user: ${(cell.value as UserResponseItemEntity).name}');
+              onActionTap?.call(
+                  cell.value as UserResponseItemEntity, 'document');
+            }),
+          );
+        } 
+        else if (cell.columnName == 'phone') {
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(left: 14.0), // Add padding right
+            child: Text(
+              cell.value.toString(),
+              overflow: TextOverflow
+                  .ellipsis, // Ensure text is truncated with ellipsis
+              style: TextStyle(
+                fontFamily: 'iAWriterQuattroS',
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        } else if (cell.columnName == 'date') {
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(left: 14.0), // Add padding right
+            child: Text(
+              cell.value.toString(),
+              overflow: TextOverflow
+                  .ellipsis, // Ensure text is truncated with ellipsis
+              style: TextStyle(
+                fontFamily: 'iAWriterQuattroS',
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        }  else if (cell.columnName == 'status') {
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(left: 14.0), // Add padding right
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.2),
+                color: Colors.green.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 cell.value.toString(),
+                overflow: TextOverflow
+                    .ellipsis, // Ensure text is truncated with ellipsis
                 style: const TextStyle(
+                  fontFamily: 'iAWriterQuattroS',
                   color: Colors.green,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
                 ),
               ),
             ),
           );
-        } else if (cell.columnName == 'document') {
-          return Container(
-            alignment: Alignment.center,
-            child: buildActionButton(
-              Colors.blue,
-              Icons.visibility,
-              () {
-                print(
-                    'Document button clicked for user: ${(cell.value as PendingUser).name}');
-                onActionTap?.call(cell.value as UserResponseItemEntity, 'Document');
-              },
-            ),
-          );
         }
-
         return Container(
-          padding: const EdgeInsets.all(8.0),
-          alignment: Alignment.center,
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.only(left: 14.0), // Add padding right
           child: Text(
             cell.value.toString(),
+            overflow:
+                TextOverflow.ellipsis, // Ensure text is truncated with ellipsis
             style: const TextStyle(
-              fontFamily: 'Roboto',
+              fontFamily: 'iAWriterQuattroS',
               fontSize: 14,
+              fontWeight: FontWeight.w600,
               color: Color(0xFF444444),
             ),
           ),

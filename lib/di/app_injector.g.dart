@@ -31,7 +31,7 @@ class _$AppInjector extends AppInjector {
       ..registerFactory(
           (c) => BlockedUsersController(c.resolve<AppRepository>()))
       ..registerFactory(
-          (c) => PendingUsersController(c.resolve<AppRepository>()))
+          (c) => PendingUsersController(c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory(
           (c) => ActiveUsersNewController(c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => NotificationSetterController())
