@@ -10,20 +10,19 @@ import 'enum/role_name.dart';
  */
 
 abstract class TableHeaderVisibility {
-
   static getTableVisibleColumn({required TableName tableName}) async {
     final tokenRepository = Injector.resolve<TokenRepository>();
     final currentRole = await tokenRepository.getRole();
     appPrint("Current Role: $currentRole");
-      switch (tableName) {
-        case TableName.USER_ACTIVE_TABLE:
-          return _USER_ACTIVE_TABLE[currentRole];
-        case TableName.USER_PENDING_TABLE:
-          return _USER_PENDING_TABLE[currentRole];
+    switch (tableName) {
+      case TableName.USER_ACTIVE_TABLE:
+        return _USER_ACTIVE_TABLE[currentRole];
+      case TableName.USER_PENDING_TABLE:
+        return _USER_PENDING_TABLE[currentRole];
 
-        default:
-          return [];
-      }
+      default:
+        return [];
+    }
   }
 
   static Map<String, List<String>> _USER_ACTIVE_TABLE = {
@@ -65,34 +64,20 @@ abstract class TableHeaderVisibility {
     RoleName.ADMIN.code: [
       'name',
       'email',
-      'phone',
-      'primary',
-      'secondary',
-      'levelName',
       'date',
       'status',
-      'details',
-      'delete',
-      'message'
+      'document',
     ], //admin
     RoleName.SUPER_ADMIN.code: [
       'name',
-      'primary',
-      'secondary',
-      'levelName',
       'date',
       'status',
-      'details',
-      'message'
+      'document',
     ], //subadmin
     RoleName.MODERATOR.code: [
       'name',
-      'primary',
-      'secondary',
-      'levelName',
       'date',
       'status',
-      'message'
     ], //moderator
   };
 }
