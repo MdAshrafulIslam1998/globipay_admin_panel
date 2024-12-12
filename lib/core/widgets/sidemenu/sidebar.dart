@@ -130,7 +130,7 @@ class Sidebar extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         leading: const Icon(
-                          CupertinoIcons.chat_bubble_2,
+                          CupertinoIcons.chat_bubble_text,
                           color: AppColors.iconBlack,
                         ),
                         title: Text(
@@ -147,7 +147,7 @@ class Sidebar extends StatelessWidget {
                             isActive: currentRoute == RoutePath.activeUsersNew,
                             title: "Chat List",
                             leading: Icon(
-                              CupertinoIcons.chat_bubble_text,
+                              CupertinoIcons.chat_bubble_2,
                               color: AppColors.iconBlack,
                             ),
 

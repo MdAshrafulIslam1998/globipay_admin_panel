@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
+import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
 import 'package:globipay_admin_panel/data/models/call_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -23,6 +24,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:storage_client/storage_client.dart';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
+import 'dart:html' as html;
+
 /**
  * Created by Abdullah on 16/10/24 08:01 PM.
  */
@@ -362,26 +365,107 @@ class ChatController extends BaseController {
     ScaffoldMessenger.of(AppNavigatorService.navigatorKey.currentState!.context).showSnackBar(snackBar);
   }
 
-  void onVideoCall() {
+  Future<void> onVideoCall() async {
 
     // Send FCM notification to the other user
     // Navigate to Video call screen and start the call
 
-    String channelName = 'globi_pay';
-    String agoraToken = '007eJxTYDhot18rpzUr94TyawGelTuqn2yp2XnqlD9/LtPybqM9exsUGNIsDCySTCyTkhPNTU2SLSwSEw2TE5MsUwzSks0tLJNTubvM01eLWaSnB25nYmRgZGABYhBgApPMYJIFTHIypOfkJ2XGFyRWMjAAAD2vIao=';
+    try {
+      //await html.window.navigator.getUserMedia(audio: true, video: true);
+
+      String channelName = 'globi_pay';
+      String agoraToken = '007eJxTYDhot18rpzUr94TyawGelTuqn2yp2XnqlD9/LtPybqM9exsUGNIsDCySTCyTkhPNTU2SLSwSEw2TE5MsUwzSks0tLJNTubvM01eLWaSnB25nYmRgZGABYhBgApPMYJIFTHIypOfkJ2XGFyRWMjAAAD2vIao=';
 
 
-    CallModel callModel = CallModel(
-      channelName: channelName,
-      videoToken: agoraToken,
-      isJoin: false,
-      callerName: "callerName",
-      callerImage: "callerImage",
-    );
-    AppRoutes.pushNamed(RoutePath.videoCall, extra: callModel);
+      CallModel callModel = CallModel(
+        channelName: channelName,
+        videoToken: agoraToken,
+        isJoin: false,
+        callerName: "callerName",
+        callerImage: "callerImage",
+      );
+      AppRoutes.pushNamed(RoutePath.videoCall, extra: callModel);
+    } catch (e) {
+      showCustomDialog("Error starting video call: $e");
+      appPrint("Error starting video call: $e");
+    }
+
   }
 
-  // Image Message
+
+  void onChatClose(BuildContext context) {
+    // Show alert dialog with two input fields
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // Controllers for input fields
+        TextEditingController primaryCoinController = TextEditingController();
+        TextEditingController secondaryCoinController = TextEditingController();
+
+        return AlertDialog(
+          title: Text("Close Chat"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Primary Coin Input Field
+              TextField(
+                controller: primaryCoinController,
+                decoration: InputDecoration(
+                  labelText: "Primary Coin",
+                  hintText: "Enter primary coin",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 10),
+              // Secondary Coin Input Field
+              TextField(
+                controller: secondaryCoinController,
+                decoration: InputDecoration(
+                  labelText: "Secondary Coin",
+                  hintText: "Enter secondary coin",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            // Cancel Button
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text("Cancel"),
+            ),
+            // Submit Button
+            ElevatedButton(
+              onPressed: () {
+                // Retrieve the values entered by the user
+                String primaryCoin = primaryCoinController.text.trim();
+                String secondaryCoin = secondaryCoinController.text.trim();
+
+                // Perform validation or other actions if necessary
+                if (primaryCoin.isNotEmpty && secondaryCoin.isNotEmpty) {
+                  // Close the dialog
+                  Navigator.of(context).pop();
+                  // Navigate to the home screen
+                  Navigator.of(context).pushReplacementNamed('/home');
+                } else {
+                  // Show an error if fields are empty
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Please fill in both fields."),
+                    ),
+                  );
+                }
+              },
+              child: Text("Submit"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
 
 
@@ -429,8 +513,6 @@ class ChatController extends BaseController {
 
   Future<String?> uploadImage(Uint8List imageFile) async {
     try {
-      final supabase = Supabase.instance.client;
-
       // Define a unique file name for the image
       final String fileName =
           'images/${DateTime.now().millisecondsSinceEpoch}.png';
@@ -448,7 +530,7 @@ class ChatController extends BaseController {
         final String publicUrl = supabase.storage.from('chats').getPublicUrl(fileName);
         return publicUrl; // Return the URL of the uploaded image
       } else {
-        print('Image upload failed: ${response}');
+        appPrint('Image upload failed: ${response}');
         return null;
       }
     } catch (e) {
@@ -456,11 +538,6 @@ class ChatController extends BaseController {
       return null;
     }
   }
-
-
-
-
-
 
   void _showPermissionDeniedDialog(String permission) {
     showDialog(
@@ -602,16 +679,17 @@ class ChatController extends BaseController {
         allowMultiple: false,
       );
 
+      appPrint("File picked: ${result.toString()}");
       if (result != null) {
         // Use the bytes property to access the file data
         return result.files.single.bytes;
       } else {
         // User canceled the picker
-        print("No file selected.");
+        appPrint("No file selected.");
         return null;
       }
     } catch (e) {
-      print("Error picking file: $e");
+      appPrint("Error picking file: $e");
       return null;
     }
   }
@@ -619,7 +697,9 @@ class ChatController extends BaseController {
   void selectAndUploadFile() async {
     final file = await pickFile();
 
-    /*if (file != null) {
+    if (file != null) {
+      appPrint("File Length:::::::::: : ${file.length}");
+
       final fileUrl = await uploadImage(file);
       if (fileUrl != null) {
         appPrint("File uploaded successfully: $fileUrl");
@@ -627,7 +707,7 @@ class ChatController extends BaseController {
       }
     } else {
       appPrint("No file selected");
-    }*/
+    }
   }
 
 
