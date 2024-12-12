@@ -60,7 +60,7 @@ class ActiveUsersNewController extends BaseController {
   @override
   void onInit(){
    tokenRepository.getRole().then((role){
-     visibleColumns.value = RoleManager.getVisibleColumns('4');
+     visibleColumns.value = RoleManager.getVisibleColumns(role,'active_user');
      fetchUsers(currentPage.value, pageSize.value);
    });
 

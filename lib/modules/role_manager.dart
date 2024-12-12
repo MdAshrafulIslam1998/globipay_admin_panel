@@ -10,7 +10,7 @@ class RoleManager {
     '4': ['name',  'primary', 'secondary', 'levelName', 'date', 'status',  'message'], //moderator
   };
 
-  static List<String> getVisibleColumns(String role) {
+  static List<String> getVisibleColumns(String role, String tablename) {
     return roleColumnVisibility[role] ?? [];
   }
 }
