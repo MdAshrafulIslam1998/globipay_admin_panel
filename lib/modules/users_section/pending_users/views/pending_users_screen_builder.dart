@@ -9,6 +9,7 @@ import 'package:globipay_admin_panel/modules/users_section/active_users_new/tabl
 import 'package:globipay_admin_panel/modules/users_section/pending_profile/controller/pending_profile_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/controller/pending_users_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/table/pending_users_data_pager_delegate.dart';
+import 'package:globipay_admin_panel/modules/users_section/pending_users/table/pending_users_data_source.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -156,7 +157,7 @@ class _PendingUsersScreenBuilderState extends BaseViewState<
               Expanded(
                 child: Obx(
                   () => SfDataGrid(
-                    source: UserDataSource(
+                    source: PendingUserDataSource(
                       controller.users.value,
                       onActionTap: (user, action) {
                         switch (action) {
