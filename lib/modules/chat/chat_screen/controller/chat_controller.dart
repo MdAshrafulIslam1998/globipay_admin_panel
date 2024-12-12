@@ -3,9 +3,14 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
 import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
+import 'package:globipay_admin_panel/core/utils/inputFilter/input_filter.dart';
+import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
+import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
 import 'package:globipay_admin_panel/data/models/call_model.dart';
+import 'package:globipay_admin_panel/modules/chat/chat_screen/views/widgets/chat_close_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +49,7 @@ class ChatController extends BaseController {
 
   ChatController(this.tokenRepository);
 
+  GlobalKey<FormState> chatCloseFormKey = GlobalKey<FormState>();
   Timer? _typingTimer;
   bool _isTyping = false;
 
@@ -395,68 +401,58 @@ class ChatController extends BaseController {
 
   void onChatClose(BuildContext context) {
     // Show alert dialog with two input fields
+    // Controllers for input fields
+    TextEditingController primaryCoinController = TextEditingController();
+    TextEditingController secondaryCoinController = TextEditingController();
+
+
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
-        // Controllers for input fields
-        TextEditingController primaryCoinController = TextEditingController();
-        TextEditingController secondaryCoinController = TextEditingController();
+
 
         return AlertDialog(
           title: Text("Close Chat"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Primary Coin Input Field
-              TextField(
-                controller: primaryCoinController,
-                decoration: InputDecoration(
-                  labelText: "Primary Coin",
-                  hintText: "Enter primary coin",
-                  border: OutlineInputBorder(),
+          content: Form(
+            key: chatCloseFormKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Primary Coin Input Field
+                InputField(
+                  controller: primaryCoinController,
+                  regex: InputRegex.NOT_EMPTY,
+                  inputFormatters: InputFilter.ONLY_NUMBER,
+
                 ),
-              ),
-              SizedBox(height: 10),
-              // Secondary Coin Input Field
-              TextField(
-                controller: secondaryCoinController,
-                decoration: InputDecoration(
-                  labelText: "Secondary Coin",
-                  hintText: "Enter secondary coin",
-                  border: OutlineInputBorder(),
+                SizedBox(height: 10),
+                // Secondary Coin Input Field
+                InputField(
+                  controller: secondaryCoinController,
+                  regex: InputRegex.NOT_EMPTY,
+                  maxLength: 10,
+                  inputFormatters: InputFilter.ONLY_NUMBER,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           actions: [
             // Cancel Button
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                AppRoutes.pop();
               },
               child: Text("Cancel"),
             ),
             // Submit Button
             ElevatedButton(
               onPressed: () {
-                // Retrieve the values entered by the user
-                String primaryCoin = primaryCoinController.text.trim();
-                String secondaryCoin = secondaryCoinController.text.trim();
+                if (chatCloseFormKey.currentState!.validate()) {
 
-                // Perform validation or other actions if necessary
-                if (primaryCoin.isNotEmpty && secondaryCoin.isNotEmpty) {
-                  // Close the dialog
-                  Navigator.of(context).pop();
-                  // Navigate to the home screen
-                  Navigator.of(context).pushReplacementNamed('/home');
-                } else {
-                  // Show an error if fields are empty
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Please fill in both fields."),
-                    ),
-                  );
                 }
+
+
               },
               child: Text("Submit"),
             ),
@@ -465,6 +461,8 @@ class ChatController extends BaseController {
       },
     );
   }
+
+
 
 
 
