@@ -12,6 +12,7 @@ import 'package:globipay_admin_panel/core/constants/app_constant.dart';
 import 'package:globipay_admin_panel/core/constants/app_images.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
+import 'package:globipay_admin_panel/core/widgets/button/app_button.dart';
 import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 import 'package:globipay_admin_panel/entity/response/message/message.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/controller/chat_controller.dart';
@@ -48,7 +49,14 @@ class _ChatScreenScreenBuilderState
   @override
   PreferredSizeWidget? appBar() {
     return AppBar(
-      title: AppText('Chat'),
+      centerTitle: true,
+      title: IconButton(
+        icon: const Icon(Icons.lock_clock_sharp),
+        onPressed: () {
+          controller.onChatClose(context);
+        },
+
+      ),
       actions: [
         IconButton(
           color: ColorPalettes.colorPrimary,
@@ -106,7 +114,7 @@ class _ChatScreenScreenBuilderState
                 appPrint(text);
               },
               actions: [
-                Padding(
+                /*Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2),
                   child: GestureDetector(
                     child: const Icon(
@@ -117,7 +125,7 @@ class _ChatScreenScreenBuilderState
                       controller.onSendMessageUsingCamera();
                     },
                   ),
-                ),
+                ),*/
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: GestureDetector(
@@ -160,6 +168,8 @@ class _ChatScreenScreenBuilderState
             id: chat.id ?? "",
             image: CachedNetworkImage(
                imageUrl: chat.media_url ?? "",
+              height: 140,
+              width: 140,
             ),
             isSender: chat.sender_id == controller.sharedController.currentUserId,
             delivered: chat.delivered_at != null,
