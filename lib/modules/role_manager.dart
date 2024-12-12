@@ -14,5 +14,4 @@ class RoleManager {
     return roleColumnVisibility[role] ?? [];
   }
 
-
 }
