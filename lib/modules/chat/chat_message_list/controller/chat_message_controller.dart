@@ -59,7 +59,7 @@ class ChatMessageController extends BaseController {
 
   }
 
-  void fetchCustomerChatSessions() async {
+  void fetchAdminChatSessions() async {
     try {
       //final userID = await tokenRepository.getUserID();
 
@@ -125,7 +125,7 @@ class ChatMessageController extends BaseController {
   }
 
   void requestForMessageList() {
-    fetchCustomerChatSessions();
+    fetchAdminChatSessions();
   }
 
   void _listenForChatSessionChanges() {

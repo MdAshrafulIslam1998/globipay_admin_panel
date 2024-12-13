@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'alpha_numeric_filter.dart';
-import 'beneficiary_nickname_formatter.dart';
 import 'name_input_formatter.dart';
 import 'no_leading_space_formatter.dart';
 import 'no_special_character_filter.dart';
@@ -17,27 +16,14 @@ abstract class InputFilter {
   ];
 
 
-  static List<TextInputFormatter> REMARKS_INPUT_FORMATTER =
-      <TextInputFormatter>[
-    NoLeadingSpaceFormatter(),
-    NoSpecialCharacterFormatter()
-  ];
 
-  static List<TextInputFormatter> BENEFICIARY_INPUT_FORMATTER =
-      <TextInputFormatter>[
-    NoLeadingSpaceFormatter(),
-    BeneficiaryNicknameFormatter()
-  ];
 
   static List<TextInputFormatter> NAME_FORMATTER = <TextInputFormatter>[
     NoLeadingSpaceFormatter(),
     NameFormatter()
   ];
 
-  static List<TextInputFormatter> USER_ID_FORMATTER = <TextInputFormatter>[
-    NoLeadingSpaceFormatter(),
-    AlphaNumericFormatter()
-  ];
+
   static List<TextInputFormatter> ONLY_NUMBER = <TextInputFormatter>[
     OnlyNumberFormatter()
   ];
