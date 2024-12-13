@@ -3,22 +3,42 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
+import 'package:globipay_admin_panel/core/constants/table_header_visibility.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_pager_delegate.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_source.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/controller/user_levels_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/table/user_levels_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/table/user_levels_data_source.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:globipay_admin_panel/router/route_path.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 
 class UserLevelsScreenBuilder extends StatefulWidget {
   const UserLevelsScreenBuilder({super.key});
 
   @override
   State<UserLevelsScreenBuilder> createState() =>
-      _UserlevelsScreenBuilderState();
+      _UserLevelsScreenBuilderState();
 }
 
+class _UserLevelsScreenBuilderState
+    extends BaseViewState<UserLevelsScreenBuilder, UserLevelsController> {
+  late Map<String, double> columnWidths = {
+    'name': double.nan,
+    'email': double.nan,
+    'primary': double.nan,
+    'secondary': double.nan,
+    'levelName': double.nan,
+    'date': double.nan,
+    'status': double.nan,
+    'details': double.nan,
+    'edit': double.nan,
+  };
 
-class _UserlevelsScreenBuilderState extends BaseViewState<
-    UserLevelsScreenBuilder, UserLevelsController> {
   @override
   void initState() {
     controller.onInit();
@@ -33,25 +53,40 @@ class _UserlevelsScreenBuilderState extends BaseViewState<
   @override
   Widget body(BuildContext context) {
     return Container(
-      color: Colors.grey[100],
+      color: const Color.fromARGB(255, 240, 238, 255),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
-          elevation: 4,
+          elevation: 6,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Header
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color.fromARGB(255, 28, 170, 61),
+                      const Color.fromARGB(255, 127, 224, 135),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 8,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,28 +95,57 @@ class _UserlevelsScreenBuilderState extends BaseViewState<
                       () => Text(
                         'Total Users: ${controller.totalItems}',
                         style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontFamily: 'newyork',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                     Row(
                       children: [
-                        Text(
-                          'Entries per page: ',
+                        TextButton(
+                          onPressed: () {
+                            // Add new level Button
+                            AppRoutes.pushNamed(RoutePath.addLevel);
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor:
+                                Colors.blue, // Button background color
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // Rounded edges
+                            ),
+                          ),
+                          child: Text(
+                            '+ Add New Level',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white, // Text color
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                            width: 16), // Spacing between button and dropdown
+                        const Text(
+                          'Show entries:   ',
                           style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w500,
+                            fontFamily: 'newyork',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Theme.of(context).primaryColor,
+                              color: Colors.white,
                               width: 1,
                             ),
                           ),
@@ -91,7 +155,18 @@ class _UserlevelsScreenBuilderState extends BaseViewState<
                                 items: [5, 10, 20, 30].map((size) {
                                   return DropdownMenuItem<int>(
                                     value: size,
-                                    child: Text(size.toString()),
+                                    child: Text(
+                                      size.toString(),
+                                      style: TextStyle(
+                                        fontSize: 13, // Adjust the font size
+                                        fontWeight: FontWeight
+                                            .bold, // Change font weight (e.g., bold)
+                                        color: const Color.fromARGB(
+                                            143, 0, 0, 0), // Set text color
+                                        fontFamily:
+                                            'newyork', // Specify a custom font family if needed
+                                      ),
+                                    ),
                                   );
                                 }).toList(),
                                 onChanged: (newSize) {
@@ -106,82 +181,49 @@ class _UserlevelsScreenBuilderState extends BaseViewState<
                   ],
                 ),
               ),
+              // DataGrid
               Expanded(
                 child: Obx(
                   () => SfDataGrid(
-                    columnWidthMode: ColumnWidthMode.fill,
-                    source: UserLevelDataSource(
-                      controller.UserLevels,
+                    source: UserLevelsDataSource(
+                      controller.users.value,
                       onActionTap: (user, action) {
                         switch (action) {
-                          case 'edit':
-                            print('edit action for ${user.name}');
-                            break;
                           case 'details':
-                            print('details action for ${user.name}');
+                            AppRoutes.pushNamed(RoutePath.pendingProfile);
                             break;
-                          case 'delete':
-                            print('delete action for ${user.name}');
+                          case 'edit':
+                            AppRoutes.pushNamed(RoutePath.editLevel);
                             break;
                         }
                       },
+                      visibleColumns: controller.visibleColumns.value,
                     ),
+                    allowColumnsResizing: true,
+                    onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
+                      setState(() {
+                        columnWidths[details.column.columnName] = details.width;
+                      });
+                      return true;
+                    },
                     gridLinesVisibility: GridLinesVisibility.both,
                     headerGridLinesVisibility: GridLinesVisibility.both,
-                    columns: [
-                      GridColumn(
-                        columnName: 'name',
-                        label: _buildHeaderCell('Full Name'),
-                      ),
-                      GridColumn(
-                        columnName: 'email',
-                        label: _buildHeaderCell('Email'),
-                      ),
-                      GridColumn(
-                        columnName: 'primary',
-                        label: _buildHeaderCell('Primary'),
-                      ),
-                      GridColumn(
-                        columnName: 'secondary',
-                        label: _buildHeaderCell('Secondary'),
-                      ),
-                      GridColumn(
-                        columnName: 'levelName',
-                        label: _buildHeaderCell('Level'),
-                        width: 100,
-                      ),
-                      GridColumn(
-                        columnName: 'date',
-                        label: _buildHeaderCell('Date'),
-                        width: 120,
-                      ),
-                      GridColumn(
-                        columnName: 'status',
-                        label: _buildHeaderCell('Status'),
-                        width: 100,
-                      ),
-                      GridColumn(
-                        columnName: 'edit',
-                        label: _buildHeaderCell('Edit'),
-                        width: 80,
-                      ),
-                      GridColumn(
-                        columnName: 'details',
-                        label: _buildHeaderCell('Details'),
-                        width: 80,
-                      ),
-                      GridColumn(
-                        columnName: 'delete',
-                        label: _buildHeaderCell('Delete'),
-                        width: 80,
-                      ),
-                    ],
+                    columnWidthMode: ColumnWidthMode.fill,
+                    columns: _buildColumns(controller.visibleColumns.value),
                     rowHeight: 50,
+                    headerRowHeight: 60,
                   ),
                 ),
               ),
+              // Pagination
               Container(
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 232, 236, 233),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
                   border: Border(
                     top: BorderSide(
                       color: Colors.grey[300]!,
@@ -190,14 +232,25 @@ class _UserlevelsScreenBuilderState extends BaseViewState<
                   ),
                 ),
                 child: Obx(
-                () => SfDataPager(
-                  delegate: UserLevelDataPagerDelegate(controller),
-                  pageCount: max(
-                    1,
-                    (controller.totalItems.value / controller.pageSize.value).ceilToDouble(),
-                  ), // Ensure minimum pageCount is 1
+                  () => SfDataPagerTheme(
+                    data: SfDataPagerThemeData(
+                      itemColor: Colors.white, // Unselected button color
+                      selectedItemColor: const Color.fromARGB(
+                          164, 12, 87, 62), // Selected button color
+                      itemBorderRadius: BorderRadius.circular(50),
+                      backgroundColor: const Color.fromARGB(255, 232, 236, 233),
+                    ),
+                    child: SfDataPager(
+                      delegate: UserLevelsDataPagerDelegate(controller),
+                      pageCount: max(
+                        1,
+                        (controller.totalItems.value /
+                                controller.pageSize.value)
+                            .ceilToDouble(),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
               ),
             ],
           ),
@@ -206,15 +259,44 @@ class _UserlevelsScreenBuilderState extends BaseViewState<
     );
   }
 
-  Widget _buildHeaderCell(String text) {
+  List<GridColumn> _buildColumns(List<String> visibleColumns) {
+    final columnDefinitions = {
+      'name': {'title': 'Full Name', 'paddingPercent': 20},
+      'email': {'title': 'Email', 'paddingPercent': 25},
+      'primary': {'title': 'Primary', 'paddingPercent': 10},
+      'secondary': {'title': 'Secondary', 'paddingPercent': 10},
+      'levelName': {'title': 'Level', 'paddingPercent': 10},
+      'date': {'title': 'Date', 'paddingPercent': 10},
+      'status': {'title': 'Status', 'paddingPercent': 5},
+      'details': {'title': 'Details', 'paddingPercent': 5},
+      'edit': {'title': 'Edit', 'paddingPercent': 5},
+    };
+
+    return visibleColumns.map((colName) {
+      final columnData = columnDefinitions[colName];
+      final title = (columnData?['title'] as String?) ?? colName;
+      final paddingPercent = (columnData?['paddingPercent'] as int?) ?? 10;
+
+      return GridColumn(
+        columnName: colName,
+        width: columnWidths[colName]!,
+        label: _buildHeaderCell(title, paddingPercent),
+      );
+    }).toList();
+  }
+
+  Widget _buildHeaderCell(String text, int paddingPercent) {
+    final double horizontalPadding = paddingPercent.toDouble();
+
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       alignment: Alignment.center,
       child: Text(
         text,
         style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
+          fontFamily: 'newyork',
+          fontSize: 15,
+          fontWeight: FontWeight.w900,
           color: Color(0xFF2C3E50),
         ),
       ),

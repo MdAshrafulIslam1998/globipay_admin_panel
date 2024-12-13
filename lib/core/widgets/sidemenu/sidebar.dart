@@ -111,7 +111,7 @@ class Sidebar extends StatelessWidget {
                           MenuTile(
                             isSubmenu: false,
                             isActive: currentRoute == RoutePath.userLevels,
-                            title: "Users Levels",
+                            title: "User Levels",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
                             count: 16,

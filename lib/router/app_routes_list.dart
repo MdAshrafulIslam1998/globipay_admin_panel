@@ -23,6 +23,8 @@ import 'package:globipay_admin_panel/modules/amount_section/create_category/view
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/promo_banner_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/automated_reply/views/automated_reply_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/about_us/views/about_us_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/add_level/views/add_level_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/edit_level/views/edit_level_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../modules/chat/call/video_call/video_call_screen.dart';
 import 'route_path.dart';
@@ -159,8 +161,16 @@ abstract class AppRoutesList {
             builder: (context, state) => CallWaitingScreen(data: state.extra as CallModel),
           ),
 
-
-
+        GoRoute(
+          path: RoutePath.addLevel,
+          name: RoutePath.addLevel,
+          builder: (context, state) => AddLevelScreen(),
+        ),
+        GoRoute(
+          path: RoutePath.editLevel,
+          name: RoutePath.editLevel,
+          builder: (context, state) => EditLevelScreen(),
+        ),
         ],
       ),
     ];
