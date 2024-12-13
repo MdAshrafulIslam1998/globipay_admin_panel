@@ -11,9 +11,8 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
 
   @override
   Widget body(BuildContext context) {
-    // Define a modern color palette
     final ColorScheme colorScheme = ColorScheme.fromSeed(
-      seedColor: const Color(0xFF3B82F6), // Primary blue
+      seedColor: const Color(0xFFE0FFF6),
       brightness: Brightness.light,
     );
 
@@ -23,11 +22,11 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
         title: Text(
           'Level Management',
           style: TextStyle(
-            color: colorScheme.onPrimary,
+            color: Color(0xB5080007),
             fontWeight: FontWeight.w600,
           ),
         ),
-        backgroundColor: colorScheme.primary,
+        backgroundColor: Color(0xFFE5F7E3),
         centerTitle: true,
         elevation: 0,
       ),
@@ -128,6 +127,12 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                             ),
                                           ),
                                         ],
+                                      ),
+                                      trailing: IconButton(
+                                        icon: const Icon(Icons.edit, color: Colors.grey),
+                                        onPressed: () {
+                                          _showEditDialog(context, level);
+                                        },
                                       ),
                                     ),
                                   );
@@ -234,7 +239,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                             ElevatedButton(
                               onPressed: controller.addLevel,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: colorScheme.primary,
+                                backgroundColor: Color(0xFF79A375),
                                 foregroundColor: Colors.white,
                                 minimumSize: const Size(double.infinity, 50),
                                 shape: RoundedRectangleBorder(
@@ -263,7 +268,74 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
     );
   }
 
-  // Helper method to create consistent text form fields
+  void _showEditDialog(BuildContext context, dynamic level) {
+    final TextEditingController nameController =
+        TextEditingController(text: level.levelName);
+    final TextEditingController valueController =
+        TextEditingController(text: level.levelValue.toString());
+    final TextEditingController minThreshController =
+        TextEditingController(text: level.minThresh.toString());
+    final TextEditingController maxThreshController =
+        TextEditingController(text: level.maxThresh.toString());
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Edit Level"),
+          content: Form(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildTextFormField(context,
+                    controller: nameController, labelText: "Level Name"),
+                const SizedBox(height: 10),
+                _buildTextFormField(context,
+                    controller: valueController,
+                    labelText: "Level Value",
+                    keyboardType: TextInputType.number),
+                const SizedBox(height: 10),
+                _buildTextFormField(context,
+                    controller: minThreshController,
+                    labelText: "Minimum Threshold",
+                    keyboardType: TextInputType.number),
+                const SizedBox(height: 10),
+                _buildTextFormField(context,
+                    controller: maxThreshController,
+                    labelText: "Maximum Threshold",
+                    keyboardType: TextInputType.number),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Simulated API Call
+                print({
+                  "level_name": nameController.text,
+                  "level_value": int.parse(valueController.text),
+                  "min_thresh": double.parse(minThreshController.text),
+                  "max_thresh": double.parse(maxThreshController.text),
+                  "level_id": level.id
+                });
+
+                Navigator.pop(context);
+              },
+              child: const Text("Save"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildTextFormField(
     BuildContext context, {
     required TextEditingController controller,

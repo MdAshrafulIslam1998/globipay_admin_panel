@@ -193,7 +193,7 @@ class _UserLevelsScreenBuilderState
                             AppRoutes.pushNamed(RoutePath.pendingProfile);
                             break;
                           case 'edit':
-                            print('edit action for ${user.name}');
+                            AppRoutes.pushNamed(RoutePath.editLevel);
                             break;
                         }
                       },
