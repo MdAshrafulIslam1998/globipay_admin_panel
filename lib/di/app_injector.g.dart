@@ -13,7 +13,8 @@ class _$AppInjector extends AppInjector {
     container
       ..registerFactory((c) => CallControllerWidgetController())
       ..registerFactory((c) => VideoCallController())
-      ..registerFactory((c) => ChatController(c.resolve<TokenRepository>(),c.resolve<AppRepository>()))
+      ..registerFactory((c) => ChatController(
+          c.resolve<TokenRepository>(), c.resolve<AppRepository>()))
       ..registerFactory((c) => ChatMessageController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => LoginController(
