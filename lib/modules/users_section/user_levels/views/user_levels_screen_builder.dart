@@ -104,6 +104,32 @@ class _UserLevelsScreenBuilderState
                     ),
                     Row(
                       children: [
+                        TextButton(
+                          onPressed: () {
+                            // Add new level Button
+                            AppRoutes.pushNamed(RoutePath.addLevel);
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor:
+                                Colors.blue, // Button background color
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // Rounded edges
+                            ),
+                          ),
+                          child: Text(
+                            '+ Add New Level',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white, // Text color
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                            width: 16), // Spacing between button and dropdown
                         const Text(
                           'Show entries:   ',
                           style: TextStyle(
