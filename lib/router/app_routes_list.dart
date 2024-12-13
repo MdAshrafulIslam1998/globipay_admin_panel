@@ -8,6 +8,7 @@ import 'package:globipay_admin_panel/modules/chat/chat_message_list/views/chat_m
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/chat_screen_screen.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/views/base_panel_screen.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/views/dashboard_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/add_promotional_banner_view.dart';
 import 'package:globipay_admin_panel/modules/splash/splash_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users/views/active_users_screen.dart';
 import 'package:globipay_admin_panel/modules/amount_section/edit_coin/views/edit_coin_screen.dart';
@@ -109,6 +110,14 @@ abstract class AppRoutesList {
             name: RoutePath.promoBanner,
             builder: (context, state) => PromoBannerScreen(),
           ),
+
+          GoRoute(
+            path: RoutePath.addPromoBanner,
+            name: RoutePath.addPromoBanner,
+            builder: (context, state) => AddPromotionalBannerView(),
+          ),
+
+
           GoRoute(
             path: RoutePath.automatedReply,
             name: RoutePath.automatedReply,
@@ -149,6 +158,8 @@ abstract class AppRoutesList {
             name: RoutePath.callPickUp,
             builder: (context, state) => CallWaitingScreen(data: state.extra as CallModel),
           ),
+
+
 
         ],
       ),

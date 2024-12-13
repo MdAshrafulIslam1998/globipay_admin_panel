@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'promo_banner_screen_builder.dart';
+import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/promotional_banner_list_view.dart';
 
 class PromoBannerScreen extends StatelessWidget {
   const PromoBannerScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return PromoBannerScreenBuilder();
+    return PromotionalBannerScreenBuilder();
   }
 }

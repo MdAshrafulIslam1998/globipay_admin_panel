@@ -12,13 +12,13 @@ import 'package:globipay_admin_panel/modules/chat/call/video_call/widgets/contro
 import 'package:globipay_admin_panel/modules/chat/chat_message_list/controller/chat_message_controller.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/controller/chat_controller.dart';
 import 'package:globipay_admin_panel/modules/chat/controller/chat_shared_controller.dart';
+import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promotional_banner_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users/controller/active_users_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/controller/base_panel_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/controller/dashboard_controller.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:globipay_admin_panel/modules/media_section/about_us/controller/about_us_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/automated_reply/controller/automated_reply_controller.dart';
-import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promo_banner_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/create_category/controller/create_category_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/user_amount/controller/user_amount_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/controller/user_levels_controller.dart';
@@ -59,7 +59,7 @@ abstract class AppInjector extends Injector {
   @Register.factory(ActiveUsersController)
   @Register.factory(AboutUsController)
   @Register.factory(AutomatedReplyController)
-  @Register.factory(PromoBannerController)
+  @Register.factory(PromotionalBannerController)
   @Register.factory(CreateCategoryController)
   @Register.factory(TransactionHistoryController)
   @Register.factory(UserAmountController)
