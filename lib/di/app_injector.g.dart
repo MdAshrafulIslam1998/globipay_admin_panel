@@ -13,12 +13,6 @@ class _$AppInjector extends AppInjector {
     container
       ..registerFactory((c) => CallControllerWidgetController())
       ..registerFactory((c) => VideoCallController())
-<<<<<<< HEAD
-      ..registerFactory((c) => ChatController(
-          c.resolve<TokenRepository>(), c.resolve<AppRepository>()))
-=======
-      ..registerFactory((c) => ChatController(c.resolve<TokenRepository>(),c.resolve<AppRepository>()))
->>>>>>> 7fdcd1b (feat(chat ) : Chat Session close completed)
       ..registerFactory((c) => ChatController(
           c.resolve<TokenRepository>(), c.resolve<AppRepository>()))
       ..registerFactory((c) => ChatMessageController(
@@ -28,8 +22,8 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => DashboardController())
       ..registerFactory((c) => BasePanelController())
       ..registerFactory((c) => ActiveUsersController())
-      ..registerFactory((c) =>
-          AddLevelController())
+      ..registerFactory((c) => EditLevelController())
+      ..registerFactory((c) => AddLevelController())
       ..registerFactory((c) => AboutUsController())
       ..registerFactory((c) => AutomatedReplyController())
       ..registerFactory((c) => PromoBannerController())
