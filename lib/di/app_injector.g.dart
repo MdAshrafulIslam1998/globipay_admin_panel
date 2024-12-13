@@ -13,7 +13,7 @@ class _$AppInjector extends AppInjector {
     container
       ..registerFactory((c) => CallControllerWidgetController())
       ..registerFactory((c) => VideoCallController())
-      ..registerFactory((c) => ChatController(c.resolve<TokenRepository>()))
+      ..registerFactory((c) => ChatController(c.resolve<TokenRepository>(),c.resolve<AppRepository>()))
       ..registerFactory((c) => ChatMessageController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => LoginController(
@@ -34,6 +34,9 @@ class _$AppInjector extends AppInjector {
           (c) => PendingUsersController(c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory(
           (c) => ActiveUsersNewController(c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
+          (c) => PendingUsersController(c.resolve<AppRepository>()))
+      ..registerFactory((c) => ActiveUsersNewController(
+          c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => NotificationSetterController())
       ..registerFactory((c) => PendingProfileController())
       ..registerFactory((c) => EditCoinController())
