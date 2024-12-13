@@ -19,6 +19,8 @@ abstract class TableHeaderVisibility {
         return _USER_ACTIVE_TABLE[currentRole];
       case TableName.USER_PENDING_TABLE:
         return _USER_PENDING_TABLE[currentRole];
+      case TableName.USER_BLOCKED_TABLE:
+        return _USER_BLOCKED_TABLE[currentRole];
 
       default:
         return [];
@@ -73,6 +75,26 @@ abstract class TableHeaderVisibility {
       'date',
       'status',
       'document',
+    ], //subadmin
+    RoleName.MODERATOR.code: [
+      'name',
+      'date',
+      'status',
+    ], //moderator
+  };
+
+  static Map<String, List<String>> _USER_BLOCKED_TABLE = {
+    RoleName.ADMIN.code: [
+      'name',
+      'email',
+      'date',
+      'status',
+      'document',
+    ], //admin
+    RoleName.SUPER_ADMIN.code: [
+      'name',
+      'date',
+      'status',
     ], //subadmin
     RoleName.MODERATOR.code: [
       'name',

@@ -5,6 +5,7 @@
 enum TableName{
   USER_ACTIVE_TABLE,
   USER_PENDING_TABLE,
+  USER_BLOCKED_TABLE,
   ;
 
 }

@@ -29,7 +29,7 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => UserAmountController())
       ..registerFactory((c) => UserLevelsController())
       ..registerFactory(
-          (c) => BlockedUsersController(c.resolve<AppRepository>()))
+          (c) => BlockedUsersController(c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory(
           (c) => PendingUsersController(c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory(
