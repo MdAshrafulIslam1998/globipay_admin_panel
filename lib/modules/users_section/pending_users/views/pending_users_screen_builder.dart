@@ -1,12 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_pager_delegate.dart';
+import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_source.dart';
+import 'package:globipay_admin_panel/modules/users_section/pending_profile/controller/pending_profile_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/controller/pending_users_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/table/pending_users_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/table/pending_users_data_source.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 
 class PendingUsersScreenBuilder extends StatefulWidget {
   const PendingUsersScreenBuilder({super.key});
@@ -16,8 +23,19 @@ class PendingUsersScreenBuilder extends StatefulWidget {
       _PendingUsersScreenBuilderState();
 }
 
-class _PendingUsersScreenBuilderState
-    extends BaseViewState<PendingUsersScreenBuilder, PendingUsersController> {
+class _PendingUsersScreenBuilderState extends BaseViewState<
+    PendingUsersScreenBuilder, PendingUsersController> {
+  
+
+  late Map<String, double> columnWidths = {
+    'name': double.nan,
+    'email': double.nan,
+    'date': double.nan,
+    'status': double.nan,
+    'document': double.nan,
+
+  };
+
   @override
   void initState() {
     controller.onInit();
@@ -31,47 +49,66 @@ class _PendingUsersScreenBuilderState
 
   @override
   Widget body(BuildContext context) {
+
     return Container(
-      color: Colors.grey[100],
+      color: const Color.fromARGB(255, 240, 238, 255),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
-          elevation: 2,
+          elevation: 6,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Header Section
+              // Header
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color.fromARGB(255, 28, 170, 61),
+                      const Color.fromARGB(255, 127, 224, 135),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 8,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Obx(
                       () => Text(
-                        'Total Pending Users: ${controller.totalItems}',
+                        'Total Users: ${controller.totalItems}',
                         style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w500,
+                          fontFamily: 'newyork',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                     Row(
                       children: [
-                        Text(
-                          'Show entries: ',
+                        const Text(
+                          'Show entries:   ',
                           style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w500,
+                            fontFamily: 'newyork',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                         Container(
@@ -80,7 +117,7 @@ class _PendingUsersScreenBuilderState
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Theme.of(context).primaryColor,
+                              color: Colors.white,
                               width: 1,
                             ),
                           ),
@@ -90,7 +127,18 @@ class _PendingUsersScreenBuilderState
                                 items: [5, 10, 20, 30].map((size) {
                                   return DropdownMenuItem<int>(
                                     value: size,
-                                    child: Text(size.toString()),
+                                    child: Text(
+                                      size.toString(),
+                                      style: TextStyle(
+                                        fontSize: 13, // Adjust the font size
+                                        fontWeight: FontWeight
+                                            .bold, // Change font weight (e.g., bold)
+                                        color: const Color.fromARGB(
+                                            143, 0, 0, 0), // Set text color
+                                        fontFamily:
+                                            'newyork', // Specify a custom font family if needed
+                                      ),
+                                    ),
                                   );
                                 }).toList(),
                                 onChanged: (newSize) {
@@ -110,81 +158,42 @@ class _PendingUsersScreenBuilderState
                 child: Obx(
                   () => SfDataGrid(
                     source: PendingUserDataSource(
-                      controller.users,
+                      controller.users.value,
                       onActionTap: (user, action) {
                         switch (action) {
                           case 'document':
-                            print('document action for ${user.name}');
+                            AppRoutes.pushNamed(RoutePath.pendingProfile);
                             break;
+                         
                         }
                       },
+                      visibleColumns: controller.visibleColumns.value,
                     ),
+                    allowColumnsResizing: true,
+                    onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
+                      setState(() {
+                        columnWidths[details.column.columnName] = details.width;
+                      });
+                      return true;
+                    },
                     gridLinesVisibility: GridLinesVisibility.both,
                     headerGridLinesVisibility: GridLinesVisibility.both,
-                    columnWidthMode: ColumnWidthMode.auto,
-                    columns: [
-                      GridColumn(
-                        columnName: 'fullName',
-                        label: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Full Name',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      GridColumn(
-                        columnName: 'email',
-                        label: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Email',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      GridColumn(
-                        columnName: 'date',
-                        label: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Date',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      GridColumn(
-                        columnName: 'status',
-                        label: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Status',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      GridColumn(
-                        columnName: 'document',
-                        label: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Document',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
+                    columnWidthMode: ColumnWidthMode.fill,
+                    columns: _buildColumns(controller.visibleColumns.value),
+                    rowHeight: 50,
+                    headerRowHeight: 60,
                   ),
                 ),
               ),
-              // Pager
+              // Pagination
               Container(
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 232, 236, 233),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
                   border: Border(
                     top: BorderSide(
                       color: Colors.grey[300]!,
@@ -193,18 +202,68 @@ class _PendingUsersScreenBuilderState
                   ),
                 ),
                 child: Obx(
-                  () => SfDataPager(
-                    delegate: PendingUserDataPagerDelegate(controller),
-                    pageCount: max(
-                      1,
-                      (controller.totalItems.value / controller.pageSize.value)
-                          .ceilToDouble(),
-                    ), // Ensure minimum pageCount is 1
+                  () => SfDataPagerTheme(
+                    data: SfDataPagerThemeData(
+                      itemColor: Colors.white, // Unselected button color
+                      selectedItemColor: const Color.fromARGB(
+                          164, 12, 87, 62), // Selected button color
+                      itemBorderRadius: BorderRadius.circular(50),
+                      backgroundColor: const Color.fromARGB(255, 232, 236, 233),
+                    ),
+                    child: SfDataPager(
+                      delegate: PendingUsersDataPagerDelegate(controller),
+                      pageCount: max(
+                        1,
+                        (controller.totalItems.value /
+                                controller.pageSize.value)
+                            .ceilToDouble(),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  List<GridColumn> _buildColumns(List<String> visibleColumns) {
+    final columnDefinitions = {
+      'name': {'title': 'Full Name', 'paddingPercent': 20},
+      'email': {'title': 'Email', 'paddingPercent': 25},
+      'date': {'title': 'Date', 'paddingPercent': 10},
+      'status': {'title': 'Status', 'paddingPercent': 5},
+      'document': {'title': 'document', 'paddingPercent': 5},
+    };
+
+    return visibleColumns.map((colName) {
+      final columnData = columnDefinitions[colName];
+      final title = (columnData?['title'] as String?) ?? colName;
+      final paddingPercent = (columnData?['paddingPercent'] as int?) ?? 10;
+
+      return GridColumn(
+        columnName: colName,
+        width: columnWidths[colName]!,
+        label: _buildHeaderCell(title, paddingPercent),
+      );
+    }).toList();
+  }
+
+  Widget _buildHeaderCell(String text, int paddingPercent) {
+    final double horizontalPadding = paddingPercent.toDouble();
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontFamily: 'newyork',
+          fontSize: 15,
+          fontWeight: FontWeight.w900,
+          color: Color(0xFF2C3E50),
         ),
       ),
     );
