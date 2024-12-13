@@ -1,60 +1,68 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
-import 'package:globipay_admin_panel/modules/users_section/user_levels/user_level_api_service.dart';
-import 'package:globipay_admin_panel/modules/users_section/user_levels/user_levels.dart';
+import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
+import 'package:globipay_admin_panel/core/constants/table_header_visibility.dart';
+import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
+import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/data/api/app_api.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 
 class UserLevelsController extends BaseController {
-  var UserLevels = <UserLevel>[].obs;
+  final AppRepository _repository;
+  final TokenRepository tokenRepository;
+  String currentRole = '';
+
+  UserLevelsController(this._repository, this.tokenRepository);
+
+  //Rx Variables
+  var users = <UserResponseItemEntity>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
-  var pageSize = 5.obs;
+  var pageSize = 10.obs;
   var isLoading = false.obs;
+  RxList<String> visibleColumns = RxList<String>();
 
-  final UserLevelApiService _apiService = UserLevelApiService();
+  PaginationRequest paginationRequest(int page, int limit) => PaginationRequest(
+        page: page,
+        limit: limit,
+      );
 
-  Future<void> fetchUsersLevel(int page, int limit) async {
-    print("\n ▌│█║▌║▌║▌│█║▌║▌║▌│█║▌║▌║ \n");
-    print("🔴::Fetching User levels::🔴");
-    print("🔻api/user/verifiedusersweb");
-    print("🔻Page: $page, Limit: $limit");
+  parseUserList(UserResponseEntity response) {
+    users.value = response.users ?? [];
+    totalItems.value = response.pagination?.total ?? 0;
+    currentPage.value = response.pagination?.currentPage ?? 1;
+  }
 
-    try {
-      isLoading.value = true;
-      var userLevelResponse = await _apiService.fetchUsersLevel(page, limit);
-
-      if (userLevelResponse != null) {
-        print("✅ Users fetched successfully.");
-        print("🔻Number of users fetched: ${userLevelResponse.users.length}");
-        print("🔻Fetched user names:");
-        userLevelResponse.users.forEach((UserLevel) => print("- ${UserLevel.name}"));
-
-        UserLevels.assignAll(userLevelResponse.users);
-        totalItems.value = userLevelResponse.pagination.total;
-        currentPage.value = userLevelResponse.pagination.currentPage;
-      } else {
-        print("API call returned null response.");
-      }
-    } catch (e) {
-      print("Error fetching users: ${e.toString()}");
-      if (e is DioError) {
-        print("DioError type: ${e.type}, message: ${e.message}");
-      }
-    } finally {
-      isLoading.value = false;
-      print("Loading state is now ${isLoading.value}");
-    }
+  Future<void> fetchUsers(int page, int limit) async {
+    final request = paginationRequest(page, limit);
+    final repo = _repository.requestForUserList(request, path: AppApi.userVerifiedProfile);
+    callService(repo, onSuccess: (response) {
+      parseUserList(response);
+    });
   }
 
   void updatePageSize(int newSize) {
     print("Updating page size to $newSize and fetching users from page 1");
     pageSize.value = newSize;
-    fetchUsersLevel(1, newSize);
+    fetchUsers(1, newSize);
+  }
+
+  Future<String> getRole() async {
+    return await tokenRepository.getRole().toString();
   }
 
   @override
   void onInit() {
+    fetchUsers(currentPage.value, pageSize.value);
+    getVisibleColumns();
     super.onInit();
-     fetchUsersLevel(currentPage.value, pageSize.value);
+  }
+
+  getVisibleColumns() async {
+    visibleColumns.value = await TableHeaderVisibility.getTableVisibleColumn(
+      tableName: TableName.USER_LEVEL_TABLE);
   }
 }

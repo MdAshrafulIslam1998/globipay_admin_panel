@@ -22,6 +22,8 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => DashboardController())
       ..registerFactory((c) => BasePanelController())
       ..registerFactory((c) => ActiveUsersController())
+      ..registerFactory((c) => EditLevelController())
+      ..registerFactory((c) => AddLevelController())
       ..registerFactory((c) => AboutUsController())
       ..registerFactory((c) => AutomatedReplyController())
       ..registerFactory((c) => PromotionalBannerController())
@@ -29,6 +31,14 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => TransactionHistoryController())
       ..registerFactory((c) => UserAmountController())
       ..registerFactory((c) => UserLevelsController())
+      ..registerFactory((c) => BlockedUsersController(
+          c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
+      ..registerFactory((c) => PendingUsersController(
+          c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
+      ..registerFactory((c) => ActiveUsersNewController(
+          c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
+      ..registerFactory((c) => UserLevelsController(
+          c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => BlockedUsersController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => PendingUsersController(

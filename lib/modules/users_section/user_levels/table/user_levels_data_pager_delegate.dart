@@ -1,27 +1,37 @@
 import 'package:globipay_admin_panel/modules/users_section/user_levels/controller/user_levels_controller.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-class UserLevelDataPagerDelegate extends DataPagerDelegate {
-  final UserLevelsController userController;
+class UserLevelsDataPagerDelegate extends DataPagerDelegate {
+  final UserLevelsController controller;
 
-  UserLevelDataPagerDelegate(this.userController);
+  UserLevelsDataPagerDelegate(this.controller);
 
   @override
   Future<bool> handlePageChange(int oldPageIndex, int newPageIndex) async {
+    print("Page change requested from $oldPageIndex to $newPageIndex");
     try {
-      await userController.fetchUsersLevel(newPageIndex + 1, userController.pageSize.value);
+      await controller.fetchUsers(newPageIndex + 1, controller.pageSize.value);
+      print("Page change successful to ${newPageIndex + 1}");
       return true;
     } catch (e) {
+      print("Error handling page change: $e");
       return false;
     }
   }
 
   @override
-  int get rowCount => userController.totalItems.value;
+  int get rowCount {
+    print("Total row count requested: ${controller.totalItems.value}");
+    return controller.totalItems.value;
+  }
 
   @override
-  int get pageCount => rowCount > 0 ? (rowCount / userController.pageSize.value).ceil() : 0;
+  int get pageCount {
+    int pageCount = rowCount > 0 ? (rowCount / controller.pageSize.value).ceil() : 0;
+    print("Calculated page count: $pageCount");
+    return pageCount;
+  }
 
   @override
-  int get pageSize => userController.pageSize.value;
+  int get pageSize => controller.pageSize.value;
 }
