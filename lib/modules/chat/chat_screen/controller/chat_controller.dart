@@ -400,8 +400,7 @@ class ChatController extends BaseController {
 
 
   void onChatClose(BuildContext context) {
-    // Show alert dialog with two input fields
-    // Controllers for input fields
+
     TextEditingController primaryCoinController = TextEditingController();
     TextEditingController secondaryCoinController = TextEditingController();
 
@@ -423,7 +422,8 @@ class ChatController extends BaseController {
                 InputField(
                   controller: primaryCoinController,
                   regex: InputRegex.NOT_EMPTY,
-                  inputFormatters: InputFilter.ONLY_NUMBER,
+                  inputFormatters: InputFilter.AMOUNT_INPUT_FILTER,
+                  hintText: "Primary Coin",
 
                 ),
                 SizedBox(height: 10),
@@ -432,7 +432,9 @@ class ChatController extends BaseController {
                   controller: secondaryCoinController,
                   regex: InputRegex.NOT_EMPTY,
                   maxLength: 10,
-                  inputFormatters: InputFilter.ONLY_NUMBER,
+                  inputFormatters: InputFilter.AMOUNT_INPUT_FILTER,
+                  hintText: "Secondary Coin",
+
                 ),
               ],
             ),
