@@ -1,180 +1,311 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
-import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/modules/users_section/add_level/controller/add_level_controller.dart';
 import 'package:intl/intl.dart';
 
-class AddLevelScreenBuilder extends BaseView <AddLevelController>{
-  AddLevelScreenBuilder({Key? key}) : super(key: key){
+class AddLevelScreenBuilder extends BaseView<AddLevelController> {
+  AddLevelScreenBuilder({Key? key}) : super(key: key) {
     controller.onInit();
   }
 
   @override
   Widget body(BuildContext context) {
+    // Define a modern color palette
+    final ColorScheme colorScheme = ColorScheme.fromSeed(
+      seedColor: const Color(0xFF3B82F6), // Primary blue
+      brightness: Brightness.light,
+    );
 
     return Scaffold(
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
-        title: const Text('Level Management'),
+        title: Text(
+          'Level Management',
+          style: TextStyle(
+            color: colorScheme.onPrimary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: colorScheme.primary,
         centerTitle: true,
+        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            // Existing Levels Column
-            Expanded(
-              flex: 1,
-              child: Card(
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Existing Levels',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const SizedBox(height: 16),
-                      Expanded(
-                        child: Obx(() {
-                          if (controller.levels.isEmpty) {
-                            return const Center(
-                              child: Text('No levels found'),
-                            );
-                          }
-                          return ListView.builder(
-                            itemCount: controller.levels.length,
-                            itemBuilder: (context, index) {
-                              final level = controller.levels[index];
-                              return Card(
-                                margin: const EdgeInsets.symmetric(vertical: 8),
-                                child: ListTile(
-                                  title: Text('Level ${level.levelName}'),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Value: ${level.levelValue}'),
-                                      Text(
-                                          'Range: ${level.minThresh} - ${level.maxThresh}'),
-                                      Text(
-                                          'Created: ${DateFormat('dd MMM yyyy HH:mm').format(level.date ?? DateTime.now())}'),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        }),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            // Add New Level Column
-            Expanded(
-              flex: 1,
-              child: Card(
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Form(
-                    key: controller.formKey,
-                    child: ListView(
-                      children: [
-                        Text(
-                          'Add New Level',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: controller.levelNameController,
-                          decoration: const InputDecoration(
-                            labelText: 'Level Name',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter level name';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: controller.levelValueController,
-                          decoration: const InputDecoration(
-                            labelText: 'Level Value',
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter level value';
-                            }
-                            if (int.tryParse(value) == null) {
-                              return 'Please enter a valid number';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: controller.minThreshController,
-                          decoration: const InputDecoration(
-                            labelText: 'Minimum Threshold',
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter minimum threshold';
-                            }
-                            if (double.tryParse(value) == null) {
-                              return 'Please enter a valid number';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: controller.maxThreshController,
-                          decoration: const InputDecoration(
-                            labelText: 'Maximum Threshold',
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter maximum threshold';
-                            }
-                            if (double.tryParse(value) == null) {
-                              return 'Please enter a valid number';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                        ElevatedButton(
-                          onPressed: controller.addLevel,
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50),
-                          ),
-                          child: const Text('Add Level'),
-                        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Row(
+              children: [
+                // Existing Levels Column
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        )
                       ],
+                    ),
+                    margin: const EdgeInsets.only(right: 16),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Existing Levels',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Expanded(
+                            child: Obx(() {
+                              if (controller.levels.isEmpty) {
+                                return Center(
+                                  child: Text(
+                                    'No levels found',
+                                    style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                );
+                              }
+                              return ListView.separated(
+                                itemCount: controller.levels.length,
+                                separatorBuilder: (context, index) => const SizedBox(height: 8),
+                                itemBuilder: (context, index) {
+                                  final level = controller.levels[index];
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: colorScheme.surface,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: Colors.grey.shade200,
+                                      ),
+                                    ),
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                      title: Text(
+                                        'Level ${level.levelName}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: colorScheme.primary,
+                                        ),
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            'Value: ${level.levelValue}',
+                                            style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Range: ${level.minThresh} - ${level.maxThresh}',
+                                            style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Created: ${DateFormat('dd MMM yyyy HH:mm').format(level.date ?? DateTime.now())}',
+                                            style: TextStyle(
+                                              color: Colors.grey.shade600,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ],
+
+                // Add New Level Column
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Form(
+                        key: controller.formKey,
+                        child: ListView(
+                          children: [
+                            Text(
+                              'Add New Level',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: colorScheme.primary,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            _buildTextFormField(
+                              context,
+                              controller: controller.levelNameController,
+                              labelText: 'Level Name',
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter level name';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            _buildTextFormField(
+                              context,
+                              controller: controller.levelValueController,
+                              labelText: 'Level Value',
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter level value';
+                                }
+                                if (int.tryParse(value) == null) {
+                                  return 'Please enter a valid number';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            _buildTextFormField(
+                              context,
+                              controller: controller.minThreshController,
+                              labelText: 'Minimum Threshold',
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter minimum threshold';
+                                }
+                                if (double.tryParse(value) == null) {
+                                  return 'Please enter a valid number';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            _buildTextFormField(
+                              context,
+                              controller: controller.maxThreshController,
+                              labelText: 'Maximum Threshold',
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter maximum threshold';
+                                }
+                                if (double.tryParse(value) == null) {
+                                  return 'Please enter a valid number';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 24),
+                            ElevatedButton(
+                              onPressed: controller.addLevel,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: colorScheme.primary,
+                                foregroundColor: Colors.white,
+                                minimumSize: const Size(double.infinity, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                elevation: 2,
+                              ),
+                              child: const Text(
+                                'Add Level',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
+    );
+  }
+
+  // Helper method to create consistent text form fields
+  Widget _buildTextFormField(
+    BuildContext context, {
+    required TextEditingController controller,
+    required String labelText,
+    TextInputType keyboardType = TextInputType.text,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        labelText: labelText,
+        labelStyle: const TextStyle(
+          color: Colors.grey,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: Colors.grey.shade300,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: Colors.grey.shade300,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: const Color(0xFF3B82F6),
+            width: 2,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: Colors.red,
+          ),
+        ),
+      ),
+      validator: validator,
     );
   }
 }
