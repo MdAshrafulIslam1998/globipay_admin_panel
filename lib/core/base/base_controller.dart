@@ -3,6 +3,8 @@
  */
 
 import 'package:get/get.dart';
+import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
+import 'package:globipay_admin_panel/core/di/injector.dart';
 import 'package:globipay_admin_panel/core/exception/app_exceptions.dart';
 import 'package:globipay_admin_panel/core/network/exceptions/api_exception.dart';
 import 'package:globipay_admin_panel/core/network/exceptions/app_exception.dart';
@@ -12,6 +14,7 @@ import 'package:globipay_admin_panel/core/network/exceptions/network_exception.d
 import 'package:globipay_admin_panel/core/network/exceptions/not_found_exception.dart';
 import 'package:globipay_admin_panel/core/network/exceptions/timeout_exception.dart';
 import 'package:globipay_admin_panel/core/network/exceptions/token_exception.dart';
+import 'package:globipay_admin_panel/core/services/storage/app_preferences_service.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import '../network/exceptions/service_unavailable_exception.dart';
 import '../network/exceptions/unauthorize_exception.dart';
@@ -19,6 +22,7 @@ import '../utils/custom_dialog.dart';
 import 'base_page_state.dart';
 class BaseController extends GetxController{
 
+  final TokenRepository tokenRepository = Injector.resolve<TokenRepository>();
   String currentPath = "";
   @override
   void onClose() {
@@ -199,5 +203,11 @@ class BaseController extends GetxController{
         showCustomDialog(message);
       }
     }
+  }
+
+
+  Future<String> getLoggedInUserId() async{
+    final id = await tokenRepository.getStuffId();
+    return id ;
   }
 }

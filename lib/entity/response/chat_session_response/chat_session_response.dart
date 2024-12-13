@@ -23,6 +23,9 @@ class ChatSessionResponse {
   bool? is_sender_typing;
   bool? is_last_message_seen;
   String? message_type;
+  String? status;
+
+
 
   ChatSessionResponse({
     this.session_id,
@@ -34,6 +37,7 @@ class ChatSessionResponse {
     this.last_message,
     this.isTyping,
     this.customer_id,
+    this.status,
 
   });
 

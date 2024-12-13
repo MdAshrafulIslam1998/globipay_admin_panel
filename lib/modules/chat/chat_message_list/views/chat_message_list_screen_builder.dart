@@ -61,13 +61,7 @@ class _ChatMessageListScreenBuilderState
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 final chat = controller.chatList[index];
-                return AnimatedChatListItem(
-                  chat: chat,
-                  index: index,
-                  onTap: () {
-                    controller.onMessageItemClicked(chat);
-                  },
-                );
+                return ChatListItem(chat, controller);
               },
             ),
           ),
@@ -77,82 +71,75 @@ class _ChatMessageListScreenBuilderState
   }
 }
 
-class AnimatedChatListItem extends StatelessWidget {
+class ChatListItem extends StatelessWidget {
   final ChatSessionResponse chat;
-  final int index;
-  Function onTap;
+  ChatMessageController controller;
+  ChatListItem(this.chat, this.controller);
 
-  AnimatedChatListItem(
-      {required this.chat, required this.index, required this.onTap});
+  bool isChatActive (ChatSessionResponse chat){
+    return chat.status == 'closed' ? false : true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onTap();
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        child: ChatListItem(chat: chat),
+    return InkWell(
+      onTap: !isChatActive(chat) ? null : (){
+        controller.onMessageItemClicked(chat);
+      } ,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: getBackgroundColor(chat),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 8),
+                  child: CircleAvatar(
+                    radius: 24,
+                    backgroundColor: Colors.grey[200],
+                    child: Image.network(
+                      chat.avatar_url ?? '',
+                      width: 24,
+                      height: 24,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: getUserMessage(chat),
+                          ),
+                          getTrailingWidget(chat)
+                        ],
+                      ),
+                      AppSpaces.spaceBetweenChild,
+                      const Divider(height: 2, color: Colors.black12),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
-}
 
-class ChatListItem extends StatelessWidget {
-  final ChatSessionResponse chat;
 
-  ChatListItem({required this.chat});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(
-        color: ColorPalettes.colorPrimary.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(right: 8),
-                child: CircleAvatar(
-                  radius: 24,
-                  backgroundColor: Colors.grey[200],
-                  child: Image.network(
-                    chat.avatar_url ?? '',
-                    width: 24,
-                    height: 24,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: getUserMessage(chat),
-                        ),
-                        getTrailingWidget(chat)
-                      ],
-                    ),
-                    AppSpaces.spaceBetweenChild,
-                    const Divider(height: 2, color: Colors.black12),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ],
-      ),
-    );
+  Color getBackgroundColor(ChatSessionResponse chat) {
+    return chat.status == 'closed'
+        ? ColorPalettes.colorError.withOpacity(0.1)
+        : ColorPalettes.colorPrimary.withOpacity(0.1);
   }
 
   Widget getTrailingWidget(ChatSessionResponse chat) {
@@ -165,7 +152,7 @@ class ChatListItem extends StatelessWidget {
           style: const TextStyle(fontSize: 14),
         ),
        /* if (chat.status != null)*/
-        StatusBadge(status: "New"),
+        StatusBadge(status: chat.status ?? ""),
 
       ],
     );

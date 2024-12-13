@@ -10,6 +10,9 @@ import 'package:globipay_admin_panel/core/utils/inputFilter/input_filter.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
 import 'package:globipay_admin_panel/data/models/call_model.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
+import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/widgets/chat_close_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -44,10 +47,15 @@ class ChatController extends BaseController {
   ScrollController scrollController = ScrollController();
 
   final TextEditingController messageController = TextEditingController();
+  TextEditingController primaryCoinController = TextEditingController();
+  TextEditingController secondaryCoinController = TextEditingController();
+
+
   // Constructor
   final TokenRepository tokenRepository;
+  final AppRepository appRepository;
 
-  ChatController(this.tokenRepository);
+  ChatController(this.tokenRepository,this.appRepository);
 
   GlobalKey<FormState> chatCloseFormKey = GlobalKey<FormState>();
   Timer? _typingTimer;
@@ -401,9 +409,6 @@ class ChatController extends BaseController {
 
   void onChatClose(BuildContext context) {
 
-    TextEditingController primaryCoinController = TextEditingController();
-    TextEditingController secondaryCoinController = TextEditingController();
-
 
     showDialog(
       context: context,
@@ -451,10 +456,9 @@ class ChatController extends BaseController {
             ElevatedButton(
               onPressed: () {
                 if (chatCloseFormKey.currentState!.validate()) {
-
+                  AppRoutes.pop();
+                  requestToCloseChatSession();
                 }
-
-
               },
               child: Text("Submit"),
             ),
@@ -464,8 +468,49 @@ class ChatController extends BaseController {
     );
   }
 
+  ChatCloseRequestEntity chatCloseRequestEntity(String createdById){
+    return ChatCloseRequestEntity(
+      primaryCoin: primaryCoinController.text.isNotEmpty ? double.tryParse(primaryCoinController.text) : 0.0,
+      secondaryCoin: secondaryCoinController.text.isNotEmpty ? double.tryParse(secondaryCoinController.text) : 0.0,
+      catId: int.tryParse(sharedController.chatSessionResponse?.category ?? "-1"),
+      uid: sharedController.chatSessionResponse?.customer_id ?? "",
+      createdBy: createdById,
+    );
+  }
 
+  requestToCloseChatSession() async{
+    final cId = await getLoggedInUserId();
+    final req = chatCloseRequestEntity(cId);
+    final repo = appRepository.requestToCloseChat(req);
+    callService(repo,onSuccess: (ChatCloseResponseEntity response){
+      parseChatCloseSession(response);
+    });
+  }
 
+  parseChatCloseSession(ChatCloseResponseEntity response){
+    updateSupabaseChatSession();
+  }
+
+  updateSupabaseChatSession() async{
+
+    // Update the chat session status to closed
+    try {
+      await supabase.from('chat_sessions').update({
+        'status': 'closed',
+        'closed_at': DateTime.now().toIso8601String(),
+      }).eq('session_id', sharedController.chatSessionId).execute();
+    } catch (e) {
+      print('Error closing chat session: $e');
+    }
+    showCustomDialog(
+      "Chat session closed successfully : ${sharedController.chatSessionId}",
+      positiveButtonText: "Ok",
+      positiveButtonAction: (){
+        AppRoutes.pop();
+      }
+    );
+
+  }
 
 
 
