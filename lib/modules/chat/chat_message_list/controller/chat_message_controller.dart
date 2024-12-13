@@ -55,7 +55,7 @@ class ChatMessageController extends BaseController {
 
     final userID = await tokenRepository.getStuffId();
     sharedController.setCurrentUserId(userID);
-    AppRoutes.pushNamed(RoutePath.chat);
+    AppRoutes.pushNamed(RoutePath.chat).then((value) => requestForMessageList());
 
   }
 
@@ -97,6 +97,7 @@ class ChatMessageController extends BaseController {
 
     sharedController.setChatSessionId(message.session_id);
     sharedController.setCustomerID(message.customer_id);
+    sharedController.setChatSessionResponse(message);
     goToChatScreen();
 
   }

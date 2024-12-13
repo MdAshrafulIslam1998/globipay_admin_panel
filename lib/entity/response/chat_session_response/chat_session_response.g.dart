@@ -17,6 +17,7 @@ ChatSessionResponse _$ChatSessionResponseFromJson(Map<String, dynamic> json) =>
       last_message: json['last_message'] as String?,
       isTyping: json['isTyping'] as bool?,
       customer_id: json['customer_id'] as String?,
+      status: json['status'] as String?,
     )
       ..last_message_timestamp = json['last_message_timestamp'] as String?
       ..is_receiver_typing = json['is_receiver_typing'] as bool?
@@ -41,4 +42,5 @@ Map<String, dynamic> _$ChatSessionResponseToJson(
       'is_sender_typing': instance.is_sender_typing,
       'is_last_message_seen': instance.is_last_message_seen,
       'message_type': instance.message_type,
+      'status': instance.status,
     };
