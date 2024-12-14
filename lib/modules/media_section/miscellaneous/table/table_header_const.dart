@@ -3,7 +3,7 @@
  */
 
 abstract class MiscTableHeaderConst{
-  static const String ID = 'id';
+  static const String ID = 'service_id';
   static const String FEATURE_CODE = 'feature_code';
   static const String TYPE = 'type';
   static const String CONTENT = 'content';

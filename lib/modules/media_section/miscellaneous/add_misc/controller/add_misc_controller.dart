@@ -57,6 +57,18 @@ class AddMiscController extends BaseController{
 
   void addMiscItem() {
 
+    if (titleController.text.isEmpty) {
+      showSnackBar( message: 'Please enter title',status: SnackBarStatus.INFO);
+      return;
+    }
+
+    if (descriptionController.document.isEmpty()) {
+      showSnackBar( message: 'Please enter description',status: SnackBarStatus.INFO);
+      return;
+    }
+
+
+
 
 
   }

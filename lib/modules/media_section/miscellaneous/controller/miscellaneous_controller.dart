@@ -33,7 +33,7 @@ class MiscellaneousController extends BaseController{
   );
 
   parseMiscList(MiscResponseEntity response) {
-    miscs.value = response.miscs ?? [];
+    miscs.value = response.services ?? [];
     totalItems.value = response.pagination?.total ?? 0;
     currentPage.value = response.pagination?.currentPage ?? 1;
   }
