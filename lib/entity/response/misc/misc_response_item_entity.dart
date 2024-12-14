@@ -7,14 +7,14 @@ part 'misc_response_item_entity.g.dart';
 
 @JsonSerializable()
 class MiscResponseItemEntity {
-  final String? id;
+  final String? service_id;
   final String? feature_code;
   final String? type;
   final String? content;
 
 
   MiscResponseItemEntity({
-    this.id,
+    this.service_id,
     this.feature_code,
     this.type,
     this.content,

@@ -16,7 +16,7 @@ part 'misc_response_entity.g.dart';
 
 @JsonSerializable()
 class MiscResponseEntity {
-  @JsonKey(name: "miscs")
+  @JsonKey(name: "services")
   List<MiscResponseItemEntity>? miscs;
   @JsonKey(name: "pagination")
   Pagination? pagination;
