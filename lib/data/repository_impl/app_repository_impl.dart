@@ -1,4 +1,5 @@
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/entity/request/category/add_category_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
@@ -95,6 +96,18 @@ class AppRepositoryImpl extends AppRepository{
   Future<void> requestToRemoveMessageTemplates(String id) {
     return remoteDataSource.requestToRemoveMessageTemplates(id);
   }
+
+  @override
+  Future<void> requestToAddCategory(AddCategoryRequestEntity req) {
+   return remoteDataSource.requestToAddCategory(req);
+  }
+
+  @override
+  Future<void> requestToDeleteCategory(String id) {
+    return remoteDataSource.requestToDeleteCategory(id);
+  }
+
+
 
 
 

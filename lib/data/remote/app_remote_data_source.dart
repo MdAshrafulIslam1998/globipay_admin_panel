@@ -1,4 +1,5 @@
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/entity/request/category/add_category_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
@@ -36,5 +37,7 @@ abstract class AppRemoteDataSource {
   Future<void> requestToAddMessageTemplates(AddMessageTemplatesRequest request);
   Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(PaginationRequest request);
   Future<void> requestToRemoveMessageTemplates(String id);
+  Future<void> requestToAddCategory(AddCategoryRequestEntity req);
+  Future<void> requestToDeleteCategory(String id);
 
 }

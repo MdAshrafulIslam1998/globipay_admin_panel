@@ -7,10 +7,13 @@ import 'package:globipay_admin_panel/core/widgets/app_print.dart';
  * Created by Abdullah on 14/12/24.
  */
 class WebImagePicker extends StatefulWidget {
-
-  Function(Uint8List?,html.File?) onImageSelected;
+  final double? height;
+  final double? width;
+  Function(Uint8List?, html.File?) onImageSelected;
   final String? hint;
-  WebImagePicker({required this.onImageSelected, this.hint});
+
+  WebImagePicker({required this.onImageSelected, this.hint, this.height, this.width});
+
   @override
   _WebImagePickerState createState() => _WebImagePickerState();
 }
@@ -37,7 +40,7 @@ class _WebImagePickerState extends State<WebImagePicker> {
           setState(() {
             // Convert the file to bytes
             _imageBytes = reader.result as Uint8List;
-            widget.onImageSelected.call(_imageBytes,file);
+            widget.onImageSelected.call(_imageBytes, file);
           });
         });
       }
@@ -46,15 +49,16 @@ class _WebImagePickerState extends State<WebImagePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         GestureDetector(
-          onTap: (){
+          onTap: () {
             pickImage();
           },
           child: Container(
-            height: 250,
+            height: widget.height ?? 250,
+            width: widget.width ?? 250,
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(12),
@@ -68,32 +72,33 @@ class _WebImagePickerState extends State<WebImagePicker> {
             ),
             child: _imageBytes != null
                 ? ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: _buildImageDisplay(),
-            )
+                    borderRadius: BorderRadius.circular(12),
+                    child: _buildImageDisplay(),
+                  )
                 : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.cloud_upload,
-                  size: 80,
-                  color: Colors.deepPurple.shade300,
-                ),
-                SizedBox(height: 16),
-                Text(
-                  widget.hint ?? 'Upload Image',
-                  style: TextStyle(
-                    color: Colors.deepPurple.shade400,
-                    fontSize: 18,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.cloud_upload,
+                        size: 80,
+                        color: Colors.deepPurple.shade300,
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        widget.hint ?? 'Upload Image',
+                        style: TextStyle(
+                          color: Colors.deepPurple.shade400,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ),
         ),
       ],
     );
   }
+
   Widget _buildImageDisplay() {
     if (_imageBytes == null) {
       return Column(

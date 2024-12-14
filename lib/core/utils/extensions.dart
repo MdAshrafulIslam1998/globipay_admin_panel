@@ -75,7 +75,7 @@ extension ColorExtension on Color?{
     if (this == null) return '';
     final color = this;
     String hex = color!.value.toRadixString(16).padLeft(8, '0').toUpperCase();
-    return includeAlpha ? hex : hex.substring(2);
+    return includeAlpha ? "#$hex" : hex.substring(2);
   }
 
 }

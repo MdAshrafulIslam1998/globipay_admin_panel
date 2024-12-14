@@ -18,6 +18,8 @@ abstract class AppApi {
   static const String addMessageTemplates = '$prefix/message-templates/add';
   static const String messageTemplatesList = '$prefix/message-templates/list';
   static const String removeMessageTemplates = '$prefix/message-templates/remove';
+  static const String addCategory = '$prefix/categories/add';
+  static const String deleteCategory = '$prefix/categories';
 
 
 
