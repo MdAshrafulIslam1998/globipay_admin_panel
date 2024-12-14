@@ -3,6 +3,10 @@ import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/constants/date_format.dart';
+import 'package:globipay_admin_panel/core/utils/extensions.dart';
+import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
+import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_item.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promotional_banner_controller.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
@@ -105,7 +109,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
         ),
         itemCount: controller.banners.length,
         itemBuilder: (context, index) {
-          final banner = controller.banners[index];
+          PromotionalBannerItem banner = controller.banners[index];
           return _buildBannerCard(banner, context);
         },
       );
@@ -173,7 +177,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
     );
   }
 
-  Widget _buildBannerCard(banner, BuildContext context) {
+  Widget _buildBannerCard(PromotionalBannerItem banner, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -192,9 +196,9 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
           // Banner Image
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-            child: banner.imageUrl != null
+            child: banner.picture != null
                 ? CachedNetworkImage(
-              imageUrl: banner.imageUrl!,
+              imageUrl: banner.picture!,
               height: 180,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -206,7 +210,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
                 : Container(
               height: 180,
               color: Colors.grey.shade200,
-              child: Center(child: Icon(Icons.image_not_supported)),
+              child: const  Center(child: Icon(Icons.image_not_supported)),
             ),
           ),
 
@@ -217,7 +221,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  banner.title,
+                  banner.title ?? '',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -226,7 +230,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
                 ),
                 SizedBox(height: 8),
                 Text(
-                  banner.description,
+                  banner.subtitle ?? '',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -235,18 +239,26 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
                 ),
                 SizedBox(height: 12),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Active: ${banner.startDate.toLocal().toString().split(' ')[0]} - ${banner.endDate.toLocal().toString().split(' ')[0]}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade500,
-                      ),
-                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        AppText(
+                          'From - ${banner.fromDate?.toString().formatDate(AppDateFormat.yyyymmddHighphenhhmmss)}',
+
+                        ),
+                        AppText(
+                          'To - ${banner.toDate?.toString().formatDate(AppDateFormat.yyyymmddHighphenhhmmss)}',
+                        ),
+                      ],
+                    )
+                    ,
                     IconButton(
                       icon: Icon(Icons.delete, color: Colors.red.shade400),
-                      onPressed: () => _showDeleteConfirmation(context, banner.id),
+                      onPressed: () => _showDeleteConfirmation(context, banner.id.toString()),
                     ),
                   ],
                 ),
@@ -266,13 +278,13 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
         content: Text('Are you sure you want to delete this banner?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => AppRoutes.pop(),
             child: Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
               controller.deleteBanner(bannerId);
-              Navigator.of(context).pop();
+              AppRoutes.pop();
             },
             child: Text('Delete'),
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),

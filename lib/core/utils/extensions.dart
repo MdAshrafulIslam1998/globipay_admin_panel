@@ -69,6 +69,17 @@ extension StringExtensions on String {
 }
 
 
+extension ColorExtension on Color?{
+  String colorToHex({bool includeAlpha = true}) {
+    if (this == null) return '';
+    final color = this;
+    String hex = color!.value.toRadixString(16).padLeft(8, '0').toUpperCase();
+    return includeAlpha ? hex : hex.substring(2);
+  }
+
+}
+
+
 
 
 

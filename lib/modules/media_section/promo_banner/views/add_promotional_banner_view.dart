@@ -2,11 +2,15 @@
  * Created by Abdullah on 13/12/24.
  */
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
+import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promotional_banner_controller.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
 
 class AddPromotionalBannerView extends StatefulWidget {
@@ -14,13 +18,14 @@ class AddPromotionalBannerView extends StatefulWidget {
   _AddPromotionalBannerViewState createState() => _AddPromotionalBannerViewState();
 }
 
-class _AddPromotionalBannerViewState extends State<AddPromotionalBannerView> {
+class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerView,PromotionalBannerController> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _urlController = TextEditingController();
 
-  XFile? _imageFile;
+  Uint8List? _imageFile;
+
   DateTime? _startDate;
   DateTime? _endDate;
   Color _bannerColor = Colors.deepPurple;
@@ -29,15 +34,10 @@ class _AddPromotionalBannerViewState extends State<AddPromotionalBannerView> {
 
   // Image Picker
   Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1920,
-      maxHeight: 1080,
-    );
-
-    if (pickedFile != null) {
+    var image = await ImagePickerWeb.getImageAsBytes();
+    if (image != null) {
       setState(() {
-        _imageFile = pickedFile;
+        _imageFile = image;
       });
     }
   }
@@ -120,13 +120,19 @@ class _AddPromotionalBannerViewState extends State<AddPromotionalBannerView> {
       return;
     }
 
-    // Success Scenario
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Promotional Banner Created Successfully'),
-        backgroundColor: Colors.green[600],
-      ),
+
+    controller.addBanner(
+      title: _titleController.text,
+      description: _descriptionController.text,
+      backgroundColor: _bannerColor,
+      imageFile: _imageFile,
+      startDate: _startDate!,
+      endDate: _endDate!,
+      isVisibleToAll: _isVisibleToAll,
+      priority: _priority,
+      destinationUrl: _urlController.text,
     );
+
   }
 
   // Image display widget
@@ -153,27 +159,11 @@ class _AddPromotionalBannerViewState extends State<AddPromotionalBannerView> {
     }
 
     // Cross-platform image display
-    return kIsWeb
-        ? Image.network(
-      _imageFile!.path,
-      fit: BoxFit.cover,
-      width: double.infinity,
-    )
-        : (Platform.isAndroid || Platform.isIOS)
-        ? Image.file(
-      File(_imageFile!.path),
-      fit: BoxFit.cover,
-      width: double.infinity,
-    )
-        : Image.network(
-      _imageFile!.path,
-      fit: BoxFit.cover,
-      width: double.infinity,
-    );
+    return Image.memory(_imageFile!);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget body(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -222,7 +212,7 @@ class _AddPromotionalBannerViewState extends State<AddPromotionalBannerView> {
                     // Image Upload Section
                     GestureDetector(
                       onTap: (){
-
+                        _pickImage();
                       },
                       child: Container(
                         height: 250,
