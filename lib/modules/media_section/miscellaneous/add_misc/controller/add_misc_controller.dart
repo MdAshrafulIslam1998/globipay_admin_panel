@@ -4,6 +4,9 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/constants/enum/feature_code.dart';
 import 'package:globipay_admin_panel/data/models/misc_item_model.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
 /**
  * Created by Abdullah on 14/12/24.
  */
@@ -13,8 +16,11 @@ class AddMiscController extends BaseController{
   final titleController = TextEditingController();
   final descriptionController = quill.QuillController.basic();
 
+  final AppRepository appRepository;
   var list = <MiscellaneousItemModel>[].obs;
   Rxn<MiscellaneousItemModel?> selectedCategory = Rxn<MiscellaneousItemModel?>(null);
+
+  AddMiscController(this.appRepository);
 
   @override
   void onInit() {
@@ -54,10 +60,45 @@ class AddMiscController extends BaseController{
       selectedCategory.value = value;
     }
   }
+  
+  AddMiscRequestEntity addMiscRequestEntity(){
+    return AddMiscRequestEntity(
+      type: titleController.text,
+      content: descriptionController.document.toPlainText().trim(), // Plain text
+      featureCode: selectedCategory.value?.code,
+    );
+  }
 
   void addMiscItem() {
 
+    if (titleController.text.isEmpty) {
+      showSnackBar( message: 'Please enter title',status: SnackBarStatus.INFO);
+      return;
+    }
 
+    if (descriptionController.document.isEmpty()) {
+      showSnackBar( message: 'Please enter description',status: SnackBarStatus.INFO);
+      return;
+    }
 
+    if(selectedCategory.value == null){
+      showSnackBar( message: 'Please select a category',status: SnackBarStatus.INFO);
+      return;
+    }
+
+    requestForAddMiscItem();
+  }
+
+  // Network call
+
+  void requestForAddMiscItem() {
+    final repo = appRepository.requestToAddMisc(addMiscRequestEntity());
+    callService(
+      repo,
+      onSuccess: (response) {
+        showSnackBar( message: 'Miscellaneous item added successfully',status: SnackBarStatus.SUCCESS);
+       AppRoutes.pop();
+      },
+    );
   }
 }

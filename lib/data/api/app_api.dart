@@ -20,6 +20,7 @@ abstract class AppApi {
   static const String removeMessageTemplates = '$prefix/templates';
   static const String addCategory = '$prefix/categories/add';
   static const String deleteCategory = '$prefix/categories';
+  static const String addMisc = '$prefix/meta-service/add';
 
 
 

@@ -29,7 +29,7 @@ class MiscellaneousDataSource extends DataGridSource {
         switch (columnName) {
           case MiscTableHeaderConst.ID:
             return DataGridCell<String>(
-                columnName: MiscTableHeaderConst.ID, value: user.service_id);
+                columnName: MiscTableHeaderConst.ID, value: user.service_id.toString());
           case MiscTableHeaderConst.FEATURE_CODE:
             return DataGridCell<String>(
                 columnName: MiscTableHeaderConst.FEATURE_CODE, value: user.feature_code);
@@ -39,6 +39,16 @@ class MiscellaneousDataSource extends DataGridSource {
           case MiscTableHeaderConst.CONTENT:
             return DataGridCell<String>(
                 columnName: MiscTableHeaderConst.CONTENT, value: user.content);
+
+          case MiscTableHeaderConst.DETAILS:
+            return DataGridCell<String>(
+                columnName: MiscTableHeaderConst.DETAILS, value: "Details");
+
+          case MiscTableHeaderConst.DELETE:
+            return DataGridCell<String>(
+                columnName: MiscTableHeaderConst.DELETE, value: "Delete");
+
+
           default:
             throw Exception('Invalid column: $columnName');
         }

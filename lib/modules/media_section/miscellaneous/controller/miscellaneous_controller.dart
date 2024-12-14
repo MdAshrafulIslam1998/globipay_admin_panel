@@ -7,6 +7,8 @@ import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_item_entity.dart';
 import 'package:get/get.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:globipay_admin_panel/router/route_path.dart';
 /**
  * Created by Abdullah on 14/12/24.
  */
@@ -33,7 +35,7 @@ class MiscellaneousController extends BaseController{
   );
 
   parseMiscList(MiscResponseEntity response) {
-    miscs.value = response.miscs ?? [];
+    miscs.value = response.services ?? [];
     totalItems.value = response.pagination?.total ?? 0;
     currentPage.value = response.pagination?.currentPage ?? 1;
   }
@@ -66,5 +68,11 @@ class MiscellaneousController extends BaseController{
   getVisibleColumns() async {
     visibleColumns.value = await TableHeaderVisibility.getTableVisibleColumn(
         tableName: TableName.MISC_TABLE);
+  }
+
+  void addNewMisc() {
+    AppRoutes.pushNamed(RoutePath.addMisc).then((value) {
+      fetchMiscs(currentPage.value, pageSize.value);
+    });
   }
 }

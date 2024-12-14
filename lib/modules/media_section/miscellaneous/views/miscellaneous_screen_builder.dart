@@ -105,7 +105,7 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                         TextButton(
                           onPressed: () {
                             // Add new level Button
-                            AppRoutes.pushNamed(RoutePath.addMisc);
+                            controller.addNewMisc();
                           },
                           style: TextButton.styleFrom(
                             backgroundColor:
@@ -186,7 +186,7 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                     source: MiscellaneousDataSource(
                       controller.miscs.value,
                       onActionTap: (user, action) {
-                        switch (action) {
+                        /*switch (action) {
                           case MiscTableHeaderConst.DETAILS:
                            // AppRoutes.pushNamed(RoutePath.pendingProfile);
                             break;
@@ -194,7 +194,7 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                            // print('Delete action for ${user.name}');
                             break;
 
-                        }
+                        }*/
                       },
                       visibleColumns: controller.visibleColumns.value,
                     ),

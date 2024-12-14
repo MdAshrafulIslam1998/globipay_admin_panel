@@ -8,7 +8,7 @@ part of 'misc_response_entity.dart';
 
 MiscResponseEntity _$MiscResponseEntityFromJson(Map<String, dynamic> json) =>
     MiscResponseEntity(
-      miscs: (json['miscs'] as List<dynamic>?)
+      services: (json['services'] as List<dynamic>?)
           ?.map(
               (e) => MiscResponseItemEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -19,6 +19,6 @@ MiscResponseEntity _$MiscResponseEntityFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$MiscResponseEntityToJson(MiscResponseEntity instance) =>
     <String, dynamic>{
-      'miscs': instance.miscs,
+      'services': instance.services,
       'pagination': instance.pagination,
     };

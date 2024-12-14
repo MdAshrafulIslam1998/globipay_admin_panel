@@ -1,25 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'misc_response_item_entity.dart';
+part of 'add_misc_request_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MiscResponseItemEntity _$MiscResponseItemEntityFromJson(
+AddMiscRequestEntity _$AddMiscRequestEntityFromJson(
         Map<String, dynamic> json) =>
-    MiscResponseItemEntity(
-      service_id: (json['service_id'] as num?)?.toInt(),
-      feature_code: json['feature_code'] as String?,
+    AddMiscRequestEntity(
+      featureCode: json['featureCode'] as String?,
       type: json['type'] as String?,
       content: json['content'] as String?,
     );
 
-Map<String, dynamic> _$MiscResponseItemEntityToJson(
-        MiscResponseItemEntity instance) =>
+Map<String, dynamic> _$AddMiscRequestEntityToJson(
+        AddMiscRequestEntity instance) =>
     <String, dynamic>{
-      'service_id': instance.service_id,
-      'feature_code': instance.feature_code,
+      'featureCode': instance.featureCode,
       'type': instance.type,
       'content': instance.content,
     };

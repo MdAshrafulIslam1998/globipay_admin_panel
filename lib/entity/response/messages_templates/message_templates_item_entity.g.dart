@@ -9,11 +9,11 @@ part of 'message_templates_item_entity.dart';
 MessageTemplatesItemEntity _$MessageTemplatesItemEntityFromJson(
         Map<String, dynamic> json) =>
     MessageTemplatesItemEntity(
-          uid: json['uid'] as String?,
+      uid: json['uid'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,
       category_name: json['category_name'] as String?,
-      category_id: json['category_id'] as int?,
+      category_id: (json['category_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$MessageTemplatesItemEntityToJson(
