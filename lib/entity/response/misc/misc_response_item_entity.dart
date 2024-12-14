@@ -7,7 +7,7 @@ part 'misc_response_item_entity.g.dart';
 
 @JsonSerializable()
 class MiscResponseItemEntity {
-  final String? service_id;
+  final int? service_id;
   final String? feature_code;
   final String? type;
   final String? content;

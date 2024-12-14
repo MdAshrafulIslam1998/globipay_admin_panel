@@ -15,7 +15,7 @@ class _$AppInjector extends AppInjector {
           (c) => AddTemplatesController(c.resolve<AppRepository>()))
       ..registerFactory(
           (c) => MessageTemplatesController(c.resolve<AppRepository>()))
-      ..registerFactory((c) => AddMiscController())
+      ..registerFactory((c) => AddMiscController(c.resolve<AppRepository>()))
       ..registerFactory((c) => MiscellaneousController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => AddNotificationController())

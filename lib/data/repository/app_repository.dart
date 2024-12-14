@@ -5,6 +5,7 @@ import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/login/login_request.dart';
 import 'package:globipay_admin_panel/entity/request/message_templates/add_message_templates_request.dart';
+import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_banner_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
@@ -38,6 +39,7 @@ abstract class AppRepository{
   Future<void> requestToRemoveMessageTemplates(String id);
   Future<void> requestToAddCategory(AddCategoryRequestEntity req);
   Future<void> requestToDeleteCategory(String id);
+  Future<void> requestToAddMisc(AddMiscRequestEntity request);
 
 
 }
