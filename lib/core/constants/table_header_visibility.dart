@@ -2,7 +2,7 @@ import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
-
+import 'package:globipay_admin_panel/modules/media_section/miscellaneous/table/table_header_const.dart';
 import 'enum/role_name.dart';
 
 /**
@@ -23,13 +23,15 @@ abstract class TableHeaderVisibility {
         return _USER_BLOCKED_TABLE[currentRole];
       case TableName.USER_LEVEL_TABLE:
         return _USER_LEVEL_TABLE[currentRole];
+      case TableName.MISC_TABLE:
+        return _MISC_TABLE[currentRole];
 
       default:
         return [];
     }
   }
 
-  static Map<String, List<String>> _USER_ACTIVE_TABLE = {
+  static final Map<String, List<String>> _USER_ACTIVE_TABLE = {
     RoleName.ADMIN.code: [
       'name',
       'email',
@@ -64,7 +66,7 @@ abstract class TableHeaderVisibility {
     ], //moderator
   };
 
-  static Map<String, List<String>> _USER_PENDING_TABLE = {
+  static final Map<String, List<String>> _USER_PENDING_TABLE = {
     RoleName.ADMIN.code: [
       'name',
       'email',
@@ -85,7 +87,7 @@ abstract class TableHeaderVisibility {
     ], //moderator
   };
 
-  static Map<String, List<String>> _USER_BLOCKED_TABLE = {
+  static final Map<String, List<String>> _USER_BLOCKED_TABLE = {
     RoleName.ADMIN.code: [
       'name',
       'email',
@@ -105,7 +107,7 @@ abstract class TableHeaderVisibility {
     ], //moderator
   };
 
-  static Map<String, List<String>> _USER_LEVEL_TABLE = {
+  static final Map<String, List<String>> _USER_LEVEL_TABLE = {
     RoleName.ADMIN.code: [
       'name',
       'email',
@@ -135,6 +137,34 @@ abstract class TableHeaderVisibility {
       'levelName',
       'date',
       'status',
+    ], //moderator
+  };
+
+  static final Map<String, List<String>> _MISC_TABLE = {
+     RoleName.ADMIN.code: const [
+      MiscTableHeaderConst.ID,
+      MiscTableHeaderConst.FEATURE_CODE,
+      MiscTableHeaderConst.TYPE,
+      MiscTableHeaderConst.CONTENT,
+      MiscTableHeaderConst.DETAILS,
+      MiscTableHeaderConst.DELETE,
+
+    ], //admin
+    RoleName.SUPER_ADMIN.code: [
+      MiscTableHeaderConst.ID,
+      MiscTableHeaderConst.FEATURE_CODE,
+      MiscTableHeaderConst.TYPE,
+      MiscTableHeaderConst.CONTENT,
+      MiscTableHeaderConst.DETAILS,
+      MiscTableHeaderConst.DELETE,
+    ], //subadmin
+    RoleName.MODERATOR.code: [
+      MiscTableHeaderConst.ID,
+      MiscTableHeaderConst.FEATURE_CODE,
+      MiscTableHeaderConst.TYPE,
+      MiscTableHeaderConst.CONTENT,
+      MiscTableHeaderConst.DETAILS,
+      MiscTableHeaderConst.DELETE,
     ], //moderator
   };
 }

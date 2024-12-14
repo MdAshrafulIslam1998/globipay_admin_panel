@@ -8,12 +8,15 @@ import 'package:globipay_admin_panel/modules/chat/chat_message_list/views/chat_m
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/chat_screen_screen.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/views/base_panel_screen.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/views/dashboard_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/miscellaneous/add_misc/views/add_misc_item_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/miscellaneous/views/miscellaneous_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/notification_setter/add_notifications/add_notification_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/add_promotional_banner_view.dart';
 import 'package:globipay_admin_panel/modules/splash/splash_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users/views/active_users_screen.dart';
 import 'package:globipay_admin_panel/modules/amount_section/edit_coin/views/edit_coin_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_profile/views/pending_profile_screen.dart';
-import 'package:globipay_admin_panel/modules/media_section/notification_setter/views/notification_setter_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/notification_setter/notification_list/views/notification_setter_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/views/active_users_new_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/views/pending_users_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/blocked_users/views/blocked_users_screen.dart';
@@ -112,14 +115,11 @@ abstract class AppRoutesList {
             name: RoutePath.promoBanner,
             builder: (context, state) => PromoBannerScreen(),
           ),
-
           GoRoute(
             path: RoutePath.addPromoBanner,
             name: RoutePath.addPromoBanner,
             builder: (context, state) => AddPromotionalBannerView(),
           ),
-
-
           GoRoute(
             path: RoutePath.automatedReply,
             name: RoutePath.automatedReply,
@@ -130,47 +130,66 @@ abstract class AppRoutesList {
             name: RoutePath.aboutUs,
             builder: (context, state) => AboutUsScreen(),
           ),
-
           GoRoute(
             path: RoutePath.chatMessageList,
             name: RoutePath.chatMessageList,
             builder: (context, state) => const ChatMessageListScreen(),
           ),
-
           GoRoute(
             path: RoutePath.chat,
             name: RoutePath.chat,
             builder: (context, state) => ChatScreenScreen(),
           ),
-
           GoRoute(
             path: RoutePath.audioCall,
             name: RoutePath.audioCall,
             builder: (context, state) => const AudioCallScreen(),
           ),
-
           GoRoute(
             path: RoutePath.videoCall,
             name: RoutePath.videoCall,
             builder: (context, state) => VideoCallScreen(data: state.extra),
           ),
-
           GoRoute(
             path: RoutePath.callPickUp,
             name: RoutePath.callPickUp,
-            builder: (context, state) => CallWaitingScreen(data: state.extra as CallModel),
+            builder: (context, state) =>
+                CallWaitingScreen(data: state.extra as CallModel),
+          ),
+          GoRoute(
+            path: RoutePath.addLevel,
+            name: RoutePath.addLevel,
+            builder: (context, state) => AddLevelScreen(),
+          ),
+          GoRoute(
+            path: RoutePath.editLevel,
+            name: RoutePath.editLevel,
+            builder: (context, state) => EditLevelScreen(),
           ),
 
-        GoRoute(
-          path: RoutePath.addLevel,
-          name: RoutePath.addLevel,
-          builder: (context, state) => AddLevelScreen(),
-        ),
-        GoRoute(
-          path: RoutePath.editLevel,
-          name: RoutePath.editLevel,
-          builder: (context, state) => EditLevelScreen(),
-        ),
+          GoRoute(
+            path: RoutePath.addNotification,
+            name: RoutePath.addNotification,
+            builder: (context, state) => AddNotificationScreen(),
+          ),
+
+          GoRoute(
+            path: RoutePath.misc,
+            name: RoutePath.misc,
+            builder: (context, state) => MiscellaneousScreen(),
+          ),
+
+          GoRoute(
+            path: RoutePath.addMisc,
+            name: RoutePath.addMisc,
+            builder: (context, state) => AddNewMiscItemScreen(),
+          ),
+
+
+
+
+
+
         ],
       ),
     ];

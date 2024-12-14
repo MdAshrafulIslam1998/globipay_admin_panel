@@ -3,11 +3,10 @@
  */
 
 enum FeatureCode{
-  PRIVACY_POLICY("notification", "Privacy Policy"),
+  PRIVACY_POLICY("privacy_policy", "Privacy Policy"),
   LEVEL("level", "Level"),
   ABOUT_US("about_us", "About Us"),
   TERMS_AND_CONDITIONS("terms_and_conditions", "Terms & Conditions"),
-  CUSTOMER_SERVICE("customer_service", "Customer Service"),
   ;
   final String code;
   final String title;

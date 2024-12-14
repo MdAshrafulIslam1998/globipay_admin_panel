@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'package:flutter/src/widgets/image.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
@@ -17,7 +16,7 @@ import 'package:globipay_admin_panel/entity/response/promotional/promotional_ban
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'dart:html' as Web;
 class PromotionalBannerController extends BaseController {
   final AppRepository repository;
   PromotionalBannerController(this.repository);
@@ -82,7 +81,8 @@ class PromotionalBannerController extends BaseController {
     required String title,
     required String description,
     required Color backgroundColor,
-    Uint8List? imageFile,
+    required Web.File? imageFile,
+    required Uint8List? imageFileBytes,
     required DateTime startDate,
     required DateTime endDate,
     required bool isVisibleToAll,
@@ -91,7 +91,7 @@ class PromotionalBannerController extends BaseController {
   }) async{
 
 
-    final imageUploadPath = await requestToUploadImage(imageFile);
+    final imageUploadPath = await requestToUploadImage(imageFileBytes);
     if(imageUploadPath != null && imageUploadPath.isNotEmpty){
 
       final req = AddPromotionalBannerRequestEntity(
@@ -143,14 +143,14 @@ class PromotionalBannerController extends BaseController {
 
   }
 
-  Future<String?> requestToUploadImage(Uint8List? imageFile) {
+  Future<String?> requestToUploadImage(Uint8List? imageFileBytes) {
     Completer<String> completer = Completer();
     try{
-      if(imageFile == null){
+      if(imageFileBytes == null){
         completer.complete("");
         return completer.future;
       }
-      final req = byteFieUploadRequest(imageFile, 'other');
+      final req = byteFieUploadRequest(imageFileBytes, 'promo_banner');
       final repo = repository.requestToByteFileUpload(req);
       callService(
         repo,

@@ -12,6 +12,9 @@ import 'package:globipay_admin_panel/modules/chat/call/video_call/widgets/contro
 import 'package:globipay_admin_panel/modules/chat/chat_message_list/controller/chat_message_controller.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/controller/chat_controller.dart';
 import 'package:globipay_admin_panel/modules/chat/controller/chat_shared_controller.dart';
+import 'package:globipay_admin_panel/modules/media_section/miscellaneous/add_misc/controller/add_misc_controller.dart';
+import 'package:globipay_admin_panel/modules/media_section/miscellaneous/controller/miscellaneous_controller.dart';
+import 'package:globipay_admin_panel/modules/media_section/notification_setter/add_notifications/controller/add_notification_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promotional_banner_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users/controller/active_users_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/controller/base_panel_controller.dart';
@@ -27,7 +30,7 @@ import 'package:globipay_admin_panel/modules/users_section/user_levels/controlle
 import 'package:globipay_admin_panel/modules/users_section/blocked_users/controller/blocked_users_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/controller/pending_users_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
-import 'package:globipay_admin_panel/modules/media_section/notification_setter/controller/notification_setter_controller.dart';
+import 'package:globipay_admin_panel/modules/media_section/notification_setter/notification_list/controller/notification_list_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_profile/controller/pending_profile_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/edit_coin/controller/edit_coin_controller.dart';
 import '../core/di/injector.dart';
@@ -51,6 +54,9 @@ abstract class AppInjector extends Injector {
   }
 
 
+  @Register.factory(AddMiscController)
+  @Register.factory(MiscellaneousController)
+  @Register.factory(AddNotificationController)
   @Register.factory(CallControllerWidgetController)
   @Register.factory(VideoCallController)
   @Register.factory(ChatController)
@@ -71,7 +77,7 @@ abstract class AppInjector extends Injector {
   @Register.factory(BlockedUsersController)
   @Register.factory(PendingUsersController)
   @Register.factory(ActiveUsersNewController)
-  @Register.factory(NotificationSetterController)
+  @Register.factory(NotificationsController)
   @Register.factory(PendingProfileController)
   @Register.factory(EditCoinController)
 

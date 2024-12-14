@@ -6,6 +6,6 @@ class NotificationSetterScreen extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        return NotificationSetterScreenBuilder();
+        return NotificationsScreenBuilder();
     }
 }

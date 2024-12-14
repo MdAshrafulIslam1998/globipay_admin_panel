@@ -11,6 +11,10 @@ class _$AppInjector extends AppInjector {
   void _controllerComponents() {
     final KiwiContainer container = KiwiContainer();
     container
+      ..registerFactory((c) => AddMiscController())
+      ..registerFactory((c) => MiscellaneousController(
+          c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
+      ..registerFactory((c) => AddNotificationController())
       ..registerFactory((c) => CallControllerWidgetController())
       ..registerFactory((c) => VideoCallController())
       ..registerFactory((c) => ChatController(
@@ -39,7 +43,7 @@ class _$AppInjector extends AppInjector {
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => ActiveUsersNewController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
-      ..registerFactory((c) => NotificationSetterController())
+      ..registerFactory((c) => NotificationsController())
       ..registerFactory((c) => PendingProfileController())
       ..registerFactory((c) => EditCoinController())
       ..registerSingleton((c) => ChatSharedController())

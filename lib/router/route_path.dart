@@ -24,6 +24,9 @@ abstract class RoutePath {
   static const String callPickUp = _RoutePath._callPickUp;
   static const String chat = _RoutePath._chat;
   static const String chatMessageList = _RoutePath._chatMessageList;
+  static const String addNotification = _RoutePath._addNotification;
+  static const String misc = _RoutePath._misc;
+  static const String addMisc = _RoutePath._addMisc;
 
 }
 
@@ -54,6 +57,9 @@ class _RoutePath {
   static const String _callPickUp = '/callPickUp';
   static const String _chat = '/chat';
   static const String _chatMessageList = '/chatMessageList';
+  static const String _addNotification = '/addNotification';
+  static const String _misc = '/misc';
+  static const String _addMisc = '/addMisc';
 
 
 }

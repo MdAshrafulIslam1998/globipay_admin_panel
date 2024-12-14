@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/widgets/web_image/web_image.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promotional_banner_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
+import 'dart:html' as web;
 
 class AddPromotionalBannerView extends StatefulWidget {
   @override
@@ -25,6 +27,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
   final _urlController = TextEditingController();
 
   Uint8List? _imageFile;
+  web.File? _imageFileWeb;
 
   DateTime? _startDate;
   DateTime? _endDate;
@@ -32,15 +35,6 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
   bool _isVisibleToAll = true;
   double _priority = 5.0;
 
-  // Image Picker
-  Future<void> _pickImage() async {
-    var image = await ImagePickerWeb.getImageAsBytes();
-    if (image != null) {
-      setState(() {
-        _imageFile = image;
-      });
-    }
-  }
 
   // Date Range Picker
   Future<void> _selectDateRange() async {
@@ -125,7 +119,8 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
       title: _titleController.text,
       description: _descriptionController.text,
       backgroundColor: _bannerColor,
-      imageFile: _imageFile,
+      imageFile: _imageFileWeb,
+      imageFileBytes: _imageFile,
       startDate: _startDate!,
       endDate: _endDate!,
       isVisibleToAll: _isVisibleToAll,
@@ -133,33 +128,6 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
       destinationUrl: _urlController.text,
     );
 
-  }
-
-  // Image display widget
-  Widget _buildImageDisplay() {
-    if (_imageFile == null) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.cloud_upload,
-            size: 80,
-            color: Colors.deepPurple.shade300,
-          ),
-          SizedBox(height: 16),
-          Text(
-            'Upload Banner Image',
-            style: TextStyle(
-              color: Colors.deepPurple.shade400,
-              fontSize: 18,
-            ),
-          ),
-        ],
-      );
-    }
-
-    // Cross-platform image display
-    return Image.memory(_imageFile!);
   }
 
   @override
@@ -202,7 +170,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                       'Create Promotional Banner',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.deepPurple,
                       ),
@@ -210,48 +178,13 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                     SizedBox(height: 32),
 
                     // Image Upload Section
-                    GestureDetector(
-                      onTap: (){
-                        _pickImage();
-                      },
-                      child: Container(
-                        height: 250,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: _imageFile != null
-                                ? Colors.transparent
-                                : Colors.deepPurple.shade200,
-                            style: BorderStyle.solid,
-                            width: 2,
-                          ),
-                        ),
-                        child: _imageFile != null
-                            ? ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: _buildImageDisplay(),
-                        )
-                            : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.cloud_upload,
-                              size: 80,
-                              color: Colors.deepPurple.shade300,
-                            ),
-                            SizedBox(height: 16),
-                            Text(
-                              'Upload Banner Image',
-                              style: TextStyle(
-                                color: Colors.deepPurple.shade400,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    WebImagePicker(
+                        onImageSelected: (imageBytes, file) {
+                      setState(() {
+                        _imageFile = imageBytes;
+                        _imageFileWeb = file;
+                      });
+                    }),
                     SizedBox(height: 24),
 
                     // Title Input
