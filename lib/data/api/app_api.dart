@@ -15,9 +15,9 @@ abstract class AppApi {
   static const String fileUpload = '$prefix/upload-document';
   static const String miscs = '$prefix/misc';
   static const String categories = '$prefix/categories';
-  static const String addMessageTemplates = '$prefix/message-templates/add';
-  static const String messageTemplatesList = '$prefix/message-templates/list';
-  static const String removeMessageTemplates = '$prefix/message-templates/remove';
+  static const String addMessageTemplates = '$prefix/templates/add';
+  static const String messageTemplatesList = '$prefix/templates';
+  static const String removeMessageTemplates = '$prefix/templates';
   static const String addCategory = '$prefix/categories/add';
   static const String deleteCategory = '$prefix/categories';
 

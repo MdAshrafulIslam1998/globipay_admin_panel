@@ -10,16 +10,18 @@ part 'message_templates_item_entity.g.dart';
 
 @JsonSerializable()
 class MessageTemplatesItemEntity {
-  int? id;
+  String? uid;
   String? title;
-  String? message;
-  CategoryItemEntity? category;
+  String? description;
+  String? category_name;
+  int? category_id;
 
   MessageTemplatesItemEntity({
-    this.id,
+    this.uid,
     this.title,
-    this.message,
-    this.category,
+    this.description,
+    this.category_name,
+    this.category_id,
   });
 
   factory MessageTemplatesItemEntity.fromJson(Map<String, dynamic> json) => _$MessageTemplatesItemEntityFromJson(json);

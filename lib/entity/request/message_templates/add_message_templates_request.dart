@@ -9,14 +9,17 @@ part 'add_message_templates_request.g.dart';
 @JsonSerializable()
 class AddMessageTemplatesRequest {
   String? title;
-  String? message;
-  String? category;
+  String? description;
+  String? categoryId;
+  String? createdBy;
 
   AddMessageTemplatesRequest({
     this.title,
-    this.message,
-    this.category,
+    this.description,
+    this.categoryId,
+    this.createdBy,
   });
+
 
   factory AddMessageTemplatesRequest.fromJson(Map<String, dynamic> json) => _$AddMessageTemplatesRequestFromJson(json);
 
