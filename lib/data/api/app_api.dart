@@ -9,6 +9,11 @@ abstract class AppApi {
   static const String blockedUserPath = '$prefix/user/blockedusersweb';
   static const String pendingUserPath = '$prefix/user/pendingusersweb';
   static const String chatClose = '$prefix/transaction/add';
+  static const String addSlider = '$prefix/sliders';
+  static const String allSlider = '$prefix/sliders';
+  static const String deleteSlide = '$prefix/sliders/delete';
+  static const String fileUpload = '$prefix/upload-document';
+
 
 
 

@@ -2,6 +2,8 @@
  * Created by Abdullah on 10/10/24.
  */
 
+import 'dart:typed_data';
+
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
@@ -16,6 +18,8 @@ import 'package:globipay_admin_panel/core/network/exceptions/timeout_exception.d
 import 'package:globipay_admin_panel/core/network/exceptions/token_exception.dart';
 import 'package:globipay_admin_panel/core/services/storage/app_preferences_service.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
+import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
+import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
 import '../network/exceptions/service_unavailable_exception.dart';
 import '../network/exceptions/unauthorize_exception.dart';
 import '../utils/custom_dialog.dart';
@@ -210,4 +214,18 @@ class BaseController extends GetxController{
     final id = await tokenRepository.getStuffId();
     return id ;
   }
+
+  FileUploadRequest fileUploadRequest(String path, String fileName) =>
+      FileUploadRequest(
+        documents: path,
+        fileName: fileName,
+      );
+
+  ByteFileUploadRequest byteFieUploadRequest(Uint8List bytes, String fileName) =>
+      ByteFileUploadRequest(
+        bytes: bytes,
+        fileName: fileName,
+      );
+
+
 }
