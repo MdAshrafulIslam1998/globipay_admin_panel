@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
+import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:globipay_admin_panel/core/base/base_remote_source.dart';
@@ -22,6 +24,7 @@ import 'package:globipay_admin_panel/entity/response/promotional/promotional_ban
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 
 import '../../../flavors/flavor_config.dart';
+import '../../entity/request/message_templates/add_message_templates_request.dart';
 import 'app_remote_data_source.dart';
 
 /**
@@ -189,6 +192,69 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       rethrow;
     }
   }
+
+  @override
+  Future<CategoryResponseEntity> requestForCategories(PaginationRequest request) {
+    var endpoint = '$BASE_URL/${AppApi.categories}';
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+      queryParameters: request.toJson(),
+    );
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => CategoryResponseEntity.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> requestToAddMessageTemplates(AddMessageTemplatesRequest request) {
+    var endpoint = '$BASE_URL/${AppApi.addMessageTemplates}';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: request.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(PaginationRequest request) {
+    var endpoint = '$BASE_URL/${AppApi.messageTemplatesList}';
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+      queryParameters: request.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => MessagesTemplatesResponseEntity.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> requestToRemoveMessageTemplates(String id) {
+    var endpoint = '$BASE_URL/${AppApi.removeMessageTemplates}';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: jsonEncode({"id": id}),
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+
+
 
 
 

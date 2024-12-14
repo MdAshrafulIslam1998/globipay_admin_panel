@@ -3,11 +3,14 @@ import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_reques
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/login/login_request.dart';
+import 'package:globipay_admin_panel/entity/request/message_templates/add_message_templates_request.dart';
 import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_banner_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/file_upload/file_upload_response.dart';
 import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
+import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/add_promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
@@ -72,6 +75,29 @@ class AppRepositoryImpl extends AppRepository{
   Future<MiscResponseEntity> requestForMisc(PaginationRequest paginationRequest) {
     return remoteDataSource.requestForMisc(paginationRequest);
   }
+
+  @override
+  Future<CategoryResponseEntity> requestForCategories(PaginationRequest request) {
+    return remoteDataSource.requestForCategories(request);
+  }
+
+  @override
+  Future<void> requestToAddMessageTemplates(AddMessageTemplatesRequest request) {
+    return remoteDataSource.requestToAddMessageTemplates(request);
+  }
+
+  @override
+  Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(PaginationRequest request) {
+    return remoteDataSource.requestForMessageTemplates(request);
+  }
+
+  @override
+  Future<void> requestToRemoveMessageTemplates(String id) {
+    return remoteDataSource.requestToRemoveMessageTemplates(id);
+  }
+
+
+
 
 
 

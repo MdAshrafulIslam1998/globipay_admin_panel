@@ -11,6 +11,10 @@ class _$AppInjector extends AppInjector {
   void _controllerComponents() {
     final KiwiContainer container = KiwiContainer();
     container
+      ..registerFactory(
+          (c) => AddTemplatesController(c.resolve<AppRepository>()))
+      ..registerFactory(
+          (c) => MessageTemplatesController(c.resolve<AppRepository>()))
       ..registerFactory((c) => AddMiscController())
       ..registerFactory((c) => MiscellaneousController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
@@ -29,7 +33,6 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => EditLevelController())
       ..registerFactory((c) => AddLevelController())
       ..registerFactory((c) => AboutUsController())
-      ..registerFactory((c) => AutomatedReplyController())
       ..registerFactory(
           (c) => PromotionalBannerController(c.resolve<AppRepository>()))
       ..registerFactory((c) => CreateCategoryController())

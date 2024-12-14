@@ -5,7 +5,6 @@ abstract class RoutePath {
   static const String editLevel = _RoutePath._editLevel;
   static const String addLevel = _RoutePath._addLevel;
   static const String aboutUs = _RoutePath._aboutUs;
-  static const String automatedReply = _RoutePath._automatedReply;
   static const String promoBanner = _RoutePath._promoBanner;
   static const String addPromoBanner = _RoutePath._addPromoBanner;
   static const String createCategory = _RoutePath._createCategory;
@@ -27,6 +26,8 @@ abstract class RoutePath {
   static const String addNotification = _RoutePath._addNotification;
   static const String misc = _RoutePath._misc;
   static const String addMisc = _RoutePath._addMisc;
+  static const String addMessageTemplates = _RoutePath._addMessageTemplates;
+  static const String messageTemplates = _RoutePath._messageTemplates;
 
 }
 
@@ -60,6 +61,8 @@ class _RoutePath {
   static const String _addNotification = '/addNotification';
   static const String _misc = '/misc';
   static const String _addMisc = '/addMisc';
+  static const String _addMessageTemplates = '/addMessageTemplates';
+  static const String _messageTemplates = '/messageTemplates';
 
 
 }

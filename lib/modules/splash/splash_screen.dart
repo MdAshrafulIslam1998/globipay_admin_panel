@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen>
     // Initialize animation controller
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 2),
     );
 
     // Fade-in animation
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _initializeApp() async {
-    await Future.delayed(const Duration(seconds: 6));
+    await Future.delayed(const Duration(seconds: 2));
 
     // Navigate based on token presence
     final token = await _tokenRepository.getToken();
