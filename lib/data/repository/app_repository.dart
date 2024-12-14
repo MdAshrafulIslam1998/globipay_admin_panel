@@ -3,11 +3,14 @@ import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_reques
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/login/login_request.dart';
+import 'package:globipay_admin_panel/entity/request/message_templates/add_message_templates_request.dart';
 import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_banner_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/file_upload/file_upload_response.dart';
 import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
+import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/add_promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
@@ -28,8 +31,10 @@ abstract class AppRepository{
   Future<FileUploadResponse> requestToByteFileUpload(ByteFileUploadRequest request);
   Future<void> requestToRemoveBanner(PromotionalBannerDeleteRequestEntity request);
   Future<MiscResponseEntity> requestForMisc(PaginationRequest paginationRequest);
-
-
+  Future<CategoryResponseEntity> requestForCategories(PaginationRequest request);
+  Future<void> requestToAddMessageTemplates(AddMessageTemplatesRequest request);
+  Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(PaginationRequest request);
+  Future<void> requestToRemoveMessageTemplates(String id);
 
 
 }

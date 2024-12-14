@@ -12,6 +12,8 @@ import 'package:globipay_admin_panel/modules/chat/call/video_call/widgets/contro
 import 'package:globipay_admin_panel/modules/chat/chat_message_list/controller/chat_message_controller.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/controller/chat_controller.dart';
 import 'package:globipay_admin_panel/modules/chat/controller/chat_shared_controller.dart';
+import 'package:globipay_admin_panel/modules/media_section/message_templates/add_templates/controller/add_templates_controller.dart';
+import 'package:globipay_admin_panel/modules/media_section/message_templates/templates_list/controller/message_templates_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/add_misc/controller/add_misc_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/controller/miscellaneous_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/add_notifications/controller/add_notification_controller.dart';
@@ -23,7 +25,6 @@ import 'package:kiwi/kiwi.dart';
 import 'package:globipay_admin_panel/modules/users_section/edit_level/controller/edit_level_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/add_level/controller/add_level_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/about_us/controller/about_us_controller.dart';
-import 'package:globipay_admin_panel/modules/media_section/automated_reply/controller/automated_reply_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/create_category/controller/create_category_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/user_amount/controller/user_amount_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/controller/user_levels_controller.dart';
@@ -54,6 +55,8 @@ abstract class AppInjector extends Injector {
   }
 
 
+  @Register.factory(AddTemplatesController)
+  @Register.factory(MessageTemplatesController)
   @Register.factory(AddMiscController)
   @Register.factory(MiscellaneousController)
   @Register.factory(AddNotificationController)
@@ -68,7 +71,6 @@ abstract class AppInjector extends Injector {
   @Register.factory(EditLevelController)
   @Register.factory(AddLevelController)
   @Register.factory(AboutUsController)
-  @Register.factory(AutomatedReplyController)
   @Register.factory(PromotionalBannerController)
   @Register.factory(CreateCategoryController)
   @Register.factory(TransactionHistoryController)

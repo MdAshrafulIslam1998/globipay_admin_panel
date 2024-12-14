@@ -4,6 +4,7 @@
 
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
@@ -16,6 +17,7 @@ import 'package:globipay_admin_panel/core/network/exceptions/network_exception.d
 import 'package:globipay_admin_panel/core/network/exceptions/not_found_exception.dart';
 import 'package:globipay_admin_panel/core/network/exceptions/timeout_exception.dart';
 import 'package:globipay_admin_panel/core/network/exceptions/token_exception.dart';
+import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 import 'package:globipay_admin_panel/core/services/storage/app_preferences_service.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
@@ -228,4 +230,30 @@ class BaseController extends GetxController{
       );
 
 
+  showSnackBar({required String message, SnackBarStatus? status}) {
+    ScaffoldMessenger.of(AppNavigatorService.navigatorKey.currentContext!).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: getColor(status ?? SnackBarStatus.INFO),
+        ),
+    );
+  }
+
+  getColor(SnackBarStatus status) {
+    switch (status) {
+      case SnackBarStatus.ERROR:
+        return Colors.red[600];
+      case SnackBarStatus.SUCCESS:
+        return Colors.green[600];
+      case SnackBarStatus.INFO:
+        return Colors.blue[600];
+    }
+  }
+
+}
+
+enum SnackBarStatus {
+  ERROR,
+  SUCCESS,
+  INFO,
 }

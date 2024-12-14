@@ -14,6 +14,11 @@ abstract class AppApi {
   static const String deleteSlide = '$prefix/sliders/delete';
   static const String fileUpload = '$prefix/upload-document';
   static const String miscs = '$prefix/misc';
+  static const String categories = '$prefix/categories';
+  static const String addMessageTemplates = '$prefix/message-templates/add';
+  static const String messageTemplatesList = '$prefix/message-templates/list';
+  static const String removeMessageTemplates = '$prefix/message-templates/remove';
+
 
 
 

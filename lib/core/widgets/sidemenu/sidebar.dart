@@ -269,24 +269,13 @@ class Sidebar extends StatelessWidget {
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.automatedReply,
-                            title: "Automated Reply",
+                            isActive: currentRoute == RoutePath.messageTemplates,
+                            title: "Message Templates",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
+                            count: 6,
                             onPressed: () {
-                              context.go(RoutePath.automatedReply);
-                            },
-                          ),
-                          MenuTile(
-                            isSubmenu: false,
-                            isActive: currentRoute == RoutePath.aboutUs,
-                            title: "About Us",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
-                            onPressed: () {
-                              context.go(RoutePath.aboutUs);
+                              context.go(RoutePath.messageTemplates);
                             },
                           ),
                           MenuTile(

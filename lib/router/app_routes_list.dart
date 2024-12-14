@@ -8,6 +8,8 @@ import 'package:globipay_admin_panel/modules/chat/chat_message_list/views/chat_m
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/chat_screen_screen.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/views/base_panel_screen.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/views/dashboard_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/message_templates/add_templates/views/add_templates_screen.dart';
+import 'package:globipay_admin_panel/modules/media_section/message_templates/templates_list/views/message_templates_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/add_misc/views/add_misc_item_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/views/miscellaneous_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/add_notifications/add_notification_screen.dart';
@@ -24,7 +26,6 @@ import 'package:globipay_admin_panel/modules/users_section/user_levels/views/use
 import 'package:globipay_admin_panel/modules/amount_section/user_amount/views/user_amount_screen.dart';
 import 'package:globipay_admin_panel/modules/amount_section/create_category/views/create_category_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/promo_banner_screen.dart';
-import 'package:globipay_admin_panel/modules/media_section/automated_reply/views/automated_reply_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/about_us/views/about_us_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/add_level/views/add_level_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/edit_level/views/edit_level_screen.dart';
@@ -120,11 +121,7 @@ abstract class AppRoutesList {
             name: RoutePath.addPromoBanner,
             builder: (context, state) => AddPromotionalBannerView(),
           ),
-          GoRoute(
-            path: RoutePath.automatedReply,
-            name: RoutePath.automatedReply,
-            builder: (context, state) => AutomatedReplyScreen(),
-          ),
+
           GoRoute(
             path: RoutePath.aboutUs,
             name: RoutePath.aboutUs,
@@ -184,6 +181,22 @@ abstract class AppRoutesList {
             name: RoutePath.addMisc,
             builder: (context, state) => AddNewMiscItemScreen(),
           ),
+
+          GoRoute(
+            path: RoutePath.addMessageTemplates,
+            name: RoutePath.addMessageTemplates,
+            builder: (context, state) => AddTemplatesScreen(),
+          ),
+
+          GoRoute(
+            path: RoutePath.messageTemplates,
+            name: RoutePath.messageTemplates,
+            builder: (context, state) => MessageTemplatesScreen(),
+          ),
+
+
+
+
 
 
 
