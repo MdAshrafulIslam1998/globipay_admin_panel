@@ -65,7 +65,7 @@ abstract class AppInjector extends Injector {
   @Register.factory(AutomatedReplyController)
   @Register.factory(PromotionalBannerController)
   @Register.factory(CreateCategoryController)
-  @Register.factory(TransactionHistoryController)
+  @Register.factory(TransHistoryController)
   @Register.factory(UserAmountController)
   @Register.factory(UserLevelsController)
   @Register.factory(BlockedUsersController)

@@ -23,6 +23,8 @@ abstract class TableHeaderVisibility {
         return _USER_BLOCKED_TABLE[currentRole];
       case TableName.USER_LEVEL_TABLE:
         return _USER_LEVEL_TABLE[currentRole];
+      case TableName.USER_TRANSACTION_TABLE:
+        return _USER_TRANSACTION_TABLE[currentRole];
 
       default:
         return [];
@@ -135,6 +137,32 @@ abstract class TableHeaderVisibility {
       'levelName',
       'date',
       'status',
+    ], //moderator
+  };
+
+
+  static Map<String, List<String>> _USER_TRANSACTION_TABLE = {
+    RoleName.ADMIN.code: [
+      'name',
+      'email',
+      'date',
+      'coin',
+      'coin_type',
+      'category_name'
+    ], //admin
+    RoleName.SUPER_ADMIN.code: [
+      'name',
+      'date',
+      'coin',
+      'coin_type',
+      'category_name'
+    ], //subadmin
+    RoleName.MODERATOR.code: [
+      'name',
+      'date',
+      'coin',
+      'coin_type',
+      'category_name'
     ], //moderator
   };
 }
