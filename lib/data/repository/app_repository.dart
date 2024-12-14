@@ -8,6 +8,7 @@ import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/pr
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/file_upload/file_upload_response.dart';
 import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
+import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/add_promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
@@ -26,6 +27,8 @@ abstract class AppRepository{
   Future<FileUploadResponse> requestToFileUpload(FileUploadRequest request);
   Future<FileUploadResponse> requestToByteFileUpload(ByteFileUploadRequest request);
   Future<void> requestToRemoveBanner(PromotionalBannerDeleteRequestEntity request);
+  Future<MiscResponseEntity> requestForMisc(PaginationRequest paginationRequest);
+
 
 
 

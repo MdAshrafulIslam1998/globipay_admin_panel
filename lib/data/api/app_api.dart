@@ -13,6 +13,7 @@ abstract class AppApi {
   static const String allSlider = '$prefix/sliders';
   static const String deleteSlide = '$prefix/sliders/delete';
   static const String fileUpload = '$prefix/upload-document';
+  static const String miscs = '$prefix/misc';
 
 
 

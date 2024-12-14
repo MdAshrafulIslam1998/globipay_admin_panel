@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
 import 'package:globipay_admin_panel/core/constants/date_format.dart';
 import 'package:globipay_admin_panel/core/utils/extensions.dart';
+import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_item.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promotional_banner_controller.dart';
@@ -198,7 +199,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
             borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
             child: banner.picture != null
                 ? CachedNetworkImage(
-              imageUrl: banner.picture!,
+              imageUrl: banner.picture!.includeBaseUrl(),
               height: 180,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -206,6 +207,9 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
                   Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) =>
                   Icon(Icons.error),
+              errorListener: (exception) {
+                appPrint('Exception: $exception');
+              },
             )
                 : Container(
               height: 180,

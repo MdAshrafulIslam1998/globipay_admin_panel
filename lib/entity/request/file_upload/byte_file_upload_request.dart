@@ -34,7 +34,7 @@ class ByteFileUploadRequest{
 
   Future<FormData> toFormData()async {
     final formData = FormData.fromMap({
-      "file": MultipartFile.fromBytes(
+      "documents": MultipartFile.fromBytes(
         bytes ?? Uint8List(0), // Adjust the bytes if needed
         filename: fileName, // Set the filename for the uploaded file
         contentType: MediaType("image", "jpeg"), // Adjust MIME type if needed

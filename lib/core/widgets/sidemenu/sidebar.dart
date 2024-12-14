@@ -289,6 +289,17 @@ class Sidebar extends StatelessWidget {
                               context.go(RoutePath.aboutUs);
                             },
                           ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.misc,
+                            title: "Miscellaneous",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.misc);
+                            },
+                          ),
                         ],
                       ),
                     ),

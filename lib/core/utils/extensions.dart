@@ -63,6 +63,7 @@ extension StringExtensions on String {
 
   String includeBaseUrl() {
     if(this == null || this.isEmpty) return "";
+    if(this.startsWith("http")) return this;
     return FlavorConfig.instance.url + this;
   }
 

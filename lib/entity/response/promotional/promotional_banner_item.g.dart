@@ -9,7 +9,7 @@ part of 'promotional_banner_item.dart';
 PromotionalBannerItem _$PromotionalBannerItemFromJson(
         Map<String, dynamic> json) =>
     PromotionalBannerItem(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       title: json['title'] as String?,
       subtitle: json['subtitle'] as String?,
       createdBy: json['created_by'] as String?,

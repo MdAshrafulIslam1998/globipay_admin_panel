@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
+import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:globipay_admin_panel/core/base/base_remote_source.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
@@ -134,7 +136,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   Future<FileUploadResponse> requestToByteFileUpload(ByteFileUploadRequest request) async{
     var endpoint = '$BASE_URL/${AppApi.fileUpload}';
     final fileData = FormData.fromMap({
-      "file": MultipartFile.fromBytes(
+      'doc_type' : "other",
+      "documents": MultipartFile.fromBytes(
         request.bytes ?? Uint8List(0), // Adjust the bytes if needed
         filename: request.fileName, // Set the filename for the uploaded file
         contentType: MediaType("image", "jpeg"), // Adjust MIME type if needed
@@ -169,6 +172,22 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       rethrow;
     }
 
+  }
+
+  @override
+  Future<MiscResponseEntity> requestForMisc(PaginationRequest request) {
+    var endpoint = '$BASE_URL/${AppApi.miscs}';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: request.toJson(),
+    );
+    try {
+      // Return a dummy response her
+      return callApiWithErrorParser(dioCall)
+          .then((response) => MiscResponseEntity.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
   }
 
 
