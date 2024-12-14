@@ -1,3 +1,4 @@
+import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/category_coin_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'transaction_item_entity.g.dart';
@@ -34,6 +35,9 @@ class TransactionItemEntity {
   @JsonKey(name: "category_name")
   String? categoryName;
 
+  // @JsonKey(name: "categories")
+  // List<CategoryCoinModelDart>? catgories;
+
   TransactionItemEntity({
     this.id,
     this.catId,
@@ -45,6 +49,7 @@ class TransactionItemEntity {
     this.createdBy,
     this.coinType,
     this.categoryName,
+    //this.catgories,
   });
 
   factory TransactionItemEntity.fromJson(Map<String, dynamic> json) =>

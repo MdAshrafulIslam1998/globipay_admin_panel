@@ -42,4 +42,11 @@ class AppRepositoryImpl extends AppRepository {
     ) {
     return remoteDataSource.requestForAllTransactions(paginationRequest);
   }
+
+  @override
+  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(
+    PaginationRequest paginationRequest,
+    ) {
+    return remoteDataSource.requestForUserwiseTransactions(paginationRequest);
+  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/constants/enum/sort_type.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/controller/trans_history_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/table/trans_history_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/table/trans_history_data_source.dart';
@@ -147,6 +148,26 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                         ),
                       ],
                     ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ElevatedButton.icon(
+                      icon: Icon(Icons.person),
+                      label: Text('User Level'),
+                      onPressed: () {
+                        controller.fetchUserWiseTransactionHistory(1, controller.pageSize.value);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[100],
+                        foregroundColor: Colors.green[800],
+                      ),
+                    )
                   ],
                 ),
               ),

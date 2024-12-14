@@ -96,4 +96,30 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       rethrow; // Pass the error to the calling layer for centralized error handling
     }
   }
+
+
+  @override
+  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(
+      PaginationRequest paginationRequest) async {
+    // Get the staff ID from the token repository or a similar source
+    final staffId = await tokenRepository.getStuffId();
+
+    // Define the endpoint for the allTransactions API, including the staff ID
+    var endpoint = '$BASE_URL/${AppApi.userwiseTransactions}/$staffId';
+
+    // Prepare the Dio call with authentication and query parameters
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+      queryParameters: paginationRequest.toJson(),
+    );
+
+    // Execute the call and parse the response into the model
+    try {
+      return callApiWithErrorParser(dioCall).then((response) {
+        return AllTransactionsResponseEntity.fromJson(response.data);
+      });
+    } catch (e) {
+      rethrow; // Pass the error to the calling layer for centralized error handling
+    }
+  }
 }

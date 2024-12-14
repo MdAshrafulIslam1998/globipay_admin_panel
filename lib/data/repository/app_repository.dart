@@ -16,6 +16,7 @@ abstract class AppRepository{
   Future<LoginResponse> requestForLogin(LoginRequest request);
   Future<ChatCloseResponseEntity> requestToCloseChat(ChatCloseRequestEntity request);
   Future<AllTransactionsResponseEntity> requestForAllTransactions(PaginationRequest paginationRequest);
+  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(PaginationRequest paginationRequest);
 
 
 

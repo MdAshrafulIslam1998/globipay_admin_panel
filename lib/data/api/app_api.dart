@@ -10,6 +10,7 @@ abstract class AppApi {
   static const String pendingUserPath = '$prefix/user/pendingusersweb';
   static const String chatClose = '$prefix/transaction/add';
   static const String allTransactions = '$prefix/alltransactions';
+  static const String userwiseTransactions = '$prefix/users/userwise/transactions';
 
 
 

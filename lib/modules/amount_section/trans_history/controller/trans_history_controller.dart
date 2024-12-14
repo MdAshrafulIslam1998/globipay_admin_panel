@@ -11,16 +11,18 @@ import 'package:globipay_admin_panel/entity/response/trans_history_response.dart
 import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/transaction_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
+import 'package:globipay_admin_panel/core/constants/enum/sort_type.dart';
 
 class TransHistoryController extends BaseController {
   final AppRepository _repository;
   final TokenRepository tokenRepository;
   String currentRole = '';
 
+
   TransHistoryController(this._repository, this.tokenRepository);
 
   //Rx Variables
-  var transactions =  <TransactionItemEntity>[].obs;
+  var transactions = <TransactionItemEntity>[].obs;
   var totalItems = 0.obs;
   var currentPage = 1.obs;
   var pageSize = 10.obs;
@@ -46,6 +48,14 @@ class TransHistoryController extends BaseController {
     });
   }
 
+   Future<void> fetchUserWiseTransactionHistory(int page, int limit) async {
+    final request = paginationRequest(page, limit);
+    final repo = _repository.requestForUserwiseTransactions(request);
+    callService(repo, onSuccess: (response) {
+      parseTransactionList(response);
+    });
+  }
+
   void updatePageSize(int newSize) {
     print("Updating page size to $newSize and fetching users from page 1");
     pageSize.value = newSize;
@@ -56,6 +66,7 @@ class TransHistoryController extends BaseController {
     return await tokenRepository.getRole().toString();
   }
 
+  
   @override
   void onInit() {
     fetchTransactionHistory(currentPage.value, pageSize.value);
@@ -65,6 +76,6 @@ class TransHistoryController extends BaseController {
 
   getVisibleColumns() async {
     visibleColumns.value = await TableHeaderVisibility.getTableVisibleColumn(
-      tableName: TableName.USER_TRANSACTION_TABLE);
+        tableName: TableName.USER_TRANSACTION_TABLE);
   }
 }
