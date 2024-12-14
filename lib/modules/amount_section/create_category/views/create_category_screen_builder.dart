@@ -1,17 +1,26 @@
 // category_screen_builder.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
+import 'package:globipay_admin_panel/core/utils/extensions.dart';
+import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
+import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
+import 'package:globipay_admin_panel/core/widgets/web_image/web_image.dart';
 import 'package:globipay_admin_panel/modules/amount_section/create_category/controller/create_category_controller.dart';
 
 class CreateCategoryScreenBuilder extends StatefulWidget {
   const CreateCategoryScreenBuilder({Key? key}) : super(key: key);
 
   @override
-  State<CreateCategoryScreenBuilder> createState() => _CategoryScreenBuilderState();
+  State<CreateCategoryScreenBuilder> createState() =>
+      _CategoryScreenBuilderState();
 }
 
-class _CategoryScreenBuilderState extends BaseViewState<CreateCategoryScreenBuilder, CreateCategoryController> {
+class _CategoryScreenBuilderState extends BaseViewState<
+    CreateCategoryScreenBuilder, CreateCategoryController> {
   @override
   void initState() {
     controller.onInit();
@@ -27,13 +36,22 @@ class _CategoryScreenBuilderState extends BaseViewState<CreateCategoryScreenBuil
   Widget body(BuildContext context) {
     return Container(
       color: Colors.grey[100],
-      padding: const EdgeInsets.all(16.0),
+      padding:  EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          WebImagePicker(
+            height: 150,
+            width: 100,
+            hint: 'Select Category Image',
+            onImageSelected: (bytes, file) {
+              controller.selectedImageBytes = bytes;
+            },
+          ),
           _buildCreateCategoryCard(),
           const SizedBox(height: 20),
-          _buildCategoryListCard(),
+          Expanded(
+              child: SingleChildScrollView(child: _buildCategoryListCard())),
         ],
       ),
     );
@@ -46,7 +64,7 @@ class _CategoryScreenBuilderState extends BaseViewState<CreateCategoryScreenBuil
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding:  EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -62,45 +80,78 @@ class _CategoryScreenBuilderState extends BaseViewState<CreateCategoryScreenBuil
             Row(
               children: [
                 Expanded(
-                  child: TextField(
+                  child: InputField(
                     controller: controller.categoryNameController,
-                    decoration: InputDecoration(
-                      hintText: 'Brand Name',
-                      border: OutlineInputBorder(
+                    hintText: 'Brand Name',
+                    regex: InputRegex.NOT_EMPTY,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    _openColorPicker(context);
+                  },
+                  child: Obx(
+                    () => Container(
+                      padding:  EdgeInsets.all(8),
+                      margin:  EdgeInsets.only(left: 16),
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        color: controller.currentColor.value,
                         borderRadius: BorderRadius.circular(8),
                       ),
+                      child:  Icon(Icons.color_lens, color: Colors.white),
                     ),
                   ),
                 ),
                 const SizedBox(width: 16),
                 ElevatedButton(
-                  onPressed: controller.pickImage,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  ),
-                  child: const Text('Choose File'),
-                ),
-                const SizedBox(width: 16),
-                Obx(() => Text(
-                  controller.selectedImagePath.value.isEmpty
-                      ? 'No file chosen'
-                      : 'File selected',
-                  style: TextStyle(color: Colors.grey[600]),
-                )),
-                const SizedBox(width: 16),
-                ElevatedButton(
                   onPressed: controller.createCategory,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                    backgroundColor: AppColors.primary,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 16),
                   ),
-                  child: const Text('Create New Brand'),
+                  child: const Text('Create New Brand',
+                      style: TextStyle(fontSize: 16, color: Colors.white)),
                 ),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void _openColorPicker(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Pick a color'),
+          content: SingleChildScrollView(
+            child: Obx(
+              () => ColorPicker(
+                pickerColor: controller.currentColor.value,
+                onColorChanged: (Color color) {
+                  controller.currentColor.value = color;
+                },
+                showLabel: true, // Display the color code
+                pickerAreaHeightPercent: 0.8, // Adjust the picker size
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Done'),
+              onPressed: () {
+                controller.currentColor.refresh();
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -124,9 +175,7 @@ class _CategoryScreenBuilderState extends BaseViewState<CreateCategoryScreenBuil
               ),
             ),
             const SizedBox(height: 16),
-            Obx(() => controller.isLoading.value
-                ? const Center(child: CircularProgressIndicator())
-                : _buildCategoryTable()),
+            Obx(() => _buildCategoryTable()),
           ],
         ),
       ),
@@ -155,36 +204,39 @@ class _CategoryScreenBuilderState extends BaseViewState<CreateCategoryScreenBuil
             _buildTableHeader('Delete'),
           ],
         ),
-        ...controller.categories.map((category) => TableRow(
-          children: [
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.network(
-                  category.image,
-                  height: 40,
-                  width: 40,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(category.name),
-              ),
-            ),
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: IconButton(
-                icon: const Icon(Icons.delete, color: Colors.red),
-                onPressed: () => controller.deleteCategory(category.id),
-              ),
-            ),
-          ],
-        )).toList(),
+        ...controller.categories
+            .map((category) => TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.network(
+                          category.image?.includeBaseUrl() ?? '',
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(category.name ?? ''),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () =>
+                            controller.deleteCategory(category.id.toString()),
+                      ),
+                    ),
+                  ],
+                ))
+            .toList(),
       ],
     );
   }

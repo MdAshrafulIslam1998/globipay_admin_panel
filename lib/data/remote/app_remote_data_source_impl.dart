@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:globipay_admin_panel/entity/request/category/add_category_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
@@ -244,6 +245,33 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     var dioCall = dioClientWithAuth.post(
       endpoint,
       data: jsonEncode({"id": id}),
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> requestToAddCategory(AddCategoryRequestEntity req) {
+    var endpoint = '$BASE_URL/${AppApi.addCategory}';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: req.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> requestToDeleteCategory(String id) {
+    var endpoint = '$BASE_URL/${AppApi.deleteCategory}/$id';
+    var dioCall = dioClientWithAuth.delete(
+      endpoint,
     );
     try {
       return callApiWithErrorParser(dioCall);

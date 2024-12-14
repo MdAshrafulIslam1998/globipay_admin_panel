@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:globipay_admin_panel/modules/amount_section/create_category/category.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 
 class CreateCategoryDataSource extends DataGridSource {
-  final List<Category> categories;
-  final Function(Category category)? onDeleteTap;
+  final List<CategoryItemEntity> categories;
+  final Function(CategoryItemEntity category)? onDeleteTap;
 
   CreateCategoryDataSource(this.categories, {this.onDeleteTap}) {
     buildDataGridRows();
@@ -17,7 +17,7 @@ class CreateCategoryDataSource extends DataGridSource {
     _dataGridRows = categories.map((category) => DataGridRow(cells: [
           DataGridCell<String>(columnName: 'logo', value: category.image),
           DataGridCell<String>(columnName: 'name', value: category.name),
-          DataGridCell<Category>(columnName: 'delete', value: category),
+          DataGridCell<CategoryItemEntity>(columnName: 'delete', value: category),
         ])).toList();
   }
 
@@ -65,7 +65,7 @@ class CreateCategoryDataSource extends DataGridSource {
             Colors.red,
             Icons.delete,
             () {
-              onDeleteTap?.call(cell.value as Category);
+              onDeleteTap?.call(cell.value as CategoryItemEntity);
             },
           ),
         );

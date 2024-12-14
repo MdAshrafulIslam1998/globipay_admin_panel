@@ -9,7 +9,7 @@ class CreateCategoryDataPagerDelegate extends DataPagerDelegate {
   @override
   Future<bool> handlePageChange(int oldPageIndex, int newPageIndex) async {
     try {
-      await controller.fetchCategories(newPageIndex + 1, controller.pageSize.value);
+      await controller.fetchCategories();
       return true;
     } catch (e) {
       return false;
