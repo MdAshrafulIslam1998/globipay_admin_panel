@@ -181,9 +181,9 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   @override
   Future<MiscResponseEntity> requestForMisc(PaginationRequest request) {
     var endpoint = '$BASE_URL/${AppApi.miscs}';
-    var dioCall = dioClientWithAuth.post(
+    var dioCall = dioClientWithAuth.get(
       endpoint,
-      data: request.toJson(),
+      queryParameters: request.toJson(),
     );
     try {
       // Return a dummy response her
@@ -241,10 +241,9 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
 
   @override
   Future<void> requestToRemoveMessageTemplates(String id) {
-    var endpoint = '$BASE_URL/${AppApi.removeMessageTemplates}';
-    var dioCall = dioClientWithAuth.post(
+    var endpoint = '$BASE_URL/${AppApi.removeMessageTemplates}/$id';
+    var dioCall = dioClientWithAuth.delete(
       endpoint,
-      data: jsonEncode({"id": id}),
     );
     try {
       return callApiWithErrorParser(dioCall);

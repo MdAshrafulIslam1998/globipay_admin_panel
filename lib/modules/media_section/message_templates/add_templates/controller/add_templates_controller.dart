@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
+import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/message_templates/add_message_templates_request.dart';
@@ -38,10 +39,12 @@ class AddTemplatesController extends BaseController{
     }
   }
 
-  AddMessageTemplatesRequest messageTemplatesRequest ()=> AddMessageTemplatesRequest(
+  AddMessageTemplatesRequest messageTemplatesRequest (String sId)=> AddMessageTemplatesRequest(
     title: titleController.text,
-    message: descriptionController.text,
-    category: selectedCategory.value?.id.toString(),
+    description: descriptionController.text,
+    categoryId: selectedCategory.value?.id.toString(),
+    createdBy: sId,
+
   );
 
   void addTemplates(){
@@ -83,8 +86,9 @@ class AddTemplatesController extends BaseController{
     );
   }
 
-  void requestToAddMessageTemplates(){
-    final req = messageTemplatesRequest();
+  void requestToAddMessageTemplates() async{
+    final sId = await tokenRepository.getStuffId();
+    final req = messageTemplatesRequest(sId);
     final repo = _appRepository.requestToAddMessageTemplates(req);
     callService(
       repo,

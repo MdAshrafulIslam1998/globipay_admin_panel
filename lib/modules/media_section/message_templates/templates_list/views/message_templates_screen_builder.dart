@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/entity/response/messages_templates/message_templates_item_entity.dart';
 import 'package:globipay_admin_panel/modules/media_section/message_templates/message_templates_model.dart';
 import 'package:globipay_admin_panel/modules/media_section/message_templates/templates_list/controller/message_templates_controller.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
@@ -92,7 +93,7 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
     );
   }
 
-  Widget _buildMessageCard(MessageTemplatesModel templates) {
+  Widget _buildMessageCard(MessageTemplatesItemEntity templates) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 4,
@@ -102,14 +103,14 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
       child: ListTile(
         contentPadding: EdgeInsets.all(16),
         title: Text(
-          templates.title,
+          templates.title ?? "",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              templates.description,
+              templates.description ?? "",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -119,14 +120,14 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
         ),
         trailing: IconButton(
           icon: Icon(Icons.delete, color: Colors.red),
-          onPressed: () => controller.removeMessageTemplate(templates.id),
+          onPressed: () => controller.removeMessageTemplate(templates.uid.toString()),
           tooltip: 'Remove Templates',
         ),
       ),
     );
   }
 
-  Widget _buildCategoryBadge(MessageTemplatesModel model) {
+  Widget _buildCategoryBadge(MessageTemplatesItemEntity model) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -134,7 +135,7 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        model.category.name ?? '',
+        model.category_name ?? '',
         style: TextStyle(
           fontSize: 12,
           color: Colors.blue[800],
@@ -162,22 +163,13 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
           spacing: 8,
           children: controller.searchUsers('').map((message) =>
               ActionChip(
-                label: Text(message.title),
+                label: Text(message.title ?? ""),
                 onPressed: () => controller.addSelectedTemplates(message),
               )
           ).toList(),
         )),
         SizedBox(height: 10),
-        /*Obx(() => Wrap(
-          spacing: 8,
-          children: controller.selectedUsers.map((user) =>
-              Chip(
-                label: Text(user.name),
-                deleteIcon: Icon(Icons.close),
-                onDeleted: () => controller.removeSelectedUser(user),
-              )
-          ).toList(),
-        )),*/
+
       ],
     );
   }

@@ -9,20 +9,19 @@ part of 'message_templates_item_entity.dart';
 MessageTemplatesItemEntity _$MessageTemplatesItemEntityFromJson(
         Map<String, dynamic> json) =>
     MessageTemplatesItemEntity(
-      id: (json['id'] as num?)?.toInt(),
+          uid: json['uid'] as String?,
       title: json['title'] as String?,
-      message: json['message'] as String?,
-      category: json['category'] == null
-          ? null
-          : CategoryItemEntity.fromJson(
-              json['category'] as Map<String, dynamic>),
+      description: json['description'] as String?,
+      category_name: json['category_name'] as String?,
+      category_id: json['category_id'] as int?,
     );
 
 Map<String, dynamic> _$MessageTemplatesItemEntityToJson(
         MessageTemplatesItemEntity instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'uid': instance.uid,
       'title': instance.title,
-      'message': instance.message,
-      'category': instance.category,
+      'description': instance.description,
+      'category_name': instance.category_name,
+      'category_id': instance.category_id,
     };

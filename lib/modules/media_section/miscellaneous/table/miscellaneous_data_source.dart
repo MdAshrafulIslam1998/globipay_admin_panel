@@ -29,7 +29,7 @@ class MiscellaneousDataSource extends DataGridSource {
         switch (columnName) {
           case MiscTableHeaderConst.ID:
             return DataGridCell<String>(
-                columnName: MiscTableHeaderConst.ID, value: user.id);
+                columnName: MiscTableHeaderConst.ID, value: user.service_id);
           case MiscTableHeaderConst.FEATURE_CODE:
             return DataGridCell<String>(
                 columnName: MiscTableHeaderConst.FEATURE_CODE, value: user.feature_code);
@@ -135,12 +135,17 @@ class MiscellaneousDataSource extends DataGridSource {
           return Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.only(left: 14.0), // Add padding right
-            child: buildActionButton(Colors.orange, Icons.message, () {
-              appPrint(
-                  'Message button clicked for user: ${(cell.value as MiscResponseItemEntity).feature_code}');
-              onActionTap?.call(
-                  cell.value as MiscResponseItemEntity, 'message');
-            }),
+            child: Text(
+              cell.value.toString(),
+              maxLines: 1,
+              overflow: TextOverflow
+                  .ellipsis, // Ensure text is truncated with ellipsis
+              style: TextStyle(
+                fontFamily: 'iAWriterQuattroS',
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           );
         }
         return Container(
