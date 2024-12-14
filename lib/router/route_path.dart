@@ -2,6 +2,7 @@ abstract class RoutePath {
   static const String start = _RoutePath._start;
   static const String dashboard = _RoutePath._dashboard;
   static const String activeUsers = _RoutePath._activeUsers;
+  static const String staffSection = _RoutePath._staffSection;
   static const String editLevel = _RoutePath._editLevel;
   static const String addLevel = _RoutePath._addLevel;
   static const String aboutUs = _RoutePath._aboutUs;
@@ -31,6 +32,7 @@ class _RoutePath {
   static const String _start = '/';
   static const String _dashboard = '/dashboard';
   static const String _activeUsers = '/activeUsers';
+  static const String _staffSection = '/staffSection';
   static const String _editLevel = '/editLevel';
   static const String _addLevel = '/addLevel';
   static const String _signUp = '/signUp';
