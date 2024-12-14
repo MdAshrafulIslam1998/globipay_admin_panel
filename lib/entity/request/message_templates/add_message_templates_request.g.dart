@@ -10,14 +10,16 @@ AddMessageTemplatesRequest _$AddMessageTemplatesRequestFromJson(
         Map<String, dynamic> json) =>
     AddMessageTemplatesRequest(
       title: json['title'] as String?,
-      message: json['message'] as String?,
-      category: json['category'] as String?,
+      description: json['description'] as String?,
+      categoryId: json['categoryId'] as String?,
+      createdBy: json['createdBy'] as String?,
     );
 
 Map<String, dynamic> _$AddMessageTemplatesRequestToJson(
         AddMessageTemplatesRequest instance) =>
     <String, dynamic>{
       'title': instance.title,
-      'message': instance.message,
-      'category': instance.category,
+      'description': instance.description,
+      'categoryId': instance.categoryId,
+      'createdBy': instance.createdBy,
     };

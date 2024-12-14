@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
+import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
+import 'package:globipay_admin_panel/entity/response/messages_templates/message_templates_item_entity.dart';
+import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/modules/media_section/message_templates/message_templates_model.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
@@ -16,7 +19,7 @@ class MessageTemplatesController extends BaseController {
 
   final AppRepository _appRepository;
   // Observable state variables
-  final RxList<MessageTemplatesModel> templates = <MessageTemplatesModel>[].obs;
+  final RxList<MessageTemplatesItemEntity> templates = <MessageTemplatesItemEntity>[].obs;
 
   final RxString searchQuery = ''.obs;
 
@@ -33,21 +36,21 @@ class MessageTemplatesController extends BaseController {
     });
   }
   // Filtered notifications based on search query
-  List<MessageTemplatesModel> get filteredMessagesTemplates {
+  List<MessageTemplatesItemEntity> get filteredMessagesTemplates {
     if (searchQuery.value.isEmpty) {
       return templates;
     }
     return templates.where((notification) =>
-    notification.title.toLowerCase().contains(searchQuery.value.toLowerCase()) ||
-        notification.description.toLowerCase().contains(searchQuery.value.toLowerCase())
+    notification.title.toString().toLowerCase().contains(searchQuery.value.toLowerCase()) ||
+        notification.description.toString().toLowerCase().contains(searchQuery.value.toLowerCase())
     ).toList();
   }
 
   // Search users
-  List<MessageTemplatesModel> searchUsers(String query) {
+  List<MessageTemplatesItemEntity> searchUsers(String query) {
     return templates.where((user) =>
-    user.title.toLowerCase().contains(query.toLowerCase()) ||
-        user.description.toLowerCase().contains(query.toLowerCase())
+    user.title.toString().toLowerCase().contains(query.toLowerCase()) ||
+        user.description.toString().toLowerCase().contains(query.toLowerCase())
     ).toList();
   }
 
@@ -66,26 +69,30 @@ class MessageTemplatesController extends BaseController {
 
   }
 
-  void addSelectedTemplates(MessageTemplatesModel user) {
+  void addSelectedTemplates(MessageTemplatesItemEntity user) {
 
   }
 
-  requestForTemplates(){
-    var list = <MessageTemplatesModel>[];
+  PaginationRequest generatePaginationRequest() {
+    return PaginationRequest(
+      page: 1,
+      limit: 100,
+    );
+  }
 
-   // add 10 items to the list
-    for (var i = 0; i < 10; i++) {
-      list.add(MessageTemplatesModel(
-        id: i.toString(),
-        title: 'Title $i',
-        description: 'Description $i',
-        category: CategoryItemEntity(
-          id: i,
-          name: 'Category $i',
-        ),
-      ));
-    }
-    templates.value = list;
+  parseTemplates(MessagesTemplatesResponseEntity response){
+    templates.clear();
+    templates.value = response.templates ?? [];
+  }
+
+  requestForTemplates(){
+    final req = _appRepository.requestForMessageTemplates(generatePaginationRequest());
+    callService(
+      req,
+      onSuccess: (response) {
+        parseTemplates(response);
+      },
+    );
   }
 
   void removeMessageTemplates(String id) {
