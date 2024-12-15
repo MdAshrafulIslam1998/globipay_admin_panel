@@ -3,11 +3,14 @@ import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/constants/enum/feature_code.dart';
+import 'package:globipay_admin_panel/core/constants/enum/file_type.dart';
+import 'package:globipay_admin_panel/core/data/model/common_data_entity.dart';
 import 'package:globipay_admin_panel/data/models/misc_item_model.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
+import 'package:delta_to_html/delta_to_html.dart';
 
 /**
  * Created by Abdullah on 14/12/24.
@@ -15,19 +18,35 @@ import 'package:quill_html_editor/quill_html_editor.dart';
 
 
 class AddMiscController extends BaseController{
-  final titleController = TextEditingController();
   final descriptionController = quill.QuillController.basic();
 
   final AppRepository appRepository;
   var list = <MiscellaneousItemModel>[].obs;
+  var contentTypes = <CommonDataEntity>[].obs;
   Rxn<MiscellaneousItemModel?> selectedCategory = Rxn<MiscellaneousItemModel?>(null);
+  Rxn<CommonDataEntity?> selectedContentType = Rxn<CommonDataEntity?>(null);
 
   AddMiscController(this.appRepository);
 
   @override
   void onInit() {
     fetchMiscItems();
+    fetchContentType();
     super.onInit();
+  }
+
+  void fetchContentType() {
+    var list = <CommonDataEntity>[];
+    list.add(CommonDataEntity(
+      key: FileType.TEXT.title,
+      value: FileType.TEXT.code,
+    ));
+    list.add(CommonDataEntity(
+      key: FileType.HTML.title,
+      value: FileType.HTML.code,
+    ));
+
+    contentTypes.value = list;
   }
 
   void fetchMiscItems() {
@@ -62,29 +81,39 @@ class AddMiscController extends BaseController{
       selectedCategory.value = value;
     }
   }
+
+  void setSelectedContentType(CommonDataEntity? value) {
+    if (value != null) {
+      selectedContentType.value = value;
+    }
+  }
+
+
   
   AddMiscRequestEntity addMiscRequestEntity(){
+
+    dynamic deltaJson = descriptionController.document.toDelta().toJson();
+    dynamic htmlContent = DeltaToHTML.encodeJson(deltaJson);
+
     return AddMiscRequestEntity(
-      type: titleController.text,
-      content: descriptionController.document.toPlainText().trim(), // Plain text
+      type: selectedContentType.value?.value,
+      content: htmlContent,
       featureCode: selectedCategory.value?.code,
     );
   }
 
   void addMiscItem() {
-
-    if (titleController.text.isEmpty) {
-      showSnackBar( message: 'Please enter title',status: SnackBarStatus.INFO);
+    if(selectedCategory.value == null){
+      showSnackBar( message: 'Please select a category',status: SnackBarStatus.INFO);
+      return;
+    }
+    if(selectedContentType.value == null){
+      showSnackBar( message: 'Please select content type',status: SnackBarStatus.INFO);
       return;
     }
 
     if (descriptionController.document.isEmpty()) {
       showSnackBar( message: 'Please enter description',status: SnackBarStatus.INFO);
-      return;
-    }
-
-    if(selectedCategory.value == null){
-      showSnackBar( message: 'Please select a category',status: SnackBarStatus.INFO);
       return;
     }
 
