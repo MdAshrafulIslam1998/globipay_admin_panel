@@ -122,7 +122,6 @@ abstract class AppRoutesList {
             name: RoutePath.addPromoBanner,
             builder: (context, state) => AddPromotionalBannerView(),
           ),
-
           GoRoute(
             path: RoutePath.aboutUs,
             name: RoutePath.aboutUs,
@@ -154,51 +153,47 @@ abstract class AppRoutesList {
             builder: (context, state) =>
                 CallWaitingScreen(data: state.extra as CallModel),
           ),
-
           GoRoute(
             path: RoutePath.addNotification,
             name: RoutePath.addNotification,
             builder: (context, state) => AddNotificationScreen(),
           ),
-
           GoRoute(
             path: RoutePath.misc,
             name: RoutePath.misc,
             builder: (context, state) => MiscellaneousScreen(),
           ),
-
           GoRoute(
             path: RoutePath.addMisc,
             name: RoutePath.addMisc,
             builder: (context, state) => AddNewMiscItemScreen(),
           ),
-
           GoRoute(
             path: RoutePath.addMessageTemplates,
             name: RoutePath.addMessageTemplates,
             builder: (context, state) => AddTemplatesScreen(),
           ),
-
           GoRoute(
             path: RoutePath.messageTemplates,
             name: RoutePath.messageTemplates,
             builder: (context, state) => MessageTemplatesScreen(),
           ),
-        GoRoute(
-          path: RoutePath.addLevel,
-          name: RoutePath.addLevel,
-          builder: (context, state) => AddLevelScreen(),
-        ),
-        GoRoute(
-          path: RoutePath.editLevel,
-          name: RoutePath.editLevel,
-          builder: (context, state) => EditLevelScreen(),
-        ),
-        GoRoute(
-          path: RoutePath.staffSection,
-          name: RoutePath.staffSection,
-          builder: (context, state) => StaffSectionScreen(),
-        ),
+          GoRoute(
+            path: RoutePath.addLevel,
+            name: RoutePath.addLevel,
+            builder: (context, state) => AddLevelScreen(),
+          ),
+          GoRoute(
+            path: RoutePath.editLevel,
+            name: RoutePath.editLevel,
+            builder: (context, state) => EditLevelScreen(),
+          ),
+          GoRoute(
+            path: RoutePath.staffSection,
+            name: RoutePath.staffSection,
+            builder: (context, state) => StaffSectionScreen(),
+          ),
+
         ],
       ),
     ];

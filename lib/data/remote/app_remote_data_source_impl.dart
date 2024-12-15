@@ -5,10 +5,12 @@ import 'package:globipay_admin_panel/entity/request/category/add_category_reques
 import 'package:globipay_admin_panel/entity/request/level/add_level_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
+import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/level/level_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:globipay_admin_panel/core/base/base_remote_source.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
@@ -403,5 +405,45 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     }
   }
 
+  @override
+  Future<StaffResponseEntity> requestForStaffList(PaginationRequest req) {
+    var endpoint = '$BASE_URL/${AppApi.staffList}';
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+      queryParameters: req.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => StaffResponseEntity.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
 
+  @override
+  Future<void> requestToAddStaff(AddStaffRequestEntity req) {
+    var endpoint = '$BASE_URL/${AppApi.addStaff}';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: req.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> requestToRemoveStaff(String id) {
+    var endpoint = '$BASE_URL/${AppApi.addStaff}/$id';
+    var dioCall = dioClientWithAuth.delete(
+      endpoint,
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

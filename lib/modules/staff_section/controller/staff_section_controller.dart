@@ -2,91 +2,139 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
+import 'package:globipay_admin_panel/core/constants/enum/role_name.dart';
+import 'package:globipay_admin_panel/core/data/model/common_data_entity.dart';
+import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
+import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/staff/staff_response_item_entity.dart';
+import 'package:uuid/uuid.dart';
 
 class StaffSectionController extends BaseController {
+  final GlobalKey<FormState> staffFormKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final RxList<Map<String, dynamic>> roles = <Map<String, dynamic>>[].obs;
-  final RxString selectedRole = ''.obs;
-  final RxList<Map<String, dynamic>> staffList = <Map<String, dynamic>>[].obs;
-  final RxBool isLoadingRoles = false.obs;
-  final RxBool isLoadingStaff = false.obs;
+
+  final AppRepository appRepository;
+
+  StaffSectionController(this.appRepository);
+
+
+  //Rx Variables
+  Rxn<CommonDataEntity> selectedRole = Rxn<CommonDataEntity>(null);
+  final RxBool isPasswordVisible = false.obs;
+  final RxBool isFormValid = false.obs;
+  final RxList<CommonDataEntity> roles = <CommonDataEntity>[].obs;
+
+  var staffList = <StaffResponseItemEntity>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchRoles();
-    fetchStaffList();
+    requestForStaffList();
+    requestForRoles();
   }
 
-  void fetchRoles() async {
-    isLoadingRoles.value = true;
-    // Simulated API response for roles
-    await Future.delayed(const Duration(seconds: 1));
-    roles.value = [
-      {"id": 1, "role_name": "Admin"},
-      {"id": 3, "role_name": "Subadmin"},
-      {"id": 4, "role_name": "Moderator"},
-    ];
-    isLoadingRoles.value = false;
-  }
-
-  void fetchStaffList() async {
-    isLoadingStaff.value = true;
-    // Simulated API response for staff list
-    await Future.delayed(const Duration(seconds: 1));
-    staffList.value = [
-      {"staff_id": 3, "name": "Mike Johnson", "email": "mike.johnson@example.com", "status": "INACTIVE", "role_name": "Subadmin"},
-      {"staff_id": 4, "name": "Sara Lee", "email": "sara.lee@example.com", "status": "ACTIVE", "role_name": "Moderator"},
-    ];
-    isLoadingStaff.value = false;
-  }
-
-  void addStaff() {
-    if (nameController.text.isEmpty || emailController.text.isEmpty || passwordController.text.isEmpty || selectedRole.value.isEmpty) {
-      Get.snackbar(
-        'Validation Error',
-        'Please fill all fields',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-      return;
-    }
-
-    // Simulated staff addition
-    staffList.add({
-      "staff_id": staffList.length + 1,
-      "name": nameController.text,
-      "email": emailController.text,
-      "status": "ACTIVE",
-      "role_name": roles.firstWhere((role) => role['id'].toString() == selectedRole.value)['role_name'],
-    });
-
-    Get.snackbar(
-      'Staff Added',
-      'Staff has been added successfully',
-      snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.green,
-      colorText: Colors.white,
+  void requestForRoles(){
+    var temp = <CommonDataEntity>[];
+    temp.add(
+        CommonDataEntity(
+            key: RoleName.ADMIN.title,
+          value: RoleName.ADMIN.code,
+        )
     );
 
-    clearFields();
+    temp.add(
+        CommonDataEntity(
+            key: RoleName.SUB_ADMIN.title,
+          value: RoleName.SUB_ADMIN.code,
+        )
+    );
+
+    temp.add(
+        CommonDataEntity(
+            key: RoleName.MODERATOR.title,
+          value: RoleName.MODERATOR.code,
+        )
+    );
+    roles.value = temp;
   }
 
-  void clearFields() {
-    nameController.clear();
-    emailController.clear();
-    passwordController.clear();
-    selectedRole.value = '';
+  void deleteRole(StaffResponseItemEntity staff) {
+    askForConfirmation(
+        message: 'Are you sure you want to remove this staff?',
+        onPositiveAction: () {
+      removeStaff(staff);
+    });
   }
 
-  @override
-  void onClose() {
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
   }
+
+
+  void createRole() {
+    if (staffFormKey.currentState!.validate()) {
+      requestToAddStaff();
+    }
+  }
+
+  PaginationRequest paginationRequest = PaginationRequest(page: 1, limit: 100);
+
+  void parseStaffList(StaffResponseEntity data) {
+    staffList.value = data.staffs ?? [];
+  }
+
+  clearAllFields(){
+    Future.delayed(Duration(milliseconds: 150), () {
+      staffFormKey.currentState?.reset();
+    });
+  }
+  AddStaffRequestEntity generateAddStaffRequest() {
+    return AddStaffRequestEntity(
+      name: nameController.text,
+      email: emailController.text,
+      password: passwordController.text,
+      role: selectedRole.value?.value,
+      status: "ACTIVE"
+    );
+  }
+  //Network Calls
+  void requestForStaffList() {
+    final repo = appRepository.requestForStaffList(paginationRequest);
+    callService(repo, onSuccess: (data) {
+      parseStaffList(data);
+    });
+  }
+
+  void requestToAddStaff(){
+    final repo = appRepository.requestToAddStaff(generateAddStaffRequest());
+    callService(repo, onSuccess: (data) {
+      showSnackBar(message: 'Staff added successfully',status: SnackBarStatus.SUCCESS);
+      requestForStaffList();
+      clearAllFields();
+    });
+  }
+
+  void removeStaff(StaffResponseItemEntity staff) {
+    final repo = appRepository.requestToRemoveStaff(
+        staff.staffId.toString() ?? "");
+    callService(repo, onSuccess: (data) {
+      showSnackBar(message: 'Staff removed successfully',
+          status: SnackBarStatus.SUCCESS);
+      requestForStaffList();
+    });
+  }
+
+    @override
+    void onClose() {
+      nameController.dispose();
+      emailController.dispose();
+      passwordController.dispose();
+      super.onClose();
+    }
+
+
 }

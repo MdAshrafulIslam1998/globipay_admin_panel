@@ -3,10 +3,11 @@
  */
 
 enum RoleName{
-  ADMIN("1"),
-  SUPER_ADMIN("3"),
-  MODERATOR("4")
+  ADMIN("1", "Admin"),
+  SUB_ADMIN("3", "Subadmin"),
+  MODERATOR("4", "Moderator"),
   ;
   final String code;
-  const RoleName(this.code);
+  final String title;
+  const RoleName(this.code,this.title);
 }

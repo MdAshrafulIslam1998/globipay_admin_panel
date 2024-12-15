@@ -56,7 +56,6 @@ abstract class AppInjector extends Injector {
     _repositoryComponents();
   }
 
-
   @Register.factory(ProfileController)
   @Register.factory(AddTemplatesController)
   @Register.factory(MessageTemplatesController)

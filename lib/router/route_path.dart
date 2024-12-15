@@ -30,6 +30,7 @@ abstract class RoutePath {
   static const String addMessageTemplates = _RoutePath._addMessageTemplates;
   static const String messageTemplates = _RoutePath._messageTemplates;
 
+
 }
 
 class _RoutePath {

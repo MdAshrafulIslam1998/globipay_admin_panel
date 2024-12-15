@@ -47,7 +47,7 @@ abstract class TableHeaderVisibility {
       'delete',
       'message'
     ], //admin
-    RoleName.SUPER_ADMIN.code: [
+    RoleName.SUB_ADMIN.code: [
       'name',
       'primary',
       'secondary',
@@ -76,7 +76,7 @@ abstract class TableHeaderVisibility {
       'status',
       'document',
     ], //admin
-    RoleName.SUPER_ADMIN.code: [
+    RoleName.SUB_ADMIN.code: [
       'name',
       'date',
       'status',
@@ -97,7 +97,7 @@ abstract class TableHeaderVisibility {
       'status',
       'document',
     ], //admin
-    RoleName.SUPER_ADMIN.code: [
+    RoleName.SUB_ADMIN.code: [
       'name',
       'date',
       'status',
@@ -121,7 +121,7 @@ abstract class TableHeaderVisibility {
       'edit',
       'details'
     ], //admin
-    RoleName.SUPER_ADMIN.code: [
+    RoleName.SUB_ADMIN.code: [
       'name',
       'primary',
       'secondary',
@@ -152,7 +152,7 @@ abstract class TableHeaderVisibility {
       MiscTableHeaderConst.DELETE,
 
     ], //admin
-    RoleName.SUPER_ADMIN.code: [
+    RoleName.SUB_ADMIN.code: [
       MiscTableHeaderConst.ID,
       MiscTableHeaderConst.FEATURE_CODE,
       MiscTableHeaderConst.TYPE,
@@ -180,7 +180,7 @@ abstract class TableHeaderVisibility {
       'coin_type',
       'category_name'
     ], //admin
-    RoleName.SUPER_ADMIN.code: [
+    RoleName.SUB_ADMIN.code: [
       'name',
       'date',
       'coin',

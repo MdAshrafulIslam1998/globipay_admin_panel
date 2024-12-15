@@ -9,6 +9,7 @@ import 'package:globipay_admin_panel/entity/request/message_templates/add_messag
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_banner_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
+import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/file_upload/file_upload_response.dart';
@@ -18,6 +19,7 @@ import 'package:globipay_admin_panel/entity/response/messages_templates/messages
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/add_promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/all_transactions_response_entity.dart';
 
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
@@ -149,6 +151,23 @@ class AppRepositoryImpl extends AppRepository {
   Future requestToAddLevel(AddLevelRequestEntity req) {
     return remoteDataSource.requestToAddLevel(req);
   }
+
+  @override
+  Future<StaffResponseEntity> requestForStaffList(PaginationRequest req) {
+    return remoteDataSource.requestForStaffList(req);
+  }
+
+  @override
+  Future<void> requestToAddStaff(AddStaffRequestEntity req) {
+    return remoteDataSource.requestToAddStaff(req);
+  }
+
+  @override
+  Future<void> requestToRemoveStaff(String req) {
+    return remoteDataSource.requestToRemoveStaff(req);
+  }
+
+
 
 
 }
