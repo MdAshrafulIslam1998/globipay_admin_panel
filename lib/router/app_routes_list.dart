@@ -29,6 +29,7 @@ import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/pr
 import 'package:globipay_admin_panel/modules/media_section/about_us/views/about_us_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/add_level/views/add_level_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/edit_level/views/edit_level_screen.dart';
+import 'package:globipay_admin_panel/modules/staff_section/views/staff_section_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../modules/chat/call/video_call/video_call_screen.dart';
 import 'route_path.dart';
@@ -203,6 +204,10 @@ abstract class AppRoutesList {
 
 
 
+        GoRoute(
+          path: RoutePath.staffSection,
+          builder: (context, state) => StaffSectionScreen(),
+        ),
         ],
       ),
     ];

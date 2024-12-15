@@ -5,6 +5,7 @@ import 'package:globipay_admin_panel/entity/request/category/add_category_reques
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
+import 'package:globipay_admin_panel/entity/response/fetch_staff/all_staff_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:http_parser/http_parser.dart';
@@ -289,6 +290,22 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     );
     try {
       return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+  @override
+  Future<AllStaffResponseEntity> requestForAllStaffs(PaginationRequest request) {
+    var endpoint = '$BASE_URL/${AppApi.allstaff}';
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+      queryParameters: request.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => AllStaffResponseEntity.fromJson(response.data));
     } catch (e) {
       rethrow;
     }

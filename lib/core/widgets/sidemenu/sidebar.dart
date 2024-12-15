@@ -315,17 +315,17 @@ class Sidebar extends StatelessWidget {
                           ),
                         ),
                         children: [
-                          // MenuTile(
-                          //   isSubmenu: false,
-                          //   isActive: currentRoute == RoutePath.editCoin,
-                          //   title: "Edit Coin",
-                          //   activeIconSrc: "assets/icons/fire_filled.svg",
-                          //   inactiveIconSrc: "assets/icons/fire_light.svg",
-                          //   count: 16,
-                          //   onPressed: () {
-                          //     context.go(RoutePath.editCoin);
-                          //   },
-                          // ),
+                          MenuTile(
+                            isSubmenu: false,
+                            isActive: currentRoute == RoutePath.staffSection,
+                            title: "Edit Coin",
+                            activeIconSrc: "assets/icons/fire_filled.svg",
+                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            count: 16,
+                            onPressed: () {
+                              context.go(RoutePath.staffSection);
+                            },
+                          ),
                         ],
                       ),
                     ),

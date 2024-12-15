@@ -10,6 +10,7 @@ import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/fetch_staff/all_staff_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/file_upload/file_upload_response.dart';
 import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
@@ -113,22 +114,10 @@ class AppRepositoryImpl extends AppRepository{
     return remoteDataSource.requestToAddMisc(request);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@override
+  Future<AllStaffResponseEntity> requestForAllStaffs(PaginationRequest request) {
+    return remoteDataSource.requestForAllStaffs(request);
+  }
 
 
 
