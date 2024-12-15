@@ -23,39 +23,35 @@ class MiscellaneousDataSource extends DataGridSource {
   List<DataGridRow> _dataGridRows = [];
 
   void buildDataGridRows() {
-    _dataGridRows = miscs
-        .map((user) => DataGridRow(
-      cells: visibleColumns.map((columnName) {
-        switch (columnName) {
-          case MiscTableHeaderConst.ID:
-            return DataGridCell<String>(
-                columnName: MiscTableHeaderConst.ID, value: user.service_id.toString());
-          case MiscTableHeaderConst.FEATURE_CODE:
-            return DataGridCell<String>(
-                columnName: MiscTableHeaderConst.FEATURE_CODE, value: user.feature_code);
-          case MiscTableHeaderConst.TYPE:
-            return DataGridCell<String>(
-                columnName: MiscTableHeaderConst.TYPE, value: user.type);
-          case MiscTableHeaderConst.CONTENT:
-            return DataGridCell<String>(
-                columnName: MiscTableHeaderConst.CONTENT, value: user.content);
-
-          case MiscTableHeaderConst.DETAILS:
-            return DataGridCell<String>(
-                columnName: MiscTableHeaderConst.DETAILS, value: "Details");
-
-          case MiscTableHeaderConst.DELETE:
-            return DataGridCell<String>(
-                columnName: MiscTableHeaderConst.DELETE, value: "Delete");
-
-
-          default:
-            throw Exception('Invalid column: $columnName');
-        }
-      }).toList(),
-    ))
-        .toList();
+    _dataGridRows = miscs.map((user) {
+      return DataGridRow(
+        cells: visibleColumns.map((columnName) {
+          switch (columnName) {
+            case MiscTableHeaderConst.ID:
+              return DataGridCell<String>(
+                  columnName: MiscTableHeaderConst.ID, value: user.service_id.toString());
+            case MiscTableHeaderConst.FEATURE_CODE:
+              return DataGridCell<String>(
+                  columnName: MiscTableHeaderConst.FEATURE_CODE, value: user.feature_code);
+            case MiscTableHeaderConst.TYPE:
+              return DataGridCell<String>(
+                  columnName: MiscTableHeaderConst.TYPE, value: user.type);
+            case MiscTableHeaderConst.CONTENT:
+              return DataGridCell<String>(
+                  columnName: MiscTableHeaderConst.CONTENT, value: user.content);
+            case MiscTableHeaderConst.DETAILS:
+            case MiscTableHeaderConst.DELETE:
+            // Store the entity itself for actions
+              return DataGridCell<MiscResponseItemEntity>(
+                  columnName: columnName, value: user);
+            default:
+              throw Exception('Invalid column: $columnName');
+          }
+        }).toList(),
+      );
+    }).toList();
   }
+
 
   @override
   List<DataGridRow> get rows => _dataGridRows;
@@ -80,77 +76,34 @@ class MiscellaneousDataSource extends DataGridSource {
     return DataGridRowAdapter(
       cells: row.getCells().map<Widget>((cell) {
         if (cell.columnName == MiscTableHeaderConst.DETAILS) {
+          // Extract entity and pass it to the callback
+          final user = cell.value as MiscResponseItemEntity;
           return Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
+            padding: const EdgeInsets.only(left: 14.0),
             child: buildActionButton(Colors.blue, Icons.visibility, () {
-             onActionTap?.call(
-                  cell.value as MiscResponseItemEntity, MiscTableHeaderConst.DETAILS);
+              onActionTap?.call(user, MiscTableHeaderConst.DETAILS);
             }),
           );
         } else if (cell.columnName == MiscTableHeaderConst.DELETE) {
+          // Extract entity and pass it to the callback
+          final user = cell.value as MiscResponseItemEntity;
           return Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
+            padding: const EdgeInsets.only(left: 14.0),
             child: buildActionButton(Colors.red, Icons.delete, () {
-              onActionTap?.call(cell.value as MiscResponseItemEntity, MiscTableHeaderConst.DELETE);
+              onActionTap?.call(user, MiscTableHeaderConst.DELETE);
             }),
           );
-        } else if (cell.columnName == MiscTableHeaderConst.ID) {
+        } else {
+          // Other cases (e.g., ID, FEATURE_CODE, etc.)
           return Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
+            padding: const EdgeInsets.only(left: 14.0),
             child: Text(
               cell.value.toString(),
-              overflow: TextOverflow
-                  .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
-                fontFamily: 'iAWriterQuattroS',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        } else if (cell.columnName == MiscTableHeaderConst.FEATURE_CODE) {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
-            child: Text(
-              cell.value.toString(),
-              overflow: TextOverflow
-                  .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
-                fontFamily: 'iAWriterQuattroS',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        } else if (cell.columnName == MiscTableHeaderConst.TYPE) {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
-            child: Text(
-              cell.value.toString(),
-              overflow: TextOverflow
-                  .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
-                fontFamily: 'iAWriterQuattroS',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        } else if (cell.columnName == MiscTableHeaderConst.CONTENT) {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
-            child: Text(
-              cell.value.toString(),
-              maxLines: 1,
-              overflow: TextOverflow
-                  .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
                 fontFamily: 'iAWriterQuattroS',
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -158,22 +111,8 @@ class MiscellaneousDataSource extends DataGridSource {
             ),
           );
         }
-        return Container(
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 14.0), // Add padding right
-          child: Text(
-            cell.value.toString(),
-            overflow:
-            TextOverflow.ellipsis, // Ensure text is truncated with ellipsis
-            style: const TextStyle(
-              fontFamily: 'iAWriterQuattroS',
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF444444),
-            ),
-          ),
-        );
       }).toList(),
     );
   }
+
 }

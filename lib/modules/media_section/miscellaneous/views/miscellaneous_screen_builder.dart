@@ -186,15 +186,14 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                     source: MiscellaneousDataSource(
                       controller.miscs.value,
                       onActionTap: (user, action) {
-                        /*switch (action) {
+                        switch (action) {
                           case MiscTableHeaderConst.DETAILS:
                            // AppRoutes.pushNamed(RoutePath.pendingProfile);
                             break;
                           case MiscTableHeaderConst.DELETE:
-                           // print('Delete action for ${user.name}');
+                            controller.removeMisc(user.service_id);
                             break;
-
-                        }*/
+                        }
                       },
                       visibleColumns: controller.visibleColumns.value,
                     ),

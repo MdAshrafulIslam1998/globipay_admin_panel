@@ -3,6 +3,7 @@ import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
 import 'package:globipay_admin_panel/core/constants/table_header_visibility.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_item_entity.dart';
@@ -74,5 +75,17 @@ class MiscellaneousController extends BaseController{
     AppRoutes.pushNamed(RoutePath.addMisc).then((value) {
       fetchMiscs(currentPage.value, pageSize.value);
     });
+  }
+
+  void removeMisc(int? service_id) {
+    askForConfirmation(
+      onPositiveAction: () {
+        final repo = _repository.requestToRemoveMisc(service_id.toString());
+        callService(repo, onSuccess: (response) {
+          fetchMiscs(currentPage.value, pageSize.value);
+        });
+      },
+    );
+
   }
 }

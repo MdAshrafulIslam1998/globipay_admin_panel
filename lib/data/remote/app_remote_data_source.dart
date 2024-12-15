@@ -41,5 +41,6 @@ abstract class AppRemoteDataSource {
   Future<void> requestToAddCategory(AddCategoryRequestEntity req);
   Future<void> requestToDeleteCategory(String id);
   Future<void> requestToAddMisc(AddMiscRequestEntity request);
+  Future<void> requestToRemoveMisc(String id);
 
 }
