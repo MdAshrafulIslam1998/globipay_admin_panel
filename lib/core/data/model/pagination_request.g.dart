@@ -15,7 +15,7 @@ PaginationRequest _$PaginationRequestFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$PaginationRequestToJson(PaginationRequest instance) =>
     <String, dynamic>{
-      'limit': instance.limit,
-      'page': instance.page,
-      'category': instance.category,
+      if (instance.limit case final value?) 'limit': value,
+      if (instance.page case final value?) 'page': value,
+      if (instance.category case final value?) 'category': value,
     };
