@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
 import 'package:globipay_admin_panel/core/constants/enum/sort_type.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/controller/trans_history_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/table/trans_history_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/table/trans_history_data_source.dart';
@@ -128,11 +130,13 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                                     child: Text(
                                       size.toString(),
                                       style: TextStyle(
-                                        fontSize: 13, // Adjust the font size
-                                        fontWeight: FontWeight
-                                            .bold, // Change font weight (e.g., bold)
-                                        color: const Color.fromARGB(
-                                            143, 0, 0, 0), // Set text color
+                                        fontSize: 13,
+                                        // Adjust the font size
+                                        fontWeight: FontWeight.bold,
+                                        // Change font weight (e.g., bold)
+                                        color:
+                                            const Color.fromARGB(143, 0, 0, 0),
+                                        // Set text color
                                         fontFamily:
                                             'newyork', // Specify a custom font family if needed
                                       ),
@@ -161,13 +165,66 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                       icon: Icon(Icons.person),
                       label: Text('User Level'),
                       onPressed: () {
-                        controller.fetchUserWiseTransactionHistory(1, controller.pageSize.value);
+                        controller.fetchUserWiseTransactionHistory(
+                            1, controller.pageSize.value);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green[100],
                         foregroundColor: Colors.green[800],
                       ),
-                    )
+                    ),
+                    AppSpaces.horizontalSpace,
+                    ElevatedButton.icon(
+                      icon: Icon(Icons.category_outlined),
+                      label: Text('Category Level'),
+                      onPressed: () {
+                        controller.setCategorySelectionVisibility(
+                          !controller.isCategorySelectionVisible.value,
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[100],
+                        foregroundColor: Colors.green[800],
+                      ),
+                    ),
+
+                    Obx(
+                      () => Visibility(
+                        visible: controller.isCategorySelectionVisible.value,
+                        child: Container(
+                          width: 120,
+                          height: 40,
+                          margin: const EdgeInsets.only(left: 12),
+                          decoration: BoxDecoration(
+                            color: Colors.green[100],                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1,
+                            ),
+                          ),
+                          child:Container(
+                            child: DropdownButtonFormField<CategoryItemEntity>(
+                            value: controller.selectedCategory.value,
+                            hint: Text('Select'),
+                            onChanged: (CategoryItemEntity? newValue) {
+                              controller.setSelectedCategory(newValue); // Use a method in your controller
+                            },
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                            ),
+                            items: controller.categoriesList.map((CategoryItemEntity item) {
+                              return DropdownMenuItem<CategoryItemEntity>(
+                                value: item,
+                                child: Text(item.name ?? ""),
+                              );
+                            }).toList(),
+                          ),),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

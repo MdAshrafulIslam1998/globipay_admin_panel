@@ -123,12 +123,7 @@ class AppRepositoryImpl extends AppRepository {
     return remoteDataSource.requestToRemoveMisc(id);
   }
 
-  @override
-  Future<AllTransactionsResponseEntity> requestForAllTransactions(
-    PaginationRequest paginationRequest,
-    ) {
-    return remoteDataSource.requestForAllTransactions(paginationRequest);
-  }
+
 
   @override
   Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(
@@ -165,6 +160,11 @@ class AppRepositoryImpl extends AppRepository {
   @override
   Future<void> requestToRemoveStaff(String req) {
     return remoteDataSource.requestToRemoveStaff(req);
+  }
+
+  @override
+  Future<AllTransactionsResponseEntity> requestForAllTransactions({required PaginationRequest paginationRequest, String? path}) {
+    return remoteDataSource.requestForAllTransactions(paginationRequest : paginationRequest, path: path);
   }
 
 

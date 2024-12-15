@@ -10,9 +10,9 @@ TransactionItemEntity _$TransactionItemEntityFromJson(
         Map<String, dynamic> json) =>
     TransactionItemEntity(
       id: (json['id'] as num?)?.toInt(),
-      catId: (json['cat_id'] as num?)?.toInt(),
+      catId: json['cat_id'],
       uid: json['uid'] as String?,
-      coin: (json['coin'] as num?)?.toInt(),
+      coin: json['coin'],
       date: json['date'] as String?,
       name: json['name'] as String?,
       email: json['email'] as String?,

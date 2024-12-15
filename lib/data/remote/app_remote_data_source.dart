@@ -48,7 +48,8 @@ abstract class AppRemoteDataSource {
   Future<void> requestToAddMisc(AddMiscRequestEntity request);
   Future<void> requestToRemoveMisc(String id);
 
-  Future<AllTransactionsResponseEntity> requestForAllTransactions(PaginationRequest paginationRequest);
+  Future<AllTransactionsResponseEntity> requestForAllTransactions(
+      {required PaginationRequest paginationRequest, String? path});
   Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(PaginationRequest paginationRequest);
   Future<void> requestToRemoveLevel(String id);
   Future<LevelResponseEntity> requestForAllLevel();

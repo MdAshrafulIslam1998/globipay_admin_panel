@@ -9,13 +9,13 @@ class TransactionItemEntity {
   int? id;
 
   @JsonKey(name: "cat_id")
-  int? catId;
+  dynamic catId;
 
   @JsonKey(name: "uid")
   String? uid;
 
   @JsonKey(name: "coin")
-  int? coin;
+  dynamic coin;
 
   @JsonKey(name: "date")
   String? date;

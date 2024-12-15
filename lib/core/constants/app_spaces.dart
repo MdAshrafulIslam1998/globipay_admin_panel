@@ -9,4 +9,5 @@ abstract class AppSpaces {
   static const SizedBox spaceBetweenChild = SizedBox(height: 12.0);
   static const SizedBox spaceBetweenHorizontalChild = SizedBox(width: 12.0);
   static const SizedBox headerSpaceBetweenChild = SizedBox(height: 3.0);
+  static const SizedBox horizontalSpace = SizedBox(width: 8.0);
 }

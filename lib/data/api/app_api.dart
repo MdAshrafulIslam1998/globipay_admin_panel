@@ -27,8 +27,8 @@ abstract class AppApi {
   static const String addLevel = '$prefix/levels/addLevel';
   static const String staffList = '$prefix/staffpanel/staffs';
   static const String addStaff = '$prefix/staffpanel/staffs';
-
-
+  static const String USER_WISE_TRANSACTIONS = '$prefix/alltransactions/userwise';
+  static const String CAT_WISE_TRANSACTIONS = '$prefix/alltransactions/categorywise';
   static const String allTransactions = '$prefix/alltransactions';
   static const String userwiseTransactions = '$prefix/users/userwise/transactions';
 

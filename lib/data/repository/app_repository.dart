@@ -33,7 +33,8 @@ abstract class AppRepository{
   Future<UserResponseEntity> requestForUserList(PaginationRequest paginationRequest,{String? path});
   Future<LoginResponse> requestForLogin(LoginRequest request);
   Future<ChatCloseResponseEntity> requestToCloseChat(ChatCloseRequestEntity request);
-  Future<AllTransactionsResponseEntity> requestForAllTransactions(PaginationRequest paginationRequest);
+  Future<AllTransactionsResponseEntity> requestForAllTransactions(
+      {required PaginationRequest paginationRequest,String? path});
   Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(PaginationRequest paginationRequest);
   Future<AddPromotionalBannerResponseEntity> requestToAddPromotionalBanner(AddPromotionalBannerRequestEntity request);
   Future<PromotionalBannerResponseEntity> requestForAllPromotionalBanner(PaginationRequest request);
