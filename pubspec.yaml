@@ -81,6 +81,7 @@ dependencies:
   flutter_typeahead: 4.3.7
   dropdown_button2: ^2.3.9
   quill_html_editor: ^2.0.0
+  delta_to_html: ^0.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

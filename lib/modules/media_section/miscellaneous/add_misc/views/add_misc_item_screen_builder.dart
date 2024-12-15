@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/data/model/common_data_entity.dart';
 import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/widgets/dropdown/app_drop_down.dart';
 import 'package:globipay_admin_panel/data/models/misc_item_model.dart';
@@ -44,7 +45,7 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
                   SizedBox(height: 16),
                   _buildCategoryDropdown(),
                   SizedBox(height: 16),
-                  _buildTitleField(),
+                  _buildContentTypeDropdown(),
                   SizedBox(height: 16),
                   _buildRichTextEditor(),
                   SizedBox(height: 16),
@@ -91,19 +92,37 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
       ],
     );
   }
-
-
-  Widget _buildTitleField() {
-    return TextField(
-      controller: controller.titleController,
-      decoration: InputDecoration(
-        labelText: 'Misc Item Title',
-        prefixIcon: Icon(Icons.title),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+  Widget _buildContentTypeDropdown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Content Type',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-      ),
-      style: TextStyle(fontSize: 16),
+        SizedBox(height: 8),
+        DropdownButtonFormField<CommonDataEntity>(
+          value: controller.selectedContentType.value,
+          onChanged: (CommonDataEntity? newValue) {
+            controller.setSelectedContentType(newValue); // Use a method in your controller
+          },
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 12),
+          ),
+          items: controller.contentTypes.map((CommonDataEntity item) {
+            return DropdownMenuItem<CommonDataEntity>(
+              value: item,
+              child: Text(item.key ?? ""),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 
@@ -127,7 +146,7 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
         ),
         SizedBox(height: 8),
         Container(
-          height: 200,
+          height: 400,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(12),
