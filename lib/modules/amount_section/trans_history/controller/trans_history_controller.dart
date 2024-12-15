@@ -35,6 +35,7 @@ class TransHistoryController extends BaseController {
       );
 
   parseTransactionList(AllTransactionsResponseEntity response) {
+    transactions.clear();
     transactions.value = response.transactions ?? [];
     totalItems.value = response.pagination?.total ?? 0;
     currentPage.value = response.pagination?.currentPage ?? 1;

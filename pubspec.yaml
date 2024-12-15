@@ -82,6 +82,8 @@ dependencies:
   dropdown_button2: ^2.3.9
   quill_html_editor: ^2.0.0
   delta_to_html: ^0.2.2
+  shimmer: ^3.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
