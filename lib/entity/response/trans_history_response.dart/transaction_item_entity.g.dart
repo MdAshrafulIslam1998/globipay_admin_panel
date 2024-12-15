@@ -19,10 +19,6 @@ TransactionItemEntity _$TransactionItemEntityFromJson(
       createdBy: json['created_by'] as String?,
       coinType: json['coin_type'] as String?,
       categoryName: json['category_name'] as String?,
-      // catgories: (json['categories'] as List<dynamic>?)
-      //     ?.map(
-      //         (e) => CategoryCoinModelDart.fromJson(e as Map<String, dynamic>))
-      //     .toList(),
     );
 
 Map<String, dynamic> _$TransactionItemEntityToJson(
@@ -38,5 +34,4 @@ Map<String, dynamic> _$TransactionItemEntityToJson(
       'created_by': instance.createdBy,
       'coin_type': instance.coinType,
       'category_name': instance.categoryName,
-      //'categories': instance.catgories,
     };
