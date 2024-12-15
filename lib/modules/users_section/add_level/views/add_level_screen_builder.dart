@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
+import 'package:globipay_admin_panel/entity/response/level/level_item_response_entity.dart';
 import 'package:globipay_admin_panel/modules/users_section/add_level/controller/add_level_controller.dart';
-import 'package:globipay_admin_panel/modules/users_section/add_level/controller/level_model.dart';
 import 'package:intl/intl.dart';
 
 class AddLevelScreenBuilder extends BaseView<AddLevelController> {
@@ -18,7 +19,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
     );
 
     return Scaffold(
-      backgroundColor: colorScheme.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         title: Text(
           'Level Management',
@@ -67,6 +68,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                             ),
                           ),
                           const SizedBox(height: 16),
+
                           Expanded(
                             child: Obx(() {
                               if (controller.levels.isEmpty) {
@@ -80,6 +82,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                 );
                               }
                               return ListView.separated(
+                                shrinkWrap: true,
                                 itemCount: controller.levels.length,
                                 separatorBuilder: (context, index) => const SizedBox(height: 8),
                                 itemBuilder: (context, index) {
@@ -92,7 +95,8 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                         color: Colors.grey.shade200,
                                       ),
                                     ),
-                                    child: ListTile(
+                                    child:
+                                    ListTile(
                                       contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 16,
                                         vertical: 8,
@@ -121,7 +125,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                             ),
                                           ),
                                           Text(
-                                            'Created: ${DateFormat('dd MMM yyyy HH:mm').format(level.date ?? DateTime.now())}',
+                                            'Created: ${DateFormat('dd MMM yyyy HH:mm').tryParse(level.date ?? DateTime.now().toString())}',
                                             style: TextStyle(
                                               color: Colors.grey.shade600,
                                               fontSize: 12,
@@ -129,12 +133,26 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                           ),
                                         ],
                                       ),
-                                      trailing: IconButton(
-                                        icon: const Icon(Icons.edit, color: Colors.grey),
-                                        onPressed: () {
-                                          _showEditDialog(context, level);
-                                        },
-                                      ),
+                                      trailing: Container(
+                                        width: 100,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              icon: const Icon(Icons.delete, color: Colors.grey),
+                                              onPressed: () {
+                                                controller.levelRemove(level);
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(Icons.edit, color: Colors.grey),
+                                              onPressed: () {
+                                                _showEditDialog(context, level);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      )
                                     ),
                                   );
                                 },
@@ -269,7 +287,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
     );
   }
 
-  void _showEditDialog(BuildContext context, LevelModel level) {
+  void _showEditDialog(BuildContext context, LevelItemResponseEntity level) {
     final TextEditingController nameController =
         TextEditingController(text: level.levelName);
     final TextEditingController valueController =

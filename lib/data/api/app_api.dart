@@ -22,6 +22,9 @@ abstract class AppApi {
   static const String deleteCategory = '$prefix/categories';
   static const String addMisc = '$prefix/meta-service/add';
   static const String removeMisc = '$prefix/meta-service';
+  static const String removeLevel = '$prefix/levels';
+  static const String allLevel = '$prefix/levels';
+  static const String addLevel = '$prefix/levels/addLevel';
 
 
   static const String allTransactions = '$prefix/alltransactions';

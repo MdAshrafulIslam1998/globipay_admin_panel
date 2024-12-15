@@ -3,22 +3,23 @@ import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
-import 'package:globipay_admin_panel/modules/users_section/add_level/controller/level_model.dart';
-import 'package:globipay_admin_panel/modules/users_section/add_level/controller/level_service.dart';
+import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/request/level/add_level_request_entity.dart';
+import 'package:globipay_admin_panel/entity/response/level/level_item_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/level/level_response_entity.dart';
 
 
 class AddLevelController extends BaseController {
   // Dependencies
   final TokenRepository tokenRepository = Injector.resolve<TokenRepository>();
-  late final LevelService _levelService;
 
+  final AppRepository appRepository;
+
+  AddLevelController(this.appRepository);
   // Observable list to track levels
-  RxList<LevelModel> levels = <LevelModel>[].obs;
-  
-  // Loading and error states
-  RxBool isLoading = false.obs;
-  Rx<String?> errorMessage = Rx<String?>(null);
-  
+  RxList<LevelItemResponseEntity> levels = <LevelItemResponseEntity>[].obs;
+
   // Form key for validation
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   
@@ -28,11 +29,6 @@ class AddLevelController extends BaseController {
   final TextEditingController minThreshController = TextEditingController();
   final TextEditingController maxThreshController = TextEditingController();
 
-  // Constructor
-  AddLevelController() {
-    _levelService = LevelService(tokenRepository);
-  }
-
   @override
   void onInit() {
     super.onInit();
@@ -41,88 +37,68 @@ class AddLevelController extends BaseController {
   }
 
 
+  parseLevelResponse(LevelResponseEntity response) {
+     levels.value = response.levels ?? [];
+  }
 
-  // Fetch existing levels from API
-  Future<void> fetchLevels() async {
-    // Reset error and set loading
-    
-    errorMessage.value = null;
-    isLoading.value = true;
 
-    try {
-      final response = await _levelService.fetchLevels();
-      levels.value = response.data?.levels ?? [];
-    } catch (e) {
-      // Handle specific error scenarios
-      errorMessage.value = e.toString();
-      
-      // Show error snackbar
-      Get.snackbar(
-        'Error', 
-        errorMessage.value ?? 'Failed to fetch levels',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    } finally {
-      isLoading.value = false;
+  void addLevel() {
+
+    if(formKey.currentState!.validate()){
+      requestToAddLevel();
     }
   }
 
   // Validate and submit new level
-  Future<void> addLevel() async {
-    // Reset previous error
-    errorMessage.value = null;
 
-    // Validate form
-    if (formKey.currentState!.validate()) {
-      // Set loading state
-      isLoading.value = true;
+  AddLevelRequestEntity generateLevelRequest(String sId) {
+    return AddLevelRequestEntity(
+      levelName: levelNameController.text,
+      levelValue: int.parse(levelValueController.text),
+      minThresh: double.parse(minThreshController.text),
+      maxThresh: double.parse(maxThreshController.text),
+      createdBy: sId, // Use actual user ID
+    );
+  }
 
-      try {
-        // Get user ID from token repository
-        final userId = await tokenRepository.getUserID();
+  levelRemove(LevelItemResponseEntity model){
+    askForConfirmation(
+        message: 'Do you want to remove this level?',
+        onPositiveAction: () async {
+          requestToRemoveLevel(model);
+    },
+    );
 
-        final newLevel = LevelModel(
-          levelName: levelNameController.text,
-          levelValue: int.parse(levelValueController.text),
-          minThresh: double.parse(minThreshController.text),
-          maxThresh: double.parse(maxThreshController.text),
-          createdBy: userId, // Use actual user ID
-        );
+  }
 
-        await _levelService.addLevel(newLevel);
-        
-        // Clear form after successful submission
-        _clearForm();
-        
-        // Refresh levels list
-        await fetchLevels();
 
-        // Success notification
-        Get.snackbar(
-          'Success', 
-          'Level added successfully',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-      } catch (e) {
-        // Handle and display specific error
-        errorMessage.value = e.toString();
-        
-        Get.snackbar(
-          'Error', 
-          errorMessage.value ?? 'Failed to add level',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      } finally {
-        // Always set loading to false
-        isLoading.value = false;
-      }
-    }
+  void requestToRemoveLevel(LevelItemResponseEntity level){
+    final repo = appRepository.requestToRemoveLevel(level.levid.toString());
+    callService(repo, onSuccess: (response) {
+      showSnackBar(message: 'Level removed successfully', status: SnackBarStatus.SUCCESS);
+      fetchLevels();
+    });
+  }
+
+
+  void requestToAddLevel()async{
+    final sId = await tokenRepository.getStuffId();
+    final req = generateLevelRequest(sId);
+    final repo = appRepository.requestToAddLevel(req);
+    callService(repo, onSuccess: (response) {
+      showSnackBar(message: 'Level added successfully', status: SnackBarStatus.SUCCESS);
+      _clearForm();
+      fetchLevels();
+
+    });
+  }
+
+  // Fetch existing levels from API
+  Future<void> fetchLevels() async {
+    final repo = appRepository.requestForAllLevel();
+    callService(repo, onSuccess: (LevelResponseEntity response) {
+      parseLevelResponse(response);
+    });
   }
 
   // Clear form fields
@@ -142,4 +118,6 @@ class AddLevelController extends BaseController {
     maxThreshController.dispose();
     super.onClose();
   }
+
+
 }

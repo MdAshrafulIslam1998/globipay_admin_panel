@@ -33,7 +33,7 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => ActiveUsersController())
       ..registerFactory((c) => StaffSectionController())
       ..registerFactory((c) => EditLevelController())
-      ..registerFactory((c) => AddLevelController())
+      ..registerFactory((c) => AddLevelController(c.resolve<AppRepository>()))
       ..registerFactory((c) => AboutUsController())
       ..registerFactory(
           (c) => PromotionalBannerController(c.resolve<AppRepository>()))

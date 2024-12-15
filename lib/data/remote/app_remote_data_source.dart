@@ -3,6 +3,7 @@ import 'package:globipay_admin_panel/entity/request/category/add_category_reques
 import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
+import 'package:globipay_admin_panel/entity/request/level/add_level_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/login/login_request.dart';
 import 'package:globipay_admin_panel/entity/request/message_templates/add_message_templates_request.dart';
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
@@ -11,6 +12,7 @@ import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/pr
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/file_upload/file_upload_response.dart';
+import 'package:globipay_admin_panel/entity/response/level/level_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
@@ -46,5 +48,8 @@ abstract class AppRemoteDataSource {
 
   Future<AllTransactionsResponseEntity> requestForAllTransactions(PaginationRequest paginationRequest);
   Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(PaginationRequest paginationRequest);
+  Future<void> requestToRemoveLevel(String id);
+  Future<LevelResponseEntity> requestForAllLevel();
+  Future requestToAddLevel(AddLevelRequestEntity req);
 
 }
