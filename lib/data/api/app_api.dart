@@ -21,6 +21,7 @@ abstract class AppApi {
   static const String addCategory = '$prefix/categories/add';
   static const String deleteCategory = '$prefix/categories';
   static const String addMisc = '$prefix/meta-service/add';
+  static const String removeMisc = '$prefix/meta-service';
 
 
 

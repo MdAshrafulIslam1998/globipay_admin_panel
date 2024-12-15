@@ -250,6 +250,20 @@ class BaseController extends GetxController{
     }
   }
 
+  void askForConfirmation({String? message, required Function onPositiveAction}) {
+    showCustomDialog(
+      message ?? "Do you want to remove the item?",
+      positiveButtonAction: (){
+        onPositiveAction();
+      },
+      positiveButtonText: "Delete",
+      negativeButtonText: "Cancel",
+      negativeButtonAction: (){
+
+      },
+    );
+  }
+
 }
 
 enum SnackBarStatus {

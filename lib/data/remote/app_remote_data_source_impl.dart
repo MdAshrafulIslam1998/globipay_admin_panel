@@ -294,6 +294,19 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     }
   }
 
+  @override
+  Future<void> requestToRemoveMisc(String id) {
+    var endpoint = '$BASE_URL/${AppApi.removeMisc}/$id';
+    var dioCall = dioClientWithAuth.delete(
+      endpoint,
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 
 
 

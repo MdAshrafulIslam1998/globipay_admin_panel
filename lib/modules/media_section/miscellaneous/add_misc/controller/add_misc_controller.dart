@@ -7,6 +7,8 @@ import 'package:globipay_admin_panel/data/models/misc_item_model.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:quill_html_editor/quill_html_editor.dart';
+
 /**
  * Created by Abdullah on 14/12/24.
  */
@@ -88,6 +90,8 @@ class AddMiscController extends BaseController{
 
     requestForAddMiscItem();
   }
+
+
 
   // Network call
 

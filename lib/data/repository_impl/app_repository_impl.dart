@@ -113,6 +113,13 @@ class AppRepositoryImpl extends AppRepository{
     return remoteDataSource.requestToAddMisc(request);
   }
 
+  @override
+  Future<void> requestToRemoveMisc(String id) {
+    return remoteDataSource.requestToRemoveMisc(id);
+  }
+
+
+
 
 
 
