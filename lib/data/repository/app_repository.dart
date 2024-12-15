@@ -16,6 +16,7 @@ import 'package:globipay_admin_panel/entity/response/messages_templates/messages
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/add_promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/all_transactions_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 
 /**
@@ -27,6 +28,8 @@ abstract class AppRepository{
   Future<UserResponseEntity> requestForUserList(PaginationRequest paginationRequest,{String? path});
   Future<LoginResponse> requestForLogin(LoginRequest request);
   Future<ChatCloseResponseEntity> requestToCloseChat(ChatCloseRequestEntity request);
+  Future<AllTransactionsResponseEntity> requestForAllTransactions(PaginationRequest paginationRequest);
+  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(PaginationRequest paginationRequest);
   Future<AddPromotionalBannerResponseEntity> requestToAddPromotionalBanner(AddPromotionalBannerRequestEntity request);
   Future<PromotionalBannerResponseEntity> requestForAllPromotionalBanner(PaginationRequest request);
   Future<FileUploadResponse> requestToFileUpload(FileUploadRequest request);

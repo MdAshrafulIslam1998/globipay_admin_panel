@@ -15,6 +15,7 @@ import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/all_transactions_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 
 import '../../entity/response/promotional/add_promotional_banner_response_entity.dart';
@@ -42,5 +43,8 @@ abstract class AppRemoteDataSource {
   Future<void> requestToDeleteCategory(String id);
   Future<void> requestToAddMisc(AddMiscRequestEntity request);
   Future<void> requestToRemoveMisc(String id);
+
+  Future<AllTransactionsResponseEntity> requestForAllTransactions(PaginationRequest paginationRequest);
+  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(PaginationRequest paginationRequest);
 
 }

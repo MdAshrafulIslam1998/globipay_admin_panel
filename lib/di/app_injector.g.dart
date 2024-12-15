@@ -30,6 +30,7 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => DashboardController())
       ..registerFactory((c) => BasePanelController())
       ..registerFactory((c) => ActiveUsersController())
+      ..registerFactory((c) => StaffSectionController())
       ..registerFactory((c) => EditLevelController())
       ..registerFactory((c) => AddLevelController())
       ..registerFactory((c) => AboutUsController())
@@ -38,6 +39,11 @@ class _$AppInjector extends AppInjector {
       ..registerFactory((c) => CreateCategoryController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => TransactionHistoryController())
+      ..registerFactory((c) => AutomatedReplyController())
+      ..registerFactory((c) => PromotionalBannerController())
+      ..registerFactory((c) => CreateCategoryController())
+      ..registerFactory((c) => TransHistoryController(
+          c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => UserAmountController())
       ..registerFactory((c) => UserLevelsController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))

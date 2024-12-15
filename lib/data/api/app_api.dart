@@ -24,6 +24,9 @@ abstract class AppApi {
   static const String removeMisc = '$prefix/meta-service';
 
 
+  static const String allTransactions = '$prefix/alltransactions';
+  static const String userwiseTransactions = '$prefix/users/userwise/transactions';
+
 
 
 

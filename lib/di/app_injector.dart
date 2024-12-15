@@ -22,6 +22,7 @@ import 'package:globipay_admin_panel/modules/users_section/active_users/controll
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/controller/base_panel_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/controller/dashboard_controller.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:globipay_admin_panel/modules/staff_section/controller/staff_section_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/edit_level/controller/edit_level_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/add_level/controller/add_level_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/about_us/controller/about_us_controller.dart';
@@ -68,12 +69,13 @@ abstract class AppInjector extends Injector {
   @Register.factory(DashboardController)
   @Register.factory(BasePanelController)
   @Register.factory(ActiveUsersController)
+  @Register.factory(StaffSectionController)
   @Register.factory(EditLevelController)
   @Register.factory(AddLevelController)
   @Register.factory(AboutUsController)
   @Register.factory(PromotionalBannerController)
   @Register.factory(CreateCategoryController)
-  @Register.factory(TransactionHistoryController)
+  @Register.factory(TransHistoryController)
   @Register.factory(UserAmountController)
   @Register.factory(UserLevelsController)
   @Register.factory(BlockedUsersController)

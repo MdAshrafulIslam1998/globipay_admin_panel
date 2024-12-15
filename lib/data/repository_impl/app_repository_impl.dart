@@ -16,6 +16,7 @@ import 'package:globipay_admin_panel/entity/response/messages_templates/messages
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/add_promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/all_transactions_response_entity.dart';
 
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 
@@ -26,8 +27,7 @@ import '../repository/app_repository.dart';
  * Created by Abdullah on 13/10/24.
  */
 
-
-class AppRepositoryImpl extends AppRepository{
+class AppRepositoryImpl extends AppRepository {
   AppRemoteDataSource remoteDataSource;
   AppRepositoryImpl(this.remoteDataSource);
 
@@ -44,8 +44,9 @@ class AppRepositoryImpl extends AppRepository{
   }
 
   @override
-  Future<ChatCloseResponseEntity> requestToCloseChat(ChatCloseRequestEntity request) {
-   return remoteDataSource.requestToCloseChat(request);
+  Future<ChatCloseResponseEntity> requestToCloseChat(
+      ChatCloseRequestEntity request) {
+    return remoteDataSource.requestToCloseChat(request);
   }
 
   @override
@@ -118,26 +119,17 @@ class AppRepositoryImpl extends AppRepository{
     return remoteDataSource.requestToRemoveMisc(id);
   }
 
+  @override
+  Future<AllTransactionsResponseEntity> requestForAllTransactions(
+    PaginationRequest paginationRequest,
+    ) {
+    return remoteDataSource.requestForAllTransactions(paginationRequest);
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  @override
+  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(
+    PaginationRequest paginationRequest,
+    ) {
+    return remoteDataSource.requestForUserwiseTransactions(paginationRequest);
+  }
 }
