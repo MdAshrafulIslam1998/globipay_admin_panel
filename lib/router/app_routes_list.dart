@@ -154,16 +154,6 @@ abstract class AppRoutesList {
             builder: (context, state) =>
                 CallWaitingScreen(data: state.extra as CallModel),
           ),
-          GoRoute(
-            path: RoutePath.addLevel,
-            name: RoutePath.addLevel,
-            builder: (context, state) => AddLevelScreen(),
-          ),
-          GoRoute(
-            path: RoutePath.editLevel,
-            name: RoutePath.editLevel,
-            builder: (context, state) => EditLevelScreen(),
-          ),
 
           GoRoute(
             path: RoutePath.addNotification,

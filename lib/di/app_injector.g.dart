@@ -38,10 +38,6 @@ class _$AppInjector extends AppInjector {
           (c) => PromotionalBannerController(c.resolve<AppRepository>()))
       ..registerFactory((c) => CreateCategoryController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
-      ..registerFactory((c) => TransactionHistoryController())
-      ..registerFactory((c) => AutomatedReplyController())
-      ..registerFactory((c) => PromotionalBannerController())
-      ..registerFactory((c) => CreateCategoryController())
       ..registerFactory((c) => TransHistoryController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => UserAmountController())
