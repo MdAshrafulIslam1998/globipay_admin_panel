@@ -45,7 +45,9 @@ class Header extends StatelessWidget {
                 children: [
                   if (!Responsive.isMobile(context))
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        AppRoutes.pushNamed(RoutePath.chatMessageList);
+                      },
                       icon: Badge(
                         isLabelVisible: true,
                         child:
@@ -55,7 +57,10 @@ class Header extends StatelessWidget {
                   if (!Responsive.isMobile(context)) gapW16,
                   if (!Responsive.isMobile(context))
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        AppRoutes.pushNamed(RoutePath.notificationSetter);
+
+                      },
                       icon: Badge(
                         isLabelVisible: true,
                         child: SvgPicture.asset(

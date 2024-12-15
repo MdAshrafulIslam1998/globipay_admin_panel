@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_screen.dart';
 import 'pending_profile_screen_builder.dart';
 
 class PendingProfileScreen extends StatelessWidget {
@@ -6,6 +7,6 @@ class PendingProfileScreen extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        return PendingProfileScreenBuilder();
+        return ProfileScreen();
     }
 }
