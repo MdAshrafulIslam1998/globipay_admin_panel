@@ -188,7 +188,7 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                       onActionTap: (user, action) {
                         switch (action) {
                           case MiscTableHeaderConst.DETAILS:
-                           // AppRoutes.pushNamed(RoutePath.pendingProfile);
+                            controller.onDetailsTap(user);
                             break;
                           case MiscTableHeaderConst.DELETE:
                             controller.removeMisc(user.service_id);
