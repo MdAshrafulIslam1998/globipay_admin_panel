@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:globipay_admin_panel/core/constants/defaults.dart';
 import 'package:globipay_admin_panel/core/constants/ghaps.dart';
 import 'package:globipay_admin_panel/core/theme/app_colors.dart';
+import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
 import 'package:globipay_admin_panel/core/utils/responsive.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
@@ -87,7 +88,18 @@ class Header extends StatelessWidget {
 
 
   void onLogout(){
-    AppRoutes.pushNamed(RoutePath.login);
-   
+    showCustomDialog(
+      "Do you want to logout?",
+      positiveButtonText: "Yes",
+      positiveButtonAction: () {
+        AppRoutes.pushAndReplaceNamed(RoutePath.login).then((value) =>
+        AppRoutes.popUntil(RoutePath.login));
+      },
+      negativeButtonText: "Cancel",
+      negativeButtonAction: (){
+
+      }
+    );
+
   }
 }
