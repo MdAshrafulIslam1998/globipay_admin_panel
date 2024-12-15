@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/controller/miscellaneous_controller.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/table/miscellaneous_data_pager_delegate.dart';
@@ -127,6 +128,7 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                           ),
                         ),
 
+                        SizedBox(width: 10),
 
                         const Text(
                           'Show entries:   ',
