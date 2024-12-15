@@ -342,40 +342,22 @@ class Sidebar extends StatelessWidget {
                   gapH8,
                   Row(
                     children: [
-                      SvgPicture.asset(
-                        'assets/icons/help_light.svg',
-                        height: 24,
-                        width: 24,
-                        colorFilter: const ColorFilter.mode(
-                          AppColors.textLight,
-                          BlendMode.srcIn,
-                        ),
+                      Icon(
+                        CupertinoIcons.app,
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
+
                       gapW8,
                       Text(
-                        'Help & getting started',
+                        'Globi Pay Admin',
                         style: Theme.of(context)
                             .textTheme
                             .labelMedium
                             ?.copyWith(fontWeight: FontWeight.w600),
                       ),
                       const Spacer(),
-                      Chip(
-                        backgroundColor: AppColors.secondaryLavender,
-                        side: BorderSide.none,
-                        padding: const EdgeInsets.symmetric(horizontal: 0.5),
-                        label: Text(
-                          "8",
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium!
-                              .copyWith(fontWeight: FontWeight.w700),
-                        ),
-                      ),
                     ],
                   ),
-                  gapH20,
-                  //const ThemeTabs(),
                   gapH8,
                 ],
               ),
