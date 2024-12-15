@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
 import 'package:globipay_admin_panel/modules/users_section/add_level/controller/add_level_controller.dart';
+import 'package:globipay_admin_panel/modules/users_section/add_level/controller/level_model.dart';
 import 'package:intl/intl.dart';
 
 class AddLevelScreenBuilder extends BaseView<AddLevelController> {
@@ -268,15 +269,15 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
     );
   }
 
-  void _showEditDialog(BuildContext context, dynamic level) {
+  void _showEditDialog(BuildContext context, LevelModel level) {
     final TextEditingController nameController =
         TextEditingController(text: level.levelName);
     final TextEditingController valueController =
-        TextEditingController(text: level.levelValue.toString());
+        TextEditingController(text: (level.levelValue ?? "").toString());
     final TextEditingController minThreshController =
-        TextEditingController(text: level.minThresh.toString());
+        TextEditingController(text: (level.minThresh ?? "").toString());
     final TextEditingController maxThreshController =
-        TextEditingController(text: level.maxThresh.toString());
+        TextEditingController(text: (level.maxThresh ?? "").toString());
 
     showDialog(
       context: context,
@@ -323,7 +324,6 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                   "level_value": int.parse(valueController.text),
                   "min_thresh": double.parse(minThreshController.text),
                   "max_thresh": double.parse(maxThreshController.text),
-                  "level_id": level.id
                 });
 
                 Navigator.pop(context);
