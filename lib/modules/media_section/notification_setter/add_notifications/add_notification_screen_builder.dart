@@ -1,21 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
+import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
+import 'package:globipay_admin_panel/core/widgets/dropdown/app_drop_down.dart';
+import 'package:globipay_admin_panel/core/widgets/dropdown/searchable_dropdown.dart';
 import 'package:globipay_admin_panel/core/widgets/web_image/web_image.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/add_notifications/controller/add_notification_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
+
+import '../../../../core/widgets/dropdown/searchable_ovellay_dropdown.dart';
 
 /**
  * Created by Abdullah on 14/12/24.
  */
 
-class AddNotificationScreenBuilder extends BaseView<AddNotificationController> {
+class AddNotificationScreenBuilder extends StatefulWidget {
+  const AddNotificationScreenBuilder({super.key});
 
   @override
+  State<AddNotificationScreenBuilder> createState() => _AddNotificationScreenBuilderState();
+}
+
+class _AddNotificationScreenBuilderState extends BaseViewState<AddNotificationScreenBuilder,AddNotificationController> {
+
+  @override
+  void initState() {
+    controller.onInit();
+    super.initState();
+  }
+
+   @override
   Widget body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Notification',
+        title: Text(
+          'Create Notification',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         elevation: 1,
@@ -33,16 +55,40 @@ class AddNotificationScreenBuilder extends BaseView<AddNotificationController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  InkWell(
+                    onTap: () {
+                      showSearchableDropdown();
+                    },
+                    child: Obx(
+                      () => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            width: 1,
+                            color: ColorPalettes.colorPrimary,
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(6),
+                        margin: const EdgeInsets.all(8),
+                        child: Text(
+                          controller.selectedUserEntity.value != null
+                              ? controller.selectedUserEntity.value?.name ?? ""
+                              : 'Choose users from here ',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  AppSpaces.spaceBetweenItem,
                   _buildTitleField(),
-                  SizedBox(height: 16),
+                  AppSpaces.spaceBetweenItem,
                   _buildRichTextEditor(),
-                  SizedBox(height: 16),
+                  AppSpaces.spaceBetweenItem,
                   _buildImageUploader(),
-                  SizedBox(height: 16),
-                  _buildPrioritySelector(),
-                  SizedBox(height: 16),
-                  _buildSchedulingOptions(context),
-                  SizedBox(height: 24),
+                  AppSpaces.spaceBetweenItem,
                   _buildSubmitButton(),
                 ],
               ),
@@ -54,7 +100,7 @@ class AddNotificationScreenBuilder extends BaseView<AddNotificationController> {
   }
 
   Widget _buildTitleField() {
-    return TextField(
+    return TextFormField(
       controller: controller.titleController,
       decoration: InputDecoration(
         labelText: 'Notification Title',
@@ -63,6 +109,12 @@ class AddNotificationScreenBuilder extends BaseView<AddNotificationController> {
           borderRadius: BorderRadius.circular(12),
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter notification title';
+        }
+        return null;
+      },
       style: TextStyle(fontSize: 16),
     );
   }
@@ -71,14 +123,13 @@ class AddNotificationScreenBuilder extends BaseView<AddNotificationController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Description',
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600
-          ),
+        Text(
+          'Description',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         SizedBox(height: 8),
         Container(
+          padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(12),
@@ -97,6 +148,8 @@ class AddNotificationScreenBuilder extends BaseView<AddNotificationController> {
           child: quill.QuillEditor.basic(
             controller: controller.descriptionController,
             configurations: quill.QuillEditorConfigurations(
+              padding: EdgeInsets.all(8),
+              placeholder: 'Write your notification description...',
               showCursor: true,
             ),
           ),
@@ -106,140 +159,18 @@ class AddNotificationScreenBuilder extends BaseView<AddNotificationController> {
   }
 
   Widget _buildImageUploader() {
-    return Obx(() => Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Notification Image',
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600
-          ),
+        Text(
+          'Notification Image',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         WebImagePicker(
-          onImageSelected: (images ,file){
-
+          onImageSelected: (images, file) {
+            controller.selectedImageBytes.value = images;
           },
-
         ),
-        SizedBox(height: 8),
-        controller.selectedImage.value == null
-            ? ElevatedButton.icon(
-          icon: Icon(Icons.cloud_upload),
-          label: Text('Upload Image'),
-          onPressed: controller.pickImage,
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 16
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        )
-            : Stack(
-          alignment: Alignment.topRight,
-          children: [
-            Container(
-              height: 250,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: FileImage(controller.selectedImage.value!),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: CircleAvatar(
-                backgroundColor: Colors.red,
-                child: IconButton(
-                  icon: Icon(Icons.close, color: Colors.white),
-                  onPressed: controller.removeImage,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    ));
-  }
-
-  Widget _buildPrioritySelector() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Notification Priority',
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600
-          ),
-        ),
-        SizedBox(height: 8),
-        Obx(() => SegmentedButton<int>(
-          segments: [
-            ButtonSegment(
-              value: 1,
-              label: Text('Low'),
-              icon: Icon(Icons.low_priority),
-            ),
-            ButtonSegment(
-              value: 2,
-              label: Text('Medium'),
-              icon: Icon(Icons.low_priority),
-            ),
-            ButtonSegment(
-              value: 3,
-              label: Text('High'),
-              icon: Icon(Icons.priority_high),
-            ),
-          ],
-          selected: <int>{controller.notificationPriority.value},
-          onSelectionChanged: (Set<int> newSelection) {
-            controller.notificationPriority.value = newSelection.first;
-          },
-        )),
-      ],
-    );
-  }
-
-  Widget _buildSchedulingOptions(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text('Schedule Notification',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600
-              ),
-            ),
-            Obx(() => Switch(
-              value: controller.isScheduled.value,
-              onChanged: (bool value) {
-                controller.isScheduled.value = value;
-              },
-            )),
-          ],
-        ),
-        Obx(() => controller.isScheduled.value
-            ? TextField(
-          controller: controller.scheduleDateController,
-          decoration: InputDecoration(
-            labelText: 'Scheduled Date & Time',
-            prefixIcon: Icon(Icons.calendar_today),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          readOnly: true,
-          onTap: () => controller.openDateTimePicker(context),
-        )
-            : SizedBox.shrink()),
       ],
     );
   }
@@ -257,11 +188,27 @@ class AddNotificationScreenBuilder extends BaseView<AddNotificationController> {
       ),
       child: Text(
         'Create Notification',
-        style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold
-        ),
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
+    );
+  }
+
+  void showSearchableDropdown() {
+    // Create controller
+
+
+    // Show dropdown overlay
+    SearchableDropdownOverlay.show<UserResponseItemEntity>(
+      context: context,
+      controller: controller.userController,
+      title: 'Select Users',
+      itemBuilder: (user) => Text(user.name ?? ''),
+      onChanged: (selectedUsers) {
+        controller.setSelectedUsers(selectedUsers);
+      },
+      displayStringForItemSelection: (UserResponseItemEntity item) {
+        return Text(item.name ?? '');
+      },
     );
   }
 }

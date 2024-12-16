@@ -67,7 +67,9 @@ class PromotionalBannerController extends BaseController {
       showCustomDialog(
           'Promotional Banner added successfully',
         positiveButtonText: 'OK',
-        positiveButtonAction: () {},
+        positiveButtonAction: () {
+            AppRoutes.pop();
+        },
       );
     }
   }

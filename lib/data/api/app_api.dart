@@ -31,6 +31,9 @@ abstract class AppApi {
   static const String CAT_WISE_TRANSACTIONS = '$prefix/alltransactions/categorywise';
   static const String allTransactions = '$prefix/alltransactions';
   static const String userwiseTransactions = '$prefix/users/userwise/transactions';
+  static const String notifications = '$prefix/notifications';
+  static const String searchUser = '$prefix/users/search';
+  static const String createNotifications = '$prefix/notifications/send';
 
 
 

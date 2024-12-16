@@ -2,18 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/constants/enum/notification_target_type.dart';
+import 'package:globipay_admin_panel/core/utils/extensions.dart';
+import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/notification_list/controller/notification_list_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/user_model.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 
+class NotificationsScreenBuilder extends StatefulWidget {
+  const NotificationsScreenBuilder({super.key});
 
-class NotificationsScreenBuilder extends BaseView<NotificationsController> {
+  @override
+  State<NotificationsScreenBuilder> createState() => _NotificationsScreenBuilderState();
+}
 
-  NotificationsScreenBuilder(){
+class _NotificationsScreenBuilderState extends BaseViewState<NotificationsScreenBuilder,NotificationsController> {
+ @override
+  void initState() {
     controller.onInit();
+    super.initState();
   }
-
   @override
   Widget body(BuildContext context) {
     return Scaffold(
@@ -26,7 +36,7 @@ class NotificationsScreenBuilder extends BaseView<NotificationsController> {
             icon: Icon(Icons.add, color: Colors.white),
             label: Text('Create Notifications', style: TextStyle(color: Colors.white)),
             onPressed: () {
-              AppRoutes.pushNamed(RoutePath.addNotification);
+              controller.navigateToCreateNotification();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue.shade600,
@@ -94,7 +104,7 @@ class NotificationsScreenBuilder extends BaseView<NotificationsController> {
     );
   }
 
-  Widget _buildNotificationCard(NotificationModel notification) {
+  Widget _buildNotificationCard(NotificationResponseItemEntity notification) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 4,
@@ -103,30 +113,30 @@ class NotificationsScreenBuilder extends BaseView<NotificationsController> {
       ),
       child: ListTile(
         contentPadding: EdgeInsets.all(16),
-        leading: notification.imageUrl != null
+        leading: notification.richMediaUrl != null
             ? CachedNetworkImage(
-          imageUrl: notification.imageUrl!,
+          imageUrl: notification.richMediaUrl!.includeBaseUrl(),
           width: 60,
           height: 60,
           fit: BoxFit.cover,
           placeholder: (context, url) =>
-              CircularProgressIndicator(),
+             const  CircularProgressIndicator(),
           errorWidget: (context, url, error) =>
-              Icon(Icons.image_not_supported),
+             const  Icon(Icons.image_not_supported),
         )
             : CircleAvatar(
           backgroundColor: Colors.blue[100],
           child: Icon(Icons.notifications, color: Colors.blue),
         ),
         title: Text(
-          notification.title,
+          notification.title ?? "",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              notification.description,
+              notification.details ?? "",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -136,72 +146,33 @@ class NotificationsScreenBuilder extends BaseView<NotificationsController> {
         ),
         trailing: IconButton(
           icon: Icon(Icons.delete, color: Colors.red),
-          onPressed: () => controller.removeNotification(notification.id),
+          onPressed: () => controller.removeNotification(notification.id.toString() ?? ""),
           tooltip: 'Remove Notification',
         ),
       ),
     );
   }
 
-  Widget _buildTargetBadge(NotificationModel notification) {
+  Widget _buildTargetBadge(NotificationResponseItemEntity notification) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: notification.targetType == NotificationTargetType.all
+        color: notification.targetType == NotificationTargetType.ALL
             ? Colors.green[100]
             : Colors.blue[100],
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        notification.targetType == NotificationTargetType.all
+        notification.targetType == NotificationTargetType.ALL
             ? 'All Users'
-            : 'Specific Users (${notification.specificUserIds?.length ?? 0})',
+            : 'Specific Users',
         style: TextStyle(
           fontSize: 12,
-          color: notification.targetType == NotificationTargetType.all
+          color: notification.targetType == NotificationTargetType.ALL
               ? Colors.green[800]
               : Colors.blue[800],
         ),
       ),
-    );
-  }
-
-
-  Widget _buildUserSelection() {
-    return Column(
-      children: [
-        TextField(
-          decoration: InputDecoration(
-            labelText: 'Search Users',
-            prefixIcon: Icon(Icons.search),
-            border: OutlineInputBorder(),
-          ),
-          onChanged: (value) {
-            // Filtering handled in searchUsers method
-          },
-        ),
-        SizedBox(height: 10),
-        Obx(() => Wrap(
-          spacing: 8,
-          children: controller.searchUsers('').map((user) =>
-              ActionChip(
-                label: Text(user.name),
-                onPressed: () => controller.addSelectedUser(user),
-              )
-          ).toList(),
-        )),
-        SizedBox(height: 10),
-        Obx(() => Wrap(
-          spacing: 8,
-          children: controller.selectedUsers.map((user) =>
-              Chip(
-                label: Text(user.name),
-                deleteIcon: Icon(Icons.close),
-                onDeleted: () => controller.removeSelectedUser(user),
-              )
-          ).toList(),
-        )),
-      ],
     );
   }
 }

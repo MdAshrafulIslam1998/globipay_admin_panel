@@ -4,12 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:globipay_admin_panel/entity/request/category/add_category_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/level/add_level_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/notification/create_notification_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/level/level_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:globipay_admin_panel/core/base/base_remote_source.dart';
@@ -445,6 +447,49 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       });
     } catch (e) {
       rethrow; // Pass the error to the calling layer for centralized error handling
+    }
+  }
+
+  @override
+  Future<List<NotificationResponseItemEntity>> requestForAllNotifications() {
+    var endpoint = '$BASE_URL/${AppApi.notifications}';
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => (response.data as List).map((e) => NotificationResponseItemEntity.fromJson(e)).toList());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<UserResponseEntity> requestForSearchUserList(PaginationRequest paginationRequest) {
+    var endpoint = '$BASE_URL/${AppApi.searchUser}';
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+      queryParameters: paginationRequest.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => UserResponseEntity.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> requestToTriggerNotification(CreateNotificationRequestEntity request) {
+    var endpoint = '$BASE_URL/${AppApi.createNotifications}';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: request.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
     }
   }
 }

@@ -7,6 +7,7 @@ import 'package:globipay_admin_panel/entity/request/level/add_level_request_enti
 import 'package:globipay_admin_panel/entity/request/login/login_request.dart';
 import 'package:globipay_admin_panel/entity/request/message_templates/add_message_templates_request.dart';
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/notification/create_notification_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_banner_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
@@ -17,6 +18,7 @@ import 'package:globipay_admin_panel/entity/response/level/level_response_entity
 import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/add_promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
@@ -165,6 +167,21 @@ class AppRepositoryImpl extends AppRepository {
   @override
   Future<AllTransactionsResponseEntity> requestForAllTransactions({required PaginationRequest paginationRequest, String? path}) {
     return remoteDataSource.requestForAllTransactions(paginationRequest : paginationRequest, path: path);
+  }
+
+  @override
+  Future<List<NotificationResponseItemEntity>> requestForAllNotifications() {
+    return remoteDataSource.requestForAllNotifications();
+  }
+
+  @override
+  Future<UserResponseEntity> requestForSearchUserList(PaginationRequest paginationRequest) {
+    return remoteDataSource.requestForSearchUserList(paginationRequest);
+  }
+
+  @override
+  Future<void> requestToTriggerNotification(CreateNotificationRequestEntity request) {
+    return remoteDataSource.requestToTriggerNotification(request);
   }
 
 

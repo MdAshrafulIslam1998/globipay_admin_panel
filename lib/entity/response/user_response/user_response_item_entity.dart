@@ -28,6 +28,11 @@ class UserResponseItemEntity {
   @JsonKey(name: "secondary")
   double? secondary;
 
+  @JsonKey(name: "push_token")
+  String? pushToken;
+
+
+
   UserResponseItemEntity({
     this.userId,
     this.name,
@@ -39,6 +44,7 @@ class UserResponseItemEntity {
     this.date,
     this.primary,
     this.secondary,
+    this.pushToken,
   });
 
   factory UserResponseItemEntity.fromJson(Map<String, dynamic> json) => _$UserResponseItemEntityFromJson(json);

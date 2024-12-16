@@ -19,6 +19,7 @@ UserResponseItemEntity _$UserResponseItemEntityFromJson(
       date: json['date'] as String?,
       primary: (json['primary'] as num?)?.toDouble(),
       secondary: (json['secondary'] as num?)?.toDouble(),
+      pushToken: json['push_token'] as String?,
     );
 
 Map<String, dynamic> _$UserResponseItemEntityToJson(
@@ -34,4 +35,5 @@ Map<String, dynamic> _$UserResponseItemEntityToJson(
       'date': instance.date,
       'primary': instance.primary,
       'secondary': instance.secondary,
+      'push_token': instance.pushToken,
     };

@@ -163,7 +163,7 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                   children: [
                     ElevatedButton.icon(
                       icon: Icon(Icons.person),
-                      label: Text('User Level'),
+                      label: Text('User'),
                       onPressed: () {
                         controller.fetchUserWiseTransactionHistory(
                             1, controller.pageSize.value);
@@ -176,7 +176,7 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                     AppSpaces.horizontalSpace,
                     ElevatedButton.icon(
                       icon: Icon(Icons.category_outlined),
-                      label: Text('Category Level'),
+                      label: Text('Category'),
                       onPressed: () {
                         controller.setCategorySelectionVisibility(
                           !controller.isCategorySelectionVisible.value,

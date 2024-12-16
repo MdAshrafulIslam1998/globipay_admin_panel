@@ -2,6 +2,7 @@
  * Created by Abdullah on 10/10/24.
  */
 
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ import 'package:globipay_admin_panel/core/network/exceptions/token_exception.dar
 import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 import 'package:globipay_admin_panel/core/services/storage/app_preferences_service.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
 import '../network/exceptions/service_unavailable_exception.dart';
@@ -262,6 +264,33 @@ class BaseController extends GetxController{
 
       },
     );
+  }
+
+  Future<String?> requestToUploadByteImage({
+    required Uint8List? imageFileBytes,
+    String? name
+  }) {
+    AppRepository repository = Injector.resolve<AppRepository>();
+    Completer<String> completer = Completer();
+    try{
+      if(imageFileBytes == null){
+        completer.complete("");
+        return completer.future;
+      }
+      final req = byteFieUploadRequest(imageFileBytes, name ?? 'other');
+      final repo = repository.requestToByteFileUpload(req);
+      callService(
+        repo,
+        onSuccess: (response) {
+          completer.complete(response.url);
+        },
+      );
+    }catch(e){
+      appPrint(e);
+      completer.complete("");
+    }
+    return completer.future;
+
   }
 
 }
