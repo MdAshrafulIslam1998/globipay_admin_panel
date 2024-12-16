@@ -45,9 +45,7 @@ class AddNotificationController extends BaseController {
         // Make an actual API call
         try {
           final response = await requestForAllUsers(query: query, page: page);
-          return response
-              .where((user) => (user.name ?? "").toLowerCase().contains(query.toLowerCase()))
-              .toList();
+          return response;
         } catch (error) {
           print('Error fetching users: $error');
           return [];

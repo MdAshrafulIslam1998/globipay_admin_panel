@@ -21,18 +21,19 @@ class AddNotificationScreenBuilder extends StatefulWidget {
   const AddNotificationScreenBuilder({super.key});
 
   @override
-  State<AddNotificationScreenBuilder> createState() => _AddNotificationScreenBuilderState();
+  State<AddNotificationScreenBuilder> createState() =>
+      _AddNotificationScreenBuilderState();
 }
 
-class _AddNotificationScreenBuilderState extends BaseViewState<AddNotificationScreenBuilder,AddNotificationController> {
-
+class _AddNotificationScreenBuilderState extends BaseViewState<
+    AddNotificationScreenBuilder, AddNotificationController> {
   @override
   void initState() {
     controller.onInit();
     super.initState();
   }
 
-   @override
+  @override
   Widget body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -196,19 +197,52 @@ class _AddNotificationScreenBuilderState extends BaseViewState<AddNotificationSc
   void showSearchableDropdown() {
     // Create controller
 
-
     // Show dropdown overlay
     SearchableDropdownOverlay.show<UserResponseItemEntity>(
       context: context,
       controller: controller.userController,
       title: 'Select Users',
-      itemBuilder: (user) => Text(user.name ?? ''),
+      itemBuilder: (item) => Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: ColorPalettes.colorPrimary,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: ListTile(
+          title: Text(item.name ?? ''),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Email : ${item.email ?? ""}"),
+              Text("Gender : ${item.gender ?? ""}"),
+              Text("Address : ${item.address ?? ""}"),
+            ],
+          ),
+          trailing: Text(item.status ?? ''),
+        ),
+      ),
       onChanged: (selectedUsers) {
         controller.setSelectedUsers(selectedUsers);
       },
       displayStringForItemSelection: (UserResponseItemEntity item) {
-        return Text(item.name ?? '');
+        return Container(
+            color: ColorPalettes.colorPrimary.withOpacity(0.1),
+            child: ListTile(
+              title: Text(item.name ?? ''),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Email : ${item.email ?? ""}"),
+                  Text("Gender : ${item.gender ?? ""}"),
+                  Text("Address : ${item.address ?? ""}"),
+                ],
+              ),
+              trailing: Text(item.status ?? ''),
+            ));
       },
     );
   }
+
 }

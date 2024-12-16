@@ -31,6 +31,11 @@ class UserResponseItemEntity {
   @JsonKey(name: "push_token")
   String? pushToken;
 
+  @JsonKey(name: "address")
+  String? address;
+  @JsonKey(name: "gender")
+  String? gender;
+
 
 
   UserResponseItemEntity({
