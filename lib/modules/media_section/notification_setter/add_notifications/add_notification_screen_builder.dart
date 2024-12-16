@@ -88,6 +88,8 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
                   AppSpaces.spaceBetweenItem,
                   _buildRichTextEditor(),
                   AppSpaces.spaceBetweenItem,
+                  _buildImageUrlLinkField(),
+                  AppSpaces.spaceBetweenItem,
                   _buildImageUploader(),
                   AppSpaces.spaceBetweenItem,
                   _buildSubmitButton(),
@@ -117,6 +119,23 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
         return null;
       },
       style: TextStyle(fontSize: 16),
+    );
+  }
+
+  Widget _buildImageUrlLinkField() {
+    return TextFormField(
+      controller: controller.imageUrlLink,
+      decoration: InputDecoration(
+        labelText: 'Notification Image Url(Optional)',
+        prefixIcon: Icon(Icons.link_outlined),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      style: TextStyle(fontSize: 16),
+      onChanged: (value) {
+        controller.selectedImageBytes.value = null;
+      },
     );
   }
 
@@ -164,7 +183,7 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Notification Image',
+          'Notification Image (Optional)',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         WebImagePicker(

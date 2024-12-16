@@ -15,26 +15,29 @@ class NotificationsScreenBuilder extends StatefulWidget {
   const NotificationsScreenBuilder({super.key});
 
   @override
-  State<NotificationsScreenBuilder> createState() => _NotificationsScreenBuilderState();
+  State<NotificationsScreenBuilder> createState() =>
+      _NotificationsScreenBuilderState();
 }
 
-class _NotificationsScreenBuilderState extends BaseViewState<NotificationsScreenBuilder,NotificationsController> {
- @override
+class _NotificationsScreenBuilderState
+    extends BaseViewState<NotificationsScreenBuilder, NotificationsController> {
+  @override
   void initState() {
     controller.onInit();
     super.initState();
   }
+
   @override
   Widget body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Notification Management',
-            style: TextStyle(fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           ElevatedButton.icon(
             icon: Icon(Icons.add, color: Colors.white),
-            label: Text('Create Notifications', style: TextStyle(color: Colors.white)),
+            label: Text('Create Notifications',
+                style: TextStyle(color: Colors.white)),
             onPressed: () {
               controller.navigateToCreateNotification();
             },
@@ -80,28 +83,25 @@ class _NotificationsScreenBuilderState extends BaseViewState<NotificationsScreen
 
     return filteredNotifications.isEmpty
         ? Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.notifications_off, size: 100, color: Colors.grey),
-          SizedBox(height: 16),
-          Text(
-            'No Notifications Found',
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[600]
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.notifications_off, size: 100, color: Colors.grey),
+                SizedBox(height: 16),
+                Text(
+                  'No Notifications Found',
+                  style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-    )
+          )
         : ListView.builder(
-      itemCount: filteredNotifications.length,
-      itemBuilder: (context, index) {
-        final notification = filteredNotifications[index];
-        return _buildNotificationCard(notification);
-      },
-    );
+            itemCount: filteredNotifications.length,
+            itemBuilder: (context, index) {
+              final notification = filteredNotifications[index];
+              return _buildNotificationCard(notification);
+            },
+          );
   }
 
   Widget _buildNotificationCard(NotificationResponseItemEntity notification) {
@@ -112,22 +112,22 @@ class _NotificationsScreenBuilderState extends BaseViewState<NotificationsScreen
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.all(16),
+        contentPadding: const EdgeInsets.all(16),
         leading: notification.richMediaUrl != null
             ? CachedNetworkImage(
-          imageUrl: notification.richMediaUrl!.includeBaseUrl(),
-          width: 60,
-          height: 60,
-          fit: BoxFit.cover,
-          placeholder: (context, url) =>
-             const  CircularProgressIndicator(),
-          errorWidget: (context, url, error) =>
-             const  Icon(Icons.image_not_supported),
-        )
+                imageUrl: (notification.richMediaUrl ?? "").includeBaseUrl(),
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.image_not_supported),
+              )
             : CircleAvatar(
-          backgroundColor: Colors.blue[100],
-          child: Icon(Icons.notifications, color: Colors.blue),
-        ),
+                backgroundColor: Colors.blue[100],
+                child: Icon(Icons.notifications, color: Colors.blue),
+              ),
         title: Text(
           notification.title ?? "",
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -146,7 +146,8 @@ class _NotificationsScreenBuilderState extends BaseViewState<NotificationsScreen
         ),
         trailing: IconButton(
           icon: Icon(Icons.delete, color: Colors.red),
-          onPressed: () => controller.removeNotification(notification.id.toString() ?? ""),
+          onPressed: () =>
+              controller.removeNotification(notification.id.toString() ?? ""),
           tooltip: 'Remove Notification',
         ),
       ),
@@ -176,4 +177,3 @@ class _NotificationsScreenBuilderState extends BaseViewState<NotificationsScreen
     );
   }
 }
-

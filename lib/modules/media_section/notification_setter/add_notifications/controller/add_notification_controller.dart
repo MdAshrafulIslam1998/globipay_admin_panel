@@ -19,6 +19,7 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 class AddNotificationController extends BaseController {
   final titleController = TextEditingController();
   final descriptionController = quill.QuillController.basic();
+  final imageUrlLink = TextEditingController();
   final scheduleDateController = TextEditingController();
   final TextEditingController userSearchController = TextEditingController();
 
@@ -72,9 +73,20 @@ class AddNotificationController extends BaseController {
       return;
     }
 
+    if(imageUrlLink.text.isNotEmpty  && selectedImageBytes.value != null) {
+      showSnackBar(message: 'Please select only one image source either from URL Option  or Image Uploader Option');
+      return;
+    }
 
     if(selectedImageBytes.value != null) {
       uploadImagePath = await requestToUploadByteImage(imageFileBytes: selectedImageBytes.value!);
+    }
+
+
+
+
+    if(imageUrlLink.text.isNotEmpty && (uploadImagePath == null || uploadImagePath!.isEmpty)) {
+      uploadImagePath = imageUrlLink.text;
     }
 
     if(selectedUserEntity.value == null) {
