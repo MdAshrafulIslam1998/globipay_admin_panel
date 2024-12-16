@@ -34,6 +34,7 @@ abstract class AppApi {
   static const String notifications = '$prefix/notifications';
   static const String searchUser = '$prefix/users/search';
   static const String createNotifications = '$prefix/notifications/send';
+  static const String userSpecificTransactionHistory = '$prefix/users';
 
 
 

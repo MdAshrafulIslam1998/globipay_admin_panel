@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_details_info_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/transaction_tab.dart';
@@ -21,8 +22,11 @@ import 'notification_tab.dart';
 
 class ProfileScreen extends BaseView<ProfileController> {
 
-  ProfileScreen(){
+  final UserResponseItemEntity? user;
+  ProfileScreen({ this.user}){
     controller.onInit();
+    controller.fetchInitialData(user);
+
   }
 
   @override

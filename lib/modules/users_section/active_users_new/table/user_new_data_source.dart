@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:intl/intl.dart';
@@ -92,9 +93,10 @@ class UserDataSource extends DataGridSource {
             padding: const EdgeInsets.only(left: 14.0), // Add padding right
             child: buildActionButton(Colors.blue, Icons.visibility, () {
               print(
-                  'Details button clicked for user: ${(cell.value as UserResponseItemEntity).name}');
-              onActionTap?.call(
-                  cell.value as UserResponseItemEntity, 'details');
+                  'Details button clicked for user: ${(cell.value as UserResponseItemEntity).email}');
+              final user = cell.value as UserResponseItemEntity;
+              appPrint('User: ${user.toJson()}');
+              onActionTap?.call(user, 'details');
             }),
           );
         } else if (cell.columnName == 'delete') {

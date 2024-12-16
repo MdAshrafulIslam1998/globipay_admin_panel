@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/data/models/call_model.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/views/trans_history_screen.dart';
 import 'package:globipay_admin_panel/modules/authetication/login/views/login_screen.dart';
 import 'package:globipay_admin_panel/modules/chat/call/audio_call/views/audio_call_screen.dart';
@@ -70,7 +71,7 @@ abstract class AppRoutesList {
           GoRoute(
             path: RoutePath.pendingProfile,
             name: RoutePath.pendingProfile,
-            builder: (context, state) => PendingProfileScreen(),
+            builder: (context, state) => PendingProfileScreen(user: state.extra as UserResponseItemEntity?),
           ),
           GoRoute(
             path: RoutePath.notificationSetter,

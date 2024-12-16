@@ -4,17 +4,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
+import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/activity_log_model.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/transaction_model.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/notification_model.dart';
 import 'package:intl/intl.dart';
 
 class ProfileController extends BaseController {
+  final AppRepository _repository;
   // Existing profile data
   Rx<ProfileData?> profileData = Rx<ProfileData?>(null);
 
   // Transactions
-  RxList<TransactionModel> transactions = RxList<TransactionModel>();
+  RxList<UserTransactionHistoryResponseItem> transactions = RxList<UserTransactionHistoryResponseItem>();
   RxString transactionSearchQuery = RxString('');
   ScrollController transactionScrollController = ScrollController();
   RxBool isTransactionLoading = RxBool(false);
@@ -31,22 +36,24 @@ class ProfileController extends BaseController {
   ScrollController notificationScrollController = ScrollController();
   RxBool isNotificationLoading = RxBool(false);
 
+  String? uid ;
+  ProfileController(this._repository);
   @override
   void onInit() {
     super.onInit();
-    fetchInitialData();
     setupScrollListeners();
   }
 
-  void fetchInitialData() {
+  void fetchInitialData(UserResponseItemEntity? user) {
+    uid = user?.userId ?? '';
     // Simulate loading profile data
     profileData.value = ProfileData(
-        fullName: 'John Doe',
-        email: 'john.doe@example.com',
+        fullName: user?.name ?? '',
+        email: user?.email ?? '',
         dob: DateFormat('dd/MM/yyyy').format(DateTime(2024, 1, 1)),
-        gender: "Male",
-        phone: "01700000000",
-        address: "127.0.0.1",
+        gender: user?.gender ?? '',
+        phone: user?.phone ?? '',
+        address: user?.address ?? '',
         selfiePath:
             "https://www.shutterstock.com/image-vector/man-character-face-avatar-glasses-600nw-542759665.jpg",
         frontIdPath:
@@ -58,15 +65,7 @@ class ProfileController extends BaseController {
         );
 
     // Generate dummy transactions
-    transactions.value = List.generate(
-        20,
-        (index) => TransactionModel(
-              id: 'TX$index',
-              dateTime: DateTime.now().subtract(Duration(days: index)),
-              type: index % 2 == 0 ? 'Primary' : 'Secondary',
-              categoryName: index % 2 == 0 ? 'Salary' : 'Expenses',
-              amount: (index + 1) * 100.0,
-            ));
+    requestForUserSpecificTransaction(uid);
 
     // Generate dummy activity logs
     activityLogs.value = List.generate(
@@ -118,20 +117,10 @@ class ProfileController extends BaseController {
     if (isTransactionLoading.value) return;
 
     isTransactionLoading.value = true;
-    // Simulate network delay
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
-    // Add more dummy transactions
-    transactions.addAll(List.generate(
-        10,
-        (index) => TransactionModel(
-              id: 'TX${transactions.length + index}',
-              dateTime: DateTime.now()
-                  .subtract(Duration(days: transactions.length + index)),
-              type: index % 2 == 0 ? 'Primary' : 'Secondary',
-              categoryName: index % 2 == 0 ? 'Bonus' : 'Investment',
-              amount: (transactions.length + index + 1) * 50.0,
-            )));
+    // Simulate network delay
+    requestForUserSpecificTransaction(uid);
 
     isTransactionLoading.value = false;
   }
@@ -217,6 +206,19 @@ class ProfileController extends BaseController {
   }
 
   void onRemove() {
+  }
+
+  PaginationRequest paginationRequest(int page, int limit) => PaginationRequest(
+        page: page,
+        limit: limit,
+      );
+
+  void requestForUserSpecificTransaction(String? uid){
+    final req = paginationRequest(1, 10);
+    final repo = _repository.requestUserSpecificTransaction(request: req, userId : uid ?? "") ;
+    callService(repo, isShowLoader: false, onSuccess: (response) {
+      transactions.value.addAll(response.transactions ?? []);
+    });
   }
 }
 

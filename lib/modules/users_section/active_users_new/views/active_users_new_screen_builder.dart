@@ -166,7 +166,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                       onActionTap: (user, action) {
                         switch (action) {
                           case 'details':
-                            AppRoutes.pushNamed(RoutePath.pendingProfile);
+                            controller.onUserDetailsClicked(user);
                             break;
                           case 'delete':
                             print('Delete action for ${user.name}');

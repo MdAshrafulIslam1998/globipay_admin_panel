@@ -13,6 +13,8 @@ import 'package:globipay_admin_panel/entity/response/messages_templates/messages
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_response.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:globipay_admin_panel/core/base/base_remote_source.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
@@ -34,6 +36,7 @@ import 'package:globipay_admin_panel/entity/response/user_response/user_response
 
 import '../../../flavors/flavor_config.dart';
 import '../../entity/request/message_templates/add_message_templates_request.dart';
+import '../../entity/response/pagination/pagination.dart';
 import 'app_remote_data_source.dart';
 
 /**
@@ -488,6 +491,21 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     );
     try {
       return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<UserTransactionHistoryResponseEntity> requestUserSpecificTransaction({required PaginationRequest request, required String userId}) {
+    var endpoint = '$BASE_URL/${AppApi.userSpecificTransactionHistory}/$userId/transactions';
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+      queryParameters: request.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => UserTransactionHistoryResponseEntity.fromJson(response.data));
     } catch (e) {
       rethrow;
     }

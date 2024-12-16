@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_response.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/transaction_model.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -57,23 +59,23 @@ class TransactionsTab extends StatelessWidget {
     );
   }
 
-  Widget _buildTransactionCard(TransactionModel transaction) {
+  Widget _buildTransactionCard(UserTransactionHistoryResponseItem transaction) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
-        leading: _getTransactionIcon(transaction.type),
+        leading: _getTransactionIcon(transaction.coinType ?? ""),
         title: Text(
-          transaction.categoryName,
+          transaction.category?.name ?? '',
           style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
         subtitle: Text(
-          transaction.formattedDate,
+          transaction.date ?? '',
           style: GoogleFonts.poppins(color: Colors.grey),
         ),
         trailing: Text(
-          transaction.formattedAmount,
+          transaction.coin.toString(),
           style: GoogleFonts.poppins(
-            color: transaction.type == 'Primary' ? Colors.green : Colors.red,
+            color: isPrimaryTransaction(transaction.coinType ?? "") ? Colors.green : Colors.red,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -83,10 +85,10 @@ class TransactionsTab extends StatelessWidget {
 
   Widget _getTransactionIcon(String type) {
     return CircleAvatar(
-      backgroundColor: type == 'Primary' ? Colors.green[100] : Colors.red[100],
+      backgroundColor: isPrimaryTransaction(type) ? Colors.green[100] : Colors.red[100],
       child: Icon(
-        type == 'Primary' ? Icons.arrow_upward : Icons.arrow_downward,
-        color: type == 'Primary' ? Colors.green : Colors.red,
+        type == isPrimaryTransaction(type) ? Icons.arrow_upward : Icons.arrow_downward,
+        color: isPrimaryTransaction(type) ? Colors.green : Colors.red,
       ),
     );
   }
@@ -118,5 +120,9 @@ class TransactionsTab extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool isPrimaryTransaction(String coinType) {
+    return coinType == 'PRIMARY';
   }
 }

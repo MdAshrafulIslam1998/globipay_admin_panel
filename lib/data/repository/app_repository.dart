@@ -25,6 +25,10 @@ import 'package:globipay_admin_panel/entity/response/promotional/promotional_ban
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/all_transactions_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_response.dart';
+
+import '../../entity/response/pagination/pagination.dart';
 
 /**
  * Created by Abdullah on 13/10/24.
@@ -61,4 +65,6 @@ abstract class AppRepository{
   Future<List<NotificationResponseItemEntity>> requestForAllNotifications();
   Future<UserResponseEntity> requestForSearchUserList(PaginationRequest paginationRequest);
   Future<void> requestToTriggerNotification(CreateNotificationRequestEntity request);
+  Future<UserTransactionHistoryResponseEntity> requestUserSpecificTransaction(
+  {required PaginationRequest request, required String userId});
 }

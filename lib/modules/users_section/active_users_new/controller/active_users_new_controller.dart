@@ -8,6 +8,8 @@ import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:globipay_admin_panel/router/route_path.dart';
 
 class ActiveUsersNewController extends BaseController {
   final AppRepository _repository;
@@ -63,5 +65,9 @@ class ActiveUsersNewController extends BaseController {
   getVisibleColumns() async {
     visibleColumns.value = await TableHeaderVisibility.getTableVisibleColumn(
       tableName: TableName.USER_ACTIVE_TABLE);
+  }
+
+  void onUserDetailsClicked(UserResponseItemEntity user) {
+    AppRoutes.pushNamed(RoutePath.pendingProfile,extra: user);
   }
 }

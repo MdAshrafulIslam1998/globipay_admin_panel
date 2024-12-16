@@ -25,6 +25,8 @@ import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity
 import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/all_transactions_response_entity.dart';
 
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_response.dart';
 
 import '../remote/app_remote_data_source.dart';
 import '../repository/app_repository.dart';
@@ -182,6 +184,11 @@ class AppRepositoryImpl extends AppRepository {
   @override
   Future<void> requestToTriggerNotification(CreateNotificationRequestEntity request) {
     return remoteDataSource.requestToTriggerNotification(request);
+  }
+
+  @override
+  Future<UserTransactionHistoryResponseEntity> requestUserSpecificTransaction({required PaginationRequest request, required String userId}) {
+    return remoteDataSource.requestUserSpecificTransaction(request: request, userId: userId);
   }
 
 
