@@ -1,5 +1,4 @@
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/constants/defaults.dart';
 
 class CustomerRoundedAvatar extends StatelessWidget {

@@ -12,7 +12,7 @@ import 'package:globipay_admin_panel/entity/request/category/add_category_reques
 import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/file_upload/file_upload_response.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
-
+import 'dart:html' as html;
 import '../../../../core/data/model/pagination_request.dart';
 import '../../../../entity/response/category/category_response.dart';
 
@@ -29,7 +29,8 @@ class CreateCategoryController extends BaseController {
   var totalItems = 0.obs;
   var currentPage = 1.obs;
   var pageSize = 5.obs;
-  Rx<Color> currentColor = Colors.blue.obs;
+
+  Color? categoryColor ;
 
 
   @override
@@ -61,7 +62,7 @@ class CreateCategoryController extends BaseController {
       return;
     }
 
-    if (currentColor.value == Colors.transparent) {
+    if (categoryColor == null) {
       showSnackBar(message: 'Please select a color');
       return;
     }
@@ -74,7 +75,7 @@ class CreateCategoryController extends BaseController {
     return AddCategoryRequestEntity(
       name: categoryNameController.text,
       image: url,
-      bgcolor: currentColor.value.colorToHex(),
+      bgcolor: categoryColor.colorToHex() ?? '',
       createdBy: stiffId
     );
   }
@@ -108,7 +109,8 @@ class CreateCategoryController extends BaseController {
   clearOnSuccess(){
     categoryNameController.clear();
     selectedImageBytes = null;
-    currentColor.value = Colors.blue;
+    categoryColor = null;
+    html.window.location.reload();
   }
 
   //Network Calls
@@ -138,6 +140,7 @@ class CreateCategoryController extends BaseController {
       showCustomDialog(
         "Category added successfully",
         positiveButtonAction: () {
+
           AppRoutes.pop();
           fetchCategories();
         },

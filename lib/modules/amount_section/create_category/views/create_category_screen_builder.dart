@@ -1,4 +1,5 @@
 // category_screen_builder.dart
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
 import 'package:globipay_admin_panel/core/widgets/web_image/web_image.dart';
 import 'package:globipay_admin_panel/modules/amount_section/create_category/controller/create_category_controller.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
 
 class CreateCategoryScreenBuilder extends StatefulWidget {
   const CreateCategoryScreenBuilder({Key? key}) : super(key: key);
@@ -21,8 +23,11 @@ class CreateCategoryScreenBuilder extends StatefulWidget {
 
 class _CategoryScreenBuilderState extends BaseViewState<
     CreateCategoryScreenBuilder, CreateCategoryController> {
+  late Color currentSelectedColor;
+
   @override
   void initState() {
+    currentSelectedColor = Colors.blue;
     controller.onInit();
     super.initState();
   }
@@ -36,7 +41,7 @@ class _CategoryScreenBuilderState extends BaseViewState<
   Widget body(BuildContext context) {
     return Container(
       color: Colors.grey[100],
-      padding:  EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -57,6 +62,7 @@ class _CategoryScreenBuilderState extends BaseViewState<
     );
   }
 
+
   Widget _buildCreateCategoryCard() {
     return Card(
       elevation: 4,
@@ -64,7 +70,7 @@ class _CategoryScreenBuilderState extends BaseViewState<
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding:  EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -90,18 +96,16 @@ class _CategoryScreenBuilderState extends BaseViewState<
                   onTap: () {
                     _openColorPicker(context);
                   },
-                  child: Obx(
-                    () => Container(
-                      padding:  EdgeInsets.all(8),
-                      margin:  EdgeInsets.only(left: 16),
+                  child: Container(
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.only(left: 16),
                       height: 60,
                       width: 60,
                       decoration: BoxDecoration(
-                        color: controller.currentColor.value,
+                        color: currentSelectedColor,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child:  Icon(Icons.color_lens, color: Colors.white),
-                    ),
+                      child: Icon(Icons.color_lens, color: Colors.white),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -130,23 +134,25 @@ class _CategoryScreenBuilderState extends BaseViewState<
         return AlertDialog(
           title: const Text('Pick a color'),
           content: SingleChildScrollView(
-            child: Obx(
-              () => ColorPicker(
-                pickerColor: controller.currentColor.value,
+            child:ColorPicker(
+                hexInputBar: true,
                 onColorChanged: (Color color) {
-                  controller.currentColor.value = color;
+                  controller.categoryColor = color;
+                  setState(() {
+                    currentSelectedColor = color;
+                  });
                 },
-                showLabel: true, // Display the color code
-                pickerAreaHeightPercent: 0.8, // Adjust the picker size
-              ),
+                showLabel: true,
+                // Display the color code
+                pickerAreaHeightPercent: 0.8,
+              pickerColor: Colors.blue, // Adjust the picker size
             ),
           ),
           actions: <Widget>[
             TextButton(
               child: const Text('Done'),
               onPressed: () {
-                controller.currentColor.refresh();
-                Navigator.of(context).pop(); // Close the dialog
+                AppRoutes.pop();
               },
             ),
           ],
@@ -211,8 +217,8 @@ class _CategoryScreenBuilderState extends BaseViewState<
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Image.network(
-                          category.image?.includeBaseUrl() ?? '',
+                        child: CachedNetworkImage(
+                          imageUrl : category.image?.includeBaseUrl() ?? '',
                           height: 40,
                           width: 40,
                           fit: BoxFit.contain,

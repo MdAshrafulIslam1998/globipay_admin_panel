@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'app.dart';
 import 'core/di/di_setup.dart';
 import 'flavors/app_properties.dart';

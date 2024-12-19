@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
@@ -27,7 +26,7 @@ showCustomDialog(message,
           }
           return;
         },
-        child: CupertinoAlertDialog(
+        child: AlertDialog(
           key: key,
           title: Text(
             title ?? "",

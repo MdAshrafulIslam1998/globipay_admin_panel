@@ -1,4 +1,6 @@
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/entity/request/agora/agora_token_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/call/send_call_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/category/add_category_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
@@ -11,6 +13,7 @@ import 'package:globipay_admin_panel/entity/request/notification/create_notifica
 import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_banner_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
+import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/file_upload/file_upload_response.dart';
@@ -190,6 +193,17 @@ class AppRepositoryImpl extends AppRepository {
   Future<UserTransactionHistoryResponseEntity> requestUserSpecificTransaction({required PaginationRequest request, required String userId}) {
     return remoteDataSource.requestUserSpecificTransaction(request: request, userId: userId);
   }
+
+  @override
+  Future<AgoraTokenResponseEntity> requestForAgoraToken(AgoraTokenRequestEntity request) {
+    return remoteDataSource.requestForAgoraToken(request);
+  }
+
+  @override
+  Future<String> requestToSendCallNotification(SendCallRequestEntity request) {
+    return remoteDataSource.requestToSendCallNotification(request);
+  }
+
 
 
 

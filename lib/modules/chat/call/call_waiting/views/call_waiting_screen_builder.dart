@@ -1,5 +1,4 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
@@ -50,16 +49,15 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
 
   @override
   Widget body(BuildContext context) {
-    return CupertinoPageScaffold(
-        backgroundColor: CupertinoColors.black,
-        child: Container(
+    return Scaffold(
+        body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                CupertinoColors.systemBlue.darkColor.withOpacity(0.8),
-                CupertinoColors.black,
+                Colors.black.withOpacity(0.8),
+                Colors.black,
               ],
             ),
           ),
@@ -84,7 +82,7 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: CupertinoColors.white.withOpacity(0.15),
+                                    color: Colors.white.withOpacity(0.15),
                                     width: 2,
                                   ),
                                 ),
@@ -99,12 +97,11 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: CupertinoColors.white,
+                                  color: Colors.white,
                                   width: 3,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: CupertinoColors.systemBlue.withOpacity(0.3),
                                     blurRadius: 20,
                                     spreadRadius: 5,
                                   ),
@@ -127,7 +124,6 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
                         style: const TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.w600,
-                          color: CupertinoColors.white,
                           letterSpacing: 0.5,
                         ),
                       ),
@@ -137,7 +133,7 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
                         text: 'Incoming video call...',
                         style: TextStyle(
                           fontSize: 16,
-                          color: CupertinoColors.white.withOpacity(0.8),
+                          color: Colors.white.withOpacity(0.8),
                         ),
                       ),
                     ],
@@ -150,8 +146,8 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _buildCallButton(
-                        icon: CupertinoIcons.phone_down_fill,
-                        color: CupertinoColors.destructiveRed,
+                        icon: Icons.call,
+                        color: Colors.redAccent,
                         onPressed: () {
                           audioPlayer.stop();
                           Navigator.of(context).pop();
@@ -160,8 +156,8 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
                         isDecline: true,
                       ),
                       _buildCallButton(
-                        icon: CupertinoIcons.video_camera_solid,
-                        color: CupertinoColors.activeGreen,
+                        icon: Icons.video_call,
+                        color: Colors.green,
                         onPressed: () async {
                           await audioPlayer.stop();
                           CallModel call = CallModel(
@@ -210,11 +206,8 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
                   width: 70,
                   height: 70,
                   margin: const EdgeInsets.only(bottom: 8),
-                  child: CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    borderRadius: BorderRadius.circular(35),
-                    color: color,
-                    onPressed: () async {
+                  child: InkWell(
+                    onTap: ()async{
                       HapticFeedback.mediumImpact();
                       if (isAudioPlaying) {
                         await audioPlayer.stop();
@@ -222,10 +215,14 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
                       }
                       onPressed();
                     },
-                    child: Icon(
-                      icon,
-                      color: CupertinoColors.white,
-                      size: 32,
+                    child: Container(
+                      padding: EdgeInsets.zero,
+                      color: color,
+                      child: Icon(
+                        icon,
+                        color: Colors.white,
+                        size: 32,
+                      ),
                     ),
                   ),
                 ),
@@ -236,7 +233,7 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
         FadeSlideText(
           text: label,
           style: const TextStyle(
-            color: CupertinoColors.white,
+            color: Colors.white,
             fontSize: 14,
           ),
           delay: isAccept ? 400 : 200,
@@ -405,9 +402,9 @@ class _ShimmerTextState extends State<ShimmerText>
           shaderCallback: (bounds) {
             return LinearGradient(
               colors: [
-                CupertinoColors.white,
-                CupertinoColors.white.withOpacity(0.5),
-                CupertinoColors.white,
+                Colors.white,
+                Colors.white.withOpacity(0.5),
+                Colors.white,
               ],
               stops: [0.0, _animation.value, 1.0],
               begin: const Alignment(-1.0, -0.5),
@@ -629,25 +626,24 @@ Future<void> requestCameraAndMicPermissions(CallModel call) async {
     } else {
       // Show iOS-style permission denied alert with haptic feedback
       HapticFeedback.mediumImpact();
-      showCupertinoDialog(
+      showDialog(
         context: AppNavigatorService.navigatorKey.currentState!.context,
-        builder: (context) => CupertinoAlertDialog(
+        builder: (context) => AlertDialog(
           title: const Text('Permissions Required'),
           content: const Text(
             'Camera and microphone access is required for video calls. Please enable them in Settings.',
           ),
           actions: [
-            CupertinoDialogAction(
+            InkWell(
               child: const Text('Cancel'),
-              onPressed: () {
+              onTap: () {
                 HapticFeedback.lightImpact();
                 Navigator.pop(context);
               },
             ),
-            CupertinoDialogAction(
-              isDefaultAction: true,
+            InkWell(
               child: const Text('Settings'),
-              onPressed: () {
+              onTap: () {
                 HapticFeedback.lightImpact();
                 openAppSettings();
               },
@@ -660,17 +656,17 @@ Future<void> requestCameraAndMicPermissions(CallModel call) async {
     print('Error requesting permissions: $e');
     // Show error dialog with haptic feedback
     HapticFeedback.heavyImpact();
-    showCupertinoDialog(
+    showDialog(
       context: AppNavigatorService.navigatorKey.currentState!.context,
-      builder: (context) => CupertinoAlertDialog(
+      builder: (context) => AlertDialog(
         title: const Text('Error'),
         content: const Text(
           'Failed to request camera and microphone permissions. Please try again.',
         ),
         actions: [
-          CupertinoDialogAction(
+          InkWell(
             child: const Text('OK'),
-            onPressed: () => Navigator.pop(context),
+            onTap: () => Navigator.pop(context),
           ),
         ],
       ),

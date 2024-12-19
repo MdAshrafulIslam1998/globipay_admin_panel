@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:globipay_admin_panel/entity/request/agora/agora_token_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/call/send_call_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/category/add_category_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/level/add_level_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/notification/create_notification_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
+import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/level/level_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
@@ -506,6 +509,36 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => UserTransactionHistoryResponseEntity.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AgoraTokenResponseEntity> requestForAgoraToken(AgoraTokenRequestEntity request) {
+    var endpoint = '$BASE_URL/${AppApi.agoraToken}';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: request.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => AgoraTokenResponseEntity.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> requestToSendCallNotification(SendCallRequestEntity request) {
+    var endpoint = '$BASE_URL/${AppApi.callSend}';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: request.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => response.data.toString());
     } catch (e) {
       rethrow;
     }

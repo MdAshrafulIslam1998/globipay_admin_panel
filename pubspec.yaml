@@ -84,6 +84,7 @@ dependencies:
   delta_to_html: ^0.2.2
   shimmer: ^3.0.0
   dropdown_search: ^6.0.1
+  html: ^0.15.0
 
 dev_dependencies:
   flutter_test:

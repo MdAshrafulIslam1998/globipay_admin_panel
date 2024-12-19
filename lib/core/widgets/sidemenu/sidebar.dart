@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:globipay_admin_panel/core/constants/config.dart';
@@ -62,7 +61,7 @@ class Sidebar extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         leading: const Icon(
-                          CupertinoIcons.person_2,
+                          Icons.person_2,
                           color: AppColors.iconBlack,
                         ),
                         title: Text(
@@ -130,7 +129,7 @@ class Sidebar extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         leading: const Icon(
-                          CupertinoIcons.chat_bubble_text,
+                          Icons.chat_bubble,
                           color: AppColors.iconBlack,
                         ),
                         title: Text(
@@ -147,7 +146,7 @@ class Sidebar extends StatelessWidget {
                             isActive: currentRoute == RoutePath.activeUsersNew,
                             title: "Chat List",
                             leading: Icon(
-                              CupertinoIcons.chat_bubble_2,
+                              Icons.chat,
                               color: AppColors.iconBlack,
                             ),
 
@@ -343,7 +342,7 @@ class Sidebar extends StatelessWidget {
                   Row(
                     children: [
                       Icon(
-                        CupertinoIcons.app,
+                        Icons.propane_outlined,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
 

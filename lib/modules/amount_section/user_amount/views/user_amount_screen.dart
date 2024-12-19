@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'user_amount_screen_builder.dart';
 
 class UserAmountScreen extends StatelessWidget {

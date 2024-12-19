@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/data/models/call_model.dart';
+import 'dart:html' as html;
 
 /**
  * Created by Abdullah on 26/10/24.
@@ -39,6 +41,7 @@ class VideoCallController extends BaseController{
 
 
   void callInit(CallModel call) {
+    checkPermissions();
     engine = createAgoraRtcEngine();
     callModel = call;
     _initializeMethods();
@@ -46,6 +49,17 @@ class VideoCallController extends BaseController{
 
 
   }
+
+  Future<void> checkPermissions() async {
+    final permission = await html.window.navigator.mediaDevices?.getUserMedia({
+      'video': true,
+      'audio': true,
+    });
+    if (permission == null) {
+      debugPrint("Camera and microphone permissions not granted");
+    }
+  }
+
 
   void _initializeMethods() {
     initAgoraEngine();

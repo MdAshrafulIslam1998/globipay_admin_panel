@@ -2,12 +2,10 @@
  * Created by Abdullah on 20/8/24.
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
 import 'package:globipay_admin_panel/core/widgets/app_loader.dart';
-import 'package:globipay_admin_panel/flavors/app_properties.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 

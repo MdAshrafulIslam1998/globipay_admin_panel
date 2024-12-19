@@ -2,6 +2,7 @@
 // generate date: 16/10/24 08:01 PM
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
@@ -11,7 +12,10 @@ import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
 import 'package:globipay_admin_panel/data/models/call_model.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/request/agora/agora_token_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/call/send_call_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
+import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/widgets/chat_close_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -380,30 +384,7 @@ class ChatController extends BaseController {
   }
 
   Future<void> onVideoCall() async {
-
-    // Send FCM notification to the other user
-    // Navigate to Video call screen and start the call
-
-    try {
-      //await html.window.navigator.getUserMedia(audio: true, video: true);
-
-      String channelName = 'globi_pay';
-      String agoraToken = '007eJxTYDhot18rpzUr94TyawGelTuqn2yp2XnqlD9/LtPybqM9exsUGNIsDCySTCyTkhPNTU2SLSwSEw2TE5MsUwzSks0tLJNTubvM01eLWaSnB25nYmRgZGABYhBgApPMYJIFTHIypOfkJ2XGFyRWMjAAAD2vIao=';
-
-
-      CallModel callModel = CallModel(
-        channelName: channelName,
-        videoToken: agoraToken,
-        isJoin: false,
-        callerName: "callerName",
-        callerImage: "callerImage",
-      );
-      AppRoutes.pushNamed(RoutePath.videoCall, extra: callModel);
-    } catch (e) {
-      showCustomDialog("Error starting video call: $e");
-      appPrint("Error starting video call: $e");
-    }
-
+    requestForAgoraToken();
   }
 
 
@@ -510,12 +491,6 @@ class ChatController extends BaseController {
       }
     );
 
-  }
-
-
-
-  void onSendMessageUsingCamera() {
-    requestCameraPermission();
   }
 
   void onSendMessageFromPhotoLibrary() async {
@@ -755,5 +730,120 @@ class ChatController extends BaseController {
     }
   }
 
+  AgoraTokenRequestEntity agoraTokenRequestEntity(String chaName)=> AgoraTokenRequestEntity(
+    channelName: chaName,
+  );
+
+  SendCallRequestEntity sendCallRequestEntity({
+    required String fcm,
+    required String title,
+    required String body,
+    required String image,
+    required String type,
+    required String callerName,
+    required String callerImage,
+    required String channel,
+    required String videoToken,
+})=> SendCallRequestEntity(
+    token: fcm,
+    title: title,
+    body: body,
+    image: image,
+    type: type,
+    callerName: callerName,
+    callerImage: callerImage,
+    channel: channel,
+    videoToken: videoToken,
+  );
+
+  Future<String?> fetchFcmToken(String userId) async {
+    final response = await supabase
+        .from('users')
+        .select('fcm_token')
+        .eq('user_id', userId)
+        .single();
+    appPrint("Response:::::::::::::::::::: $response");
+    if (response == null) {
+      // Handle error
+      appPrint("Error fetching FCM token: ${response.error?.message}");
+      return null;
+    }
+    return response['fcm_token'] as String?;
+  }
+
+  parseAgoraToken(AgoraTokenResponseEntity response) async {
+    if (response.token != null && sharedController.customer_id != null) {
+      final partnerId = sharedController.customer_id;
+      final fcm = await fetchFcmToken(partnerId!);
+      requestToCallRequest(
+          fcm ?? "",
+          response.token ?? "",
+          getChannelName(),
+      );
+    }
+
+
+  }
+
+  navigateToCallScreen(String channelName, String agoraToken){
+    CallModel callModel = CallModel(
+      channelName: channelName,
+      videoToken: agoraToken,
+      isJoin: false,
+      callerName: "callerName",
+      callerImage: "callerImage",
+    );
+    appPrint("Navigating to call screen with channel: $channelName");
+    appPrint("Navigating to call screen with token: $agoraToken");
+    AppRoutes.pushNamed(RoutePath.videoCall, extra: callModel);
+  }
+
+  String getChannelName(){
+    return generateUniqueString();
+  }
+  String generateUniqueString() {
+// Supported characters
+    const String chars =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !#%&()+-:;<=>.?@[\\]^_{|}~";
+    final Random random = Random();
+
+    // Generate a random string of 40 characters
+    String randomString = List.generate(
+      40,
+          (index) => chars[random.nextInt(chars.length)],
+    ).join();
+
+    // Shortened timestamp (10 digits instead of 13 for brevity)
+    String timestamp = DateTime.now().millisecondsSinceEpoch.toString().substring(0, 10);
+
+    // Combine timestamp and random string
+    return 'channel';
+  }
+
+  void requestForAgoraToken(){
+    final channelName = getChannelName();
+    final repo = appRepository.requestForAgoraToken(agoraTokenRequestEntity(channelName));
+    callService(repo,onSuccess: (token){
+      parseAgoraToken(token);
+    });
+  }
+
+  void requestToCallRequest(String fcm, String agoraToken, String channelName){
+    final req = sendCallRequestEntity(
+      fcm: fcm,
+      title: "Incoming Call",
+      body: "Incoming Call",
+      image: "https://mdbcdn.b-cdn.net/img/new/avatars/2.webp",
+      type: "call",
+      callerName: "Abdullah",
+      callerImage: "https://mdbcdn.b-cdn.net/img/new/avatars/2.webp",
+      channel: channelName,
+      videoToken: agoraToken,
+    );
+    final repo = appRepository.requestToSendCallNotification(req);
+    callService(repo,onSuccess: (response){
+      navigateToCallScreen(channelName, agoraToken);
+    });
+  }
 
 }
