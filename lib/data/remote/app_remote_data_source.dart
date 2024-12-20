@@ -1,3 +1,4 @@
+import 'package:globipay_admin_panel/core/constants/enum/user_status.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/entity/request/agora/agora_token_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/call/send_call_request_entity.dart';
@@ -21,6 +22,7 @@ import 'package:globipay_admin_panel/entity/response/level/level_response_entity
 import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/notification/notification_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
@@ -71,4 +73,8 @@ abstract class AppRemoteDataSource {
       {required PaginationRequest request, required String userId});
   Future<AgoraTokenResponseEntity> requestForAgoraToken(AgoraTokenRequestEntity request);
   Future<String> requestToSendCallNotification(SendCallRequestEntity request);
+  Future<NotificationResponseEntity> requestUserSpecificNotification(
+      {required PaginationRequest request, required String userId});
+  Future<void> requestToUpdateUserStatus(String userId, UserStatus status);
+
 }

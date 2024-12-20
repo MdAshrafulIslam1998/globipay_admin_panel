@@ -63,7 +63,7 @@ class TransactionsTab extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
-        leading: _getTransactionIcon(transaction.coinType ?? ""),
+        leading: _getTransactionIcon(transaction.coin_type ?? ""),
         title: Text(
           transaction.category?.name ?? '',
           style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
@@ -72,12 +72,23 @@ class TransactionsTab extends StatelessWidget {
           transaction.date ?? '',
           style: GoogleFonts.poppins(color: Colors.grey),
         ),
-        trailing: Text(
-          transaction.coin.toString(),
-          style: GoogleFonts.poppins(
-            color: isPrimaryTransaction(transaction.coinType ?? "") ? Colors.green : Colors.red,
-            fontWeight: FontWeight.bold,
-          ),
+        trailing: Column(
+          children: [
+            Text(
+              transaction.coin_type.toString(),
+              style: GoogleFonts.poppins(
+                color: isPrimaryTransaction(transaction.coin_type ?? "") ? Colors.green : Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              transaction.coin.toString(),
+              style: GoogleFonts.poppins(
+                color: isPrimaryTransaction(transaction.coin_type ?? "") ? Colors.green : Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -37,6 +37,9 @@ abstract class AppApi {
   static const String userSpecificTransactionHistory = '$prefix/users';
   static const String agoraToken = '$prefix/agora/generateToken';
   static const String callSend = '$prefix/send-call-notification';
+  static const String userSpecificNotifications = '$prefix/notifications/fetch-by-target';
+  static const String userStatus = '$prefix/users/changestatus';
+
 
 
 

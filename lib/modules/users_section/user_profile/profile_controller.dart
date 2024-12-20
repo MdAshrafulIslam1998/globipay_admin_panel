@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/activity_log_model.dart';
@@ -31,7 +32,7 @@ class ProfileController extends BaseController {
   RxBool isActivityLoading = RxBool(false);
 
   // Notifications
-  RxList<NotificationModel> notifications = RxList<NotificationModel>();
+  RxList<NotificationResponseItemEntity> notifications = RxList<NotificationResponseItemEntity>();
   RxString notificationSearchQuery = RxString('');
   ScrollController notificationScrollController = ScrollController();
   RxBool isNotificationLoading = RxBool(false);
@@ -77,13 +78,7 @@ class ProfileController extends BaseController {
             ));
 
     // Generate dummy notifications
-    notifications.value = List.generate(
-        20,
-        (index) => NotificationModel(
-              id: 'NT$index',
-              content: _getRandomNotificationContent(index),
-              timestamp: DateTime.now().subtract(Duration(days: index ~/ 2)),
-            ));
+    requestForUserSpecificNotification(uid);
   }
 
   void setupScrollListeners() {
@@ -109,7 +104,7 @@ class ProfileController extends BaseController {
   void _loadMoreNotifications() {
     if (notificationScrollController.position.pixels ==
         notificationScrollController.position.maxScrollExtent) {
-      _fetchMoreNotifications();
+     // _fetchMoreNotifications();
     }
   }
 
@@ -152,15 +147,8 @@ class ProfileController extends BaseController {
     // Simulate network delay
     await Future.delayed(Duration(seconds: 2));
 
-    // Add more dummy notifications
-    notifications.addAll(List.generate(
-        10,
-        (index) => NotificationModel(
-              id: 'NT${notifications.length + index}',
-              content: _getRandomNotificationContent(index),
-              timestamp: DateTime.now()
-                  .subtract(Duration(days: notifications.length ~/ 2 + index)),
-            )));
+    // Add more notifications
+    requestForUserSpecificNotification(uid);
 
     isNotificationLoading.value = false;
   }
@@ -218,6 +206,22 @@ class ProfileController extends BaseController {
     final repo = _repository.requestUserSpecificTransaction(request: req, userId : uid ?? "") ;
     callService(repo, isShowLoader: false, onSuccess: (response) {
       transactions.value.addAll(response.transactions ?? []);
+    });
+  }
+
+  /*void requestForUserSpecificActivityLog(String? uid){
+    final req = paginationRequest(1, 10);
+    final repo = _repository.requestUserSpecificActivityLog(request: req, userId : uid ?? "") ;
+    callService(repo, isShowLoader: false, onSuccess: (response) {
+      activityLogs.value.addAll(response.activityLogs ?? []);
+    });
+  }*/
+
+  void requestForUserSpecificNotification(String? uid){
+    final req = paginationRequest(1, 10);
+    final repo = _repository.requestUserSpecificNotification(request: req, userId : uid ?? "") ;
+    callService(repo, isShowLoader: false, onSuccess: (response) {
+      notifications.value.addAll(response.notifications ?? []);
     });
   }
 }

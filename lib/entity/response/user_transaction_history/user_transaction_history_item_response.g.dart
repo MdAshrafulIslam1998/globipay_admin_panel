@@ -19,7 +19,7 @@ UserTransactionHistoryResponseItem _$UserTransactionHistoryResponseItemFromJson(
       name: json['name'] as String?,
       email: json['email'] as String?,
       createdBy: json['createdBy'] as String?,
-      coinType: json['coinType'] as String?,
+      coin_type: json['coin_type'] as String?,
     );
 
 Map<String, dynamic> _$UserTransactionHistoryResponseItemToJson(
@@ -32,5 +32,5 @@ Map<String, dynamic> _$UserTransactionHistoryResponseItemToJson(
       'name': instance.name,
       'email': instance.email,
       'createdBy': instance.createdBy,
-      'coinType': instance.coinType,
+      'coin_type': instance.coin_type,
     };

@@ -14,7 +14,7 @@ class UserTransactionHistoryResponseItem {
   String? name;
   String? email;
   String? createdBy;
-  String? coinType;
+  String? coin_type;
 
   UserTransactionHistoryResponseItem({
     this.id,
@@ -24,7 +24,7 @@ class UserTransactionHistoryResponseItem {
     this.name,
     this.email,
     this.createdBy,
-    this.coinType,
+    this.coin_type,
   });
 
   factory UserTransactionHistoryResponseItem.fromJson(Map<String, dynamic> json) => _$UserTransactionHistoryResponseItemFromJson(json);

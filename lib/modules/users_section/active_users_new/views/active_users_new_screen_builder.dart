@@ -169,7 +169,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                             controller.onUserDetailsClicked(user);
                             break;
                           case 'delete':
-                            print('Delete action for ${user.name}');
+                            controller.onUserDeleteClicked(user);
                             break;
                           case 'message':
                             print('Message action for ${user.name}');

@@ -1,17 +1,9 @@
-/**
- * Created by Abdullah on 13/12/24.
- */
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/widgets/web_image/web_image.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promotional_banner_controller.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
 import 'dart:html' as web;
 
@@ -244,7 +236,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                     SizedBox(height: 16),
 
                     // Additional Options
-                    Row(
+                    /*Row(
                       children: [
                         // Color Picker
                         Expanded(
@@ -281,11 +273,11 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                           ),
                         ),
                       ],
-                    ),
+                    ),*/
                     SizedBox(height: 16),
 
                     // Priority Slider
-                    Text(
+                    /*Text(
                       'Banner Priority: ${_priority.round()}',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.deepPurple),
@@ -302,7 +294,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                           _priority = value;
                         });
                       },
-                    ),
+                    ),*/
                     SizedBox(height: 24),
 
                     // Submit Button

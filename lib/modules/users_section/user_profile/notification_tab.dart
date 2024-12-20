@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/notification_model.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -53,22 +54,24 @@ class NotificationsTab extends StatelessWidget {
     );
   }
 
-  Widget _buildNotificationCard(NotificationModel notification) {
+  Widget _buildNotificationCard(NotificationResponseItemEntity notification) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
-        leading: _getNotificationIcon(notification.content),
+        leading: CircleAvatar(
+          backgroundColor: Colors.grey.withOpacity(0.1),
+          child: Icon(Icons.notifications_outlined, color: Colors.grey, size: 20),
+        ),
         title: Text(
-          notification.content,
+          notification.details ?? "",
           style: GoogleFonts.poppins(
             fontWeight: FontWeight.w500,
             fontSize: 14,
           ),
-          maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
-          notification.formattedTimestamp,
+          notification.createdAt.toString(),
           style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,

@@ -41,7 +41,7 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
 
   @override
   PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Blocked Users'));
+    return AppBar(title: Text('Inactive Users'));
   }
 
   @override

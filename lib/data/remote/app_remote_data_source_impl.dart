@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:globipay_admin_panel/core/constants/enum/user_status.dart';
 import 'package:globipay_admin_panel/entity/request/agora/agora_token_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/call/send_call_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/category/add_category_request_entity.dart';
@@ -14,6 +15,7 @@ import 'package:globipay_admin_panel/entity/response/category/category_response.
 import 'package:globipay_admin_panel/entity/response/level/level_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/notification/notification_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
@@ -539,6 +541,40 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => response.data.toString());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<NotificationResponseEntity> requestUserSpecificNotification({required PaginationRequest request, required String userId}) {
+    var endpoint = '$BASE_URL/${AppApi.userSpecificNotifications}';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: {
+        ...request.toJson(),
+        'target_id': userId,
+      },
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => NotificationResponseEntity.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> requestToUpdateUserStatus(String userId, UserStatus status) {
+    var endpoint = '$BASE_URL/${AppApi.userStatus}/$userId';
+    var dioCall = dioClientWithAuth.post(
+      endpoint,
+      data: {
+        'status': status.name,
+      },
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
     } catch (e) {
       rethrow;
     }

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
+import 'package:globipay_admin_panel/core/constants/enum/user_status.dart';
 import 'package:globipay_admin_panel/core/constants/table_header_visibility.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
@@ -69,5 +70,26 @@ class ActiveUsersNewController extends BaseController {
 
   void onUserDetailsClicked(UserResponseItemEntity user) {
     AppRoutes.pushNamed(RoutePath.pendingProfile,extra: user);
+  }
+
+  void onUserDeleteClicked(UserResponseItemEntity user) {
+    askForConfirmation(
+      message: 'Are you sure you want to delete this user?',
+      onPositiveAction: (){
+        requestToDeleteUser(user);
+      },
+    );
+  }
+
+
+  void requestToDeleteUser(UserResponseItemEntity user) async {
+    final repo = _repository.requestToUpdateUserStatus(
+        user.userId ?? '',
+        UserStatus.DELETED,
+    );
+
+    callService(repo, onSuccess: (response) {
+      fetchUsers(currentPage.value, pageSize.value);
+    });
   }
 }

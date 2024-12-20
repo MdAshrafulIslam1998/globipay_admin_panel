@@ -99,7 +99,7 @@ class Sidebar extends StatelessWidget {
                           MenuTile(
                             isSubmenu: false,
                             isActive: currentRoute == RoutePath.blockedUsers,
-                            title: "Blocked Users",
+                            title: "Inactive Users",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
                             count: 16,
