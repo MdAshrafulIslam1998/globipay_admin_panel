@@ -20,6 +20,7 @@ UserResponseItemEntity _$UserResponseItemEntityFromJson(
       primary: (json['primary'] as num?)?.toDouble(),
       secondary: (json['secondary'] as num?)?.toDouble(),
       pushToken: json['push_token'] as String?,
+      user_code: json['user_code'] as String?,
     )
       ..address = json['address'] as String?
       ..gender = json['gender'] as String?;
@@ -40,4 +41,5 @@ Map<String, dynamic> _$UserResponseItemEntityToJson(
       'push_token': instance.pushToken,
       'address': instance.address,
       'gender': instance.gender,
+      'user_code': instance.user_code,
     };

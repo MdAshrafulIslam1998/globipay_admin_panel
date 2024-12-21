@@ -22,6 +22,9 @@ class UserDataSource extends DataGridSource {
         .map((user) => DataGridRow(
               cells: visibleColumns.map((columnName) {
                 switch (columnName) {
+                  case 'code':
+                    return DataGridCell<String>(
+                        columnName: 'code', value: user.user_code ?? 'NAN');
                   case 'name':
                     return DataGridCell<String>(
                         columnName: 'name', value: user.name);

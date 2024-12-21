@@ -69,13 +69,13 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                             ),
                           ),
                           child: Center(
-                            child: Text(
-                              "Pending Review",
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFFD97706),
-                              ),
+                            child:  Text(
+                                "Profile for ${profile.code}",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFFD97706),
+                                ),
                             ),
                           ),
                         ),

@@ -25,6 +25,7 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
   
 
   late Map<String, double> columnWidths = {
+    'code': double.nan,
     'name': double.nan,
     'email': double.nan,
     'date': double.nan,
@@ -228,6 +229,7 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
 
   List<GridColumn> _buildColumns(List<String> visibleColumns) {
     final columnDefinitions = {
+      'code': {'title': 'Code', 'paddingPercent': 20},
       'name': {'title': 'Full Name', 'paddingPercent': 20},
       'email': {'title': 'Email', 'paddingPercent': 25},
       'date': {'title': 'Date', 'paddingPercent': 10},

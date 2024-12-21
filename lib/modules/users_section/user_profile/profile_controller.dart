@@ -49,6 +49,7 @@ class ProfileController extends BaseController {
     uid = user?.userId ?? '';
     // Simulate loading profile data
     profileData.value = ProfileData(
+      code: user?.user_code ?? '',
         fullName: user?.name ?? '',
         email: user?.email ?? '',
         dob: DateFormat('dd/MM/yyyy').format(DateTime(2024, 1, 1)),
@@ -237,6 +238,7 @@ class ProfileData {
   final String selfiePath;
   final String frontIdPath;
   final String backIdPath;
+  final String code;
 
   // Add other profile fields as needed
 
@@ -250,5 +252,6 @@ class ProfileData {
     required this.selfiePath,
     required this.frontIdPath,
     required this.backIdPath,
+    required this.code,
   });
 }

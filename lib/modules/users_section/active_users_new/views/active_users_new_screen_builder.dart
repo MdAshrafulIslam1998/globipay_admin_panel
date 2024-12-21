@@ -27,6 +27,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
   
 
   late Map<String, double> columnWidths = {
+    'code': double.nan,
     'name': double.nan,
     'email': double.nan,
     'phone': double.nan,
@@ -240,6 +241,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
 
   List<GridColumn> _buildColumns(List<String> visibleColumns) {
     final columnDefinitions = {
+      'code': {'title': 'Code', 'paddingPercent': 20},
       'name': {'title': 'Full Name', 'paddingPercent': 20},
       'email': {'title': 'Email', 'paddingPercent': 25},
       'phone': {'title': 'Phone', 'paddingPercent': 25},

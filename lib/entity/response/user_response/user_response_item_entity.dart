@@ -35,6 +35,7 @@ class UserResponseItemEntity {
   String? address;
   @JsonKey(name: "gender")
   String? gender;
+  String? user_code;
 
 
 
@@ -50,6 +51,7 @@ class UserResponseItemEntity {
     this.primary,
     this.secondary,
     this.pushToken,
+    this.user_code,
   });
 
   factory UserResponseItemEntity.fromJson(Map<String, dynamic> json) => _$UserResponseItemEntityFromJson(json);

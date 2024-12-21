@@ -35,6 +35,7 @@ abstract class TableHeaderVisibility {
 
   static final Map<String, List<String>> _USER_ACTIVE_TABLE = {
     RoleName.ADMIN.code: [
+      'code',
       'name',
       'email',
       'phone',
@@ -48,6 +49,7 @@ abstract class TableHeaderVisibility {
       'message'
     ], //admin
     RoleName.SUB_ADMIN.code: [
+      'code',
       'name',
       'primary',
       'secondary',
@@ -58,6 +60,7 @@ abstract class TableHeaderVisibility {
       'message'
     ], //subadmin
     RoleName.MODERATOR.code: [
+      'code',
       'name',
       'primary',
       'secondary',
@@ -70,6 +73,7 @@ abstract class TableHeaderVisibility {
 
   static final Map<String, List<String>> _USER_PENDING_TABLE = {
     RoleName.ADMIN.code: [
+      'code',
       'name',
       'email',
       'date',
@@ -77,12 +81,14 @@ abstract class TableHeaderVisibility {
       'document',
     ], //admin
     RoleName.SUB_ADMIN.code: [
+      'code',
       'name',
       'date',
       'status',
       'document',
     ], //subadmin
     RoleName.MODERATOR.code: [
+      'code',
       'name',
       'date',
       'status',
@@ -91,6 +97,7 @@ abstract class TableHeaderVisibility {
 
   static final Map<String, List<String>> _USER_BLOCKED_TABLE = {
     RoleName.ADMIN.code: [
+      'code',
       'name',
       'email',
       'date',
@@ -98,11 +105,13 @@ abstract class TableHeaderVisibility {
       'document',
     ], //admin
     RoleName.SUB_ADMIN.code: [
+      'code',
       'name',
       'date',
       'status',
     ], //subadmin
     RoleName.MODERATOR.code: [
+      'code',
       'name',
       'date',
       'status',
