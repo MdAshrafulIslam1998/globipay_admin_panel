@@ -46,7 +46,10 @@ class NotificationsController extends BaseController {
   }
 
   void removeNotification(String id) {
-    notifications.removeWhere((notification) => notification.id == id);
+    askForConfirmation(
+        onPositiveAction: () {
+      requestToDeleteNotifications(id);
+    });
   }
 
   void setTargetType(NotificationTargetType type) {
@@ -64,6 +67,14 @@ class NotificationsController extends BaseController {
     callService(repo, onSuccess: (response) {
       parseNotification(response);
     });
+  }
+
+  void requestToDeleteNotifications(String id){
+    final repo = appRepository.requestToRemoveNotification(id);
+    callService(repo, onSuccess: (response) {
+      requestForAllNotifications();
+    });
+
 
   }
 

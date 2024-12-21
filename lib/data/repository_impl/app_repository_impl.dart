@@ -216,6 +216,11 @@ class AppRepositoryImpl extends AppRepository {
     return remoteDataSource.requestToUpdateUserStatus(userId, status);
   }
 
+  @override
+  Future<void> requestToRemoveNotification(String notificationId) {
+    return remoteDataSource.requestToRemoveNotification(notificationId);
+  }
+
 
 
 

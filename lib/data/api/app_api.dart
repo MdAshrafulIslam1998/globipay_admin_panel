@@ -39,6 +39,7 @@ abstract class AppApi {
   static const String callSend = '$prefix/send-call-notification';
   static const String userSpecificNotifications = '$prefix/notifications/fetch-by-target';
   static const String userStatus = '$prefix/users/changestatus';
+  static const String deleteNotification = '$prefix/notifications/delete';
 
 
 

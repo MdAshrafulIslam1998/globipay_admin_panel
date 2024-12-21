@@ -80,5 +80,6 @@ abstract class AppRepository{
       {required PaginationRequest request, required String userId});
 
   Future<void> requestToUpdateUserStatus(String userId, UserStatus status);
+  Future<void> requestToRemoveNotification(String notificationId);
 
 }

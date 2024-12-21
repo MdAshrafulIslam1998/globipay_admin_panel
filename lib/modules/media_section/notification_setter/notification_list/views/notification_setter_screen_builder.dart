@@ -137,17 +137,20 @@ class _NotificationsScreenBuilderState
           children: [
             Text(
               notification.details ?? "",
-              maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(height: 8),
             _buildTargetBadge(notification),
+            Text(
+              notification.createdAt ?? "",
+              overflow: TextOverflow.ellipsis,
+            ),
+
           ],
         ),
         trailing: IconButton(
           icon: Icon(Icons.delete, color: Colors.red),
           onPressed: () =>
-              controller.removeNotification(notification.id.toString() ?? ""),
+              controller.removeNotification(notification.notificationId.toString() ?? ""),
           tooltip: 'Remove Notification',
         ),
       ),

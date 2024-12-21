@@ -579,4 +579,17 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       rethrow;
     }
   }
+
+  @override
+  Future<void> requestToRemoveNotification(String notificationId) {
+    var endpoint = '$BASE_URL/${AppApi.deleteNotification}/$notificationId';
+    var dioCall = dioClientWithAuth.delete(
+      endpoint,
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
