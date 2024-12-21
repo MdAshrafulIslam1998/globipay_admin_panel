@@ -31,7 +31,7 @@ class BlockedUsersDataSource extends DataGridSource {
                   case 'date':
                     return DataGridCell<String>(
                         columnName: 'date',
-                        value: DateFormat('dd-MM-yyyy')
+                        value: DateFormat('dd-MM-yyyy HH:mm')
                             .format(DateTime.parse(user.date ?? '')));
                   case 'status':
                     return DataGridCell<String>(

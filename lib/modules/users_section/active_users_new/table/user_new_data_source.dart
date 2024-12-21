@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
@@ -27,30 +26,30 @@ class UserDataSource extends DataGridSource {
                         columnName: 'code', value: user.user_code ?? 'NAN');
                   case 'name':
                     return DataGridCell<String>(
-                        columnName: 'name', value: user.name);
+                        columnName: 'name', value: user.name ?? '');
                   case 'email':
                     return DataGridCell<String>(
-                        columnName: 'email', value: user.email);
+                        columnName: 'email', value: user.email ?? '');
                   case 'phone':
                     return DataGridCell<String>(
-                        columnName: 'phone', value: user.phone);
+                        columnName: 'phone', value: user.phone ?? '');
                   case 'primary':
                     return DataGridCell<double>(
-                        columnName: 'primary', value: user.primary);
+                        columnName: 'primary', value: user.primary ?? 0.0);
                   case 'secondary':
                     return DataGridCell<double>(
-                        columnName: 'secondary', value: user.secondary);
+                        columnName: 'secondary', value: user.secondary ?? 0.0);
                   case 'levelName':
                     return DataGridCell<String>(
-                        columnName: 'levelName', value: user.levelName);
+                        columnName: 'levelName', value: user.levelName ?? '');
                   case 'date':
                     return DataGridCell<String>(
                         columnName: 'date',
-                        value: DateFormat('dd-MM-yyyy')
-                            .format(DateTime.parse(user.date ?? '')));
-                  case 'status':
+                        value: "${DateFormat('dd MMM yyyy', 'en_US').format(DateTime.parse(user.date ?? ''))} \n"
+                            "${DateFormat('hh:mm a', 'en_US').format(DateTime.parse(user.date ?? ''))}");
+                    case 'status':
                     return DataGridCell<String>(
-                        columnName: 'status', value: user.status);
+                        columnName: 'status', value: user.status ?? '');
                   case 'details':
                     return DataGridCell<UserResponseItemEntity>(
                         columnName: 'details', value: user);

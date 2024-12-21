@@ -14,6 +14,7 @@ class MessageTemplatesItemEntity {
   String? title;
   String? description;
   String? category_name;
+  String? create_date;
   int? category_id;
 
   MessageTemplatesItemEntity({
@@ -22,6 +23,7 @@ class MessageTemplatesItemEntity {
     this.description,
     this.category_name,
     this.category_id,
+    this.create_date,
   });
 
   factory MessageTemplatesItemEntity.fromJson(Map<String, dynamic> json) => _$MessageTemplatesItemEntityFromJson(json);

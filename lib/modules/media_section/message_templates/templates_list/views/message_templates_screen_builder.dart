@@ -17,19 +17,19 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
   Widget body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Message Management',
+        title: const Text('Message Management',
             style: TextStyle(fontWeight: FontWeight.bold)
         ),
         actions: [
           ElevatedButton.icon(
-            icon: Icon(Icons.add, color: Colors.white),
-            label: Text('Create Templates', style: TextStyle(color: Colors.white)),
+            icon: const Icon(Icons.add, color: Colors.white),
+            label: const Text('Create Templates', style: TextStyle(color: Colors.white)),
             onPressed: () {
              controller.navigateToAddTemplated();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue.shade600,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const  EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -72,8 +72,8 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.messenger_outline, size: 100, color: Colors.grey),
-          SizedBox(height: 16),
+          const Icon(Icons.messenger_outline, size: 100, color: Colors.grey),
+          const SizedBox(height: 16),
           Text(
             'No Templates Found',
             style: TextStyle(
@@ -101,10 +101,10 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.all(16),
+        contentPadding: const  EdgeInsets.all(16),
         title: Text(
           templates.title ?? "",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,12 +114,18 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
+            Text(
+              templates.create_date ?? "",
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 8),
             _buildCategoryBadge(templates)
           ],
         ),
         trailing: IconButton(
-          icon: Icon(Icons.delete, color: Colors.red),
+          icon: const Icon(Icons.delete, color: Colors.red),
           onPressed: () => controller.removeMessageTemplate(templates.uid.toString()),
           tooltip: 'Remove Templates',
         ),

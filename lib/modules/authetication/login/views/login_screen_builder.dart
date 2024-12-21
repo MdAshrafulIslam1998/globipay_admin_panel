@@ -18,6 +18,12 @@ class LoginScreenBuilder extends StatefulWidget {
 
 class _LoginScreenBuilderState
     extends BaseViewState<LoginScreenBuilder, LoginController> {
+
+  @override
+  void initState() {
+    controller.onInit();
+    super.initState();
+  }
   @override
   Widget body(BuildContext context) {
     return Scaffold(
@@ -82,7 +88,7 @@ class _LoginScreenBuilderState
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Checkbox(
-                            value: controller.rememberMe.value,
+                            value: controller.isRememberMeChecked.value,
                             onChanged: (value) {
                               controller.toggleRememberMe(value ?? false);
                             },
