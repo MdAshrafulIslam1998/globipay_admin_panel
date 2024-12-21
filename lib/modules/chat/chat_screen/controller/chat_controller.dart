@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
+import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
 import 'package:globipay_admin_panel/core/utils/inputFilter/input_filter.dart';
@@ -17,6 +18,9 @@ import 'package:globipay_admin_panel/entity/request/call/send_call_request_entit
 import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/messages_templates/message_templates_item_entity.dart';
+import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
+import 'package:globipay_admin_panel/modules/chat/chat_screen/views/message_templates_view.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/widgets/chat_close_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -64,13 +68,91 @@ class ChatController extends BaseController {
   GlobalKey<FormState> chatCloseFormKey = GlobalKey<FormState>();
   Timer? _typingTimer;
   bool _isTyping = false;
+  var templates =  <MessageTemplatesItemEntity>[].obs; // Your list of templates
+  var showTemplates = false.obs; // Controls the split view
+
+  final ValueNotifier<List<MessageTemplatesItemEntity>> filteredTemplates = ValueNotifier<List<MessageTemplatesItemEntity>>([]);
+  final ValueNotifier<String> selectedCategory = ValueNotifier<String>('All');
+  String searchQuery = '';
 
   @override
   void onInit() {
+    fetchTemplates();
     _initializeMessages();
     _onListener();
     super.onInit();
   }
+  // Get unique categories from templates
+  List<String> getUniqueCategories() {
+    return templates
+        .map((template) => template.category_name ?? "")
+        .where((category) => category.isNotEmpty) // Filter out empty strings
+        .toSet()
+        .toList()
+      ..sort();
+  }
+
+
+  // Handle category selection
+  void onCategorySelected(String category) {
+    selectedCategory.value = category;
+    _applyFilters();
+  }
+
+  // Handle search text changes
+  void onSearchChanged(String query) {
+    searchQuery = query;
+    _applyFilters();
+  }
+
+  // Apply both category and search filters
+  void _applyFilters() {
+    List<MessageTemplatesItemEntity> result = List.from(templates);
+
+    // Apply category filter
+    if (selectedCategory.value != 'All') {
+      result = result.where((template) =>
+      template.category_name == selectedCategory.value).toList();
+    }
+
+    // Apply search filter
+    if (searchQuery.isNotEmpty) {
+      result = result.where((template) =>
+      (template.title??"").toLowerCase().contains(searchQuery.toLowerCase()) ||
+          (template.description ?? "").toLowerCase().contains(searchQuery.toLowerCase()) ||
+          (template.category_name ??"").toLowerCase().contains(searchQuery.toLowerCase())
+      ).toList();
+    }
+
+    filteredTemplates.value = result;
+  }
+
+
+  void fetchTemplates() {
+    requestForMessageTemplates();
+  }
+
+  void searchTemplates(String query) {
+    if (query.isEmpty) {
+      filteredTemplates.value = templates;
+      return;
+    }
+
+    filteredTemplates.value = templates
+        .where((template) =>
+    (template.title ??"").toLowerCase().contains(query.toLowerCase()) ||
+        (template.description ?? "").toLowerCase().contains(query.toLowerCase()) ||
+        (template.category_name ?? "").toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
+
+  
+  void onTemplateSelected(String template) {
+    messageController.text = template;
+    messageController.selection = TextSelection.fromPosition(
+        TextPosition(offset: messageController.text.length));
+  }
+
   void _onListener(){
     messageController.addListener(_onTyping);
   }
@@ -843,6 +925,27 @@ class ChatController extends BaseController {
     final repo = appRepository.requestToSendCallNotification(req);
     callService(repo,onSuccess: (response){
       navigateToCallScreen(channelName, agoraToken);
+    });
+  }
+
+  PaginationRequest paginationRequest(int page, int limit){
+    return PaginationRequest(
+      page: page,
+      limit: limit,
+    );
+  }
+
+
+  parseMessageTemplates(MessagesTemplatesResponseEntity response){
+    templates.value = response.templates ?? [];
+    filteredTemplates.value = templates;
+  }
+
+  void requestForMessageTemplates(){
+    final req = paginationRequest(1, 200);
+    final repo = appRepository.requestForMessageTemplates(req);
+    callService(repo,onSuccess: (response){
+      parseMessageTemplates(response);
     });
   }
 
