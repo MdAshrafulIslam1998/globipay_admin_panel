@@ -27,6 +27,8 @@ abstract class TableHeaderVisibility {
         return _MISC_TABLE[currentRole];
       case TableName.USER_TRANSACTION_TABLE:
         return _USER_TRANSACTION_TABLE[currentRole];
+      case TableName.USER_AMOUNT_TABLE:
+        return _USER_TRANSACTION_TABLE[currentRole];
 
       default:
         return [];
@@ -152,14 +154,13 @@ abstract class TableHeaderVisibility {
   };
 
   static final Map<String, List<String>> _MISC_TABLE = {
-     RoleName.ADMIN.code: const [
+    RoleName.ADMIN.code: const [
       MiscTableHeaderConst.ID,
       MiscTableHeaderConst.FEATURE_CODE,
       MiscTableHeaderConst.TYPE,
       MiscTableHeaderConst.CONTENT,
       MiscTableHeaderConst.DETAILS,
       MiscTableHeaderConst.DELETE,
-
     ], //admin
     RoleName.SUB_ADMIN.code: [
       MiscTableHeaderConst.ID,
@@ -178,7 +179,6 @@ abstract class TableHeaderVisibility {
       MiscTableHeaderConst.DELETE,
     ], //moderator
   };
-
 
   static Map<String, List<String>> _USER_TRANSACTION_TABLE = {
     RoleName.ADMIN.code: [
@@ -202,6 +202,32 @@ abstract class TableHeaderVisibility {
       'coin',
       'coin_type',
       'category_name'
+    ], //moderator
+  };
+
+  static Map<String, List<String>> _USER_AMOUNT_TABLE = {
+    RoleName.ADMIN.code: [
+      'name',
+      'email',
+      'date',
+      'coin',
+      'status',
+      'level',
+      
+    ], //admin
+    RoleName.SUB_ADMIN.code: [
+      'name',
+      'date',
+      'coin',
+      'status',
+      'level',
+    ], //subadmin
+    RoleName.MODERATOR.code: [
+      'name',
+      'date',
+      'coin',
+      'status',
+      'level',
     ], //moderator
   };
 }

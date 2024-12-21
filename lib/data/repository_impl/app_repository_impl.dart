@@ -45,11 +45,11 @@ class AppRepositoryImpl extends AppRepository {
   AppRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<UserResponseEntity> requestForUserList(PaginationRequest paginationRequest, {String? path}) {
+  Future<UserResponseEntity> requestForUserList(
+      PaginationRequest paginationRequest,
+      {String? path}) {
     return remoteDataSource.requestForUserList(paginationRequest, path: path);
   }
-
-  
 
   @override
   Future<LoginResponse> requestForLogin(LoginRequest request) {
@@ -63,12 +63,14 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<AddPromotionalBannerResponseEntity> requestToAddPromotionalBanner(AddPromotionalBannerRequestEntity request) {
+  Future<AddPromotionalBannerResponseEntity> requestToAddPromotionalBanner(
+      AddPromotionalBannerRequestEntity request) {
     return remoteDataSource.requestToAddPromotionalBanner(request);
   }
 
   @override
-  Future<PromotionalBannerResponseEntity> requestForAllPromotionalBanner(PaginationRequest request) {
+  Future<PromotionalBannerResponseEntity> requestForAllPromotionalBanner(
+      PaginationRequest request) {
     return remoteDataSource.requestForAllPromotionalBanner(request);
   }
 
@@ -78,32 +80,38 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<FileUploadResponse> requestToByteFileUpload(ByteFileUploadRequest request) {
+  Future<FileUploadResponse> requestToByteFileUpload(
+      ByteFileUploadRequest request) {
     return remoteDataSource.requestToByteFileUpload(request);
   }
 
   @override
-  Future<void> requestToRemoveBanner(PromotionalBannerDeleteRequestEntity request) {
+  Future<void> requestToRemoveBanner(
+      PromotionalBannerDeleteRequestEntity request) {
     return remoteDataSource.requestToRemoveBanner(request);
   }
 
   @override
-  Future<MiscResponseEntity> requestForMisc(PaginationRequest paginationRequest) {
+  Future<MiscResponseEntity> requestForMisc(
+      PaginationRequest paginationRequest) {
     return remoteDataSource.requestForMisc(paginationRequest);
   }
 
   @override
-  Future<CategoryResponseEntity> requestForCategories(PaginationRequest request) {
+  Future<CategoryResponseEntity> requestForCategories(
+      PaginationRequest request) {
     return remoteDataSource.requestForCategories(request);
   }
 
   @override
-  Future<void> requestToAddMessageTemplates(AddMessageTemplatesRequest request) {
+  Future<void> requestToAddMessageTemplates(
+      AddMessageTemplatesRequest request) {
     return remoteDataSource.requestToAddMessageTemplates(request);
   }
 
   @override
-  Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(PaginationRequest request) {
+  Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(
+      PaginationRequest request) {
     return remoteDataSource.requestForMessageTemplates(request);
   }
 
@@ -114,7 +122,7 @@ class AppRepositoryImpl extends AppRepository {
 
   @override
   Future<void> requestToAddCategory(AddCategoryRequestEntity req) {
-   return remoteDataSource.requestToAddCategory(req);
+    return remoteDataSource.requestToAddCategory(req);
   }
 
   @override
@@ -132,14 +140,8 @@ class AppRepositoryImpl extends AppRepository {
     return remoteDataSource.requestToRemoveMisc(id);
   }
 
+ 
 
-
-  @override
-  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(
-    PaginationRequest paginationRequest,
-    ) {
-    return remoteDataSource.requestForUserwiseTransactions(paginationRequest);
-  }
 
   @override
   Future<void> requestToRemoveLevel(String id) {
@@ -172,9 +174,29 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<AllTransactionsResponseEntity> requestForAllTransactions({required PaginationRequest paginationRequest, String? path}) {
-    return remoteDataSource.requestForAllTransactions(paginationRequest : paginationRequest, path: path);
+  Future<AllTransactionsResponseEntity> requestForAllTransactions(
+      {required PaginationRequest paginationRequest, String? path}) {
+    return remoteDataSource.requestForAllTransactions(
+        paginationRequest: paginationRequest, path: path);
   }
+
+
+@override
+  Future<AllTransactionsResponseEntity> requestForUserAmountDetails(
+      {required PaginationRequest paginationRequest, String? path}) {
+    return remoteDataSource.requestForUserAmountDetails(
+        paginationRequest: paginationRequest, path: path);
+  }
+
+
+   @override
+  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(
+    PaginationRequest paginationRequest,
+  ) {
+    return remoteDataSource.requestForUserwiseTransactions(paginationRequest);
+  }
+
+
 
   @override
   Future<List<NotificationResponseItemEntity>> requestForAllNotifications() {
@@ -182,22 +204,27 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<UserResponseEntity> requestForSearchUserList(PaginationRequest paginationRequest) {
+  Future<UserResponseEntity> requestForSearchUserList(
+      PaginationRequest paginationRequest) {
     return remoteDataSource.requestForSearchUserList(paginationRequest);
   }
 
   @override
-  Future<void> requestToTriggerNotification(CreateNotificationRequestEntity request) {
+  Future<void> requestToTriggerNotification(
+      CreateNotificationRequestEntity request) {
     return remoteDataSource.requestToTriggerNotification(request);
   }
 
   @override
-  Future<UserTransactionHistoryResponseEntity> requestUserSpecificTransaction({required PaginationRequest request, required String userId}) {
-    return remoteDataSource.requestUserSpecificTransaction(request: request, userId: userId);
+  Future<UserTransactionHistoryResponseEntity> requestUserSpecificTransaction(
+      {required PaginationRequest request, required String userId}) {
+    return remoteDataSource.requestUserSpecificTransaction(
+        request: request, userId: userId);
   }
 
   @override
-  Future<AgoraTokenResponseEntity> requestForAgoraToken(AgoraTokenRequestEntity request) {
+  Future<AgoraTokenResponseEntity> requestForAgoraToken(
+      AgoraTokenRequestEntity request) {
     return remoteDataSource.requestForAgoraToken(request);
   }
 
@@ -207,8 +234,10 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<NotificationResponseEntity> requestUserSpecificNotification({required PaginationRequest request, required String userId}) {
-    return remoteDataSource.requestUserSpecificNotification(request: request, userId: userId);
+  Future<NotificationResponseEntity> requestUserSpecificNotification(
+      {required PaginationRequest request, required String userId}) {
+    return remoteDataSource.requestUserSpecificNotification(
+        request: request, userId: userId);
   }
 
   @override
@@ -220,11 +249,4 @@ class AppRepositoryImpl extends AppRepository {
   Future<void> requestToRemoveNotification(String notificationId) {
     return remoteDataSource.requestToRemoveNotification(notificationId);
   }
-
-
-
-
-
-
-
 }

@@ -27,22 +27,22 @@ abstract class AppApi {
   static const String addLevel = '$prefix/levels/addLevel';
   static const String staffList = '$prefix/staffpanel/staffs';
   static const String addStaff = '$prefix/staffpanel/staffs';
-  static const String USER_WISE_TRANSACTIONS = '$prefix/alltransactions/userwise';
-  static const String CAT_WISE_TRANSACTIONS = '$prefix/alltransactions/categorywise';
+  static const String USER_WISE_TRANSACTIONS =
+      '$prefix/alltransactions/userwise';
+  static const String CAT_WISE_TRANSACTIONS =
+      '$prefix/alltransactions/categorywise';
   static const String allTransactions = '$prefix/alltransactions';
-  static const String userwiseTransactions = '$prefix/users/userwise/transactions';
+  static const String userwiseTransactions =
+      '$prefix/users/userwise/transactions';
   static const String notifications = '$prefix/notifications';
   static const String searchUser = '$prefix/users/search';
   static const String createNotifications = '$prefix/notifications/send';
   static const String userSpecificTransactionHistory = '$prefix/users';
   static const String agoraToken = '$prefix/agora/generateToken';
   static const String callSend = '$prefix/send-call-notification';
-  static const String userSpecificNotifications = '$prefix/notifications/fetch-by-target';
+  static const String userSpecificNotifications =
+      '$prefix/notifications/fetch-by-target';
   static const String userStatus = '$prefix/users/changestatus';
   static const String deleteNotification = '$prefix/notifications/delete';
-
-
-
-
-
+  static const String userAmountDetails = '$prefix/amountdetailsweb';
 }

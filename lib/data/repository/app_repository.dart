@@ -47,6 +47,8 @@ abstract class AppRepository{
   Future<AllTransactionsResponseEntity> requestForAllTransactions(
       {required PaginationRequest paginationRequest,String? path});
   Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(PaginationRequest paginationRequest);
+   Future<AllTransactionsResponseEntity> requestForUserAmountDetails(
+      {required PaginationRequest paginationRequest,String? path});
   Future<AddPromotionalBannerResponseEntity> requestToAddPromotionalBanner(AddPromotionalBannerRequestEntity request);
   Future<PromotionalBannerResponseEntity> requestForAllPromotionalBanner(PaginationRequest request);
   Future<FileUploadResponse> requestToFileUpload(FileUploadRequest request);

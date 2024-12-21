@@ -43,7 +43,8 @@ class _$AppInjector extends AppInjector {
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => TransHistoryController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
-      ..registerFactory((c) => UserAmountController())
+      ..registerFactory((c) => UserAmountController(
+          c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => UserLevelsController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => BlockedUsersController(
