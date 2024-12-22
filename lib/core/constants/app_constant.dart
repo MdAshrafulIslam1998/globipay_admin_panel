@@ -31,6 +31,7 @@ abstract class AppConstants{
 
   static const String TOKEN = "token";
   static const String isUserLoggedIn = "isUserLoggedIn";
+  static const String CURRENCY_SYMBOL = "\$";
 
   static const int valueInt0 = 0;
   static const int valueInt1 = 1;

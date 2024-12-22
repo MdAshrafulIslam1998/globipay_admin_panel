@@ -29,7 +29,7 @@ class _$AppInjector extends AppInjector {
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory((c) => LoginController(
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
-      ..registerFactory((c) => DashboardController())
+      ..registerFactory((c) => DashboardController(c.resolve<AppRepository>()))
       ..registerFactory((c) => BasePanelController())
       ..registerFactory((c) => ActiveUsersController())
       ..registerFactory(

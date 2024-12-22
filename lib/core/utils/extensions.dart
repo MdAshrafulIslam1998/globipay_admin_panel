@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:globipay_admin_panel/core/constants/app_constant.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
-
 import 'package:globipay_admin_panel/flavors/flavor_config.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart';
@@ -78,6 +78,14 @@ extension ColorExtension on Color?{
     return includeAlpha ? "#$hex" : hex.substring(2);
   }
 
+}
+
+extension DoubleExtension on double?{
+  String toCurrencyFormat() {
+    if (this == null) return '';
+    final formatter = NumberFormat("#,##0.00", "en_US");
+    return "${AppConstants.CURRENCY_SYMBOL} ${formatter.format(this)}";
+  }
 }
 
 

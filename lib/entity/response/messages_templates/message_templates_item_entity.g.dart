@@ -13,8 +13,8 @@ MessageTemplatesItemEntity _$MessageTemplatesItemEntityFromJson(
       title: json['title'] as String?,
       description: json['description'] as String?,
       category_name: json['category_name'] as String?,
-          create_date: json['create_date'] as String?,
       category_id: (json['category_id'] as num?)?.toInt(),
+      create_date: json['create_date'] as String?,
     );
 
 Map<String, dynamic> _$MessageTemplatesItemEntityToJson(

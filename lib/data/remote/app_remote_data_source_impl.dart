@@ -12,6 +12,8 @@ import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/pr
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
+import 'package:globipay_admin_panel/entity/response/dashboard/dashboard_transaction_balance_entity.dart';
+import 'package:globipay_admin_panel/entity/response/dashboard/recent_transaction_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/level/level_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.dart';
@@ -621,6 +623,34 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     );
     try {
       return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<DashboardTransactionBalanceEntity> requestForDashboardBalance() {
+    var endpoint = '$BASE_URL/${AppApi.totalTransactions}';
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => DashboardTransactionBalanceEntity.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<RecentTransactionResponseEntity>> requestForRecentTransactionHistory() {
+    var endpoint = '$BASE_URL/${AppApi.recentTransaction}';
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+    );
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => (response.data as List).map((e) => RecentTransactionResponseEntity.fromJson(e)).toList());
     } catch (e) {
       rethrow;
     }

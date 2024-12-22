@@ -17,6 +17,8 @@ import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_enti
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/dashboard/dashboard_transaction_balance_entity.dart';
+import 'package:globipay_admin_panel/entity/response/dashboard/recent_transaction_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/file_upload/file_upload_response.dart';
 import 'package:globipay_admin_panel/entity/response/level/level_item_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/level/level_response_entity.dart';
@@ -83,5 +85,7 @@ abstract class AppRepository{
 
   Future<void> requestToUpdateUserStatus(String userId, UserStatus status);
   Future<void> requestToRemoveNotification(String notificationId);
+  Future<DashboardTransactionBalanceEntity> requestForDashboardBalance();
+  Future<List<RecentTransactionResponseEntity>> requestForRecentTransactionHistory();
 
 }
