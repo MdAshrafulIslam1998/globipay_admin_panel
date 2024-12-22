@@ -8,9 +8,7 @@ class _DashboardScreenState extends State<DashboardScreenBuilder> {
     @override
     Widget build(BuildContext context) {
         return Scaffold(
-            body:Expanded(
-                child: _buildMainDashboard(),
-            ),
+            body:_buildMainDashboard(),
         );
     }
 
@@ -53,23 +51,23 @@ class _DashboardScreenState extends State<DashboardScreenBuilder> {
                         Row(
                             children: [
                                 _buildStatCard(
-                                    title: 'Total Balance',
+                                    title: 'Total Transaction',
                                     value: '\$24,563.45',
                                     icon: Icons.account_balance_wallet,
                                     color: Colors.blue,
                                 ),
                                 SizedBox(width: 20),
                                 _buildStatCard(
-                                    title: 'Total Income',
+                                    title: 'Total Primary',
                                     value: '\$5,230.00',
-                                    icon: Icons.trending_up,
+                                    icon: Icons.monetization_on,
                                     color: Colors.green,
                                 ),
                                 SizedBox(width: 20),
                                 _buildStatCard(
-                                    title: 'Total Expenses',
+                                    title: 'Total Secondary',
                                     value: '\$3,450.75',
-                                    icon: Icons.trending_down,
+                                    icon: Icons.monetization_on_outlined,
                                     color: Colors.red,
                                 ),
                             ],
