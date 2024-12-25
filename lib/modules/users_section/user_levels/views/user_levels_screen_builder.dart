@@ -36,7 +36,6 @@ class _UserLevelsScreenBuilderState
     'date': double.nan,
     'status': double.nan,
     'details': double.nan,
-    'edit': double.nan,
   };
 
   @override
@@ -192,9 +191,7 @@ class _UserLevelsScreenBuilderState
                           case 'details':
                             AppRoutes.pushNamed(RoutePath.pendingProfile);
                             break;
-                          case 'edit':
-                            AppRoutes.pushNamed(RoutePath.editLevel);
-                            break;
+
                         }
                       },
                       visibleColumns: controller.visibleColumns.value,
@@ -269,7 +266,6 @@ class _UserLevelsScreenBuilderState
       'date': {'title': 'Date', 'paddingPercent': 10},
       'status': {'title': 'Status', 'paddingPercent': 5},
       'details': {'title': 'Details', 'paddingPercent': 5},
-      'edit': {'title': 'Edit', 'paddingPercent': 5},
     };
 
     return visibleColumns.map((colName) {

@@ -129,7 +129,6 @@ abstract class TableHeaderVisibility {
       'levelName',
       'date',
       'status',
-      'edit',
       'details'
     ], //admin
     RoleName.SUB_ADMIN.code: [
@@ -139,7 +138,6 @@ abstract class TableHeaderVisibility {
       'levelName',
       'date',
       'status',
-      'edit',
       'details'
     ], //subadmin
     RoleName.MODERATOR.code: [

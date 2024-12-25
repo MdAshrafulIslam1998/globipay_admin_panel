@@ -50,9 +50,9 @@ class UserLevelsDataSource extends DataGridSource {
                     return DataGridCell<UserResponseItemEntity>(
                         columnName: 'details', value: user);
                  
-                  case 'edit':
+                  /*case 'edit':
                     return DataGridCell<UserResponseItemEntity>(
-                        columnName: 'edit', value: user);
+                        columnName: 'edit', value: user);*/
                   default:
                     throw Exception('Invalid column: $columnName');
                 }
@@ -94,7 +94,7 @@ class UserLevelsDataSource extends DataGridSource {
                   cell.value as UserResponseItemEntity, 'details');
             }),
           );
-        } else if (cell.columnName == 'edit') {
+        }/* else if (cell.columnName == 'edit') {
           return Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.only(left: 14.0), // Add padding right
@@ -104,7 +104,7 @@ class UserLevelsDataSource extends DataGridSource {
               onActionTap?.call(cell.value as UserResponseItemEntity, 'edit');
             }),
           );
-        } else if (cell.columnName == 'levelName') {
+        }*/ else if (cell.columnName == 'levelName') {
           return Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.only(left: 14.0), // Add padding right
