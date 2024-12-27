@@ -5,16 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/core/utils/inputFilter/input_filter.dart';
+import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
+import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
+import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
+import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/activity_log_model.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/transaction_model.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/notification_model.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:intl/intl.dart';
 
 class ProfileController extends BaseController {
+
+  final GlobalKey<FormState> modifyTransactionFormKey = GlobalKey<FormState>();
+  final TextEditingController primaryCoinController = TextEditingController();
+  final TextEditingController secondaryCoinController = TextEditingController();
+
+
+
   final AppRepository _repository;
   // Existing profile data
   Rx<ProfileData?> profileData = Rx<ProfileData?>(null);
@@ -224,6 +237,83 @@ class ProfileController extends BaseController {
     callService(repo, isShowLoader: false, onSuccess: (response) {
       notifications.value.addAll(response.notifications ?? []);
     });
+  }
+
+  void onAddTransaction(BuildContext context) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Modify Transactions"),
+            content: Form(
+              key: modifyTransactionFormKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Primary Coin Input Field
+                  InputField(
+                    controller: primaryCoinController,
+                    inputFormatters: InputFilter.ONLY_NUMBER,
+                    hintText: "Primary Coin",
+
+                  ),
+                  SizedBox(height: 10),
+                  // Secondary Coin Input Field
+                  InputField(
+                    controller: secondaryCoinController,
+                    maxLength: 10,
+                    inputFormatters: InputFilter.ONLY_NUMBER,
+                    hintText: "Secondary Coin",
+
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              // Cancel Button
+              TextButton(
+                onPressed: () {
+                  AppRoutes.pop();
+                },
+                child: Text("Cancel"),
+              ),
+              // Submit Button
+              ElevatedButton(
+                onPressed: () {
+                  if (modifyTransactionFormKey.currentState!.validate()) {
+                    AppRoutes.pop();
+                    requestToCloseChatSession();
+                  }
+                },
+                child: Text("Submit"),
+              ),
+            ],
+          );
+        },
+      );
+  }
+  ChatCloseRequestEntity chatCloseRequestEntity(String createdById,String chatId, String chatUID){
+    return ChatCloseRequestEntity(
+      primaryCoin: primaryCoinController.text.isNotEmpty ? double.tryParse(primaryCoinController.text) : 0.0,
+      secondaryCoin: secondaryCoinController.text.isNotEmpty ? double.tryParse(secondaryCoinController.text) : 0.0,
+      catId: int.tryParse(chatId ?? "-1"),
+      uid: chatUID ?? "",
+      createdBy: createdById,
+    );
+  }
+
+  requestToCloseChatSession() async{
+    final cId = await getLoggedInUserId();
+    final req = chatCloseRequestEntity(cId, "1", uid ?? "");
+    final repo = _repository.requestToCloseChat(req);
+    callService(repo,onSuccess: (ChatCloseResponseEntity response){
+      parseChatCloseSession(response);
+    });
+  }
+
+  parseChatCloseSession(ChatCloseResponseEntity response){
+
   }
 }
 

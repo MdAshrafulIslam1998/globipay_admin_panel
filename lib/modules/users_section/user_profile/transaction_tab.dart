@@ -20,7 +20,27 @@ class TransactionsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildSearchBar(),
+        Row(
+          children: [
+            Expanded(child: _buildSearchBar()),
+            Spacer(),
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: (){
+
+              },
+            ),
+
+            ElevatedButton.icon(
+              icon: Icon(Icons.add),
+              onPressed: (){
+                controller.onAddTransaction(context);
+              },
+              label: Text('Add Transaction'),
+            ),
+          ],
+        ),
+
         Expanded(
           child: Obx(() => ListView.builder(
             controller: controller.transactionScrollController,

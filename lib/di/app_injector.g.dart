@@ -11,6 +11,7 @@ class _$AppInjector extends AppInjector {
   void _controllerComponents() {
     final KiwiContainer container = KiwiContainer();
     container
+      ..registerFactory((c) => SideMenuController())
       ..registerFactory((c) => ProfileController(c.resolve<AppRepository>()))
       ..registerFactory(
           (c) => AddTemplatesController(c.resolve<AppRepository>()))

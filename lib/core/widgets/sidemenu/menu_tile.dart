@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
 import 'package:globipay_admin_panel/core/constants/defaults.dart';
 import '../../theme/app_colors.dart';
 
@@ -60,23 +61,27 @@ class MenuTile extends StatelessWidget {
               color: isActive ? AppColors.titleLight : AppColors.textLight,
             ),
           ),
-          trailing: trailing ?? Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: AppDefaults.padding / 2,
-                      vertical: AppDefaults.padding / 4),
-                  decoration: BoxDecoration(
-                    color: countBg,
-                    borderRadius:
-                        BorderRadius.circular(AppDefaults.borderRadius / 2),
-                  ),
-                  child: Text(
-                    count.toString(),
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                )
+          trailing: trailingWidget(context)
           ,
         ),
       ),
     );
+  }
+
+  Widget trailingWidget(BuildContext context){
+    return trailing ?? (count != null ? Container(
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppDefaults.padding / 2,
+                vertical: AppDefaults.padding / 4),
+            decoration: BoxDecoration(
+              color: countBg,
+              borderRadius:
+                  BorderRadius.circular(AppDefaults.borderRadius / 2),
+            ),
+            child: Text(
+              (count ?? '').toString(),
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
+          ) : AppSpaces.emptySpace);
   }
 }

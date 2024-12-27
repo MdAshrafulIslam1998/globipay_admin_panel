@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 
@@ -46,9 +47,9 @@ class _SplashScreenState extends State<SplashScreen>
     // Navigate based on token presence
     final token = await _tokenRepository.getToken();
     if (token != null && token.isNotEmpty) {
-      context.go(RoutePath.dashboard); // Navigate to dashboard
+      AppRoutes.pushAndPopAll(RoutePath.dashboard); // Navigate to dashboard
     } else {
-      context.go(RoutePath.login); // Adjust for login if needed
+      AppRoutes.pushAndPopAll(RoutePath.login); // Adjust for login if needed
     }
   }
 

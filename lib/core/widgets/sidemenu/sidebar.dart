@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/constants/app_constant.dart';
 import 'package:globipay_admin_panel/core/constants/config.dart';
 import 'package:globipay_admin_panel/core/constants/defaults.dart';
 import 'package:globipay_admin_panel/core/constants/ghaps.dart';
+import 'package:globipay_admin_panel/core/di/injector.dart';
+import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
+import 'package:globipay_admin_panel/core/widgets/app_print.dart';
+import 'package:globipay_admin_panel/core/widgets/sidemenu/side_menu_controller.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:go_router/go_router.dart';
@@ -11,11 +17,9 @@ import 'package:flutter_svg/svg.dart';
 import 'menu_tile.dart';
 
 class Sidebar extends StatelessWidget {
-  const Sidebar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final String currentRoute = GoRouterState.of(context).location;
 
     return Drawer(
       // width: Responsive.isMobile(context) ? double.infinity : null,
@@ -46,12 +50,12 @@ class Sidebar extends StatelessWidget {
                 child: ListView(
                   children: [
                     MenuTile(
-                      isActive: currentRoute == RoutePath.dashboard,
+                      isActive: AppConstants.currentPath == RoutePath.dashboard,
                       title: "Dashboard",
                       activeIconSrc: "assets/icons/bulb_filled.svg",
                       inactiveIconSrc: "assets/icons/bulb_light.svg",
                       onPressed: () {
-                        context.go(RoutePath.dashboard);
+                        navigate(RoutePath.dashboard);
                       },
                     ),
                     // Users Section with ExpansionTile
@@ -75,47 +79,43 @@ class Sidebar extends StatelessWidget {
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.activeUsersNew,
+                            isActive: AppConstants.currentPath == RoutePath.activeUsersNew,
                             title: "Active Users",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.activeUsersNew);
+                              navigate(RoutePath.activeUsersNew);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.pendingUsers,
+                            isActive: AppConstants.currentPath == RoutePath.pendingUsers,
                             title: "Pending Users",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.pendingUsers);
+                              navigate(RoutePath.pendingUsers);
                             },
                           ),
 
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.blockedUsers,
+                            isActive: AppConstants.currentPath == RoutePath.blockedUsers,
                             title: "Inactive Users",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.blockedUsers);
+                              navigate(RoutePath.blockedUsers);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.userLevels,
+                            isActive: AppConstants.currentPath == RoutePath.userLevels,
                             title: "User Levels",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.userLevels);
+                              navigate(RoutePath.userLevels);
                             },
                           ),
                         ],
@@ -143,16 +143,14 @@ class Sidebar extends StatelessWidget {
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.activeUsersNew,
+                            isActive: AppConstants.currentPath == RoutePath.chatMessageList,
                             title: "Chat List",
                             leading: Icon(
                               Icons.chat,
                               color: AppColors.iconBlack,
                             ),
-
-                            count: 16,
                             onPressed: () {
-                              AppRoutes.pushNamed(RoutePath.chatMessageList);
+                              navigate(RoutePath.chatMessageList);
                             },
                           ),
 
@@ -186,35 +184,32 @@ class Sidebar extends StatelessWidget {
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.userAmount,
+                            isActive: AppConstants.currentPath == RoutePath.userAmount,
                             title: "User Amount",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.userAmount);
+                              navigate(RoutePath.userAmount);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.transHistory,
+                            isActive: AppConstants.currentPath == RoutePath.transHistory,
                             title: "Transaction History",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.transHistory);
+                              navigate(RoutePath.transHistory);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.createCategory,
+                            isActive: AppConstants.currentPath == RoutePath.createCategory,
                             title: "Create Category",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.createCategory);
+                              navigate(RoutePath.createCategory);
                             },
                           ),
                         ],
@@ -246,46 +241,43 @@ class Sidebar extends StatelessWidget {
                           MenuTile(
                             isSubmenu: false,
                             isActive:
-                                currentRoute == RoutePath.notificationSetter,
+                                AppConstants.currentPath == RoutePath.notificationSetter,
                             title: "Notification Setter",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.notificationSetter);
+                              navigate(RoutePath.notificationSetter);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.promoBanner,
+                            isActive: AppConstants.currentPath == RoutePath.promoBanner,
                             title: "Promotional Banner",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.promoBanner);
+                              navigate(RoutePath.promoBanner);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.messageTemplates,
+                            isActive: AppConstants.currentPath == RoutePath.messageTemplates,
                             title: "Message Templates",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
                             count: 6,
                             onPressed: () {
-                              context.go(RoutePath.messageTemplates);
+                              navigate(RoutePath.messageTemplates);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.misc,
+                            isActive: AppConstants.currentPath == RoutePath.misc,
                             title: "Miscellaneous",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.misc);
+                              navigate(RoutePath.misc);
                             },
                           ),
                         ],
@@ -316,13 +308,12 @@ class Sidebar extends StatelessWidget {
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive: currentRoute == RoutePath.staffSection,
+                            isActive: AppConstants.currentPath == RoutePath.staffSection,
                             title: "Staff Section",
                             activeIconSrc: "assets/icons/fire_filled.svg",
                             inactiveIconSrc: "assets/icons/fire_light.svg",
-                            count: 16,
                             onPressed: () {
-                              context.go(RoutePath.staffSection);
+                              navigate(RoutePath.staffSection);
                             },
                           ),
                         ],
@@ -366,4 +357,12 @@ class Sidebar extends StatelessWidget {
       ),
     );
   }
+
+  void navigate(String routePath){
+    if(AppConstants.currentPath != routePath){
+      AppConstants.currentPath = routePath;
+      AppRoutes.pushNamed(routePath);
+    }
+  }
+
 }
