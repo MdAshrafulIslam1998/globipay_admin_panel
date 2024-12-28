@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:globipay_admin_panel/core/utils/app_utils.dart';
 
 ///iMessage's chat bubble type
 ///
@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
  * Created by Abdullah on 19/10/24.
  */
 
-
 class BubbleSpecialThree extends StatelessWidget {
   final bool isSender;
   final String text;
@@ -25,6 +24,7 @@ class BubbleSpecialThree extends StatelessWidget {
   final bool seen;
   final TextStyle textStyle;
   final BoxConstraints? constraints;
+  final String? time;
 
   const BubbleSpecialThree({
     Key? key,
@@ -40,6 +40,7 @@ class BubbleSpecialThree extends StatelessWidget {
       color: Colors.black87,
       fontSize: 16,
     ),
+    this.time,
   }) : super(key: key);
 
   ///chat bubble builder method
@@ -88,8 +89,8 @@ class BubbleSpecialThree extends StatelessWidget {
                 ),
             margin: isSender
                 ? stateTick
-                ? const EdgeInsets.fromLTRB(7, 7, 14, 7)
-                : const EdgeInsets.fromLTRB(7, 7, 17, 7)
+                    ? const EdgeInsets.fromLTRB(7, 7, 14, 7)
+                    : const EdgeInsets.fromLTRB(7, 7, 17, 7)
                 : const EdgeInsets.fromLTRB(17, 7, 7, 7),
             child: Stack(
               children: <Widget>[
@@ -97,21 +98,40 @@ class BubbleSpecialThree extends StatelessWidget {
                   padding: stateTick
                       ? const EdgeInsets.only(left: 4, right: 20)
                       : const EdgeInsets.only(left: 4, right: 4),
-                  child: Text(
-                    text,
-                    style: textStyle,
-                    textAlign: TextAlign.left,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child:
+                      Text(
+                        text,
+                        style: textStyle,
+                        textAlign: TextAlign.left,
+                      ),),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        AppUtils.getChatTime(time ?? DateTime.now().toString()),
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 stateIcon != null && stateTick
                     ? Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: stateIcon,
-                )
+                        bottom: 0,
+                        right: 0,
+                        top: 0,
+                        child: stateIcon,
+                      )
                     : const SizedBox(
-                  width: 1,
-                ),
+                        width: 1,
+                      ),
               ],
             ),
           ),
@@ -298,3 +318,6 @@ class SpecialChatBubbleThree extends CustomPainter {
     return true;
   }
 }
+
+
+

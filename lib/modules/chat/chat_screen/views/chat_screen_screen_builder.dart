@@ -5,22 +5,27 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
-import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/entity/response/message/message.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/controller/chat_controller.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/message_templates_view.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/widgets/message_bars/message_bar.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/widgets/message_bubble_widget.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/widgets/message_date_chip.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:linkify/linkify.dart';
 
 import 'widgets/message_image_bubble_widget.dart';
 
 /**
  * Created by Abdullah on 19/10/24 08:01 PM.
  */
+
 
 class ChatScreenScreenBuilder extends StatefulWidget {
 
@@ -124,11 +129,11 @@ class _ChatScreenScreenBuilderState
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: GestureDetector(
                             child: const Icon(
-                              Icons.insert_comment,
+                              Icons.image_outlined,
                               color: Colors.grey,
                             ),
                             onTap: () {
-                              controller.showTemplates.toggle(); // Toggle split view
+                              controller.onSendMessageFromPhotoLibrary(); // Toggle split view
                             },
                           ),
                         ),
@@ -153,17 +158,22 @@ class _ChatScreenScreenBuilderState
 
 
   Widget messageContent(List<Message> chat, int index){
+
     final chat = controller.messages.value[index];
-    final messageDate = DateTime.parse(chat.created_at ?? "").day;
-    final nextMessageDate = index + 1 < controller.messages.value.length
-        ? DateTime.parse(controller.messages.value[index + 1].created_at ?? "").day
+    final currentMessage = controller.messages.value[index];
+    final currentDate = DateTime.parse(currentMessage.created_at ?? "").toLocal();
+
+    final previousMessageDate = index > 0
+        ? DateTime.parse(controller.messages.value[index - 1].created_at ?? "").toLocal()
         : null;
-    bool showDate = messageDate != nextMessageDate;
+
+    // Determine if we need to show the date header
+    final bool showDate = index == 0 ||
+        (previousMessageDate != null && currentDate.day != previousMessageDate.day);
 
     return Column(
       children: [
-
-        if (showDate)
+        if (index == 0 || showDate)
         DateChip(
             date: DateTime.parse(chat.created_at ?? ""),
         ),
@@ -180,6 +190,7 @@ class _ChatScreenScreenBuilderState
             delivered: chat.delivered_at != null,
             sent: true,
             seen: chat.seen_at != null,
+            time: chat.created_at,
           ),
         if(chat.message_type == 'text')
           BubbleSpecialThree(
@@ -191,9 +202,903 @@ class _ChatScreenScreenBuilderState
           sent: true,
           seen: chat.seen_at != null,
           textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+          time: chat.created_at,
         )
       ],
     );
 
   }
+
 }
+
+
+/*
+
+class ChatScreenScreenBuilder extends StatefulWidget {
+  const ChatScreenScreenBuilder({super.key});
+
+  @override
+  State<ChatScreenScreenBuilder> createState() => _ChatScreenBuilderState();
+}
+
+class _ChatScreenBuilderState extends BaseViewState<ChatScreenScreenBuilder, ChatController> {
+  final FocusNode _focusNode = FocusNode();
+  bool _isAttachmentPreviewVisible = false;
+
+  @override
+  void initState() {
+    controller.onInit();
+    _setupScrollListener();
+    super.initState();
+  }
+
+  void _setupScrollListener() {
+    controller.scrollController.addListener(() {
+      if (controller.scrollController.position.pixels ==
+          controller.scrollController.position.maxScrollExtent) {
+        // Load more messages when reaching the top
+      //  controller.loadMoreMessages();
+      }
+    });
+  }
+
+  @override
+  PreferredSizeWidget? appBar() {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Theme.of(context).primaryColor,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+        onPressed: () => Navigator.pop(context),
+      ),
+
+      title: _buildAppBarTitle(),
+      actions: _buildAppBarActions(),
+    );
+  }
+
+  Widget _buildAppBarTitle() {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 20,
+          backgroundColor: Colors.white,
+          child: Text(
+            'U',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Abdullah" ?? '',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Obx(() => Text(
+              controller.isTyping.value ? 'typing...' : 'Online',
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 12,
+              ),
+            )),
+          ],
+        ),
+      ],
+    );
+  }
+
+  List<Widget> _buildAppBarActions() {
+    return [
+      IconButton(
+        icon: const Icon(CupertinoIcons.phone_solid, color: Colors.white),
+        onPressed: () => controller.onAudioCall(),
+      ),
+      IconButton(
+        icon: const Icon(CupertinoIcons.video_camera, color: Colors.white),
+        onPressed: () => controller.onVideoCall(),
+      ),
+      IconButton(
+        icon: const Icon(Icons.more_vert, color: Colors.white),
+        onPressed: () => _showMoreOptions(),
+      ),
+    ];
+  }
+
+  @override
+  Widget body(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        gradient: LinearGradient(
+          colors: [
+            Colors.grey[100]!,
+            Colors.grey[200]!,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            flex: controller.showTemplates.value ? 4 : 6,
+            child: Column(
+              children: [
+                Expanded(
+                  child: _buildMessagesList(),
+                ),
+                _buildAttachmentPreview(),
+                _buildMessageBar(),
+              ],
+            ),
+          ),
+          if (controller.showTemplates.value)
+            Expanded(
+              flex: 2,
+              child: MessageTemplatesView(controller),
+            )
+          else
+            _buildChatInfoPanel(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMessagesList() {
+    return Obx(() => ListView.builder(
+      reverse: true,
+      controller: controller.scrollController,
+      itemCount: controller.messages.length,
+      itemBuilder: (context, index) {
+        final messages = controller.messages.reversed.toList();
+        final message = messages[index];
+        final previousMessage = index > 0 ? messages[index - 1] : null;
+
+        return Column(
+          children: [
+            if (_shouldShowDateHeader(message, previousMessage))
+              _buildDateHeader(message),
+            if (_shouldShowTimeGap(message, previousMessage))
+              _buildTimeGapMarker(message, previousMessage!),
+            _buildMessageItem(message, previousMessage),
+          ],
+        );
+      },
+    ));
+  }
+  bool _shouldShowDateHeader(Message currentMessage, Message? previousMessage) {
+    if (previousMessage == null) return true;
+
+    final currentDate = _parseDate(currentMessage.created_at);
+    final previousDate = _parseDate(previousMessage.created_at);
+
+    if (currentDate == null || previousDate == null) return false;
+
+    return currentDate.year != previousDate.year ||
+        currentDate.month != previousDate.month ||
+        currentDate.day != previousDate.day;
+  }
+
+  Widget _buildDateHeader(Message message) {
+    final date = _parseDate(message.created_at);
+    if (date == null) return SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Text(
+        _formatDate(date),
+        style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  bool _shouldShowTimeGap(Message currentMessage, Message? previousMessage) {
+    if (previousMessage == null) return false;
+
+    final currentDate = _parseDate(currentMessage.created_at);
+    final previousDate = _parseDate(previousMessage.created_at);
+
+    if (currentDate == null || previousDate == null) return false;
+
+    const timeGapThreshold = Duration(minutes: 15);
+    final timeDifference = currentDate.difference(previousDate).abs();
+    return timeDifference > timeGapThreshold;
+  }
+
+  Widget _buildTimeGapMarker(Message currentMessage, Message previousMessage) {
+    final currentDate = _parseDate(currentMessage.created_at);
+    final previousDate = _parseDate(previousMessage.created_at);
+
+    if (currentDate == null || previousDate == null) return SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Text(
+        _formatTimeGap(currentDate, previousDate),
+        style: const TextStyle(fontSize: 12.0, color: Colors.grey),
+      ),
+    );
+  }
+
+// Utility method to parse date
+  DateTime? _parseDate(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return null;
+    try {
+      return DateTime.parse(dateString);
+    } catch (e) {
+      return null;
+    }
+  }
+
+// Format date as "Day Month Year"
+  String _formatDate(DateTime date) {
+    return "${date.day}/${date.month}/${date.year}"; // You can customize this format
+  }
+
+// Format time gap as "Time gap: X minutes"
+  String _formatTimeGap(DateTime current, DateTime previous) {
+    final difference = current.difference(previous).inMinutes;
+    return "Time gap: $difference minutes";
+  }
+
+
+  Widget _buildMessageItem(Message message, Message? previousMessage) {
+    final isSender = message.sender_id == controller.sharedController.currentUserId;
+    final isGrouped = previousMessage != null &&
+        previousMessage.sender_id == message.sender_id &&
+        DateTime.parse(message.created_at!).difference(
+          DateTime.parse(previousMessage.created_at!),
+        ).inMinutes < 2;
+
+    return Container(
+      margin: EdgeInsets.only(
+        top: isGrouped ? 2 : 12,
+        bottom: 2,
+        left: 16,
+        right: 16,
+      ),
+      child: Row(
+        mainAxisAlignment:
+        isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (!isSender && !isGrouped)
+            CircleAvatar(
+              radius: 16,
+              backgroundImage: message.media_url != null
+                  ? NetworkImage(message.media_url!)
+                  : null,
+              child: message.media_url == null
+                  ? Text( 'U')
+                  : null,
+            ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.6,
+              ),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: isSender
+                      ? [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).primaryColor.withOpacity(0.8),
+                  ]
+                      : [Colors.white, Colors.white],
+                ),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (message.message_type == 'text')
+                    _buildTextMessage(message, isSender)
+                  else if (message.message_type == 'image')
+                    _buildImageMessage(message)
+                  else if (message.message_type == 'file')
+                      _buildFileMessage(message),
+                  const SizedBox(height: 4),
+                  _buildMessageFooter(message, isSender),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextMessage(Message message, bool isSender) {
+    return Linkify(
+      onOpen: (link) async {
+        if (await canLaunch(link.url)) {
+          await launch(link.url);
+        }
+      },
+      text: message.message ?? '',
+      style: TextStyle(
+        color: isSender ? Colors.white : Colors.black87,
+        fontSize: 16,
+      ),
+      linkStyle: TextStyle(
+        color: isSender ? Colors.white70 : Theme.of(context).primaryColor,
+        decoration: TextDecoration.underline,
+      ),
+    );
+  }
+
+  Widget _buildImageMessage(Message message) {
+    return GestureDetector(
+      onTap: () => (){
+
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: CachedNetworkImage(
+          imageUrl: message.media_url!,
+          placeholder: (context, url) => Container(
+            height: 200,
+            color: Colors.grey[200],
+            child: const Center(child: CircularProgressIndicator()),
+          ),
+          errorWidget: (context, url, error) => Container(
+            height: 200,
+            color: Colors.grey[200],
+            child: const Icon(Icons.error),
+          ),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFileMessage(Message message) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.insert_drive_file, size: 24),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              'File',
+              style: const TextStyle(
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMessageFooter(Message message, bool isSender) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          DateFormat('HH:mm').format(DateTime.parse(message.created_at!)),
+          style: TextStyle(
+            color: isSender ? Colors.white70 : Colors.grey[600],
+            fontSize: 10,
+          ),
+        ),
+        if (isSender) ...[
+          const SizedBox(width: 4),
+          _buildMessageStatus(message),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildMessageStatus(Message message) {
+    if (message.seen_at != null) {
+      return const Icon(Icons.done_all, size: 16, color: Colors.blue);
+    } else if (message.delivered_at != null) {
+      return const Icon(Icons.done_all, size: 16, color: Colors.white70);
+    } else if (message.seen_at == null && message.delivered_at == null) {
+      return const Icon(Icons.done, size: 16, color: Colors.white70);
+    }
+    return const Icon(Icons.access_time, size: 16, color: Colors.white70);
+  }
+
+  Widget _buildAttachmentPreview() {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      height: _isAttachmentPreviewVisible ? 200 : 0,
+      child: _isAttachmentPreviewVisible
+          ? Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Attachment Preview',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    setState(() {
+                      _isAttachmentPreviewVisible = false;
+                    });
+                  },
+                ),
+              ],
+            ),
+            // Add your attachment preview widgets here
+          ],
+        ),
+      )
+          : null,
+    );
+  }
+
+  Widget _buildMessageBar() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 3,
+            offset: const Offset(0, -1),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Row(
+          children: [
+      IconButton(
+      icon: const Icon(Icons.add_circle_outline),
+      onPressed: () {
+        setState(() {
+          _isAttachmentPreviewVisible = !_isAttachmentPreviewVisible;
+        });
+      },
+    ),
+
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: controller.messageController,
+                        focusNode: _focusNode,
+                        maxLines: null,
+                        textCapitalization: TextCapitalization.sentences,
+                        decoration: InputDecoration(
+                          hintText: 'Type a message...',
+                          hintStyle: TextStyle(color: Colors.grey[500]),
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (value) {
+                          controller.updateTypingStatus(value.isNotEmpty);
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.emoji_emotions_outlined),
+                      color: Colors.grey[600],
+                      onPressed: () {
+                        // Show emoji picker
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.attach_file),
+                  color: Colors.grey[600],
+                  onPressed: () {
+                    _showAttachmentOptions();
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.send),
+                  color: Theme.of(context).primaryColor,
+                  onPressed: () {
+                    if (controller.messageController.text.trim().isNotEmpty) {
+                      controller.sendTextMessage(controller.messageController.text);
+                      controller.messageController.clear();
+                      _focusNode.requestFocus();
+                    }
+                  },
+                ),
+              ],
+            ),
+          ],
+      ),
+    );
+  }
+
+  Widget _buildChatInfoPanel() {
+    return Container(
+      width: 300,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          left: BorderSide(color: Colors.grey[200]!),
+        ),
+      ),
+      child: Column(
+        children: [
+          _buildSearchBar(),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  _buildUserInfo(),
+                  const Divider(height: 32),
+                  _buildSharedMedia(),
+                  const Divider(height: 32),
+                  _buildChatActions(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 3,
+          ),
+        ],
+      ),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: 'Search in conversation',
+          prefixIcon: const Icon(Icons.search),
+          filled: true,
+          fillColor: Colors.grey[100],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        onChanged: (value) {
+          // Implement search functionality
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserInfo() {
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 40,
+          backgroundImage:
+              NetworkImage(controller.sharedController.chatSessionResponse?.avatar_url ?? ""),
+
+          child:  Text(
+             'U',
+            style: const TextStyle(fontSize: 24),
+          )
+        ),
+        const SizedBox(height: 16),
+        Text(
+           'ABD',
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+           'Online',
+          style: TextStyle(
+            color: Colors.grey[600],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSharedMedia() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Quick Actions',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: [
+            _buildQuickActionButton(
+              icon: Icons.file_copy,
+              label: 'Files',
+              onTap: () {
+                // Show shared files
+              },
+            ),
+            _buildQuickActionButton(
+              icon: Icons.image,
+              label: 'Media',
+              onTap: () {
+                // Show shared media
+              },
+            ),
+            _buildQuickActionButton(
+              icon: Icons.link,
+              label: 'Links',
+              onTap: () {
+                // Show shared links
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildQuickActionButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 100,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          children: [
+            Icon(icon, size: 24, color: Theme.of(context).primaryColor),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChatActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Chat Actions',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 16),
+        _buildActionButton(
+          icon: Icons.notifications_off,
+          label: 'Mute Notifications',
+          onTap: () {
+            // Implement mute functionality
+          },
+        ),
+        _buildActionButton(
+          icon: Icons.block,
+          label: 'Block User',
+          onTap: () {
+            // Implement block functionality
+          },
+        ),
+        _buildActionButton(
+          icon: Icons.report,
+          label: 'Report User',
+          onTap: () {
+            // Implement report functionality
+          },
+          isDestructive: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+    bool isDestructive = false,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              size: 20,
+              color: isDestructive ? Colors.red : Colors.grey[600],
+            ),
+            const SizedBox(width: 12),
+            Text(
+              label,
+              style: TextStyle(
+                color: isDestructive ? Colors.red : Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showAttachmentOptions() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(20),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildAttachmentOption(
+                  icon: Icons.image,
+                  label: 'Gallery',
+                  onTap: () {
+
+                  },
+                ),
+                _buildAttachmentOption(
+                  icon: Icons.camera_alt,
+                  label: 'Camera',
+                  onTap:() {},
+                ),
+                _buildAttachmentOption(
+                  icon: Icons.insert_drive_file,
+                  label: 'Document',
+                  onTap: (){
+
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAttachmentOption({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: Theme.of(context).primaryColor),
+          ),
+          const SizedBox(height: 8),
+          Text(label),
+        ],
+      ),
+    );
+  }
+
+  void _showMoreOptions() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(20),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.search),
+              title: const Text('Search in Chat'),
+              onTap: () {
+                // Implement search
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.notifications_off),
+              title: const Text('Mute Notifications'),
+              onTap: () {
+                // Implement mute
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.block),
+              title: const Text('Block User'),
+              onTap: () {
+                // Implement block
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+}*/

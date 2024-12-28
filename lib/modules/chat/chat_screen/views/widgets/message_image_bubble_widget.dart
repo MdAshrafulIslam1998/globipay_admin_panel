@@ -3,6 +3,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:globipay_admin_panel/core/utils/app_utils.dart';
 
 const double BUBBLE_RADIUS_IMAGE = 16;
 
@@ -58,6 +59,7 @@ class BubbleNormalImage extends StatelessWidget {
   final Widget? trailing;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
+  final String? time;
 
   const BubbleNormalImage({
     Key? key,
@@ -76,6 +78,7 @@ class BubbleNormalImage extends StatelessWidget {
     this.seen = false,
     this.onTap,
     this.onLongPress,
+    this.time,
   }) : super(key: key);
 
   /// image bubble builder method
@@ -129,32 +132,47 @@ class BubbleNormalImage extends StatelessWidget {
                 tag: id,
                 child: Stack(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: color,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(bubbleRadius),
-                          topRight: Radius.circular(bubbleRadius),
-                          bottomLeft: Radius.circular(tail
-                              ? isSender
-                              ? bubbleRadius
-                              : 0
-                              : BUBBLE_RADIUS_IMAGE),
-                          bottomRight: Radius.circular(tail
-                              ? isSender
-                              ? 0
-                              : bubbleRadius
-                              : BUBBLE_RADIUS_IMAGE),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: color,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(bubbleRadius),
+                              topRight: Radius.circular(bubbleRadius),
+                              bottomLeft: Radius.circular(tail
+                                  ? isSender
+                                  ? bubbleRadius
+                                  : 0
+                                  : BUBBLE_RADIUS_IMAGE),
+                              bottomRight: Radius.circular(tail
+                                  ? isSender
+                                  ? 0
+                                  : bubbleRadius
+                                  : BUBBLE_RADIUS_IMAGE),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(bubbleRadius),
+                              child: image,
+                            ),
+                          ),
                         ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(bubbleRadius),
-                          child: image,
+                        Text(
+                          AppUtils.getChatTime(time ?? DateTime.now().toString()),
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 10,
+                          ),
                         ),
-                      ),
+                      ],
                     ),
+
                     stateIcon != null && stateTick
                         ? Positioned(
                       bottom: 4,

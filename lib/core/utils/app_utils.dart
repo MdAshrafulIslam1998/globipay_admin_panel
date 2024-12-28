@@ -39,4 +39,12 @@ class AppUtils {
     return '$minutes:$secs';
   }
 
+  static String getChatTime(String time) {
+    final DateTime dateTime = DateTime.parse(time).toLocal(); // Convert to local time
+    final int hour = dateTime.hour % 12 == 0 ? 12 : dateTime.hour % 12; // Convert to 12-hour format
+    final String minute = dateTime.minute.toString().padLeft(2, '0'); // Add leading zero if needed
+    final String period = dateTime.hour >= 12 ? 'PM' : 'AM'; // Determine AM/PM
+    return "$hour:$minute $period";
+  }
+
 }
