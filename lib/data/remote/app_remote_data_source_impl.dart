@@ -20,7 +20,7 @@ import 'package:globipay_admin_panel/entity/response/misc/misc_response_entity.d
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
-import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
+import 'package:globipay_admin_panel/entity/response/user_profile/user_profile_details_response.dart';
 import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_response.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:globipay_admin_panel/core/base/base_remote_source.dart';
@@ -651,6 +651,21 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => (response.data as List).map((e) => RecentTransactionResponseEntity.fromJson(e)).toList());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+  @override
+  Future<UserProfileData> getUserProfileDetails(String userId) async {
+    var endpoint = '$BASE_URL/${AppApi.userProfileDetails}/$userId';
+    var dioCall = dioClientWithAuth.get(endpoint);
+    
+    try {
+      return callApiWithErrorParser(dioCall).then(
+        (response) => UserProfileData.fromJson(response.data)
+      );
     } catch (e) {
       rethrow;
     }

@@ -17,6 +17,7 @@ import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_reques
 import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
+import 'package:globipay_admin_panel/entity/response/user_profile/user_profile_details_response.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/activity_log_model.dart';
@@ -37,7 +38,7 @@ class ProfileController extends BaseController {
 
   final AppRepository _repository;
   // Existing profile data
-  Rx<ProfileData?> profileData = Rx<ProfileData?>(null);
+  Rx<UserProfileData?> profileData = Rx<UserProfileData?>(null);
 
   // Transactions
   RxList<UserTransactionHistoryResponseItem> transactions = RxList<UserTransactionHistoryResponseItem>();
@@ -72,26 +73,13 @@ class ProfileController extends BaseController {
     setupScrollListeners();
   }
 
-  void fetchInitialData(UserResponseItemEntity? user) {
+  void fetchInitialData(UserResponseItemEntity? user) async{
     uid = user?.userId ?? '';
-    // Simulate loading profile data
-    profileData.value = ProfileData(
-      code: user?.user_code ?? '',
-        fullName: user?.name ?? '',
-        email: user?.email ?? '',
-        dob: DateFormat('dd/MM/yyyy').format(DateTime(2024, 1, 1)),
-        gender: user?.gender ?? '',
-        phone: user?.phone ?? '',
-        address: user?.address ?? '',
-        selfiePath:
-            "https://www.shutterstock.com/image-vector/man-character-face-avatar-glasses-600nw-542759665.jpg",
-        frontIdPath:
-            "https://cdn.pixabay.com/photo/2022/11/09/00/44/aadhaar-card-7579588_640.png",
-        backIdPath:
-            "https://5.imimg.com/data5/UF/GX/GLADMIN-63025529/adhar-card-service-500x500.png"
 
-        // ... other profile details
-        );
+     
+    // Fetch user profile data
+    requestForProfileData(uid);
+
 
     // Generate dummy transactions
     requestForUserSpecificTransaction(uid);
@@ -246,6 +234,15 @@ class ProfileController extends BaseController {
     });
   }
 
+
+  void requestForProfileData(String? uid){
+    final repo = _repository.getUserProfileDetails(uid!);
+    callService(repo, onSuccess: (response) {
+      profileData.value = response;
+    
+    });
+  }
+
   void onAddTransaction(BuildContext context) {
       showDialog(
         context: context,
@@ -390,33 +387,4 @@ class ProfileController extends BaseController {
     // For example:
     // await apiService.updateUserStatus(userId, selectedStatus.value);
   }
-}
-
-// Existing ProfileData model (you can expand this)
-class ProfileData {
-  final String fullName;
-  final String email;
-  final String dob;
-  final String gender;
-  final String phone;
-  final String address;
-  final String selfiePath;
-  final String frontIdPath;
-  final String backIdPath;
-  final String code;
-
-  // Add other profile fields as needed
-
-  ProfileData({
-    required this.fullName,
-    required this.email,
-    required this.dob,
-    required this.gender,
-    required this.phone,
-    required this.address,
-    required this.selfiePath,
-    required this.frontIdPath,
-    required this.backIdPath,
-    required this.code,
-  });
 }

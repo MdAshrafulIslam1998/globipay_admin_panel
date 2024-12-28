@@ -47,4 +47,5 @@ abstract class AppApi {
   static const String userAmountDetails = '$prefix/amountdetailsweb';
   static const String totalTransactions = '$prefix/transactions/totals';
   static const String recentTransaction = '$prefix/transactions/recent';
+  static const String userProfileDetails = '$prefix/users/profile';
 }

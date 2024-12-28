@@ -33,7 +33,7 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                 );
               }
 
-              var profile = controller.profileData.value!;
+              var profile = controller.profileData.value;
               return Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -68,7 +68,7 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "Profile for ${profile.code}",
+                              "Profile for ${profile?.userCode?? ""}",
                               style: GoogleFonts.poppins(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -96,19 +96,19 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                                         _buildInfoCard(
                                           Icons.person_outline,
                                           "Full Name",
-                                          profile.fullName,
+                                          profile?.userName??"",
                                         ),
                                         const SizedBox(height: 12),
                                         _buildInfoCard(
                                           Icons.mail_outline,
                                           "Email",
-                                          profile.email,
+                                          profile?.email??"",
                                         ),
                                         const SizedBox(height: 12),
                                         _buildInfoCard(
                                           Icons.calendar_today_outlined,
                                           "Date of Birth",
-                                          profile.dob,
+                                          profile?.dob??"",
                                         ),
                                       ],
                                     ),
@@ -120,19 +120,19 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                                         _buildInfoCard(
                                           Icons.wc,
                                           "Gender",
-                                          profile.gender,
+                                          profile?.gender??"",
                                         ),
                                         const SizedBox(height: 12),
                                         _buildInfoCard(
                                           Icons.phone_outlined,
                                           "Phone",
-                                          profile.phone,
+                                          profile?.phone??"",
                                         ),
                                         const SizedBox(height: 12),
                                         _buildInfoCard(
                                           Icons.location_on_outlined,
                                           "Address",
-                                          profile.address,
+                                          profile?.address??"",
                                         ),
                                       ],
                                     ),
@@ -149,21 +149,21 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: _buildDocumentCard(
-                                      profile.selfiePath,
+                                      profile?.selfiePath??"",
                                       "Profile Picture",
                                     ),
                                   ),
                                   const SizedBox(width: 16),
                                   Expanded(
                                     child: _buildDocumentCard(
-                                      profile.frontIdPath,
+                                      profile?.frontIdPath?? "",
                                       "ID Card Front",
                                     ),
                                   ),
                                   const SizedBox(width: 16),
                                   Expanded(
                                     child: _buildDocumentCard(
-                                      profile.backIdPath,
+                                      profile?.backIdPath?? "",
                                       "ID Card Back",
                                     ),
                                   ),

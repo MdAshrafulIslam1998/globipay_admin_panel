@@ -30,6 +30,7 @@ import 'package:globipay_admin_panel/entity/response/promotional/add_promotional
 import 'package:globipay_admin_panel/entity/response/promotional/promotional_banner_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/all_transactions_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/user_profile/user_profile_details_response.dart';
 
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
@@ -260,5 +261,10 @@ class AppRepositoryImpl extends AppRepository {
   @override
   Future<List<RecentTransactionResponseEntity>> requestForRecentTransactionHistory() {
     return remoteDataSource.requestForRecentTransactionHistory();
+  }
+
+  @override
+  Future<UserProfileData> getUserProfileDetails(String userId) {
+    return remoteDataSource.getUserProfileDetails(userId);
   }
 }
