@@ -4,6 +4,8 @@ import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/utils/extensions.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/controller/dashboard_controller.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:globipay_admin_panel/router/route_path.dart';
 
 class DashboardScreenBuilder extends StatefulWidget {
   @override
@@ -279,9 +281,16 @@ class _DashboardScreenState
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildActionButton(Icons.person, 'Users'),
-                _buildActionButton(Icons.add, 'Level'),
-                _buildActionButton(Icons.messenger_outline, 'Chat'),
+                _buildActionButton(Icons.person, 'Users', onTap: () {
+                  AppRoutes.pushNamed(RoutePath.activeUsersNew);
+                }),
+                _buildActionButton(Icons.add, 'Level', onTap: () {
+                  AppRoutes.pushNamed(RoutePath.userLevels);
+                }),
+                _buildActionButton(Icons.messenger_outline, 'Chat', onTap: () {
+                  AppRoutes.pushNamed(RoutePath.chatMessageList);
+
+                }),
               ],
             ),
           ],
@@ -290,20 +299,23 @@ class _DashboardScreenState
     );
   }
 
-  Widget _buildActionButton(IconData icon, String label) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.purple[50],
-            borderRadius: BorderRadius.circular(10),
+  Widget _buildActionButton(IconData icon, String label, {Function()? onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.purple[50],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: EdgeInsets.all(15),
+            child: Icon(icon, color: Colors.deepPurple),
           ),
-          padding: EdgeInsets.all(15),
-          child: Icon(icon, color: Colors.deepPurple),
-        ),
-        SizedBox(height: 10),
-        Text(label),
-      ],
+          SizedBox(height: 10),
+          Text(label),
+        ],
+      ),
     );
   }
 
