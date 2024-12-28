@@ -196,7 +196,8 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                           height: 40,
                           margin: const EdgeInsets.only(left: 12),
                           decoration: BoxDecoration(
-                            color: Colors.green[100],                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.green[100],
+                            borderRadius: BorderRadius.circular(8),
                             border: Border.all(
                               color: Colors.white,
                               width: 1,

@@ -2,14 +2,19 @@
  * Created by Abdullah on 15/12/24.
  */
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/core/utils/inputFilter/first_index_sign_number_input_formatter.dart';
 import 'package:globipay_admin_panel/core/utils/inputFilter/input_filter.dart';
+import 'package:globipay_admin_panel/core/widgets/app_print.dart';
+import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
@@ -52,9 +57,16 @@ class ProfileController extends BaseController {
 
   String? uid ;
   ProfileController(this._repository);
+
+
+  RxList<CategoryItemEntity> categoriesList = <CategoryItemEntity>[].obs;
+
+  Rxn<CategoryItemEntity> selectedCategory = Rxn<CategoryItemEntity>(null);
+
   @override
   void onInit() {
     super.onInit();
+    requestForCategories();
     setupScrollListeners();
   }
 
@@ -193,12 +205,12 @@ class ProfileController extends BaseController {
   // Export methods
   void exportTransactions() {
     // Implement CSV or PDF export logic
-    print('Exporting Transactions');
+    appPrint('Exporting Transactions');
   }
 
   void exportActivityLogs() {
     // Implement CSV or PDF export logic
-    print('Exporting Activity Logs');
+    appPrint('Exporting Activity Logs');
   }
 
   void onApprove() {
@@ -215,10 +227,10 @@ class ProfileController extends BaseController {
         limit: limit,
       );
 
-  void requestForUserSpecificTransaction(String? uid){
+  void requestForUserSpecificTransaction(String? uid, {bool isShowTrnxShowLoader = false}) {
     final req = paginationRequest(1, 10);
     final repo = _repository.requestUserSpecificTransaction(request: req, userId : uid ?? "") ;
-    callService(repo, isShowLoader: false, onSuccess: (response) {
+    callService(repo, isShowLoader: isShowTrnxShowLoader, onSuccess: (response) {
       transactions.value.addAll(response.transactions ?? []);
     });
   }
@@ -250,20 +262,50 @@ class ProfileController extends BaseController {
               key: modifyTransactionFormKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+
+                  AppText("Category"),
+
+                  Container(
+                    child: DropdownButtonFormField<CategoryItemEntity>(
+                      value: selectedCategory.value,
+                      hint: Text('Select'),
+                      onChanged: (CategoryItemEntity? newValue) {
+                        setSelectedCategory(newValue); // Use a method in your controller
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                      ),
+                      items: categoriesList.map((CategoryItemEntity item) {
+                        return DropdownMenuItem<CategoryItemEntity>(
+                          value: item,
+                          child: Text(item.name ?? ""),
+                        );
+                      }).toList(),
+                    ),),
+
                   // Primary Coin Input Field
+                  AppText("Primary Coin"),
                   InputField(
                     controller: primaryCoinController,
-                    inputFormatters: InputFilter.ONLY_NUMBER,
+                    inputFormatters: [
+                      FirstIndexSignInputFormatter(),
+                    ],
                     hintText: "Primary Coin",
 
                   ),
                   SizedBox(height: 10),
                   // Secondary Coin Input Field
+                  AppText("Secondary Coin"),
                   InputField(
                     controller: secondaryCoinController,
                     maxLength: 10,
-                    inputFormatters: InputFilter.ONLY_NUMBER,
+                    inputFormatters: [FirstIndexSignInputFormatter()],
                     hintText: "Secondary Coin",
 
                   ),
@@ -281,10 +323,16 @@ class ProfileController extends BaseController {
               // Submit Button
               ElevatedButton(
                 onPressed: () {
-                  if (modifyTransactionFormKey.currentState!.validate()) {
-                    AppRoutes.pop();
-                    requestToCloseChatSession();
+
+                  if(selectedCategory.value == null ){
+                    showSnackBar(message: "Please select category");
+                    return;
+                  }else if(selectedCategory.value !=null && primaryCoinController.text.isEmpty && secondaryCoinController.text.isEmpty){
+                    showSnackBar(message: "Please fill at least one Coin");
+                    return;
                   }
+                  requestToCloseChatSession();
+
                 },
                 child: Text("Submit"),
               ),
@@ -293,7 +341,11 @@ class ProfileController extends BaseController {
         },
       );
   }
-  ChatCloseRequestEntity chatCloseRequestEntity(String createdById,String chatId, String chatUID){
+  void setSelectedCategory(CategoryItemEntity? categoryItemEntity) {
+    selectedCategory.value = categoryItemEntity;
+  }
+
+  ChatCloseRequestEntity chatCloseRequestEntity(String createdById, String? chatId, String chatUID){
     return ChatCloseRequestEntity(
       primaryCoin: primaryCoinController.text.isNotEmpty ? double.tryParse(primaryCoinController.text) : 0.0,
       secondaryCoin: secondaryCoinController.text.isNotEmpty ? double.tryParse(secondaryCoinController.text) : 0.0,
@@ -305,7 +357,7 @@ class ProfileController extends BaseController {
 
   requestToCloseChatSession() async{
     final cId = await getLoggedInUserId();
-    final req = chatCloseRequestEntity(cId, "1", uid ?? "");
+    final req = chatCloseRequestEntity(cId, (selectedCategory.value?.id ?? "").toString(), uid ?? "");
     final repo = _repository.requestToCloseChat(req);
     callService(repo,onSuccess: (ChatCloseResponseEntity response){
       parseChatCloseSession(response);
@@ -313,7 +365,19 @@ class ProfileController extends BaseController {
   }
 
   parseChatCloseSession(ChatCloseResponseEntity response){
+    AppRoutes.pop();
+  }
 
+  void requestForCategories(){
+    categoriesList.clear();
+    final repo = _repository.requestForCategories(paginationRequest(1, 100));
+    callService(repo, onSuccess: (response) {
+      categoriesList.value = response.categories ?? [];
+    });
+  }
+
+  void onRefreshTransactions() {
+    requestForUserSpecificTransaction(uid,isShowTrnxShowLoader: true);
   }
 }
 

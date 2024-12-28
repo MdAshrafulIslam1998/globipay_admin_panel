@@ -48,8 +48,12 @@ abstract class BaseRemoteSource {
               httpCode: response.statusCode ?? 0,
               status: baseResponse.responseCode ?? "");
         }
+      }else if (response.statusCode == 401 || response.statusCode == 403) {
+        throw ApiException(
+            message: baseResponse.responseMessage ?? "",
+            httpCode: response.statusCode ?? 0,
+            status: baseResponse.responseCode ?? "");
       }
-      // if (response.statusCode == 401) {}
 
       return baseResponse;
     } on DioException catch (dioError) {

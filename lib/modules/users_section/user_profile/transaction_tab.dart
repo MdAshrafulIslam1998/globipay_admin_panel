@@ -27,6 +27,7 @@ class TransactionsTab extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.refresh),
               onPressed: (){
+                controller.onRefreshTransactions();
 
               },
             ),
