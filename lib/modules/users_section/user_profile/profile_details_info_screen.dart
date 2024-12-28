@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-/**
- * Created by Abdullah on 15/12/24.
- */
 
 class ProfileDetailsInfoScreen extends StatelessWidget {
-
   ProfileController controller;
   ProfileDetailsInfoScreen(this.controller);
+
+  // Add status tracking variables
+  final List<String> statusOptions = ['INITIATED', 'APPROVED', 'DELETED'];
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +17,10 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
 
     return Container(
       child: Center(
-        // Center the content
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: 1200, // Maximum width for the content
-            maxHeight: screenSize.height, // Use full screen height
+            maxWidth: 1200,
+            maxHeight: screenSize.height,
           ),
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -69,13 +67,13 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                             ),
                           ),
                           child: Center(
-                            child:  Text(
-                                "Profile for ${profile.code}",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFFD97706),
-                                ),
+                            child: Text(
+                              "Profile for ${profile.code}",
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFFD97706),
+                              ),
                             ),
                           ),
                         ),
@@ -88,7 +86,7 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                               _buildSectionTitle("Personal Information"),
                               const SizedBox(height: 24),
 
-                              // Profile Information Grid - More compact
+                              // Profile Information Grid
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -146,7 +144,7 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                               _buildSectionTitle("Verification Documents"),
                               const SizedBox(height: 24),
 
-                              // Documents Grid - Adjusted for better fit
+                              // Documents Grid
                               Row(
                                 children: [
                                   Expanded(
@@ -173,38 +171,8 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                               ),
 
                               const SizedBox(height: 32),
-                              // Compact, Left-aligned Action Buttons
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 120, // Fixed width for buttons
-                                    child: _buildActionButton(
-                                      "Approve",
-                                      const Color(0xFF22C55E),
-                                      controller.onApprove,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  SizedBox(
-                                    width: 120,
-                                    child: _buildActionButton(
-                                      "Pending",
-                                      const Color(0xFFD97706),
-                                      controller.onPending,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  SizedBox(
-                                    width: 120,
-                                    child: _buildActionButton(
-                                      "Delete",
-                                      const Color(0xFFEF4444),
-                                      controller.onRemove,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // New Status Update Section
+                              _buildStatusUpdateSection(),
                             ],
                           ),
                         ),
@@ -227,7 +195,6 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
         'Pending Profile',
       ),
       backgroundColor: const Color(0xFFF7F2FA),
-
     );
   }
 
@@ -318,7 +285,7 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
             ),
             child: Image.network(
               url,
-              height: 180, // Slightly reduced height
+              height: 180,
               width: double.infinity,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
@@ -337,25 +304,71 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButton(String label, Color color, VoidCallback onPressed) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        elevation: 0,
-      ),
-      child: Text(
-        label,
-        style: GoogleFonts.poppins(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
+   Widget _buildStatusUpdateSection() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            width: 200,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF8FAFC),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: const Color(0xFFE2E8F0),
+                width: 1,
+              ),
+            ),
+            child: Obx(() => DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: controller.selectedStatus.value,
+                isExpanded: true,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                borderRadius: BorderRadius.circular(12),
+                items: statusOptions.map((String status) {
+                  return DropdownMenuItem<String>(
+                    value: status,
+                    child: Text(
+                      status,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF1E293B),
+                      ),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    controller.onStatusChanged(newValue);
+                    print('Status changed to: $newValue'); // Debug print
+                  }
+                },
+              ),
+            )),
+          ),
+          const SizedBox(width: 12),
+          ElevatedButton(
+            onPressed: () {
+              controller.updateStatus();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF3B82F6),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 0,
+            ),
+            child: Text(
+              'Update Status',
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
 }

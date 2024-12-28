@@ -31,6 +31,8 @@ class ProfileController extends BaseController {
   final TextEditingController primaryCoinController = TextEditingController();
   final TextEditingController secondaryCoinController = TextEditingController();
 
+  final selectedStatus = 'INITIATED'.obs;
+
 
 
   final AppRepository _repository;
@@ -213,14 +215,7 @@ class ProfileController extends BaseController {
     appPrint('Exporting Activity Logs');
   }
 
-  void onApprove() {
-  }
-
-  void onPending() {
-  }
-
-  void onRemove() {
-  }
+ 
 
   PaginationRequest paginationRequest(int page, int limit) => PaginationRequest(
         page: page,
@@ -378,6 +373,22 @@ class ProfileController extends BaseController {
 
   void onRefreshTransactions() {
     requestForUserSpecificTransaction(uid,isShowTrnxShowLoader: true);
+  }
+
+
+  // Add these two new functions
+  void onStatusChanged(String newStatus) {
+    selectedStatus.value = newStatus;
+    // You can add additional logic here if needed
+    print('Controller: Status changed to: $newStatus');
+  }
+
+  void updateStatus() {
+    // This function will be called when the Update button is clicked
+    print('Controller: Updating status to: ${selectedStatus.value}');
+    // Add your status update logic here
+    // For example:
+    // await apiService.updateUserStatus(userId, selectedStatus.value);
   }
 }
 
