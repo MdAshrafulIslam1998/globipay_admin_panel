@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
+import 'package:globipay_admin_panel/core/constants/enum/chat_session_type.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
@@ -90,6 +91,10 @@ class ChatController extends BaseController {
         .toSet()
         .toList()
       ..sort();
+  }
+
+  bool isChatSessionClosed() {
+    return sharedController.chatSessionResponse?.status == ChatSessionType.CLOSED.code;
   }
 
 

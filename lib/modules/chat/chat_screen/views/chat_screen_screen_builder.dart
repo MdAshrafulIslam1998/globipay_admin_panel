@@ -48,7 +48,7 @@ class _ChatScreenScreenBuilderState
 
   @override
   PreferredSizeWidget? appBar() {
-    return AppBar(
+    return !controller.isChatSessionClosed() == true ? AppBar(
       centerTitle: true,
       title: IconButton(
         icon: const Icon(Icons.lock_clock_sharp),
@@ -74,6 +74,10 @@ class _ChatScreenScreenBuilderState
           iconSize: 34,
         ),
       ],
+    ):
+    AppBar(
+      centerTitle: true,
+      title: Text("Chat Closed"),
     );
   }
 
@@ -107,37 +111,40 @@ class _ChatScreenScreenBuilderState
                         },
                       ),
                     ),
-                    MessageBar(
-                      textController: controller.messageController,
-                      onSend: (text) {
-                        controller.sendTextMessage(text);
-                      },
-                      actions: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: GestureDetector(
-                            child: const Icon(
-                              Icons.menu,
-                              color: Colors.grey,
+                    Visibility(
+                      visible: !controller.isChatSessionClosed(),
+                      child: MessageBar(
+                        textController: controller.messageController,
+                        onSend: (text) {
+                          controller.sendTextMessage(text);
+                        },
+                        actions: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: GestureDetector(
+                              child: const Icon(
+                                Icons.menu,
+                                color: Colors.grey,
+                              ),
+                              onTap: () {
+                                controller.showTemplates.toggle(); // Toggle split view
+                              },
                             ),
-                            onTap: () {
-                              controller.showTemplates.toggle(); // Toggle split view
-                            },
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: GestureDetector(
-                            child: const Icon(
-                              Icons.image_outlined,
-                              color: Colors.grey,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: GestureDetector(
+                              child: const Icon(
+                                Icons.image_outlined,
+                                color: Colors.grey,
+                              ),
+                              onTap: () {
+                                controller.onSendMessageFromPhotoLibrary(); // Toggle split view
+                              },
                             ),
-                            onTap: () {
-                              controller.onSendMessageFromPhotoLibrary(); // Toggle split view
-                            },
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
