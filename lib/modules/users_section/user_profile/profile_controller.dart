@@ -19,6 +19,7 @@ import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_respo
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
+import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_response.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/activity_log_model.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/transaction_model.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/notification_model.dart';
@@ -63,11 +64,24 @@ class ProfileController extends BaseController {
 
   Rxn<CategoryItemEntity> selectedCategory = Rxn<CategoryItemEntity>(null);
 
+  static const int  LIMIT = 10;
+  int? totalPages;
+  int? currentPage = 1;
+  int limit = LIMIT;
+
+
   @override
   void onInit() {
     super.onInit();
+    setInitialData();
     requestForCategories();
     setupScrollListeners();
+  }
+
+  void setInitialData() {
+    totalPages = null;
+    currentPage = 1;
+    limit = LIMIT;
   }
 
   void fetchInitialData(UserResponseItemEntity? user) {
@@ -116,7 +130,10 @@ class ProfileController extends BaseController {
   void _loadMoreTransactions() {
     if (transactionScrollController.position.pixels ==
         transactionScrollController.position.maxScrollExtent) {
-      _fetchMoreTransactions();
+      if( totalPages != null && (currentPage ?? 1) < totalPages!){
+        currentPage = (currentPage ?? 1) + 1;
+        _fetchMoreTransactions();
+      }
     }
   }
 
@@ -139,6 +156,7 @@ class ProfileController extends BaseController {
 
     isTransactionLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
+
 
     // Simulate network delay
     requestForUserSpecificTransaction(uid);
@@ -227,11 +245,17 @@ class ProfileController extends BaseController {
         limit: limit,
       );
 
+  void parseUserSpecificTransaction(UserTransactionHistoryResponseEntity response) {
+    transactions.addAll(response.transactions ?? []);
+    transactions.refresh();
+    totalPages = response.pagination?.totalPages ?? 1;
+    currentPage = response.pagination?.currentPage ?? 1;
+  }
   void requestForUserSpecificTransaction(String? uid, {bool isShowTrnxShowLoader = false}) {
-    final req = paginationRequest(1, 10);
+    final req = paginationRequest(currentPage ?? 1, limit);
     final repo = _repository.requestUserSpecificTransaction(request: req, userId : uid ?? "") ;
     callService(repo, isShowLoader: isShowTrnxShowLoader, onSuccess: (response) {
-      transactions.value.addAll(response.transactions ?? []);
+      parseUserSpecificTransaction(response);
     });
   }
 
@@ -244,7 +268,7 @@ class ProfileController extends BaseController {
   }*/
 
   void requestForUserSpecificNotification(String? uid){
-    final req = paginationRequest(1, 10);
+    final req = paginationRequest(1, LIMIT);
     final repo = _repository.requestUserSpecificNotification(request: req, userId : uid ?? "") ;
     callService(repo, isShowLoader: false, onSuccess: (response) {
       notifications.value.addAll(response.notifications ?? []);
@@ -366,6 +390,7 @@ class ProfileController extends BaseController {
 
   parseChatCloseSession(ChatCloseResponseEntity response){
     AppRoutes.pop();
+    requestForUserSpecificTransaction(uid);
   }
 
   void requestForCategories(){
@@ -377,6 +402,7 @@ class ProfileController extends BaseController {
   }
 
   void onRefreshTransactions() {
+    transactions.clear();
     requestForUserSpecificTransaction(uid,isShowTrnxShowLoader: true);
   }
 }
