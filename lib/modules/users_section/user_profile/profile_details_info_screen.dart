@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:globipay_admin_panel/core/utils/extensions.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,7 +9,15 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
   ProfileDetailsInfoScreen(this.controller);
 
   // Add status tracking variables
-  final List<String> statusOptions = ['INITIATED', 'APPROVED', 'DELETED'];
+  // Update this list
+  final List<String> statusOptions = [
+    'VERIFIED',
+    'PENDING',
+    'REJECTED',
+    'BLOCKED',
+    'DELETED',
+    'INITIATED'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +77,7 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "Profile for ${profile?.userCode?? ""}",
+                              "Profile for ${profile?.userCode ?? ""}",
                               style: GoogleFonts.poppins(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -96,19 +105,19 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                                         _buildInfoCard(
                                           Icons.person_outline,
                                           "Full Name",
-                                          profile?.userName??"",
+                                          profile?.userName ?? "",
                                         ),
                                         const SizedBox(height: 12),
                                         _buildInfoCard(
                                           Icons.mail_outline,
                                           "Email",
-                                          profile?.email??"",
+                                          profile?.email ?? "",
                                         ),
                                         const SizedBox(height: 12),
                                         _buildInfoCard(
                                           Icons.calendar_today_outlined,
                                           "Date of Birth",
-                                          profile?.dob??"",
+                                          profile?.dob ?? "",
                                         ),
                                       ],
                                     ),
@@ -120,25 +129,35 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                                         _buildInfoCard(
                                           Icons.wc,
                                           "Gender",
-                                          profile?.gender??"",
+                                          profile?.gender ?? "",
                                         ),
                                         const SizedBox(height: 12),
                                         _buildInfoCard(
                                           Icons.phone_outlined,
                                           "Phone",
-                                          profile?.phone??"",
+                                          profile?.phone ?? "",
                                         ),
                                         const SizedBox(height: 12),
                                         _buildInfoCard(
                                           Icons.location_on_outlined,
                                           "Address",
-                                          profile?.address??"",
+                                          profile?.address ?? "",
                                         ),
                                       ],
                                     ),
                                   ),
                                 ],
                               ),
+
+                              const SizedBox(height: 24),
+                              _buildInfoCard(
+                                Icons
+                                    .verified_user_outlined, // or Icons.radio_button_checked
+                                "Current Status",
+                                profile?.status ??
+                                    "Not Set", // assuming status field exists in UserProfileData
+                              ),
+                              const SizedBox(height: 32),
 
                               const SizedBox(height: 32),
                               _buildSectionTitle("Verification Documents"),
@@ -149,21 +168,21 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: _buildDocumentCard(
-                                      profile?.selfiePath??"",
+                                      (profile?.selfiePath ?? "").includeBaseUrl(),
                                       "Profile Picture",
                                     ),
                                   ),
                                   const SizedBox(width: 16),
                                   Expanded(
                                     child: _buildDocumentCard(
-                                      profile?.frontIdPath?? "",
+                                      (profile?.frontIdPath ?? "").includeBaseUrl(),
                                       "ID Card Front",
                                     ),
                                   ),
                                   const SizedBox(width: 16),
                                   Expanded(
                                     child: _buildDocumentCard(
-                                      profile?.backIdPath?? "",
+                                      (profile?.backIdPath ?? "").includeBaseUrl(),
                                       "ID Card Back",
                                     ),
                                   ),
@@ -304,71 +323,71 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
     );
   }
 
-   Widget _buildStatusUpdateSection() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            width: 200,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: const Color(0xFFE2E8F0),
-                width: 1,
-              ),
+  Widget _buildStatusUpdateSection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          width: 200,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF8FAFC),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: const Color(0xFFE2E8F0),
+              width: 1,
             ),
-            child: Obx(() => DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: controller.selectedStatus.value,
-                isExpanded: true,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                borderRadius: BorderRadius.circular(12),
-                items: statusOptions.map((String status) {
-                  return DropdownMenuItem<String>(
-                    value: status,
-                    child: Text(
-                      status,
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF1E293B),
+          ),
+          child: Obx(() => DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: controller.selectedStatus.value,
+                  isExpanded: true,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  borderRadius: BorderRadius.circular(12),
+                  items: statusOptions.map((String status) {
+                    return DropdownMenuItem<String>(
+                      value: status,
+                      child: Text(
+                        status,
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF1E293B),
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    controller.onStatusChanged(newValue);
-                    print('Status changed to: $newValue'); // Debug print
-                  }
-                },
-              ),
-            )),
-          ),
-          const SizedBox(width: 12),
-          ElevatedButton(
-            onPressed: () {
-              controller.updateStatus();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF3B82F6),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 0,
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      controller.onStatusChanged(newValue);
+                      print('Status changed to: $newValue'); // Debug print
+                    }
+                  },
+                ),
+              )),
+        ),
+        const SizedBox(width: 12),
+        ElevatedButton(
+          onPressed: () {
+            controller.updateStatus();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF3B82F6),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Text(
-              'Update Status',
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
+            elevation: 0,
+          ),
+          child: Text(
+            'Update Status',
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
             ),
           ),
-        ],
-      );
-    }
+        ),
+      ],
+    );
+  }
 }
