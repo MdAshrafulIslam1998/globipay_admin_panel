@@ -10,6 +10,7 @@ import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity
 import 'package:globipay_admin_panel/entity/request/notification/create_notification_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/user_profile_request/update_user_status_request.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/dashboard/dashboard_transaction_balance_entity.dart';
@@ -21,6 +22,7 @@ import 'package:globipay_admin_panel/entity/response/notification/notification_r
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_profile/user_profile_details_response.dart';
+import 'package:globipay_admin_panel/entity/response/user_profile_response/update_user_status_response.dart';
 import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_response.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:globipay_admin_panel/core/base/base_remote_source.dart';
@@ -666,6 +668,22 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       return callApiWithErrorParser(dioCall).then(
         (response) => UserProfileData.fromJson(response.data)
       );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+   @override
+  Future<UserData> updateUserStatus(String userId, UpdateUserStatusRequest request) {
+    var endpoint = '$BASE_URL/${AppApi.updateUserStatus}/$userId';
+    var dioCall = dioClientWithAuth.put(
+      endpoint,
+      data: request.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall).then((response) =>
+          UserData.fromJson(response.data));
     } catch (e) {
       rethrow;
     }

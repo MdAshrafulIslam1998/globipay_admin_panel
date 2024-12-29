@@ -14,6 +14,7 @@ import 'package:globipay_admin_panel/entity/request/notification/create_notifica
 import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_banner_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/user_profile_request/update_user_status_request.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
@@ -31,6 +32,7 @@ import 'package:globipay_admin_panel/entity/response/promotional/promotional_ban
 import 'package:globipay_admin_panel/entity/response/staff/staff_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/all_transactions_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_profile/user_profile_details_response.dart';
+import 'package:globipay_admin_panel/entity/response/user_profile_response/update_user_status_response.dart';
 
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_transaction_history/user_transaction_history_item_response.dart';
@@ -266,5 +268,10 @@ class AppRepositoryImpl extends AppRepository {
   @override
   Future<UserProfileData> getUserProfileDetails(String userId) {
     return remoteDataSource.getUserProfileDetails(userId);
+  }
+
+    @override
+  Future<UserData> updateUserStatus(String userId, UpdateUserStatusRequest request) {
+    return remoteDataSource.updateUserStatus(userId, request);
   }
 }

@@ -14,6 +14,7 @@ import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/user_profile_request/update_user_status_request.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
@@ -381,10 +382,13 @@ class ProfileController extends BaseController {
   }
 
   void updateStatus() {
-    // This function will be called when the Update button is clicked
+   
     print('Controller: Updating status to: ${selectedStatus.value}');
-    // Add your status update logic here
-    // For example:
-    // await apiService.updateUserStatus(userId, selectedStatus.value);
+    final request = UpdateUserStatusRequest(status: selectedStatus.value);
+    final repo = _repository.updateUserStatus(uid??"", request);
+    callService(repo, onSuccess: (response) {
+      showSnackBar(message: "Status updated successfully");
+    });
+   
   }
 }
