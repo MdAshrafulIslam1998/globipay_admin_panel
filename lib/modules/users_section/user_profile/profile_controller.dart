@@ -375,7 +375,9 @@ class ProfileController extends BaseController {
 
 
   // Add these two new functions
-  void onStatusChanged(String newStatus) {
+  void onStatusChanged(String? newStatus) {
+
+    if (newStatus == null) return;
     selectedStatus.value = newStatus;
     // You can add additional logic here if needed
     print('Controller: Status changed to: $newStatus');
