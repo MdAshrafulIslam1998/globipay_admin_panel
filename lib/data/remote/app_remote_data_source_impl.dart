@@ -11,6 +11,7 @@ import 'package:globipay_admin_panel/entity/request/notification/create_notifica
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/user_profile_request/update_user_status_request.dart';
+import 'package:globipay_admin_panel/entity/response/activity_log/activity_log_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/dashboard/dashboard_transaction_balance_entity.dart';
@@ -68,8 +69,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       queryParameters: request.toJson(),
     );
     try {
-      return callApiWithErrorParser(dioCall).then((response) =>
-          UserResponseEntity.fromJson(response.data));
+      return callApiWithErrorParser(dioCall)
+          .then((response) => UserResponseEntity.fromJson(response.data));
     } catch (e) {
       rethrow;
     }
@@ -83,30 +84,32 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       data: request.toJson(),
     );
     try {
-      return callApiWithErrorParser(dioCall).then((response) =>
-          LoginResponse.fromJson(response.data));
+      return callApiWithErrorParser(dioCall)
+          .then((response) => LoginResponse.fromJson(response.data));
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<ChatCloseResponseEntity> requestToCloseChat(ChatCloseRequestEntity request) {
+  Future<ChatCloseResponseEntity> requestToCloseChat(
+      ChatCloseRequestEntity request) {
     var endpoint = '$BASE_URL/${AppApi.chatClose}';
     var dioCall = dioClientWithAuth.post(
       endpoint,
       data: request.toJson(),
     );
     try {
-      return callApiWithErrorParser(dioCall).then((response) =>
-          ChatCloseResponseEntity.fromJson(response.data));
+      return callApiWithErrorParser(dioCall)
+          .then((response) => ChatCloseResponseEntity.fromJson(response.data));
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<AddPromotionalBannerResponseEntity> requestToAddPromotionalBanner(AddPromotionalBannerRequestEntity request){
+  Future<AddPromotionalBannerResponseEntity> requestToAddPromotionalBanner(
+      AddPromotionalBannerRequestEntity request) {
     var endpoint = '$BASE_URL/${AppApi.addSlider}';
     var dioCall = dioClientWithAuth.post(
       endpoint,
@@ -121,7 +124,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<PromotionalBannerResponseEntity> requestForAllPromotionalBanner(PaginationRequest request){
+  Future<PromotionalBannerResponseEntity> requestForAllPromotionalBanner(
+      PaginationRequest request) {
     var endpoint = '$BASE_URL/${AppApi.allSlider}';
     var dioCall = dioClientWithAuth.get(
       endpoint,
@@ -136,8 +140,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<FileUploadResponse> requestToFileUpload(FileUploadRequest request) async{
-
+  Future<FileUploadResponse> requestToFileUpload(
+      FileUploadRequest request) async {
     var endpoint = '$BASE_URL/${AppApi.fileUpload}';
     var fileData = await request.toFormData();
     var dioCall = dioClientWithAuth.post(
@@ -158,16 +162,18 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<FileUploadResponse> requestToByteFileUpload(ByteFileUploadRequest request) async{
+  Future<FileUploadResponse> requestToByteFileUpload(
+      ByteFileUploadRequest request) async {
     var endpoint = '$BASE_URL/${AppApi.fileUpload}';
     final fileData = FormData.fromMap({
-      'doc_type' : "other",
+      'doc_type': "other",
       "documents": MultipartFile.fromBytes(
         request.bytes ?? Uint8List(0), // Adjust the bytes if needed
         filename: request.fileName, // Set the filename for the uploaded file
         contentType: MediaType("image", "jpeg"), // Adjust MIME type if needed
       ),
-    });    var dioCall = dioClientWithAuth.post(
+    });
+    var dioCall = dioClientWithAuth.post(
       endpoint,
       data: fileData,
       options: Options(
@@ -185,7 +191,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<void> requestToRemoveBanner(PromotionalBannerDeleteRequestEntity request) {
+  Future<void> requestToRemoveBanner(
+      PromotionalBannerDeleteRequestEntity request) {
     var endpoint = '$BASE_URL/${AppApi.deleteSlide}';
     var dioCall = dioClientWithAuth.post(
       endpoint,
@@ -196,7 +203,6 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     } catch (e) {
       rethrow;
     }
-
   }
 
   @override
@@ -216,7 +222,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<CategoryResponseEntity> requestForCategories(PaginationRequest request) {
+  Future<CategoryResponseEntity> requestForCategories(
+      PaginationRequest request) {
     var endpoint = '$BASE_URL/${AppApi.categories}';
     var dioCall = dioClientWithAuth.get(
       endpoint,
@@ -232,7 +239,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<void> requestToAddMessageTemplates(AddMessageTemplatesRequest request) {
+  Future<void> requestToAddMessageTemplates(
+      AddMessageTemplatesRequest request) {
     var endpoint = '$BASE_URL/${AppApi.addMessageTemplates}';
     var dioCall = dioClientWithAuth.post(
       endpoint,
@@ -246,15 +254,16 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(PaginationRequest request) {
+  Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(
+      PaginationRequest request) {
     var endpoint = '$BASE_URL/${AppApi.messageTemplatesList}';
     var dioCall = dioClientWithAuth.get(
       endpoint,
       queryParameters: request.toJson(),
     );
     try {
-      return callApiWithErrorParser(dioCall)
-          .then((response) => MessagesTemplatesResponseEntity.fromJson(response.data));
+      return callApiWithErrorParser(dioCall).then((response) =>
+          MessagesTemplatesResponseEntity.fromJson(response.data));
     } catch (e) {
       rethrow;
     }
@@ -326,8 +335,6 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       rethrow;
     }
   }
-
-
 
   @override
   Future<void> requestToRemoveLevel(String id) {
@@ -413,7 +420,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<AllTransactionsResponseEntity> requestForAllTransactions({required PaginationRequest paginationRequest, String? path}) async{
+  Future<AllTransactionsResponseEntity> requestForAllTransactions(
+      {required PaginationRequest paginationRequest, String? path}) async {
     // Get the staff ID from the token repository or a similar source
     final staffId = await tokenRepository.getStuffId();
 
@@ -436,10 +444,9 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     }
   }
 
-
-
   @override
-  Future<AllTransactionsResponseEntity> requestForUserAmountDetails({required PaginationRequest paginationRequest, String? path}) async{
+  Future<AllTransactionsResponseEntity> requestForUserAmountDetails(
+      {required PaginationRequest paginationRequest, String? path}) async {
     // Get the staff ID from the token repository or a similar source
     final staffId = await tokenRepository.getStuffId();
 
@@ -461,9 +468,6 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       rethrow; // Pass the error to the calling layer for centralized error handling
     }
   }
-
-
-  
 
   @override
   Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(
@@ -490,8 +494,6 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     }
   }
 
-
-
   @override
   Future<List<NotificationResponseItemEntity>> requestForAllNotifications() {
     var endpoint = '$BASE_URL/${AppApi.notifications}';
@@ -499,15 +501,18 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       endpoint,
     );
     try {
-      return callApiWithErrorParser(dioCall)
-          .then((response) => (response.data as List).map((e) => NotificationResponseItemEntity.fromJson(e)).toList());
+      return callApiWithErrorParser(dioCall).then((response) =>
+          (response.data as List)
+              .map((e) => NotificationResponseItemEntity.fromJson(e))
+              .toList());
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<UserResponseEntity> requestForSearchUserList(PaginationRequest paginationRequest) {
+  Future<UserResponseEntity> requestForSearchUserList(
+      PaginationRequest paginationRequest) {
     var endpoint = '$BASE_URL/${AppApi.searchUser}';
     var dioCall = dioClientWithAuth.get(
       endpoint,
@@ -522,7 +527,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<void> requestToTriggerNotification(CreateNotificationRequestEntity request) {
+  Future<void> requestToTriggerNotification(
+      CreateNotificationRequestEntity request) {
     var endpoint = '$BASE_URL/${AppApi.createNotifications}';
     var dioCall = dioClientWithAuth.post(
       endpoint,
@@ -536,22 +542,25 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<UserTransactionHistoryResponseEntity> requestUserSpecificTransaction({required PaginationRequest request, required String userId}) {
-    var endpoint = '$BASE_URL/${AppApi.userSpecificTransactionHistory}/$userId/transactions';
+  Future<UserTransactionHistoryResponseEntity> requestUserSpecificTransaction(
+      {required PaginationRequest request, required String userId}) {
+    var endpoint =
+        '$BASE_URL/${AppApi.userSpecificTransactionHistory}/$userId/transactions';
     var dioCall = dioClientWithAuth.get(
       endpoint,
       queryParameters: request.toJson(),
     );
     try {
-      return callApiWithErrorParser(dioCall)
-          .then((response) => UserTransactionHistoryResponseEntity.fromJson(response.data));
+      return callApiWithErrorParser(dioCall).then((response) =>
+          UserTransactionHistoryResponseEntity.fromJson(response.data));
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<AgoraTokenResponseEntity> requestForAgoraToken(AgoraTokenRequestEntity request) {
+  Future<AgoraTokenResponseEntity> requestForAgoraToken(
+      AgoraTokenRequestEntity request) {
     var endpoint = '$BASE_URL/${AppApi.agoraToken}';
     var dioCall = dioClientWithAuth.post(
       endpoint,
@@ -581,7 +590,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<NotificationResponseEntity> requestUserSpecificNotification({required PaginationRequest request, required String userId}) {
+  Future<NotificationResponseEntity> requestUserSpecificNotification(
+      {required PaginationRequest request, required String userId}) {
     var endpoint = '$BASE_URL/${AppApi.userSpecificNotifications}';
     var dioCall = dioClientWithAuth.post(
       endpoint,
@@ -591,16 +601,13 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       },
     );
     try {
-      return callApiWithErrorParser(dioCall)
-          .then((response) => NotificationResponseEntity.fromJson(response.data));
+      return callApiWithErrorParser(dioCall).then(
+          (response) => NotificationResponseEntity.fromJson(response.data));
     } catch (e) {
       rethrow;
     }
   }
 
-
-  
-   
   @override
   Future<void> requestToUpdateUserStatus(String userId, UserStatus status) {
     var endpoint = '$BASE_URL/${AppApi.userStatus}/$userId';
@@ -637,54 +644,79 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       endpoint,
     );
     try {
-      return callApiWithErrorParser(dioCall)
-          .then((response) => DashboardTransactionBalanceEntity.fromJson(response.data));
+      return callApiWithErrorParser(dioCall).then((response) =>
+          DashboardTransactionBalanceEntity.fromJson(response.data));
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<List<RecentTransactionResponseEntity>> requestForRecentTransactionHistory() {
+  Future<List<RecentTransactionResponseEntity>>
+      requestForRecentTransactionHistory() {
     var endpoint = '$BASE_URL/${AppApi.recentTransaction}';
     var dioCall = dioClientWithAuth.get(
       endpoint,
     );
     try {
-      return callApiWithErrorParser(dioCall)
-          .then((response) => (response.data as List).map((e) => RecentTransactionResponseEntity.fromJson(e)).toList());
+      return callApiWithErrorParser(dioCall).then((response) =>
+          (response.data as List)
+              .map((e) => RecentTransactionResponseEntity.fromJson(e))
+              .toList());
     } catch (e) {
       rethrow;
     }
   }
-
 
   @override
   Future<UserProfileData> getUserProfileDetails(String userId) async {
     final staffId = await tokenRepository.getStuffId();
     var endpoint = '$BASE_URL/${AppApi.userProfileDetails}/$userId/$staffId';
     var dioCall = dioClientWithAuth.get(endpoint);
-    
+
     try {
-      return callApiWithErrorParser(dioCall).then(
-        (response) => UserProfileData.fromJson(response.data)
-      );
+      return callApiWithErrorParser(dioCall)
+          .then((response) => UserProfileData.fromJson(response.data));
     } catch (e) {
       rethrow;
     }
   }
 
-
-   @override
-  Future<UserData> updateUserStatus(String userId, UpdateUserStatusRequest request) {
+  @override
+  Future<UserData> updateUserStatus(
+      String userId, UpdateUserStatusRequest request) {
     var endpoint = '$BASE_URL/${AppApi.updateUserStatus}/$userId';
     var dioCall = dioClientWithAuth.put(
       endpoint,
       data: request.toJson(),
     );
     try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => UserData.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ActivityLogResponseEntity> requestActivityLogs(
+      PaginationRequest request,
+      {String? userId,
+      String? search}) async {
+    var endpoint = '$BASE_URL/${AppApi.activityLogs}';
+
+    Map<String, dynamic> queryParameters = request.toJson();
+    if (userId != null) queryParameters['user_id'] = userId;
+    if (search != null) queryParameters['search'] = search;
+
+    var dioCall = dioClientWithAuth.get(
+      endpoint,
+      queryParameters: queryParameters,
+    );
+
+    try {
       return callApiWithErrorParser(dioCall).then((response) =>
-          UserData.fromJson(response.data));
+          ActivityLogResponseEntity.fromJson(response.data['data']));
     } catch (e) {
       rethrow;
     }

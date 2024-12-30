@@ -15,6 +15,7 @@ import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/user_profile_request/update_user_status_request.dart';
+import 'package:globipay_admin_panel/entity/response/activity_log/activity_log_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
@@ -274,4 +275,16 @@ class AppRepositoryImpl extends AppRepository {
   Future<UserData> updateUserStatus(String userId, UpdateUserStatusRequest request) {
     return remoteDataSource.updateUserStatus(userId, request);
   }
+
+
+  @override
+Future<ActivityLogResponseEntity> requestActivityLogs(
+    PaginationRequest paginationRequest, 
+    {String? userId, String? search}) {
+  return remoteDataSource.requestActivityLogs(
+    paginationRequest, 
+    userId: userId, 
+    search: search
+  );
+}
 }

@@ -15,6 +15,7 @@ import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/user_profile_request/update_user_status_request.dart';
+import 'package:globipay_admin_panel/entity/response/activity_log/activity_log_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
@@ -42,20 +43,29 @@ import '../../entity/response/promotional/add_promotional_banner_response_entity
  * Created by Abdullah on 13/10/24.
  */
 
-
 abstract class AppRemoteDataSource {
-  Future<UserResponseEntity> requestForUserList(PaginationRequest paginationRequest,{String? path});
+  Future<UserResponseEntity> requestForUserList(
+      PaginationRequest paginationRequest,
+      {String? path});
   Future<LoginResponse> requestForLogin(LoginRequest request);
-  Future<ChatCloseResponseEntity> requestToCloseChat(ChatCloseRequestEntity request);
-  Future<AddPromotionalBannerResponseEntity> requestToAddPromotionalBanner(AddPromotionalBannerRequestEntity request);
-  Future<PromotionalBannerResponseEntity> requestForAllPromotionalBanner(PaginationRequest request);
+  Future<ChatCloseResponseEntity> requestToCloseChat(
+      ChatCloseRequestEntity request);
+  Future<AddPromotionalBannerResponseEntity> requestToAddPromotionalBanner(
+      AddPromotionalBannerRequestEntity request);
+  Future<PromotionalBannerResponseEntity> requestForAllPromotionalBanner(
+      PaginationRequest request);
   Future<FileUploadResponse> requestToFileUpload(FileUploadRequest request);
-  Future<FileUploadResponse> requestToByteFileUpload(ByteFileUploadRequest request);
-  Future<void> requestToRemoveBanner(PromotionalBannerDeleteRequestEntity request);
-  Future<MiscResponseEntity> requestForMisc(PaginationRequest paginationRequest);
-  Future<CategoryResponseEntity> requestForCategories(PaginationRequest request);
+  Future<FileUploadResponse> requestToByteFileUpload(
+      ByteFileUploadRequest request);
+  Future<void> requestToRemoveBanner(
+      PromotionalBannerDeleteRequestEntity request);
+  Future<MiscResponseEntity> requestForMisc(
+      PaginationRequest paginationRequest);
+  Future<CategoryResponseEntity> requestForCategories(
+      PaginationRequest request);
   Future<void> requestToAddMessageTemplates(AddMessageTemplatesRequest request);
-  Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(PaginationRequest request);
+  Future<MessagesTemplatesResponseEntity> requestForMessageTemplates(
+      PaginationRequest request);
   Future<void> requestToRemoveMessageTemplates(String id);
   Future<void> requestToAddCategory(AddCategoryRequestEntity req);
   Future<void> requestToDeleteCategory(String id);
@@ -66,8 +76,9 @@ abstract class AppRemoteDataSource {
       {required PaginationRequest paginationRequest, String? path});
   Future<AllTransactionsResponseEntity> requestForUserAmountDetails(
       {required PaginationRequest paginationRequest, String? path});
-  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(PaginationRequest paginationRequest);
-  
+  Future<AllTransactionsResponseEntity> requestForUserwiseTransactions(
+      PaginationRequest paginationRequest);
+
   Future<void> requestToRemoveLevel(String id);
   Future<LevelResponseEntity> requestForAllLevel();
   Future requestToAddLevel(AddLevelRequestEntity req);
@@ -75,19 +86,27 @@ abstract class AppRemoteDataSource {
   Future<void> requestToAddStaff(AddStaffRequestEntity req);
   Future<void> requestToRemoveStaff(String req);
   Future<List<NotificationResponseItemEntity>> requestForAllNotifications();
-  Future<UserResponseEntity> requestForSearchUserList(PaginationRequest paginationRequest);
-  Future<void> requestToTriggerNotification(CreateNotificationRequestEntity request);
+  Future<UserResponseEntity> requestForSearchUserList(
+      PaginationRequest paginationRequest);
+  Future<void> requestToTriggerNotification(
+      CreateNotificationRequestEntity request);
   Future<UserTransactionHistoryResponseEntity> requestUserSpecificTransaction(
       {required PaginationRequest request, required String userId});
-  Future<AgoraTokenResponseEntity> requestForAgoraToken(AgoraTokenRequestEntity request);
+  Future<AgoraTokenResponseEntity> requestForAgoraToken(
+      AgoraTokenRequestEntity request);
   Future<String> requestToSendCallNotification(SendCallRequestEntity request);
   Future<NotificationResponseEntity> requestUserSpecificNotification(
       {required PaginationRequest request, required String userId});
   Future<void> requestToUpdateUserStatus(String userId, UserStatus status);
   Future<void> requestToRemoveNotification(String notificationId);
   Future<DashboardTransactionBalanceEntity> requestForDashboardBalance();
-  Future<List<RecentTransactionResponseEntity>> requestForRecentTransactionHistory();
+  Future<List<RecentTransactionResponseEntity>>
+      requestForRecentTransactionHistory();
   Future<UserProfileData> getUserProfileDetails(String userId);
-  Future<UserData> updateUserStatus(String userId, UpdateUserStatusRequest request);
-
+  Future<UserData> updateUserStatus(
+      String userId, UpdateUserStatusRequest request);
+  Future<ActivityLogResponseEntity> requestActivityLogs(
+      PaginationRequest paginationRequest,
+      {String? userId,
+      String? search});
 }
