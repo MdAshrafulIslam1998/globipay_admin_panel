@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/utils/extensions.dart';
+import 'package:globipay_admin_panel/entity/response/user_profile/user_profile_details_response.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,8 +9,6 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
   ProfileController controller;
   ProfileDetailsInfoScreen(this.controller);
 
-  // Add status tracking variables
-  // Update this list
   final List<String> statusOptions = [
     'VERIFIED',
     'PENDING',
@@ -19,9 +18,59 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
     'INITIATED'
   ];
 
+  // Helper method to check if a string is empty or null
+  bool _hasData(String? value) {
+    return value != null && value.trim().isNotEmpty;
+  }
+
+  // Helper method to create info fields only if they have data
+  List<Widget> _buildDynamicInfoFields(UserProfileData? profile) {
+    final fields = [
+      if (_hasData(profile?.userName))
+        _buildInfoCard(
+          Icons.person_outline,
+          "Full Name",
+          profile?.userName ?? "",
+        ),
+      if (_hasData(profile?.email))
+        _buildInfoCard(
+          Icons.mail_outline,
+          "Email",
+          profile?.email ?? "",
+        ),
+      if (_hasData(profile?.dob))
+        _buildInfoCard(
+          Icons.calendar_today_outlined,
+          "Date of Birth",
+          profile?.dob ?? "",
+        ),
+      if (_hasData(profile?.gender))
+        _buildInfoCard(
+          Icons.wc,
+          "Gender",
+          profile?.gender ?? "",
+        ),
+      if (_hasData(profile?.phone))
+        _buildInfoCard(
+          Icons.phone_outlined,
+          "Phone",
+          profile?.phone ?? "",
+        ),
+      if (_hasData(profile?.address))
+        _buildInfoCard(
+          Icons.location_on_outlined,
+          "Address",
+          profile?.address ?? "",
+        ),
+    ];
+
+    // Split fields into two columns
+    final midPoint = (fields.length / 2).ceil();
+    return fields;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Get screen size
     final screenSize = MediaQuery.of(context).size;
 
     return Container(
@@ -43,6 +92,9 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
               }
 
               var profile = controller.profileData.value;
+              final infoFields = _buildDynamicInfoFields(profile);
+              final midPoint = (infoFields.length / 2).ceil();
+
               return Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -62,135 +114,124 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Status Banner
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFEF3C7),
-                            border: Border(
-                              bottom: BorderSide(
-                                color: const Color(0xFFD97706).withOpacity(0.2),
-                                width: 1,
+                        if (_hasData(profile?.userCode))
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFEF3C7),
+                              border: Border(
+                                bottom: BorderSide(
+                                  color:
+                                      const Color(0xFFD97706).withOpacity(0.2),
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Profile for ${profile?.userCode ?? ""}",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFFD97706),
+                                ),
                               ),
                             ),
                           ),
-                          child: Center(
-                            child: Text(
-                              "Profile for ${profile?.userCode ?? ""}",
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFFD97706),
-                              ),
-                            ),
-                          ),
-                        ),
-
                         Padding(
                           padding: const EdgeInsets.all(24),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildSectionTitle("Personal Information"),
-                              const SizedBox(height: 24),
+                              if (infoFields.isNotEmpty) ...[
+                                _buildSectionTitle("Personal Information"),
+                                const SizedBox(height: 24),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        children: infoFields
+                                            .sublist(0, midPoint)
+                                            .map((field) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 12),
+                                                  child: field,
+                                                ))
+                                            .toList(),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 24),
+                                    Expanded(
+                                      child: Column(
+                                        children: infoFields
+                                            .sublist(midPoint)
+                                            .map((field) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 12),
+                                                  child: field,
+                                                ))
+                                            .toList(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
 
-                              // Profile Information Grid
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        _buildInfoCard(
-                                          Icons.person_outline,
-                                          "Full Name",
-                                          profile?.userName ?? "",
-                                        ),
-                                        const SizedBox(height: 12),
-                                        _buildInfoCard(
-                                          Icons.mail_outline,
-                                          "Email",
-                                          profile?.email ?? "",
-                                        ),
-                                        const SizedBox(height: 12),
-                                        _buildInfoCard(
-                                          Icons.calendar_today_outlined,
-                                          "Date of Birth",
-                                          profile?.dob ?? "",
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 24),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        _buildInfoCard(
-                                          Icons.wc,
-                                          "Gender",
-                                          profile?.gender ?? "",
-                                        ),
-                                        const SizedBox(height: 12),
-                                        _buildInfoCard(
-                                          Icons.phone_outlined,
-                                          "Phone",
-                                          profile?.phone ?? "",
-                                        ),
-                                        const SizedBox(height: 12),
-                                        _buildInfoCard(
-                                          Icons.location_on_outlined,
-                                          "Address",
-                                          profile?.address ?? "",
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              if (_hasData(profile?.status)) ...[
+                                const SizedBox(height: 24),
+                                _buildInfoCard(
+                                  Icons.verified_user_outlined,
+                                  "Current Status",
+                                  profile?.status ?? "",
+                                ),
+                              ],
 
-                              const SizedBox(height: 24),
-                              _buildInfoCard(
-                                Icons
-                                    .verified_user_outlined, // or Icons.radio_button_checked
-                                "Current Status",
-                                profile?.status ??
-                                    "Not Set", // assuming status field exists in UserProfileData
-                              ),
-                              const SizedBox(height: 32),
-
-                              const SizedBox(height: 32),
-                              _buildSectionTitle("Verification Documents"),
-                              const SizedBox(height: 24),
-
-                              // Documents Grid
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: _buildDocumentCard(
-                                      (profile?.selfiePath ?? "").includeBaseUrl(),
-                                      "Profile Picture",
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: _buildDocumentCard(
-                                      (profile?.frontIdPath ?? "").includeBaseUrl(),
-                                      "ID Card Front",
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: _buildDocumentCard(
-                                      (profile?.backIdPath ?? "").includeBaseUrl(),
-                                      "ID Card Back",
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Only show documents section if any document exists
+                              if (_hasData(profile?.selfiePath) ||
+                                  _hasData(profile?.frontIdPath) ||
+                                  _hasData(profile?.backIdPath)) ...[
+                                const SizedBox(height: 32),
+                                _buildSectionTitle("Verification Documents"),
+                                const SizedBox(height: 24),
+                                Row(
+                                  children: [
+                                    if (_hasData(profile?.selfiePath))
+                                      Expanded(
+                                        child: _buildDocumentCard(
+                                          (profile?.selfiePath ?? "")
+                                              .includeBaseUrl(),
+                                          "Profile Picture",
+                                        ),
+                                      ),
+                                    if (_hasData(profile?.frontIdPath)) ...[
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: _buildDocumentCard(
+                                          (profile?.frontIdPath ?? "")
+                                              .includeBaseUrl(),
+                                          "ID Card Front",
+                                        ),
+                                      ),
+                                    ],
+                                    if (_hasData(profile?.backIdPath)) ...[
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: _buildDocumentCard(
+                                          (profile?.backIdPath ?? "")
+                                              .includeBaseUrl(),
+                                          "ID Card Back",
+                                        ),
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              ],
 
                               const SizedBox(height: 32),
-                              // New Status Update Section
                               _buildStatusUpdateSection(),
                             ],
                           ),

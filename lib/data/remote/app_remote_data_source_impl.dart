@@ -661,7 +661,8 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
 
   @override
   Future<UserProfileData> getUserProfileDetails(String userId) async {
-    var endpoint = '$BASE_URL/${AppApi.userProfileDetails}/$userId';
+    final staffId = await tokenRepository.getStuffId();
+    var endpoint = '$BASE_URL/${AppApi.userProfileDetails}/$userId/$staffId';
     var dioCall = dioClientWithAuth.get(endpoint);
     
     try {
