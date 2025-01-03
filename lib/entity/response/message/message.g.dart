@@ -19,7 +19,9 @@ Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       delivered_at: json['delivered_at'] as String?,
       seen_at: json['seen_at'] as String?,
       message_from: json['message_from'] as String?,
-    );
+      delivery_status: json['delivery_status'] as Map<String, dynamic>?,
+
+);
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'id': instance.id,
@@ -34,4 +36,5 @@ Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'delivered_at': instance.delivered_at,
       'seen_at': instance.seen_at,
       'message_from': instance.message_from,
+      'delivery_status': instance.delivery_status,
     };

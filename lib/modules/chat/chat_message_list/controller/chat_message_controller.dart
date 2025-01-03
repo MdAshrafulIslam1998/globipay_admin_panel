@@ -2,13 +2,18 @@
 // generate date: 16/10/24 08:01 PM
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
+import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
+import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 import 'package:globipay_admin_panel/core/services/storage/app_preferences_service.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
+import 'package:globipay_admin_panel/core/widgets/button/app_button.dart';
+import 'package:globipay_admin_panel/core/widgets/button/app_outline_button.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/data/services/supabase_service.dart';
 import 'package:globipay_admin_panel/entity/response/chat_item/chat_item_response_entity.dart';
@@ -25,7 +30,8 @@ class ChatMessageController extends BaseController {
   AppRepository _appRepository;
 
   TokenRepository tokenRepository;
-  final ChatSharedController sharedController = Injector.resolve<ChatSharedController>();
+  final ChatSharedController sharedController =
+      Injector.resolve<ChatSharedController>();
 
   ChatMessageController(this._appRepository, this.tokenRepository);
 
@@ -33,6 +39,7 @@ class ChatMessageController extends BaseController {
   RxList<ChatSessionResponse> chatList = RxList<ChatSessionResponse>([]);
   var userName = "".obs;
   final supabase = SupabaseService().client;
+
   @override
   onInit() {
     super.onInit();
@@ -41,9 +48,9 @@ class ChatMessageController extends BaseController {
     _getUserInfo();
   }
 
-
   void _getUserInfo() async {
-    final name = await PreferencesService.getString(PreferencesService.USER_NAME);
+    final name =
+        await PreferencesService.getString(PreferencesService.USER_NAME);
     userName.value = name ?? "";
   }
 
@@ -51,12 +58,11 @@ class ChatMessageController extends BaseController {
     return PaginationRequest(limit: 20, page: 1);
   }
 
-  void goToChatScreen()async{
-
+  void goToChatScreen() async {
     final userID = await tokenRepository.getStuffId();
     sharedController.setCurrentUserId(userID);
-    AppRoutes.pushNamed(RoutePath.chat).then((value) => requestForMessageList());
-
+    AppRoutes.pushNamed(RoutePath.chat)
+        .then((value) => requestForMessageList());
   }
 
   void fetchAdminChatSessions() async {
@@ -64,8 +70,9 @@ class ChatMessageController extends BaseController {
       //final userID = await tokenRepository.getUserID();
 
       // Execute the remote procedure call
-      final response = await supabase
-          .rpc('a_chat_session',);
+      final response = await supabase.rpc(
+        'a_chat_session',
+      );
 
       // Since the response is a list, check if it is empty
       if (response == null || (response as List).isEmpty) {
@@ -83,23 +90,23 @@ class ChatMessageController extends BaseController {
       // Update your chat list with the fetched chat sessions
       chatList.value = chatSessions;
       appPrint('Chat sessions: ${chatList.value.length}');
-
     } catch (e) {
       appPrint('Exception while loading chat sessions: $e');
     }
   }
 
+  void onMessageItemClicked(ChatSessionResponse message) async {
+    appPrint("Session ID  : ${message.session_id}");
 
-
-  void onMessageItemClicked(ChatSessionResponse message) async{
-
-   appPrint("Session ID  : ${message.session_id}");
+    if (message.status == "pending") {
+      showPendingDialog(message);
+      return;
+    }
 
     sharedController.setChatSessionId(message.session_id);
     sharedController.setCustomerID(message.customer_id);
     sharedController.setChatSessionResponse(message);
     goToChatScreen();
-
   }
 
   void onAudioCall() {
@@ -140,9 +147,9 @@ class ChatMessageController extends BaseController {
           schema: 'public',
           table: 'chat_sessions',
         ),
-            (payload, [ref]) async {
+        (payload, [ref]) async {
           if (payload['new'] != null) {
-            final newSession = payload['new'] ;
+            final newSession = payload['new'];
             update();
             _updateUI(newSession);
             appPrint('New chat session INSERT: ${newSession}');
@@ -156,9 +163,9 @@ class ChatMessageController extends BaseController {
           schema: 'public',
           table: 'chat_sessions',
         ),
-            (payload, [ref]) async {
+        (payload, [ref]) async {
           if (payload['new'] != null) {
-            final newSession = payload['new'] ;
+            final newSession = payload['new'];
             update();
             _updateUI(newSession);
 
@@ -170,7 +177,8 @@ class ChatMessageController extends BaseController {
 
   _updateUI(Map<String, dynamic> newSession) {
     final chatSession = ChatSessionResponse.fromJson(newSession);
-    final index = chatList.indexWhere((element) => element.session_id == chatSession.session_id);
+    final index = chatList
+        .indexWhere((element) => element.session_id == chatSession.session_id);
     if (index != -1) {
       if (chatSession.is_sender_typing ?? false == true) {
         chatList[index].last_message = "Typing...";
@@ -179,9 +187,137 @@ class ChatMessageController extends BaseController {
       } else {
         chatList[index].last_message = chatSession.last_message;
         chatList[index].message_type = chatSession.message_type;
-        chatList[index].last_message_timestamp = chatSession.last_message_timestamp;
+        chatList[index].last_message_timestamp =
+            chatSession.last_message_timestamp;
       }
     }
     chatList.refresh();
+  }
+
+  void showPendingDialog(ChatSessionResponse message) {
+    showDialog(
+      context: AppNavigatorService.navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Rotating outer circle
+                      TweenAnimationBuilder(
+                        tween: Tween(begin: 0.0, end: 1.0),
+                        duration: const Duration(seconds: 2),
+                        builder: (context, value, child) {
+                          return Transform.rotate(
+                            angle: value * 2 * pi,
+                            child: Icon(
+                              Icons.circle_outlined,
+                              size: 80,
+                              color: Colors.blue.shade400,
+                            ),
+                          );
+                        },
+                      ),
+                      // Pulsing hourglass
+                      TweenAnimationBuilder(
+                        tween: Tween(begin: 0.8, end: 1.2),
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeInOut,
+                        builder: (context, value, child) {
+                          return Transform.scale(
+                            scale: value,
+                            child: Icon(
+                              Icons.hourglass_empty,
+                              size: 40,
+                              color: Colors.blue.shade700,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                FadeTransition(
+                  opacity: CurvedAnimation(
+                    parent: ModalRoute.of(context)!.animation!,
+                    curve: Curves.easeIn,
+                  ),
+                  child: Text(
+                    'Would you like to Accepts Chat Request',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[800],
+                      height: 1.5,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: 400,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: AppOutlineButton(
+                          onPress: () {
+                            AppRoutes.pop();
+                          },
+                          text: 'Cancel',
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: AppButton(
+                          onPress: () {
+                            chatAccept(message);
+                          },
+                          text: 'Accept',
+                        ),
+                      ),
+                      
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void chatAccept(ChatSessionResponse message) {
+    updateSupabaseChatSession(message);
+    //goToChatScreen();
+  }
+  updateSupabaseChatSession(ChatSessionResponse message) async{
+
+    appPrint("Session ID ::::::::::::>>>> : ${sharedController.chatSessionId}");
+// Update the chat session status to closed
+    try {
+      await supabase.from('chat_sessions').update({
+        'status': 'open',
+        'created_at': DateTime.now().toIso8601String(),
+      }).eq('session_id', message.session_id).execute();
+    } catch (e) {
+      print('Error closing chat session: $e');
+    }
+    AppRoutes.pop();
+    fetchAdminChatSessions();
+
   }
 }

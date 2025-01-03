@@ -47,6 +47,14 @@ class _ChatScreenScreenBuilderState
   }
 
   @override
+  void dispose() {
+    controller.incomingMessageChannelSubscription.unsubscribe();
+    controller.dispose();
+
+    super.dispose();
+  }
+
+  @override
   PreferredSizeWidget? appBar() {
     return !controller.isChatSessionClosed() == true ? AppBar(
       centerTitle: true,
@@ -205,9 +213,9 @@ class _ChatScreenScreenBuilderState
           color: ColorPalettes.colorPrimary,
           tail: true,
           isSender: chat.sender_id == controller.sharedController.currentUserId,
-          delivered: chat.delivered_at != null,
-          sent: true,
-          seen: chat.seen_at != null,
+          delivered: chat.isDelivered,
+          sent: chat.isSent,
+          seen: chat.isSeen,
           textStyle: const TextStyle(color: Colors.white, fontSize: 16),
           time: chat.created_at,
         )

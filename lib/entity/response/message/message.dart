@@ -19,7 +19,7 @@ class Message {
   String? delivered_at; // Timestamp for when the message was delivered
   String? seen_at; // Timestamp for when the message was seen
   String? message_from;
-
+  Map<String, dynamic>? delivery_status;
 
   Message({
     this.id,
@@ -34,7 +34,12 @@ class Message {
     this.delivered_at,
     this.seen_at,
     this.message_from,
+    this.delivery_status,
   });
+
+  bool get isSent => delivery_status?['sent'] != null;
+  bool get isDelivered => delivery_status?['delivered'] != null;
+  bool get isSeen => delivery_status?['seen'] != null;
 
   factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
 

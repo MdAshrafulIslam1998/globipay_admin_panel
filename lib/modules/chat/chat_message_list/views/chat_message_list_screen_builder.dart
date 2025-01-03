@@ -272,7 +272,6 @@ class AttachmentIcon extends StatelessWidget {
 */
 
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -705,6 +704,12 @@ class ChatListItem extends StatelessWidget {
         Colors.red[50]!,
       ];
     }
+    else if (chat.status == 'pending') {
+      return [
+        Colors.blue[900]!,
+        Colors.blueAccent,
+      ];
+    }
     return [
       Colors.blue[50]!,
       Colors.white,
@@ -759,6 +764,8 @@ class StatusBadge extends StatelessWidget {
         return [Colors.green[400]!, Colors.green[600]!];
       case 'closed':
         return [Colors.red[400]!, Colors.red[600]!];
+      case 'pending':
+        return [Colors.green[400]!, Colors.green[600]!];
       default:
         return [Colors.blue[400]!, Colors.blue[600]!];
     }
