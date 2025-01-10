@@ -382,7 +382,7 @@ class _ChatMessageListScreenBuilderState
             ),
           ),
           const Spacer(),
-          _buildUnreadBadge(),
+          //_buildUnreadBadge(),
         ],
       ),
     );

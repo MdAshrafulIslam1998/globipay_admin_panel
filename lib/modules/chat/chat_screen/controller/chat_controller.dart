@@ -225,13 +225,28 @@ class ChatController extends BaseController {
       'media_url': url,
       'created_at': DateTime.now().toIso8601String(),
       'updated_at': DateTime.now().toIso8601String(),
-      'message_from': UserType.Customer.name
-    }).execute();
+      'message_from': UserType.Customer.name,
+      'delivery_status': {
+        'sent': DateTime.now().toIso8601String(),
+      } // Corrected structure
+    }).select('id').execute(); // Add .select('id') to fetch the inserted id
 
+// Access the inserted id
+    String? messageID;
+    if (response.data != null && response.data.isNotEmpty) {
+      messageID = response.data[0]['id'] as String?;
+    }
+
+    if (messageID != null) {
+      await markMessageAsDelivered(messageID);
+      appPrint('Inserted message ID::::::::::::::::::::> $messageID');
+    } else {
+      appPrint('Message ID not found in the response.');
+    }
 
     updateLastMessage(
       sessionId: sharedController.chatSessionId ?? "",
-      message: "new image message",
+      message: "New Image Message",
       isSeen: false,
       messageType: 'image'
     );

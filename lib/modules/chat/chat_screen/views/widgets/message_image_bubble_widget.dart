@@ -1,43 +1,7 @@
-/**
- * Created by Abdullah on 19/10/24.
- */
-
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/utils/app_utils.dart';
 
 const double BUBBLE_RADIUS_IMAGE = 16;
-
-/// Basic image bubble
-///
-/// Image bubble should have [id] to work with Hero animations
-/// [id] must be a unique value and is also required
-///
-/// The [BorderRadius] can be customized using [bubbleRadius]
-///
-/// [margin] and [padding] can be used to add space around or within
-/// the bubble respectively
-///
-/// Color can be customized using [color]
-///
-/// [tail] boolean is used to add or remove a tail accoring to the sender type
-///
-/// Display image can be changed using [image]
-///
-/// [image] is a required parameter
-///
-/// Message sender can be changed using [isSender]
-///
-/// [sent], [delivered] and [seen] can be used to display the message state
-///
-/// The [TextStyle] can be customized using [textStyle]
-///
-/// [leading] is the widget that's infront of the bubble when [isSender]
-/// is false.
-///
-/// [trailing] is the widget that's at the end of the bubble when [isSender]
-/// is true.
-///
-/// [onTap], [onLongPress] are callbacks used to register tap gestures
 
 class BubbleNormalImage extends StatelessWidget {
   static const loadingWidget = Center(
@@ -81,165 +45,182 @@ class BubbleNormalImage extends StatelessWidget {
     this.time,
   }) : super(key: key);
 
-  /// image bubble builder method
   @override
   Widget build(BuildContext context) {
     bool stateTick = false;
     Icon? stateIcon;
     if (sent) {
       stateTick = true;
-      stateIcon = Icon(
-        Icons.done,
-        size: 18,
-        color: Color(0xFF97AD8E),
-      );
+      stateIcon = Icon(Icons.done, size: 18, color: Color(0xFF97AD8E));
     }
     if (delivered) {
       stateTick = true;
-      stateIcon = Icon(
-        Icons.done_all,
-        size: 18,
-        color: Color(0xFF97AD8E),
-      );
+      stateIcon = Icon(Icons.done_all, size: 18, color: Color(0xFF97AD8E));
     }
     if (seen) {
       stateTick = true;
-      stateIcon = Icon(
-        Icons.done_all,
-        size: 18,
-        color: Color(0xFF92DEDA),
-      );
+      stateIcon = Icon(Icons.done_all, size: 18, color: Color(0xFF92DEDA));
     }
 
-    return Row(
-      children: <Widget>[
-        isSender
-            ? const Expanded(
-          child: SizedBox(
-            width: 5,
-          ),
-        )
-            : leading ?? Container(),
-        Container(
-          padding: padding,
-          margin: margin,
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * .5,
-            maxHeight: MediaQuery.of(context).size.width * .5,
-          ),
-          child: GestureDetector(
-              child: Hero(
-                tag: id,
-                child: Stack(
+    return Container(
+      padding: padding,
+      margin: margin,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * .5,
+        ),
+        child: GestureDetector(
+          child:  Hero(
+            tag: id,
+            child: Stack(
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(bubbleRadius),
-                              topRight: Radius.circular(bubbleRadius),
-                              bottomLeft: Radius.circular(tail
-                                  ? isSender
-                                  ? bubbleRadius
-                                  : 0
-                                  : BUBBLE_RADIUS_IMAGE),
-                              bottomRight: Radius.circular(tail
-                                  ? isSender
-                                  ? 0
-                                  : bubbleRadius
-                                  : BUBBLE_RADIUS_IMAGE),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(bubbleRadius),
-                              child: image,
-                            ),
-                          ),
+                    Container(
+                      constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.width * .4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(bubbleRadius),
+                          topRight: Radius.circular(bubbleRadius),
+                          bottomLeft: Radius.circular(
+                              tail ? (isSender ? bubbleRadius : 0) : BUBBLE_RADIUS_IMAGE),
+                          bottomRight: Radius.circular(
+                              tail ? (isSender ? 0 : bubbleRadius) : BUBBLE_RADIUS_IMAGE),
                         ),
-                        Text(
-                          AppUtils.getChatTime(time ?? DateTime.now().toString()),
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 10,
-                          ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(bubbleRadius),
+                          child: image,
                         ),
-                      ],
+                      ),
                     ),
-
-                    stateIcon != null && stateTick
-                        ? Positioned(
-                      bottom: 4,
-                      right: 6,
-                      child: stateIcon,
-                    )
-                        : SizedBox(
-                      width: 1,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4, right: 8),
+                      child: Text(
+                        AppUtils.getChatTime(time ?? DateTime.now().toString()),
+                        style: TextStyle(color: Colors.grey, fontSize: 10),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              onLongPress: onLongPress,
-              onTap: onTap ??
-                      () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return _DetailScreen(
-                        tag: id,
-                        image: image,
-                      );
-                    }));
-                  }),
+                if (stateIcon != null && stateTick)
+                  Positioned(
+                    bottom: 10,
+                    right: 6,
+                    child: stateIcon,
+                  ),
+              ],
+            ),
+          ),
+          onLongPress: onLongPress,
+          onTap: (){
+            if (onTap != null) {
+              onTap!();
+            } else {
+              _showDetailScreen(context);
+            }
+          },
         ),
-        if (isSender && trailing != null) SizedBox.shrink(),
-      ],
+      ),
     );
   }
+
+  void _showDetailScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => DetailScreen(
+          tag: id,
+          image: image,
+        ),
+      ),
+    );
+  }
+
+// ... [Previous helper methods remain the same]
 }
 
-/// detail screen of the image, display when tap on the image bubble
-class _DetailScreen extends StatefulWidget {
+class DetailScreen extends StatelessWidget {
   final String tag;
   final Widget image;
 
-  const _DetailScreen({Key? key, required this.tag, required this.image})
-      : super(key: key);
-
-  @override
-  _DetailScreenState createState() => _DetailScreenState();
-}
-
-/// created using the Hero Widget
-class _DetailScreenState extends State<_DetailScreen> {
-  @override
-  initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  const DetailScreen({
+    Key? key,
+    required this.tag,
+    required this.image,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Scaffold(
-        body: Center(
-          child: Hero(
-            tag: widget.tag,
-            child: widget.image,
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white.withOpacity(0.9),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          onPressed: () => Navigator.pop(context),
+        ),
+        /*actions: [
+          IconButton(
+            icon: const Icon(Icons.share, color: Colors.black87),
+            onPressed: () {*//* Add share functionality *//*},
           ),
+          IconButton(
+            icon: const Icon(Icons.download, color: Colors.black87),
+            onPressed: () {*//* Add download functionality *//*},
+          ),
+        ],*/
+      ),
+      body: Container(
+        color: Colors.white,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            InteractiveViewer(
+              minScale: 0.5,
+              maxScale: 4.0,
+              child: Hero(
+                tag: tag,
+                child: Center(child: image),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Colors.white.withOpacity(0.9),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    /*IconButton(
+                      icon: const Icon(Icons.edit, color: Colors.black87),
+                      onPressed: () {*//* Add edit functionality *//*},
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () {*//* Add delete functionality *//*},
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.info_outline, color: Colors.black87),
+                      onPressed: () {*//* Add info functionality *//*},
+                    ),*/
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      onTap: () {
-        Navigator.pop(context);
-      },
     );
   }
 }

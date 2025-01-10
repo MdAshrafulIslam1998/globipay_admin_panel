@@ -44,7 +44,7 @@ class ChatListItem extends StatelessWidget {
                             Expanded(
                               child: getUserMessage(chat),
                             ),
-                            getTrailingWidget(chat)
+                            //getTrailingWidget(chat)
                           ],
                         ),
                         AppSpaces.spaceBetweenChild,
