@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:globipay_admin_panel/data/services/message_listener.dart';
+import 'package:globipay_admin_panel/data/services/supabase_service.dart';
 
 import 'app.dart';
 import 'core/di/di_setup.dart';
@@ -19,5 +21,8 @@ Future<void> main() async {
   );
 
   setupDependencies();
+
+  MessagesListener().initialize(SupabaseService().client);
+
   runApp(const App());
 }

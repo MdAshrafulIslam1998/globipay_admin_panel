@@ -194,18 +194,21 @@ class _ChatScreenScreenBuilderState
         ),
 
         if (chat.message_type == "image")
-          BubbleNormalImage(
-            id: chat.id ?? "",
-            image: CachedNetworkImage(
-               imageUrl: chat.media_url ?? "",
-              height: 180,
-              width: 180,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: BubbleNormalImage(
+              id: chat.id ?? "",
+              image: CachedNetworkImage(
+                 imageUrl: chat.media_url ?? "",
+                height: 180,
+                width: 180,
+              ),
+              isSender: chat.sender_id == controller.sharedController.currentUserId,
+              delivered: chat.sender_id == controller.sharedController.currentUserId ?  chat.isDelivered : false,
+              sent: chat.sender_id == controller.sharedController.currentUserId ? chat.isSent : false,
+              seen: chat.sender_id == controller.sharedController.currentUserId ? chat.isSeen  : false,
+              time: chat.created_at,
             ),
-            isSender: chat.sender_id == controller.sharedController.currentUserId,
-            delivered: chat.sender_id == controller.sharedController.currentUserId ?  chat.isDelivered : false,
-            sent: chat.sender_id == controller.sharedController.currentUserId ? chat.isSent : false,
-            seen: chat.sender_id == controller.sharedController.currentUserId ? chat.isSeen  : false,
-            time: chat.created_at,
           ),
         if(chat.message_type == 'text')
           BubbleSpecialThree(

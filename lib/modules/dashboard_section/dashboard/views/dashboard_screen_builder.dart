@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/utils/extensions.dart';
+import 'package:globipay_admin_panel/data/services/message_listener.dart';
+import 'package:globipay_admin_panel/data/services/supabase_service.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/controller/dashboard_controller.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
@@ -21,7 +24,14 @@ class _DashboardScreenState
   }
 
   @override
+  void dispose() {
+    MessagesListener().dispose();
+    super.dispose();
+  }
+
+  @override
   Widget body(BuildContext context) {
+
     return Scaffold(
       body: _buildMainDashboard(),
     );
@@ -44,18 +54,6 @@ class _DashboardScreenState
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.notifications_outlined),
-                      onPressed: () {},
-                    ),
-                  ],
                 ),
               ],
             ),

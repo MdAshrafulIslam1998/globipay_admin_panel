@@ -24,6 +24,8 @@ import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
+import 'package:globipay_admin_panel/entity/response/message/message.dart';
+import 'package:globipay_admin_panel/utils/views/chat_notifications_snack_bar.dart';
 import '../network/exceptions/service_unavailable_exception.dart';
 import '../network/exceptions/unauthorize_exception.dart';
 import '../utils/custom_dialog.dart';
@@ -231,6 +233,17 @@ class BaseController extends GetxController{
         fileName: fileName,
       );
 
+  void showChatSnackBar(BuildContext context,{required Message message}) {
+    {
+      ChatNotificationManager().show(
+        context,
+        userName: "New Message",
+        message: message.message ?? "",
+        imageUrl: message.media_url ?? "",
+        timestamp: DateTime.now(),
+      );
+    }
+  }
 
   showSnackBar({required String message, SnackBarStatus? status}) {
     ScaffoldMessenger.of(AppNavigatorService.navigatorKey.currentContext!).showSnackBar(
@@ -292,6 +305,8 @@ class BaseController extends GetxController{
     return completer.future;
 
   }
+
+  BuildContext get appContext  => AppNavigatorService.navigatorKey.currentContext!;
 
 }
 
