@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 15/12/24.
- */
+/// Created by Abdullah on 15/12/24.
+library;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
@@ -23,7 +22,7 @@ import 'notification_tab.dart';
 class ProfileScreen extends BaseView<ProfileController> {
 
   final UserResponseItemEntity? user;
-  ProfileScreen({ this.user}){
+  ProfileScreen({super.key,  this.user}){
     controller.onInit();
     controller.fetchInitialData(user);
 
@@ -45,7 +44,7 @@ class ProfileScreen extends BaseView<ProfileController> {
           ),
           backgroundColor: Colors.white,
           elevation: 0,
-          bottom: TabBar(
+          bottom: const TabBar(
             labelColor: Colors.blue,
             unselectedLabelColor: Colors.grey,
             indicatorColor: Colors.blue,
@@ -83,14 +82,14 @@ class ProfileScreen extends BaseView<ProfileController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(radius: 50),
-            SizedBox(height: 10),
+            const CircleAvatar(radius: 50),
+            const SizedBox(height: 10),
             Container(
               width: 200,
               height: 20,
               color: Colors.white,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
               width: 150,
               height: 20,
@@ -106,13 +105,13 @@ class ProfileScreen extends BaseView<ProfileController> {
     return Center(
       child: Column(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 60,
             backgroundImage: NetworkImage(
               'https://via.placeholder.com/150',
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             profile.fullName,
             style: GoogleFonts.poppins(
@@ -143,7 +142,7 @@ class ProfileScreen extends BaseView<ProfileController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildDetailRow('Email', profile.email),
-            Divider(),
+            const Divider(),
             // Add more personal details here
           ],
         ),
@@ -183,8 +182,8 @@ class ProfileScreen extends BaseView<ProfileController> {
           onPressed: () {
             // Implement edit profile
           },
-          icon: Icon(Icons.edit),
-          label: Text('Edit Profile'),
+          icon: const Icon(Icons.edit),
+          label: const Text('Edit Profile'),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
             shape: RoundedRectangleBorder(
@@ -196,8 +195,8 @@ class ProfileScreen extends BaseView<ProfileController> {
           onPressed: () {
             // Implement account settings
           },
-          icon: Icon(Icons.settings),
-          label: Text('Settings'),
+          icon: const Icon(Icons.settings),
+          label: const Text('Settings'),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.green,
             shape: RoundedRectangleBorder(

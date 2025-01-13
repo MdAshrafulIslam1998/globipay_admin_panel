@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 25/8/24.
- */
+/// Created by Abdullah on 25/8/24.
+library;
 
 abstract class AppImages {
   static const assets = "assets";

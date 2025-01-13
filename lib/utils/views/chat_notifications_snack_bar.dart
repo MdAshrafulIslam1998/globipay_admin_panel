@@ -95,10 +95,10 @@ class _NotificationsOverlay extends StatefulWidget {
   final Function(ChatNotification) onDismiss;
 
   const _NotificationsOverlay({
-    Key? key,
+    super.key,
     required this.notifications,
     required this.onDismiss,
-  }) : super(key: key);
+  });
 
   @override
   _NotificationsStateKey createState() => _NotificationsStateKey();
@@ -151,10 +151,10 @@ class _NotificationCard extends StatefulWidget {
   final VoidCallback onDismiss;
 
   const _NotificationCard({
-    Key? key,
+    super.key,
     required this.notification,
     required this.onDismiss,
-  }) : super(key: key);
+  });
 
   @override
   _NotificationCardState createState() => _NotificationCardState();

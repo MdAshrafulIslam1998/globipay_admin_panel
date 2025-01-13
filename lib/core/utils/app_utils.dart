@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'dart:math';
 
-/**
- * Created by Abdullah on 18/10/24.
- */
+/// Created by Abdullah on 18/10/24.
 
 
 class AppUtils {

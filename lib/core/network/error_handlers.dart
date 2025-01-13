@@ -12,9 +12,7 @@ import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 
 import 'exceptions/service_unavailable_exception.dart';
 
-/**
- * Created by Abdullah on 12/10/24.
- */
+/// Created by Abdullah on 12/10/24.
 
 Exception handleError(String error) {
   appPrint(tag: "Generic Exception", error);
@@ -46,7 +44,7 @@ Exception handleDioError(DioException dioError) {
   }
 }
 
-Exception _parseDioErrorResponse(DioError dioError) {
+Exception _parseDioErrorResponse(DioException dioError) {
   int statusCode = dioError.response?.statusCode ?? -1;
   String? status;
   String? serverMessage;

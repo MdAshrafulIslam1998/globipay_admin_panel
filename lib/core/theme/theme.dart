@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 20/8/24.
- */
+/// Created by Abdullah on 20/8/24.
+library;
 
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';

@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 30/11/24.
- */
+/// Created by Abdullah on 30/11/24.
+library;
 
 enum FeatureCode{
   PRIVACY_POLICY("privacy_policy", "Privacy Policy"),

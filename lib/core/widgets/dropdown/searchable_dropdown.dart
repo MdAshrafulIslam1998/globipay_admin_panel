@@ -99,7 +99,7 @@ class SearchableDropdownController<T> extends GetxController {
     }
   }
 
-  var _searchQuery = ''.obs;
+  final _searchQuery = ''.obs;
   // Debounced search method
   void searchWithDelay(String query) {
     _debounceTimer?.cancel();
@@ -173,14 +173,14 @@ class SearchableDropdown<T> extends StatelessWidget {
   // Callbacks
   final void Function(List<T> selectedItems)? onChanged;
 
-   SearchableDropdown({
-    Key? key,
+   const SearchableDropdown({
+    super.key,
     required this.controller,
     required this.itemBuilder,
     this.selectedItemBuilder,
     required this.displayStringForItemSelection ,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   // Default string representation
   static String _defaultDisplayString<T>(T item) => item.toString();

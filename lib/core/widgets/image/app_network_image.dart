@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 
-/**
- * Created by Abdullah on 11/10/24.
- */
+/// Created by Abdullah on 11/10/24.
 
 class AppNetworkImage extends CachedNetworkImage {
   AppNetworkImage(

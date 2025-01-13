@@ -21,14 +21,14 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Level Management',
           style: TextStyle(
             color: Color(0xB5080007),
             fontWeight: FontWeight.w600,
           ),
         ),
-        backgroundColor: Color(0xFFE5F7E3),
+        backgroundColor: const Color(0xFFE5F7E3),
         centerTitle: true,
         elevation: 0,
       ),
@@ -133,7 +133,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                           ),
                                         ],
                                       ),
-                                      trailing: Container(
+                                      trailing: SizedBox(
                                         width: 100,
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -258,7 +258,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                             ElevatedButton(
                               onPressed: controller.addLevel,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFF79A375),
+                                backgroundColor: const Color(0xFF79A375),
                                 foregroundColor: Colors.white,
                                 minimumSize: const Size(double.infinity, 50),
                                 shape: RoundedRectangleBorder(
@@ -383,8 +383,8 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: const Color(0xFF3B82F6),
+          borderSide: const BorderSide(
+            color: Color(0xFF3B82F6),
             width: 2,
           ),
         ),

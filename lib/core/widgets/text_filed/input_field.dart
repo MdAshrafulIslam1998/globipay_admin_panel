@@ -4,9 +4,7 @@ import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
 import '../../constants/app_constant.dart';
 import 'input_regex.dart';
 
-/**
- * Created by Abdullah on 22/8/24.
- */
+/// Created by Abdullah on 22/8/24.
 
 class InputField extends TextFormField {
   final String? header;
@@ -91,21 +89,21 @@ class InputField extends TextFormField {
     decoration: inputDecoration ??
         InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
+            borderSide: const BorderSide(color: Colors.grey),
             borderRadius: BorderRadius.circular(12),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
-            borderSide:  BorderSide(color: ColorPalettes.colorPrimary),
+            borderSide:  const BorderSide(color: ColorPalettes.colorPrimary),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
-            borderSide:  BorderSide(color: Colors.grey),
+            borderSide:  const BorderSide(color: Colors.grey),
           ),
 
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
-            borderSide:  BorderSide(color: Colors.grey),
+            borderSide:  const BorderSide(color: Colors.grey),
           ),
           hintText: hintText,
           counterText: willShowCounter ? null : "",
@@ -117,7 +115,7 @@ class InputField extends TextFormField {
           prefix: prefix,
           suffix: suffix,
           contentPadding: contentPadding ??
-              EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
         ),
     validator: (value) {
       if (isOptional && value!.isEmpty) {

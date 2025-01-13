@@ -1,11 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/**
- * Created by Abdullah on 13/10/24.
- */
+/// Created by Abdullah on 13/10/24.
 
 class AppSecureStorage {
-FlutterSecureStorage storage = FlutterSecureStorage();
+FlutterSecureStorage storage = const FlutterSecureStorage();
 
 final authOption = const AndroidOptions(
     storageCipherAlgorithm: StorageCipherAlgorithm.AES_GCM_NoPadding);

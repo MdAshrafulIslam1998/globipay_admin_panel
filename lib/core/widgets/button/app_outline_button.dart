@@ -4,9 +4,7 @@ import 'package:globipay_admin_panel/core/data/model/icon_button_model.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
 import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 
-/**
- * Created by Abdullah on 11/10/24.
- */
+/// Created by Abdullah on 11/10/24.
 
 class AppOutlineButton extends StatelessWidget {
   final String text;
@@ -29,8 +27,8 @@ class AppOutlineButton extends StatelessWidget {
     return OutlinedButton(
         onPressed: onPress,
         style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all(Size(double.infinity, AppConstants.buttonHeight)),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        minimumSize: WidgetStateProperty.all(const Size(double.infinity, AppConstants.buttonHeight)),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
                 side: BorderSide(

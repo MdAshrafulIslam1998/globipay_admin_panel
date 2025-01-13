@@ -14,10 +14,10 @@ class DateChip extends StatelessWidget {
   ///
   ///
   const DateChip({
-    Key? key,
+    super.key,
     required this.date,
     this.color = const Color(0x558AD3D5),
-  }) : super(key: key);
+  });
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -28,7 +28,7 @@ class DateChip extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(6)),
+            borderRadius: const BorderRadius.all(Radius.circular(6)),
             color: color,
           ),
           child: Padding(

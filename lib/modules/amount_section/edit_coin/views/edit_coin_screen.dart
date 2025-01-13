@@ -3,6 +3,8 @@ import 'edit_coin_screen_builder.dart';
 import 'package:http/http.dart' as http;
 
 class EditCoinScreen extends StatelessWidget {
+  const EditCoinScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return EditCoinScreenBuilder();

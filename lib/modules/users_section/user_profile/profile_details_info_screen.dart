@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-/**
- * Created by Abdullah on 15/12/24.
- */
+/// Created by Abdullah on 15/12/24.
 
 class ProfileDetailsInfoScreen extends StatelessWidget {
 
   ProfileController controller;
-  ProfileDetailsInfoScreen(this.controller);
+  ProfileDetailsInfoScreen(this.controller, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +221,7 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
   @override
   PreferredSizeWidget? appBar() {
     return AppBar(
-      title: Text(
+      title: const Text(
         'Pending Profile',
       ),
       backgroundColor: const Color(0xFFF7F2FA),
@@ -324,10 +322,10 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
               errorBuilder: (context, error, stackTrace) => Container(
                 height: 180,
                 color: const Color(0xFFE2E8F0),
-                child: Icon(
+                child: const Icon(
                   Icons.broken_image,
                   size: 48,
-                  color: const Color(0xFF64748B),
+                  color: Color(0xFF64748B),
                 ),
               ),
             ),

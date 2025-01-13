@@ -4,7 +4,7 @@ class AudioCallProfileView extends StatefulWidget {
   final String userName;
   final String userImageUrl;
 
-  const AudioCallProfileView({
+  const AudioCallProfileView({super.key, 
     required this.userName,
     required this.userImageUrl,
   });
@@ -31,7 +31,7 @@ class _AudioCallProfileViewState extends State<AudioCallProfileView>
     // Animation for pulsing effect around the profile picture
     _pulseController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
 
     _pulseAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
@@ -44,20 +44,20 @@ class _AudioCallProfileViewState extends State<AudioCallProfileView>
     // Fade animation for the user name
     _fadeController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
     _fadeAnimation =
         Tween<double>(begin: 0.0, end: 1.0).animate(_fadeController);
 
     // Trigger the name fade-in animation after a small delay
-    Future.delayed(Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       _fadeController.forward();
     });
 
     // Color-shifting animation for the background gradient
     _colorShiftController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 4),
+      duration: const Duration(seconds: 4),
     )..repeat(reverse: true);
 
     _colorAnimation = ColorTween(
@@ -119,7 +119,7 @@ class _AudioCallProfileViewState extends State<AudioCallProfileView>
                               color: Colors.blueAccent.withOpacity(0.6),
                               blurRadius: 25,
                               spreadRadius: 3,
-                              offset: Offset(0, 0),
+                              offset: const Offset(0, 0),
                             ),
                           ],
                         ),
@@ -128,14 +128,14 @@ class _AudioCallProfileViewState extends State<AudioCallProfileView>
                   },
                 ),
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // User Name with Fade-in Animation
                 FadeTransition(
                   opacity: _fadeAnimation,
                   child: Text(
                     widget.userName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,

@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 19/10/24.
- */
+/// Created by Abdullah on 19/10/24.
+library;
 
 import 'package:intl/intl.dart';
 
@@ -19,11 +18,11 @@ class DateChipText {
   ///
   ///
   String getText() {
-    final now = new DateTime.now();
+    final now = DateTime.now();
     if (_formatter.format(now) == _formatter.format(date)) {
       return 'Today';
     } else if (_formatter
-        .format(new DateTime(now.year, now.month, now.day - 1)) ==
+        .format(DateTime(now.year, now.month, now.day - 1)) ==
         _formatter.format(date)) {
       return 'Yesterday';
     } else {

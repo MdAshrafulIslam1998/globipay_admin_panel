@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 15/12/24.
- */
+/// Created by Abdullah on 15/12/24.
+library;
 
 enum FileType {
   HTML("html","Html"),

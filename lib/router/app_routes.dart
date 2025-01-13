@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 
-/**
- * Created by Abdullah on 21/8/24.
- */
+/// Created by Abdullah on 21/8/24.
 
 class AppRoutes {
   static Future<dynamic> pushAndPopAll(String path, {extra}) async {
@@ -29,7 +27,7 @@ class AppRoutes {
 
   static popUntil(String keepUpto) {
     final navigator = AppNavigatorService.navigatorKey.currentState!;
-    if (navigator != null && navigator.canPop()) {
+    if (navigator.canPop()) {
       navigator.popUntil(ModalRoute.withName(keepUpto));
     }
   }

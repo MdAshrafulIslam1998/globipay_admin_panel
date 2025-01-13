@@ -2,9 +2,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 
-/**
- * Created by Abdullah on 27/10/24.
- */
+/// Created by Abdullah on 27/10/24.
 
 
 class CallControllerWidgetController extends GetxController {

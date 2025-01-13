@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 13/12/24.
- */
+/// Created by Abdullah on 13/12/24.
+library;
 
 enum TableName{
   USER_ACTIVE_TABLE,

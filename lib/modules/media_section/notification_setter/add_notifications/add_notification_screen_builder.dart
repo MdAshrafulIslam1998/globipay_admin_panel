@@ -13,9 +13,7 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 
 import '../../../../core/widgets/dropdown/searchable_ovellay_dropdown.dart';
 
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
 
 class AddNotificationScreenBuilder extends StatefulWidget {
   const AddNotificationScreenBuilder({super.key});
@@ -37,7 +35,7 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
   Widget body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Create Notification',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -107,7 +105,7 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
       controller: controller.titleController,
       decoration: InputDecoration(
         labelText: 'Notification Title',
-        prefixIcon: Icon(Icons.title),
+        prefixIcon: const Icon(Icons.title),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -118,7 +116,7 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
         }
         return null;
       },
-      style: TextStyle(fontSize: 16),
+      style: const TextStyle(fontSize: 16),
     );
   }
 
@@ -127,12 +125,12 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
       controller: controller.imageUrlLink,
       decoration: InputDecoration(
         labelText: 'Notification Image Url(Optional)',
-        prefixIcon: Icon(Icons.link_outlined),
+        prefixIcon: const Icon(Icons.link_outlined),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
-      style: TextStyle(fontSize: 16),
+      style: const TextStyle(fontSize: 16),
       onChanged: (value) {
         controller.selectedImageBytes.value = null;
       },
@@ -143,13 +141,13 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Description',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(12),
@@ -158,7 +156,7 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
             controller: controller.descriptionController,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           height: 200,
           decoration: BoxDecoration(
@@ -167,7 +165,7 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
           ),
           child: quill.QuillEditor.basic(
             controller: controller.descriptionController,
-            configurations: quill.QuillEditorConfigurations(
+            configurations: const quill.QuillEditorConfigurations(
               padding: EdgeInsets.all(8),
               placeholder: 'Write your notification description...',
               showCursor: true,
@@ -182,7 +180,7 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Notification Image (Optional)',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
@@ -201,12 +199,12 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
-      child: Text(
+      child: const Text(
         'Create Notification',
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),

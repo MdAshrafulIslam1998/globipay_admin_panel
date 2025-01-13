@@ -14,7 +14,7 @@ import 'package:globipay_admin_panel/modules/amount_section/create_category/cont
 import 'package:globipay_admin_panel/router/app_routes.dart';
 
 class CreateCategoryScreenBuilder extends StatefulWidget {
-  const CreateCategoryScreenBuilder({Key? key}) : super(key: key);
+  const CreateCategoryScreenBuilder({super.key});
 
   @override
   State<CreateCategoryScreenBuilder> createState() =>
@@ -34,14 +34,14 @@ class _CategoryScreenBuilderState extends BaseViewState<
 
   @override
   PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Category Management'));
+    return AppBar(title: const Text('Category Management'));
   }
 
   @override
   Widget body(BuildContext context) {
     return Container(
       color: Colors.grey[100],
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -70,7 +70,7 @@ class _CategoryScreenBuilderState extends BaseViewState<
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -97,15 +97,15 @@ class _CategoryScreenBuilderState extends BaseViewState<
                     _openColorPicker(context);
                   },
                   child: Container(
-                      padding: EdgeInsets.all(8),
-                      margin: EdgeInsets.only(left: 16),
+                      padding: const EdgeInsets.all(8),
+                      margin: const EdgeInsets.only(left: 16),
                       height: 60,
                       width: 60,
                       decoration: BoxDecoration(
                         color: currentSelectedColor,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Icon(Icons.color_lens, color: Colors.white),
+                      child: const Icon(Icons.color_lens, color: Colors.white),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -242,7 +242,7 @@ class _CategoryScreenBuilderState extends BaseViewState<
                     ),
                   ],
                 ))
-            .toList(),
+            ,
       ],
     );
   }

@@ -19,6 +19,7 @@ import '../../../../entity/response/category/category_response.dart';
 class CreateCategoryController extends BaseController {
   final categoryNameController = TextEditingController();
   final AppRepository _repository;
+  @override
   final TokenRepository tokenRepository;
   Uint8List? selectedImageBytes;
 

@@ -3,16 +3,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
 class WebImagePicker extends StatefulWidget {
   final double? height;
   final double? width;
   Function(Uint8List?, html.File?) onImageSelected;
   final String? hint;
 
-  WebImagePicker({required this.onImageSelected, this.hint, this.height, this.width});
+  WebImagePicker({super.key, required this.onImageSelected, this.hint, this.height, this.width});
 
   @override
   _WebImagePickerState createState() => _WebImagePickerState();
@@ -83,7 +81,7 @@ class _WebImagePickerState extends State<WebImagePicker> {
                         size: 80,
                         color: Colors.deepPurple.shade300,
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Text(
                         widget.hint ?? 'Upload Image',
                         style: TextStyle(
@@ -109,7 +107,7 @@ class _WebImagePickerState extends State<WebImagePicker> {
             size: 80,
             color: Colors.deepPurple.shade300,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'Upload Banner Image',
             style: TextStyle(

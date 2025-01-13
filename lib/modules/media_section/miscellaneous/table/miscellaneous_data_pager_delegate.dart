@@ -3,9 +3,7 @@ import 'package:globipay_admin_panel/modules/media_section/miscellaneous/control
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/views/miscellaneous_screen.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
 
 class MiscellaneousDataPagerDelegate extends DataPagerDelegate {
   final MiscellaneousController controller;

@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
 import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 
-/**
- * Created by Abdullah on 18/10/24.
- */
+/// Created by Abdullah on 18/10/24.
 
 
 class StatusBadge extends StatelessWidget {
   final String status;
 
-  const StatusBadge({required this.status});
+  const StatusBadge({super.key, required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +48,7 @@ class StatusBadge extends StatelessWidget {
 class AttachmentIcon extends StatelessWidget {
   final String type;
 
-  AttachmentIcon({required this.type});
+  const AttachmentIcon({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {

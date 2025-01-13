@@ -14,7 +14,7 @@ import 'package:globipay_admin_panel/router/route_path.dart';
 
 
 class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerController> {
-  PromotionalBannerScreenBuilder() {
+  PromotionalBannerScreenBuilder({super.key}) {
     controller.onInit();
   }
 
@@ -30,14 +30,14 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
             // Main Content Area
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(24),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Header
                     _buildHeader(context),
 
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
                     // Banner List
                     Expanded(
@@ -66,14 +66,14 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
           ),
         ),
         ElevatedButton.icon(
-          icon: Icon(Icons.add, color: Colors.white),
-          label: Text('Create Banner', style: TextStyle(color: Colors.white)),
+          icon: const Icon(Icons.add, color: Colors.white),
+          label: const Text('Create Banner', style: TextStyle(color: Colors.white)),
           onPressed: () {
             AppRoutes.pushNamed(RoutePath.addPromoBanner);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue.shade600,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -102,7 +102,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
       }
 
       return GridView.builder(
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 350,
           childAspectRatio: 0.8,
           crossAxisSpacing: 16,
@@ -127,7 +127,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
             height: 100,
             color: Colors.grey.shade400,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'Something went wrong',
             style: TextStyle(
@@ -135,13 +135,13 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
               color: Colors.grey.shade600,
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () => controller.fetchActiveBanners(),
-            child: Text('Retry'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue.shade600,
             ),
+            child: Text('Retry'),
           ),
         ],
       ),
@@ -158,7 +158,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
             height: 150,
             color: Colors.grey.shade400,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'No Promotional Banners',
             style: TextStyle(
@@ -166,7 +166,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
               color: Colors.grey.shade600,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Create your first promotional banner',
             style: TextStyle(
@@ -196,7 +196,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
         children: [
           // Banner Image
           ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             child: banner.picture != null
                 ? CachedNetworkImage(
               imageUrl: banner.picture!.includeBaseUrl(),
@@ -204,9 +204,9 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
               width: double.infinity,
               fit: BoxFit.cover,
               placeholder: (context, url) =>
-                  Center(child: CircularProgressIndicator()),
+                  const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) =>
-                  Icon(Icons.error),
+                  const Icon(Icons.error),
               errorListener: (exception) {
                 appPrint('Exception: $exception');
               },
@@ -232,7 +232,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
                     color: Colors.grey.shade800,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   banner.subtitle ?? '',
                   maxLines: 2,
@@ -241,7 +241,7 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
                     color: Colors.grey.shade600,
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,20 +278,20 @@ class PromotionalBannerScreenBuilder extends BaseView<PromotionalBannerControlle
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Banner'),
-        content: Text('Are you sure you want to delete this banner?'),
+        title: const Text('Delete Banner'),
+        content: const Text('Are you sure you want to delete this banner?'),
         actions: [
           TextButton(
             onPressed: () => AppRoutes.pop(),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
               controller.deleteBanner(bannerId);
               AppRoutes.pop();
             },
-            child: Text('Delete'),
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: Text('Delete'),
           ),
         ],
       ),

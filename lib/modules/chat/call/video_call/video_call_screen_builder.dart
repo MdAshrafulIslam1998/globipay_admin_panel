@@ -18,7 +18,7 @@ import 'audio_profile_view.dart';
 class VideoCallScreenBuilder extends StatefulWidget {
   final dynamic data;
 
-  const VideoCallScreenBuilder({Key? key, this.data}) : super(key: key);
+  const VideoCallScreenBuilder({super.key, this.data});
 
   @override
   _VideoCallScreenState createState() => _VideoCallScreenState();
@@ -80,7 +80,7 @@ class _VideoCallScreenState
                     AppSpaces.spaceBetweenChild,
                     Text(
                       securedEmojis ?? "", // Get 4 to 5 emojis
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18, // Match the size of call status text
                       ),
                     ),
@@ -89,7 +89,7 @@ class _VideoCallScreenState
                     // Call Duration Text
                     Obx(()=>Text(
                       AppUtils.formatDuration(controller.callDuration.value),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
@@ -106,8 +106,8 @@ class _VideoCallScreenState
               bottom: 160,
               child: Draggable(
                 feedback: selfViewWidget(),
-                child: selfViewWidget(),
                 childWhenDragging: Container(),
+                child: selfViewWidget(),
               ),
             ) : Container()),
 
@@ -161,7 +161,7 @@ class _VideoCallScreenState
 
   // Widget for the audio call background (color-shifting animation)
   Widget audioCallBackground() {
-    return AudioCallProfileView(
+    return const AudioCallProfileView(
       userName: "John Doe",
       userImageUrl:
           "https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg", // Replace with actual user image URL

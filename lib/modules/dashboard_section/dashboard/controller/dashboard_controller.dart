@@ -8,7 +8,7 @@ import 'package:globipay_admin_panel/entity/response/dashboard/recent_transactio
 class DashboardController extends BaseController {
     var featureName = "Dashboard";
 
-    AppRepository _repository;
+    final AppRepository _repository;
     DashboardController(this._repository);
 
     //Rx Variable

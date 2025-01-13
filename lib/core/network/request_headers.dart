@@ -9,9 +9,7 @@ import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import '../constants/storage_keys.dart';
 import '../data/local/repository/token_repository.dart';
 
-/**
- * Created by Abdullah on 12/10/24.
- */
+/// Created by Abdullah on 12/10/24.
 
 class RequestHeaderInterceptor extends InterceptorsWrapper {
   var isAuthenticationHeaderRequired = false;

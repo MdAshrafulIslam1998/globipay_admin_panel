@@ -2,9 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:globipay_admin_panel/flavors/flavor_config.dart';
 
-/**
- * Created by Abdullah on 13/10/24.
- */
+/// Created by Abdullah on 13/10/24.
 
 appPrint(data, {tag}) {
   if (kDebugMode || (FlavorConfig.instance.flavor == Flavor.DEV)) {

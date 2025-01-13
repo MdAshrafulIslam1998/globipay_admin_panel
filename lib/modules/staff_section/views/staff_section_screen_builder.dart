@@ -242,12 +242,12 @@ class _StaffSectionScreenBuilderState extends BaseViewState<StaffSectionScreenBu
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.deepPurple,
               foregroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text(
+            child: const Text(
               'Create Staff',
               style: TextStyle(
                   fontSize: 18,

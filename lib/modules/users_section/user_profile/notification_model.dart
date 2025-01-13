@@ -1,8 +1,6 @@
 import 'package:intl/intl.dart';
 
-/**
- * Created by Abdullah on 15/12/24.
- */
+/// Created by Abdullah on 15/12/24.
 
 class NotificationModel {
   final String id;

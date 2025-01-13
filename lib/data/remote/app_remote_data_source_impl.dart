@@ -46,9 +46,7 @@ import '../../entity/request/message_templates/add_message_templates_request.dar
 import '../../entity/response/pagination/pagination.dart';
 import 'app_remote_data_source.dart';
 
-/**
- * Created by Abdullah on 13/10/24.
- */
+/// Created by Abdullah on 13/10/24.
 
 class AppRemoteDataSourceImpl extends BaseRemoteSource
     implements AppRemoteDataSource {

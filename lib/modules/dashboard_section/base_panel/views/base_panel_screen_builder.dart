@@ -13,7 +13,7 @@ import 'package:go_router/go_router.dart';
 
 class BasePanelScreenBuilder extends StatelessWidget {
     final Widget child;
-  const BasePanelScreenBuilder({Key? key, required this.child}) : super(key: key);
+  const BasePanelScreenBuilder({super.key, required this.child});
   @override
   Widget build(BuildContext cx) {
     String? currentRouteName = GoRouterState.of(cx).fullPath ?? "";
@@ -25,7 +25,7 @@ class BasePanelScreenBuilder extends StatelessWidget {
         }
       });
     });
-    appPrint("::::::::::::::::::::::::::base panel build (${currentRouteName})::::::::::::::::::");
+    appPrint("::::::::::::::::::::::::::base panel build ($currentRouteName)::::::::::::::::::");
     return Scaffold(
       body: Row(
         children: [

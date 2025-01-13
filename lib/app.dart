@@ -2,13 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/router/app_router.dart';
 import 'flavors/app_properties.dart';
-/**
- * Created by Abdullah on 10/10/24.
- */
+/// Created by Abdullah on 10/10/24.
 
 class App extends StatelessWidget {
 
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {

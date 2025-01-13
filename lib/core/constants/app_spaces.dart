@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-/**
- * Created by Abdullah on 25/8/24.
- */
+/// Created by Abdullah on 25/8/24.
 
 abstract class AppSpaces {
   static const SizedBox spaceBetweenItem = SizedBox(height: 20.0);

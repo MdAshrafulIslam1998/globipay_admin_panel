@@ -34,7 +34,7 @@ class AppDropdown<T> extends StatelessWidget {
     return IgnorePointer(
       ignoring: !isEnabled,
       child: DropdownButtonFormField2(
-        iconStyleData: IconStyleData(
+        iconStyleData: const IconStyleData(
           icon: Padding(
             padding: AppEdgeInsets.right8,
             child: Icon(
@@ -50,11 +50,11 @@ class AppDropdown<T> extends StatelessWidget {
         )
             .toList(),
         onChanged: (value) {
-          onChange(value as T?);
+          onChange(value);
         },
         hint: Text(
           hintText,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.grey,
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -87,7 +87,7 @@ class AppDropdown<T> extends StatelessWidget {
           searchInnerWidgetHeight: AppConstants.valueDouble58,
           searchMatchFn: (DropdownMenuItem<T?> item, sv) {
             if (onFilter != null && item.value != null) {
-              return onFilter!(item.value!, sv);
+              return onFilter!(item.value as T, sv);
             }
             return true;
           },

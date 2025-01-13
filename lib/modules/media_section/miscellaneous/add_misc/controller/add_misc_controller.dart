@@ -12,9 +12,7 @@ import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 import 'package:delta_to_html/delta_to_html.dart';
 
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
 
 
 class AddMiscController extends BaseController{

@@ -3,7 +3,6 @@
 //     final categoryCoinModelDart = categoryCoinModelDartFromJson(jsonString);
 
 import 'package:json_annotation/json_annotation.dart';
-import 'dart:convert';
 
 part 'category_coin_model.g.dart';
 

@@ -1,12 +1,11 @@
-/**
- * Created by Abdullah on 25/8/24.
- */
+/// Created by Abdullah on 25/8/24.
+library;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorageService {
-  static final _storage = FlutterSecureStorage();
+  static final _storage = const FlutterSecureStorage();
 
-  static String _TOKEN_KEY = 'userToken';
+  static final String _TOKEN_KEY = 'userToken';
 
   static Future<void> saveToken(String token) async {
     await _storage.write(key: _TOKEN_KEY, value: token);

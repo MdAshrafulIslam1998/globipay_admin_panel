@@ -7,9 +7,7 @@ import 'package:globipay_admin_panel/di/app_injector.dart';
 import 'package:globipay_admin_panel/modules/chat/call/video_call/widgets/call_circle_button.dart';
 import 'package:globipay_admin_panel/modules/chat/call/video_call/widgets/controller/call_controller_widget_controller.dart';
 
-/**
- * Created by Abdullah on 26/10/24.
- */
+/// Created by Abdullah on 26/10/24.
 
 class CallControlWidget extends StatelessWidget {
   Function(bool state) toggleMutePressed;
@@ -19,12 +17,12 @@ class CallControlWidget extends StatelessWidget {
 
 
   CallControlWidget({
-    Key? key,
+    super.key,
     required this.toggleMutePressed,
     required this.toggleCameraPressed,
     required this.switchCameraPressed,
     required this.endCallPressed,
-  }) : super(key: key);
+  });
 
   // Centralized colors for easy theming
   final Color primaryColor = ColorPalettes.colorPrimary;

@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 10/10/24.
- */
+/// Created by Abdullah on 10/10/24.
+library;
 
 import 'dart:async';
 import 'dart:typed_data';
@@ -87,7 +86,7 @@ class BaseController extends GetxController{
         bool willShowError = true,
         bool isShowToast = true,
       }) async {
-    Exception? _exception;
+    Exception? exception;
     onStart?.call();
 
     if (isShowLoader) {
@@ -103,7 +102,7 @@ class BaseController extends GetxController{
         return response;
 
     } on TokenException catch (exception) {
-      _exception = exception;
+      exception = exception;
       if (isShowLoader) {
         hideLoader();
       }
@@ -123,7 +122,7 @@ class BaseController extends GetxController{
 
       );
     }on ServiceUnavailableException catch (exception) {
-      _exception = exception;
+      exception = exception;
       if (isShowLoader) {
         hideLoader();
       }
@@ -133,14 +132,14 @@ class BaseController extends GetxController{
     } on UnauthorizedException catch (exception) {
       if (isShowLoader) hideLoader();
 
-      _exception = exception;
+      exception = exception;
       // TODO : manage unauthorized exception
 
     } on TimeoutException catch (exception) {
       if (isShowLoader) {
         hideLoader();
       }
-      _exception = exception;
+      exception = exception;
 
       showErrorMessage(exception.message,
           isToast: isShowToast, willShowError: willShowError);
@@ -148,7 +147,7 @@ class BaseController extends GetxController{
       if (isShowLoader) {
         hideLoader();
       }
-      _exception = exception;
+      exception = exception;
 
       showErrorMessage(exception.message,
           isToast: isShowToast, willShowError: willShowError);
@@ -156,7 +155,7 @@ class BaseController extends GetxController{
       if (isShowLoader) {
         hideLoader();
       }
-      _exception = exception;
+      exception = exception;
 
       showErrorMessage(exception.message,
           isToast: isShowToast, willShowError: willShowError);
@@ -164,7 +163,7 @@ class BaseController extends GetxController{
       if (isShowLoader) {
         hideLoader();
       }
-      _exception = exception;
+      exception = exception;
 
       showErrorMessage(exception.message,
           isToast: isShowToast, willShowError: willShowError);
@@ -172,7 +171,7 @@ class BaseController extends GetxController{
       if (isShowLoader) {
         hideLoader();
       }
-      _exception = exception;
+      exception = exception;
 
       showErrorMessage(exception.message,
           isToast: isShowToast, willShowError: willShowError);
@@ -180,7 +179,7 @@ class BaseController extends GetxController{
       if (isShowLoader) {
         hideLoader();
       }
-      _exception = exception;
+      exception = exception;
 
       showErrorMessage(exception.message,
           isToast: isShowToast, willShowError: willShowError);
@@ -188,18 +187,18 @@ class BaseController extends GetxController{
       if (isShowLoader) {
         hideLoader();
       }
-      _exception = exception;
+      exception = exception;
       showErrorMessage(exception.message,
           isToast: isShowToast, willShowError: willShowError);
     } catch (error) {
       if (isShowLoader) {
         hideLoader();
       }
-      _exception = AppException(message: "$error");
+      exception = AppException(message: "$error");
       appPrint(error, tag: "Controller:CallService::");
     }
 
-    if (onError != null) onError(_exception);
+    if (onError != null) onError(exception);
 
     if (onComplete != null) onComplete();
   }

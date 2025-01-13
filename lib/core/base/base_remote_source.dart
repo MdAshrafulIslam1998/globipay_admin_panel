@@ -8,9 +8,7 @@ import '../network/exceptions/api_exception.dart';
 import '../widgets/app_print.dart';
 import 'base_response.dart';
 
-/**
- * Created by Abdullah on 12/10/24.
- */
+/// Created by Abdullah on 12/10/24.
 
 abstract class BaseRemoteSource {
   Dio get dioClient => DioProvider.dioWithHeaderToken;

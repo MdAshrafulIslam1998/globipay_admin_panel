@@ -31,19 +31,19 @@ class _NotificationsScreenBuilderState
   Widget body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notification Management',
+        title: const Text('Notification Management',
             style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           ElevatedButton.icon(
-            icon: Icon(Icons.add, color: Colors.white),
-            label: Text('Create Notifications',
+            icon: const Icon(Icons.add, color: Colors.white),
+            label: const Text('Create Notifications',
                 style: TextStyle(color: Colors.white)),
             onPressed: () {
               controller.navigateToCreateNotification();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue.shade600,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -68,7 +68,7 @@ class _NotificationsScreenBuilderState
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Search notifications...',
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -86,8 +86,8 @@ class _NotificationsScreenBuilderState
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.notifications_off, size: 100, color: Colors.grey),
-                SizedBox(height: 16),
+                const Icon(Icons.notifications_off, size: 100, color: Colors.grey),
+                const SizedBox(height: 16),
                 Text(
                   'No Notifications Found',
                   style: TextStyle(fontSize: 18, color: Colors.grey[600]),
@@ -126,11 +126,11 @@ class _NotificationsScreenBuilderState
               )
             : CircleAvatar(
                 backgroundColor: Colors.blue[100],
-                child: Icon(Icons.notifications, color: Colors.blue),
+                child: const Icon(Icons.notifications, color: Colors.blue),
               ),
         title: Text(
           notification.title ?? "",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +148,7 @@ class _NotificationsScreenBuilderState
           ],
         ),
         trailing: IconButton(
-          icon: Icon(Icons.delete, color: Colors.red),
+          icon: const Icon(Icons.delete, color: Colors.red),
           onPressed: () =>
               controller.removeNotification(notification.notificationId.toString() ?? ""),
           tooltip: 'Remove Notification',
@@ -159,7 +159,7 @@ class _NotificationsScreenBuilderState
 
   Widget _buildTargetBadge(NotificationResponseItemEntity notification) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: notification.targetType == NotificationTargetType.ALL
             ? Colors.green[100]

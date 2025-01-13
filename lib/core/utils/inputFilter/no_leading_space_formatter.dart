@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 26/5/24.
- */
+/// Created by Abdullah on 26/5/24.
+library;
 
 import 'package:flutter/services.dart';
 

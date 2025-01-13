@@ -9,13 +9,11 @@ import 'package:globipay_admin_panel/modules/media_section/miscellaneous/add_mis
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/controller/miscellaneous_controller.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
 
 class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
 
-  AddMiscItemScreenBuilder(){
+  AddMiscItemScreenBuilder({super.key}){
     controller.onInit();
   }
 
@@ -23,7 +21,7 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
   Widget body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Create Miscellaneous Item',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -42,13 +40,13 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   _buildCategoryDropdown(),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   _buildContentTypeDropdown(),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   _buildRichTextEditor(),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   _buildSubmitButton(),
                 ],
               ),
@@ -63,14 +61,14 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Select Category',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         DropdownButtonFormField<MiscellaneousItemModel>(
           value: controller.selectedCategory.value,
           onChanged: (MiscellaneousItemModel? newValue) {
@@ -80,7 +78,7 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 12),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           ),
           items: controller.list.map((MiscellaneousItemModel item) {
             return DropdownMenuItem<MiscellaneousItemModel>(
@@ -96,14 +94,14 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Content Type',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         DropdownButtonFormField<CommonDataEntity>(
           value: controller.selectedContentType.value,
           onChanged: (CommonDataEntity? newValue) {
@@ -113,7 +111,7 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 12),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           ),
           items: controller.contentTypes.map((CommonDataEntity item) {
             return DropdownMenuItem<CommonDataEntity>(
@@ -130,11 +128,11 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Description',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
@@ -144,7 +142,7 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
             controller: controller.descriptionController,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           height: 400,
           decoration: BoxDecoration(
@@ -153,7 +151,7 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
           ),
           child: quill.QuillEditor.basic(
             controller: controller.descriptionController,
-            configurations: quill.QuillEditorConfigurations(
+            configurations: const quill.QuillEditorConfigurations(
                 showCursor: true, padding: EdgeInsets.all(8)),
           ),
         ),
@@ -167,12 +165,12 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
-      child: Text(
+      child: const Text(
         'Add Miscellaneous Item',
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),

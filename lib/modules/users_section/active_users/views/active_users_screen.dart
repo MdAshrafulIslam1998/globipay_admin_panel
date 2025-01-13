@@ -3,8 +3,10 @@ import 'package:globipay_admin_panel/modules/users_section/active_users/views/ac
 
 
 class ActiveUsersScreen extends StatelessWidget {
+  const ActiveUsersScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ActiveUsersScreenBuilder();
+    return const ActiveUsersScreenBuilder();
   }
 }

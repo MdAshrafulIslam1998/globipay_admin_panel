@@ -7,9 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'base_controller.dart';
 import 'base_page_state.dart';
 
-/**
- * Created by Abdullah on 20/8/24.
- */
+/// Created by Abdullah on 20/8/24.
 
 abstract class BaseViewState<S extends StatefulWidget, B extends BaseController>
     extends State<S> {
@@ -21,7 +19,9 @@ abstract class BaseViewState<S extends StatefulWidget, B extends BaseController>
 
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
-  PreferredSizeWidget? appBar() {}
+  PreferredSizeWidget? appBar() {
+    return null;
+  }
 
   bool resizeToAvoidBottomInset() {
     return true;
@@ -35,6 +35,7 @@ abstract class BaseViewState<S extends StatefulWidget, B extends BaseController>
     return const SizedBox();
   }
 
+  @override
   late BuildContext context;
 
   @override

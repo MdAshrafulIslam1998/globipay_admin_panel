@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-/**
- * Created by Abdullah on 11/10/24.
- */
+/// Created by Abdullah on 11/10/24.
 
 abstract class AppRadius {
 

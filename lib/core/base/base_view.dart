@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 20/8/24.
- */
+/// Created by Abdullah on 20/8/24.
+library;
 
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
@@ -34,7 +33,9 @@ abstract class BaseView<B extends BaseController> extends StatelessWidget {
     return Padding(padding: setPadding(), child: body(context));
   }
 
-  PreferredSizeWidget? appBar() {}
+  PreferredSizeWidget? appBar() {
+    return null;
+  }
 
   Widget? floatingActionButton() {
     return null;

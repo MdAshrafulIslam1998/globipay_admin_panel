@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
+library;
 
 abstract class MiscTableHeaderConst{
   static const String ID = 'service_id';

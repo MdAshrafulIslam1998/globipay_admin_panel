@@ -2,9 +2,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
 
 
 class ByteFileUploadRequest{

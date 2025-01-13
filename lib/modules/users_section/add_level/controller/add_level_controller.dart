@@ -12,6 +12,7 @@ import 'package:globipay_admin_panel/entity/response/level/level_response_entity
 
 class AddLevelController extends BaseController {
   // Dependencies
+  @override
   final TokenRepository tokenRepository = Injector.resolve<TokenRepository>();
 
   final AppRepository appRepository;

@@ -5,7 +5,7 @@ import 'pending_profile_screen_builder.dart';
 
 class PendingProfileScreen extends StatelessWidget {
      UserResponseItemEntity? user;
-     PendingProfileScreen({Key? key, this.user}) : super(key: key);
+     PendingProfileScreen({super.key, this.user});
 
     @override
     Widget build(BuildContext context) {

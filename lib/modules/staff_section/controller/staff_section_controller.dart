@@ -88,7 +88,7 @@ class StaffSectionController extends BaseController {
   }
 
   clearAllFields(){
-    Future.delayed(Duration(milliseconds: 150), () {
+    Future.delayed(const Duration(milliseconds: 150), () {
       staffFormKey.currentState?.reset();
     });
   }

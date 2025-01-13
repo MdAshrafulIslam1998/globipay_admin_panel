@@ -6,9 +6,7 @@ import 'no_special_character_filter.dart';
 import 'only_english_formatter.dart';
 import 'only_number.dart';
 
-/**
- * Created by Abdullah on 20/2/24.
- */
+/// Created by Abdullah on 20/2/24.
 
 abstract class InputFilter {
   static List<TextInputFormatter> AMOUNT_INPUT_FILTER = <TextInputFormatter>[

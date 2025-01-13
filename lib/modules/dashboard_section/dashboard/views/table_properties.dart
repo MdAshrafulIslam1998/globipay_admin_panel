@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-/**
- * Created by Abdullah on 10/11/24.
- */
+/// Created by Abdullah on 10/11/24.
 
 
 
@@ -12,9 +10,9 @@ List<GridColumn> activeUserColumns(){
     GridColumn(
         columnName: 'id',
         label: Container(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           alignment: Alignment.center,
-          child: Text(
+          child: const Text(
             'ID',
             overflow: TextOverflow.ellipsis,
           ),
@@ -22,9 +20,9 @@ List<GridColumn> activeUserColumns(){
     GridColumn(
         columnName: 'name',
         label: Container(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           alignment: Alignment.center,
-          child: Text(
+          child: const Text(
             'Name',
             overflow: TextOverflow.ellipsis,
           ),
@@ -32,9 +30,9 @@ List<GridColumn> activeUserColumns(){
     GridColumn(
         columnName: 'designation',
         label: Container(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           alignment: Alignment.center,
-          child: Text(
+          child: const Text(
             'Designation',
             overflow: TextOverflow.ellipsis,
           ),
@@ -42,9 +40,9 @@ List<GridColumn> activeUserColumns(){
     GridColumn(
         columnName: 'salary',
         label: Container(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           alignment: Alignment.center,
-          child: Text(
+          child: const Text(
             'Salary',
             overflow: TextOverflow.ellipsis,
           ),

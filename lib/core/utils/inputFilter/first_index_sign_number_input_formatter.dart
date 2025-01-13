@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 27/12/24.
- */
+/// Created by Abdullah on 27/12/24.
+library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

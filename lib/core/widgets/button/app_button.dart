@@ -3,12 +3,10 @@ import 'package:globipay_admin_panel/core/constants/app_constant.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
 import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 
-/**
- * Created by Abdullah on 11/10/24 12:03 AM.
- */
+/// Created by Abdullah on 11/10/24 12:03 AM.
 
 class AppButton extends StatelessWidget {
-  AppButton({
+  AppButton({super.key, 
     required this.text,
     required this.onPress,
     this.backgroundColor,

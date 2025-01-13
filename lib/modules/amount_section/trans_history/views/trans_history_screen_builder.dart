@@ -45,7 +45,7 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
 
   @override
   PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Transaction History'));
+    return AppBar(title: const Text('Transaction History'));
   }
 
   @override
@@ -65,16 +65,16 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
               // Header
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color.fromARGB(255, 28, 170, 61),
-                      const Color.fromARGB(255, 127, 224, 135),
+                      Color.fromARGB(255, 28, 170, 61),
+                      Color.fromARGB(255, 127, 224, 135),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
                   ),
@@ -92,7 +92,7 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                     Obx(
                       () => Text(
                         'Total Users: ${controller.totalItems}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'newyork',
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -129,13 +129,13 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                                     value: size,
                                     child: Text(
                                       size.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 13,
                                         // Adjust the font size
                                         fontWeight: FontWeight.bold,
                                         // Change font weight (e.g., bold)
                                         color:
-                                            const Color.fromARGB(143, 0, 0, 0),
+                                            Color.fromARGB(143, 0, 0, 0),
                                         // Set text color
                                         fontFamily:
                                             'newyork', // Specify a custom font family if needed
@@ -162,8 +162,8 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ElevatedButton.icon(
-                      icon: Icon(Icons.person),
-                      label: Text('User'),
+                      icon: const Icon(Icons.person),
+                      label: const Text('User'),
                       onPressed: () {
                         controller.fetchUserWiseTransactionHistory(
                             1, controller.pageSize.value);
@@ -175,8 +175,8 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                     ),
                     AppSpaces.horizontalSpace,
                     ElevatedButton.icon(
-                      icon: Icon(Icons.category_outlined),
-                      label: Text('Category'),
+                      icon: const Icon(Icons.category_outlined),
+                      label: const Text('Category'),
                       onPressed: () {
                         controller.setCategorySelectionVisibility(
                           !controller.isCategorySelectionVisible.value,
@@ -206,7 +206,7 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                           child:Container(
                             child: DropdownButtonFormField<CategoryItemEntity>(
                             value: controller.selectedCategory.value,
-                            hint: Text('Select'),
+                            hint: const Text('Select'),
                             onChanged: (CategoryItemEntity? newValue) {
                               controller.setSelectedCategory(newValue); // Use a method in your controller
                             },
@@ -214,7 +214,7 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                             ),
                             items: controller.categoriesList.map((CategoryItemEntity item) {
                               return DropdownMenuItem<CategoryItemEntity>(

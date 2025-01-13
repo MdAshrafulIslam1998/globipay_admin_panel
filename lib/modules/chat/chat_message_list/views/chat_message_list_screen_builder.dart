@@ -316,7 +316,7 @@ class _ChatMessageListScreenBuilderState
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 final chat = controller.chatList[index];
-                return controller.chatList.value.length == 0
+                return controller.chatList.value.isEmpty
                     ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -365,13 +365,13 @@ class _ChatMessageListScreenBuilderState
           ),
         ],
       ),
-      child: Row(
+      child: const Row(
         children: [
-          const Icon(Icons.chat_bubble_outline,
+          Icon(Icons.chat_bubble_outline,
               color: Colors.white,
               size: 28
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Text(
             'Messages',
             style: TextStyle(
@@ -381,7 +381,7 @@ class _ChatMessageListScreenBuilderState
               letterSpacing: 0.5,
             ),
           ),
-          const Spacer(),
+          Spacer(),
           //_buildUnreadBadge(),
         ],
       ),
@@ -426,7 +426,7 @@ class ChatListItem extends StatelessWidget {
   final ChatSessionResponse chat;
   final ChatMessageController controller;
 
-  ChatListItem(this.chat, this.controller);
+  const ChatListItem(this.chat, this.controller, {super.key});
 
   bool isChatActive(ChatSessionResponse chat) {
     return chat.status != 'closed';
@@ -662,7 +662,7 @@ class ChatListItem extends StatelessWidget {
         3,
             (index) => TweenAnimationBuilder<double>(
           tween: Tween(begin: 0.0, end: 1.0),
-          duration: Duration(milliseconds: 600),
+          duration: const Duration(milliseconds: 600),
           builder: (context, value, child) {
             return Container(
               width: 4,
@@ -726,7 +726,7 @@ class ChatListItem extends StatelessWidget {
 class StatusBadge extends StatelessWidget {
   final String status;
 
-  const StatusBadge({required this.status});
+  const StatusBadge({super.key, required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -779,7 +779,7 @@ class StatusBadge extends StatelessWidget {
 class AttachmentIcon extends StatelessWidget {
   final String type;
 
-  const AttachmentIcon({required this.type});
+  const AttachmentIcon({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,7 @@
 import 'package:globipay_admin_panel/core/utils/custom_dialog.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-/**
- * Created by Abdullah on 21/8/24.
- */
+/// Created by Abdullah on 21/8/24.
 
 Future<T> callWithExceptionsHandler<T>(
     Future<T> future, {
@@ -19,7 +17,7 @@ Future<T> callWithExceptionsHandler<T>(
 
     return response; // Ensure that the response is returned correctly
   } on AuthException catch (e) {
-    print('AuthException::::::: ${e}');
+    print('AuthException::::::: $e');
     showCustomDialog(
         title: 'Error',
         e.message);
@@ -31,7 +29,7 @@ Future<T> callWithExceptionsHandler<T>(
     showCustomDialog(
         title: 'Error',
         e.toString());
-    print('Exception::::::: ${e}');
+    print('Exception::::::: $e');
     if (onError != null) {
       onError(e);
     }

@@ -1,8 +1,6 @@
 import 'package:flutter/services.dart';
 
-/**
- * Created by Mainul Karim on 02/05/24.
- */
+/// Created by Mainul Karim on 02/05/24.
 
 class NoSpecialCharacterFormatter extends TextInputFormatter {
   @override

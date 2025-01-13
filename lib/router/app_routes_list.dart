@@ -46,7 +46,7 @@ abstract class AppRoutesList {
       GoRoute(
         path: RoutePath.login,
         name: RoutePath.login,
-        builder: (context, state) => LoginScreen(),
+        builder: (context, state) => const LoginScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) {
@@ -56,7 +56,7 @@ abstract class AppRoutesList {
           GoRoute(
             path: RoutePath.dashboard,
             name: RoutePath.dashboard,
-            builder: (context, state) => DashboardScreen(),
+            builder: (context, state) => const DashboardScreen(),
           ),
           GoRoute(
             path: RoutePath.activeUsers,
@@ -76,7 +76,7 @@ abstract class AppRoutesList {
           GoRoute(
             path: RoutePath.notificationSetter,
             name: RoutePath.notificationSetter,
-            builder: (context, state) => NotificationSetterScreen(),
+            builder: (context, state) => const NotificationSetterScreen(),
           ),
           GoRoute(
             path: RoutePath.activeUsersNew,
@@ -86,22 +86,22 @@ abstract class AppRoutesList {
           GoRoute(
             path: RoutePath.pendingUsers,
             name: RoutePath.pendingUsers,
-            builder: (context, state) => PendingUsersScreen(),
+            builder: (context, state) => const PendingUsersScreen(),
           ),
           GoRoute(
             path: RoutePath.blockedUsers,
             name: RoutePath.blockedUsers,
-            builder: (context, state) => BlockedUsersScreen(),
+            builder: (context, state) => const BlockedUsersScreen(),
           ),
           GoRoute(
             path: RoutePath.userLevels,
             name: RoutePath.userLevels,
-            builder: (context, state) => UserLevelsScreen(),
+            builder: (context, state) => const UserLevelsScreen(),
           ),
           GoRoute(
             path: RoutePath.userAmount,
             name: RoutePath.userAmount,
-            builder: (context, state) => UserAmountScreen(),
+            builder: (context, state) => const UserAmountScreen(),
           ),
           GoRoute(
             path: RoutePath.transHistory,
@@ -116,7 +116,7 @@ abstract class AppRoutesList {
           GoRoute(
             path: RoutePath.promoBanner,
             name: RoutePath.promoBanner,
-            builder: (context, state) => PromoBannerScreen(),
+            builder: (context, state) => const PromoBannerScreen(),
           ),
           GoRoute(
             path: RoutePath.addPromoBanner,
@@ -126,7 +126,7 @@ abstract class AppRoutesList {
           GoRoute(
             path: RoutePath.aboutUs,
             name: RoutePath.aboutUs,
-            builder: (context, state) => AboutUsScreen(),
+            builder: (context, state) => const AboutUsScreen(),
           ),
           GoRoute(
             path: RoutePath.chatMessageList,
@@ -136,7 +136,7 @@ abstract class AppRoutesList {
           GoRoute(
             path: RoutePath.chat,
             name: RoutePath.chat,
-            builder: (context, state) => ChatScreenScreen(),
+            builder: (context, state) => const ChatScreenScreen(),
           ),
           GoRoute(
             path: RoutePath.audioCall,
@@ -157,42 +157,42 @@ abstract class AppRoutesList {
           GoRoute(
             path: RoutePath.addNotification,
             name: RoutePath.addNotification,
-            builder: (context, state) => AddNotificationScreen(),
+            builder: (context, state) => const AddNotificationScreen(),
           ),
           GoRoute(
             path: RoutePath.misc,
             name: RoutePath.misc,
-            builder: (context, state) => MiscellaneousScreen(),
+            builder: (context, state) => const MiscellaneousScreen(),
           ),
           GoRoute(
             path: RoutePath.addMisc,
             name: RoutePath.addMisc,
-            builder: (context, state) => AddNewMiscItemScreen(),
+            builder: (context, state) => const AddNewMiscItemScreen(),
           ),
           GoRoute(
             path: RoutePath.addMessageTemplates,
             name: RoutePath.addMessageTemplates,
-            builder: (context, state) => AddTemplatesScreen(),
+            builder: (context, state) => const AddTemplatesScreen(),
           ),
           GoRoute(
             path: RoutePath.messageTemplates,
             name: RoutePath.messageTemplates,
-            builder: (context, state) => MessageTemplatesScreen(),
+            builder: (context, state) => const MessageTemplatesScreen(),
           ),
           GoRoute(
             path: RoutePath.addLevel,
             name: RoutePath.addLevel,
-            builder: (context, state) => AddLevelScreen(),
+            builder: (context, state) => const AddLevelScreen(),
           ),
           GoRoute(
             path: RoutePath.editLevel,
             name: RoutePath.editLevel,
-            builder: (context, state) => EditLevelScreen(),
+            builder: (context, state) => const EditLevelScreen(),
           ),
           GoRoute(
             path: RoutePath.staffSection,
             name: RoutePath.staffSection,
-            builder: (context, state) => StaffSectionScreen(),
+            builder: (context, state) => const StaffSectionScreen(),
           ),
 
         ],

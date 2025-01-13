@@ -5,14 +5,12 @@ import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 import 'package:globipay_admin_panel/entity/response/chat_item/chat_item_response_entity.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_message_list/views/widgets/status_badge_widget.dart';
 
-/**
- * Created by Abdullah on 18/10/24.
- */
+/// Created by Abdullah on 18/10/24.
 
 class ChatListItem extends StatelessWidget {
   final ChatItemResponseEntity chat;
 
-  ChatListItem({required this.chat});
+  const ChatListItem({super.key, required this.chat});
 
   @override
   Widget build(BuildContext context) {

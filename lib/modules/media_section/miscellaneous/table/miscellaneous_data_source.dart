@@ -6,9 +6,7 @@ import 'package:globipay_admin_panel/entity/response/user_response/user_response
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/table/table_header_const.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:intl/intl.dart';
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
 
 
 class MiscellaneousDataSource extends DataGridSource {

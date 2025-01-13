@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 15/12/24.
- */
+/// Created by Abdullah on 15/12/24.
+library;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -169,7 +168,7 @@ class ProfileController extends BaseController {
 
     isActivityLoading.value = true;
     // Simulate network delay
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     // Add more dummy activity logs
     activityLogs.addAll(List.generate(
@@ -189,7 +188,7 @@ class ProfileController extends BaseController {
 
     isNotificationLoading.value = true;
     // Simulate network delay
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     // Add more notifications
     requestForUserSpecificNotification(uid);
@@ -281,7 +280,7 @@ class ProfileController extends BaseController {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Modify Transactions"),
+            title: const Text("Modify Transactions"),
             content: Form(
               key: modifyTransactionFormKey,
               child: Column(
@@ -290,12 +289,12 @@ class ProfileController extends BaseController {
                 children: [
 
 
-                  AppText("Category"),
+                  const AppText("Category"),
 
                   Container(
                     child: DropdownButtonFormField<CategoryItemEntity>(
                       value: selectedCategory.value,
-                      hint: Text('Select'),
+                      hint: const Text('Select'),
                       onChanged: (CategoryItemEntity? newValue) {
                         setSelectedCategory(newValue); // Use a method in your controller
                       },
@@ -303,7 +302,7 @@ class ProfileController extends BaseController {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                       ),
                       items: categoriesList.map((CategoryItemEntity item) {
                         return DropdownMenuItem<CategoryItemEntity>(
@@ -314,7 +313,7 @@ class ProfileController extends BaseController {
                     ),),
 
                   // Primary Coin Input Field
-                  AppText("Primary Coin"),
+                  const AppText("Primary Coin"),
                   InputField(
                     controller: primaryCoinController,
                     inputFormatters: [
@@ -323,9 +322,9 @@ class ProfileController extends BaseController {
                     hintText: "Primary Coin",
 
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   // Secondary Coin Input Field
-                  AppText("Secondary Coin"),
+                  const AppText("Secondary Coin"),
                   InputField(
                     controller: secondaryCoinController,
                     maxLength: 10,
@@ -342,7 +341,7 @@ class ProfileController extends BaseController {
                 onPressed: () {
                   AppRoutes.pop();
                 },
-                child: Text("Cancel"),
+                child: const Text("Cancel"),
               ),
               // Submit Button
               ElevatedButton(
@@ -358,7 +357,7 @@ class ProfileController extends BaseController {
                   requestToCloseChatSession();
 
                 },
-                child: Text("Submit"),
+                child: const Text("Submit"),
               ),
             ],
           );

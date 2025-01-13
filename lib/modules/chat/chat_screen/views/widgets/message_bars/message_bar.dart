@@ -54,7 +54,7 @@ class MessageBar extends StatelessWidget {
   /// [MessageBar] constructor
   ///
   ///
-  MessageBar({
+  const MessageBar({super.key, 
     this.replying = false,
     this.replyingTo = "",
     this.actions = const [],
@@ -100,7 +100,7 @@ class MessageBar extends StatelessWidget {
                     Expanded(
                       child: Container(
                         child: Text(
-                          'Re : ' + replyingTo,
+                          'Re : $replyingTo',
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),

@@ -16,6 +16,7 @@ import 'package:globipay_admin_panel/core/constants/enum/sort_type.dart';
 
 class TransHistoryController extends BaseController {
   final AppRepository _repository;
+  @override
   final TokenRepository tokenRepository;
   String currentRole = '';
 
@@ -105,7 +106,7 @@ class TransHistoryController extends BaseController {
   }
 
   Future<String> getRole() async {
-    return await tokenRepository.getRole().toString();
+    return tokenRepository.getRole().toString();
   }
 
   

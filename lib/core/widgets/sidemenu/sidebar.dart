@@ -17,6 +17,8 @@ import 'package:flutter_svg/svg.dart';
 import 'menu_tile.dart';
 
 class Sidebar extends StatelessWidget {
+  const Sidebar({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +147,7 @@ class Sidebar extends StatelessWidget {
                             isSubmenu: false,
                             isActive: AppConstants.currentPath == RoutePath.chatMessageList,
                             title: "Chat List",
-                            leading: Icon(
+                            leading: const Icon(
                               Icons.chat,
                               color: AppColors.iconBlack,
                             ),

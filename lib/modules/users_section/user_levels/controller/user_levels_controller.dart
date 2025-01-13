@@ -12,6 +12,7 @@ import 'package:globipay_admin_panel/entity/response/user_response/user_response
 
 class UserLevelsController extends BaseController {
   final AppRepository _repository;
+  @override
   final TokenRepository tokenRepository;
   String currentRole = '';
 
@@ -51,7 +52,7 @@ class UserLevelsController extends BaseController {
   }
 
   Future<String> getRole() async {
-    return await tokenRepository.getRole().toString();
+    return tokenRepository.getRole().toString();
   }
 
   @override

@@ -6,11 +6,9 @@ import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
 import 'package:globipay_admin_panel/core/theme/theme_style/text_theme.dart';
 
 
-/**
- * Created by Abdullah on 11/10/24.
- */
+/// Created by Abdullah on 11/10/24.
 
-ButtonThemeData buttonThemeDataLight =  ButtonThemeData(
+ButtonThemeData buttonThemeDataLight =  const ButtonThemeData(
   textTheme: ButtonTextTheme.normal,
   buttonColor: ColorPalettes.buttonPrimaryColor,
   height: AppConstants.buttonHeight,
@@ -22,8 +20,6 @@ ButtonThemeData buttonThemeDataLight =  ButtonThemeData(
     onSecondary: ColorPalettes.transparent,
     error: ColorPalettes.buttonPrimaryColor,
     onError: ColorPalettes.buttonPrimaryColor,
-    background: ColorPalettes.buttonPrimaryColor,
-    onBackground: ColorPalettes.buttonPrimaryColor,
     surface: ColorPalettes.buttonPrimaryColor,
     onSurface: ColorPalettes.buttonPrimaryColor,
   ),
@@ -33,24 +29,24 @@ ElevatedButtonThemeData elevatedButtonThemeDataLight = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: ColorPalettes.buttonPrimaryColor,
       textStyle: bodyLightLarge.copyWith(color: ColorPalettes.whiteColor),
-      side: BorderSide(color: ColorPalettes.transparent, width: 0),
+      side: const BorderSide(color: ColorPalettes.transparent, width: 0),
       shape: AppRadius.defaultButtonBorderRound,
       padding: AppEdgeInsets.all15,
     ));
 
 OutlinedButtonThemeData outlinedButtonThemeDataLight = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      minimumSize: Size(double.infinity, AppConstants.buttonHeight),
+      minimumSize: const Size(double.infinity, AppConstants.buttonHeight),
       backgroundColor: ColorPalettes.transparent,
       textStyle: bodyLightLarge.copyWith(color: ColorPalettes.colorPrimary),
       shape: AppRadius.defaultButtonBorderRound,
-      side: BorderSide(color: ColorPalettes.colorPrimary , width: 1),
+      side: const BorderSide(color: ColorPalettes.colorPrimary , width: 1),
       padding: AppEdgeInsets.all15,
     ));
 
 // Dark
 
-ButtonThemeData buttonThemeDataDark =  ButtonThemeData(
+ButtonThemeData buttonThemeDataDark =  const ButtonThemeData(
   textTheme: ButtonTextTheme.normal,
   height: AppConstants.buttonHeight,
   buttonColor: ColorPalettes.buttonPrimaryColor,
@@ -62,8 +58,6 @@ ButtonThemeData buttonThemeDataDark =  ButtonThemeData(
     onSecondary: ColorPalettes.transparent,
     error: ColorPalettes.buttonPrimaryColor,
     onError: ColorPalettes.buttonPrimaryColor,
-    background: ColorPalettes.buttonPrimaryColor,
-    onBackground: ColorPalettes.buttonPrimaryColor,
     surface: ColorPalettes.buttonPrimaryColor,
     onSurface: ColorPalettes.buttonPrimaryColor,
   ),
@@ -82,5 +76,5 @@ OutlinedButtonThemeData outlinedButtonThemeDataDark = OutlinedButtonThemeData(
         backgroundColor: ColorPalettes.transparent,
         textStyle: bodyLightLarge.copyWith(color: ColorPalettes.colorPrimary),
         shape: AppRadius.defaultButtonBorderRound,
-        side: BorderSide(color: ColorPalettes.buttonPrimaryColor, width: 1),
+        side: const BorderSide(color: ColorPalettes.buttonPrimaryColor, width: 1),
         padding: AppEdgeInsets.all15));

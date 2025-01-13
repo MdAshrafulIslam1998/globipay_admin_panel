@@ -13,7 +13,7 @@ class CallWaitingScreenBuilder extends StatefulWidget {
 
   final CallModel data;
 
-  const CallWaitingScreenBuilder({Key? key, required this.data}) : super(key: key);
+  const CallWaitingScreenBuilder({super.key, required this.data});
 
   @override
   State<CallWaitingScreenBuilder> createState() => _CallWaitingScreenBuilderState();
@@ -100,7 +100,7 @@ class _CallWaitingScreenBuilderState extends BaseViewState<CallWaitingScreenBuil
                                   color: Colors.white,
                                   width: 3,
                                 ),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 20,
                                     spreadRadius: 5,
@@ -249,10 +249,10 @@ class PulseAnimationWidget extends StatefulWidget {
   final Duration delay;
 
   const PulseAnimationWidget({
-    Key? key,
+    super.key,
     required this.child,
     required this.delay,
-  }) : super(key: key);
+  });
 
   @override
   _PulseAnimationWidgetState createState() => _PulseAnimationWidgetState();
@@ -309,7 +309,7 @@ class _PulseAnimationWidgetState extends State<PulseAnimationWidget>
 class FloatingAnimationWidget extends StatefulWidget {
   final Widget child;
 
-  const FloatingAnimationWidget({Key? key, required this.child}) : super(key: key);
+  const FloatingAnimationWidget({super.key, required this.child});
 
   @override
   _FloatingAnimationWidgetState createState() => _FloatingAnimationWidgetState();
@@ -362,10 +362,10 @@ class ShimmerText extends StatefulWidget {
   final TextStyle style;
 
   const ShimmerText({
-    Key? key,
+    super.key,
     required this.text,
     required this.style,
-  }) : super(key: key);
+  });
 
   @override
   _ShimmerTextState createState() => _ShimmerTextState();
@@ -427,10 +427,10 @@ class BlinkingText extends StatefulWidget {
   final TextStyle style;
 
   const BlinkingText({
-    Key? key,
+    super.key,
     required this.text,
     required this.style,
-  }) : super(key: key);
+  });
 
   @override
   _BlinkingTextState createState() => _BlinkingTextState();
@@ -474,7 +474,7 @@ class _BlinkingTextState extends State<BlinkingText>
 class BounceOnHoverButton extends StatefulWidget {
   final Widget child;
 
-  const BounceOnHoverButton({Key? key, required this.child}) : super(key: key);
+  const BounceOnHoverButton({super.key, required this.child});
 
   @override
   _BounceOnHoverButtonState createState() => _BounceOnHoverButtonState();
@@ -542,11 +542,11 @@ class FadeSlideText extends StatefulWidget {
   final int delay;
 
   const FadeSlideText({
-    Key? key,
+    super.key,
     required this.text,
     required this.style,
     this.delay = 0,
-  }) : super(key: key);
+  });
 
   @override
   _FadeSlideTextState createState() => _FadeSlideTextState();

@@ -22,9 +22,7 @@ import 'package:linkify/linkify.dart';
 
 import 'widgets/message_image_bubble_widget.dart';
 
-/**
- * Created by Abdullah on 19/10/24 08:01 PM.
- */
+/// Created by Abdullah on 19/10/24 08:01 PM.
 
 
 class ChatScreenScreenBuilder extends StatefulWidget {
@@ -85,13 +83,13 @@ class _ChatScreenScreenBuilderState
     ):
     AppBar(
       centerTitle: true,
-      title: Text("Chat Closed"),
+      title: const Text("Chat Closed"),
     );
   }
 
   AudioPlayer audioPlayer = AudioPlayer();
-  Duration duration = new Duration();
-  Duration position = new Duration();
+  Duration duration = const Duration();
+  Duration position = const Duration();
   bool isPlaying = false;
   bool isLoading = false;
   bool isPause = false;

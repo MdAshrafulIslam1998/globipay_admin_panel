@@ -11,6 +11,8 @@ import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 
 class DashboardScreenBuilder extends StatefulWidget {
+  const DashboardScreenBuilder({super.key});
+
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
@@ -45,7 +47,7 @@ class _DashboardScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -58,7 +60,7 @@ class _DashboardScreenState
               ],
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
             // Top Cards
             Obx(
@@ -71,7 +73,7 @@ class _DashboardScreenState
                     icon: Icons.account_balance_wallet,
                     color: Colors.blue,
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   _buildStatCard(
                     title: 'Total Primary',
                     value:
@@ -79,7 +81,7 @@ class _DashboardScreenState
                     icon: Icons.trending_up,
                     color: Colors.green,
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   _buildStatCard(
                     title: 'Total Secondary',
                     value:
@@ -91,7 +93,7 @@ class _DashboardScreenState
               ),
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
             // Detailed Sections
             Row(
@@ -103,7 +105,7 @@ class _DashboardScreenState
                   child: _buildTransactionsSection(),
                 ),
 
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
 
                 // Quick Actions and Chat
                 Expanded(
@@ -111,7 +113,7 @@ class _DashboardScreenState
                   child: Column(
                     children: [
                       _buildQuickActionsSection(),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       _buildRecentChatsSection(),
                     ],
                   ),
@@ -132,7 +134,7 @@ class _DashboardScreenState
   }) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -153,14 +155,14 @@ class _DashboardScreenState
                 Icon(icon, color: color, size: 40),
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 16,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               value,
               style: TextStyle(
@@ -196,7 +198,7 @@ class _DashboardScreenState
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Recent Transactions',
                     style: TextStyle(
                       fontSize: 20,
@@ -205,12 +207,12 @@ class _DashboardScreenState
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: Text('View All'),
+                    child: const Text('View All'),
                   ),
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: 500,
               child: ListView.builder(
                 shrinkWrap: true,
@@ -228,12 +230,12 @@ class _DashboardScreenState
                       children: [
                         Text(
                           item.primaryAmount.toCurrencyFormat() ?? '',
-                          style:  TextStyle(color: Colors.green,
+                          style:  const TextStyle(color: Colors.green,
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           ),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
                           item.secondaryAmount.toCurrencyFormat(),
                           style: TextStyle(color: Colors.green[400]),
@@ -268,14 +270,14 @@ class _DashboardScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Quick Actions',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -307,10 +309,10 @@ class _DashboardScreenState
               color: Colors.purple[50],
               borderRadius: BorderRadius.circular(10),
             ),
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             child: Icon(icon, color: Colors.deepPurple),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(label),
         ],
       ),
@@ -337,7 +339,7 @@ class _DashboardScreenState
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Recent Chats',
                   style: TextStyle(
                     fontSize: 20,
@@ -346,14 +348,14 @@ class _DashboardScreenState
                 ),
                 TextButton(
                   onPressed: () {},
-                  child: Text('View All'),
+                  child: const Text('View All'),
                 ),
               ],
             ),
           ),
           // Chat List
           ...List.generate(4, (index) {
-            return ListTile(
+            return const ListTile(
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(
                   'https://via.placeholder.com/150',

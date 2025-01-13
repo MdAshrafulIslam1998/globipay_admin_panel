@@ -1,10 +1,9 @@
-/**
- * Created by Abdullah on 25/8/24.
- */
+/// Created by Abdullah on 25/8/24.
+library;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
-  static String _REMEMBER_ME_KEY = 'REMEMBER_ME';
+  static final String _REMEMBER_ME_KEY = 'REMEMBER_ME';
   static String USER_NAME = 'USER_NAME';
   static String USER_EMAIL = 'USER_EMAIL';
 

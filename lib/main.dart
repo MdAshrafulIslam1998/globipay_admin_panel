@@ -7,9 +7,7 @@ import 'core/di/di_setup.dart';
 import 'flavors/app_properties.dart';
 import 'flavors/flavor_config.dart';
 
-/**
- * Created by Abdullah on 10/10/24.
- */
+/// Created by Abdullah on 10/10/24.
 
 Future<void> main() async {
   AppProperties.appFlavor = Flavor.DEV;

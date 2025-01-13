@@ -5,15 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
-import 'package:globipay_admin_panel/core/di/injector.dart';
-import 'package:globipay_admin_panel/core/services/navigator/app_navigator_service.dart';
 import 'package:globipay_admin_panel/core/widgets/dropdown/searchable_dropdown.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/notification/create_notification_request_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 
 class AddNotificationController extends BaseController {

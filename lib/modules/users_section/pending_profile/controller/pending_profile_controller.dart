@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_profile/pending_profile.dart';

@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 15/12/24.
- */
+/// Created by Abdullah on 15/12/24.
+library;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,7 @@ import 'package:shimmer/shimmer.dart';
 
 class NotificationsTab extends StatelessWidget {
   ProfileController controller;
-  NotificationsTab(this.controller);
+  NotificationsTab(this.controller, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class NotificationsTab extends StatelessWidget {
       child: TextField(
           decoration: InputDecoration(
             hintText: 'Search Notifications',
-            prefixIcon: Icon(Icons.search),
+            prefixIcon: const Icon(Icons.search),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -56,11 +55,11 @@ class NotificationsTab extends StatelessWidget {
 
   Widget _buildNotificationCard(NotificationResponseItemEntity notification) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: Colors.grey.withOpacity(0.1),
-          child: Icon(Icons.notifications_outlined, color: Colors.grey, size: 20),
+          child: const Icon(Icons.notifications_outlined, color: Colors.grey, size: 20),
         ),
         title: Text(
           notification.details ?? "",
@@ -118,11 +117,11 @@ class NotificationsTab extends StatelessWidget {
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: ListTile(
-        leading: CircleAvatar(),
+        leading: const CircleAvatar(),
         title: Container(
           color: Colors.white,
           height: 10,
-          margin: EdgeInsets.only(bottom: 5),
+          margin: const EdgeInsets.only(bottom: 5),
         ),
         subtitle: Container(
           color: Colors.white,

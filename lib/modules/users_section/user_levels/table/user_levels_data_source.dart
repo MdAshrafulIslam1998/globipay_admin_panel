@@ -112,7 +112,7 @@ class UserLevelsDataSource extends DataGridSource {
               cell.value.toString(),
               overflow: TextOverflow
                   .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'iAWriterQuattroS',
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -127,7 +127,7 @@ class UserLevelsDataSource extends DataGridSource {
               cell.value.toString(),
               overflow: TextOverflow
                   .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'iAWriterQuattroS',
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

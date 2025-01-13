@@ -10,9 +10,7 @@ import 'package:globipay_admin_panel/core/utils/app_utils.dart';
 ///message sender can be changed using [isSender]
 ///chat bubble [TextStyle] can be customized using [textStyle]
 
-/**
- * Created by Abdullah on 19/10/24.
- */
+/// Created by Abdullah on 19/10/24.
 
 class BubbleSpecialThree extends StatelessWidget {
   final bool isSender;
@@ -27,7 +25,7 @@ class BubbleSpecialThree extends StatelessWidget {
   final String? time;
 
   const BubbleSpecialThree({
-    Key? key,
+    super.key,
     this.isSender = true,
     this.constraints,
     required this.text,
@@ -41,7 +39,7 @@ class BubbleSpecialThree extends StatelessWidget {
       fontSize: 16,
     ),
     this.time,
-  }) : super(key: key);
+  });
 
   ///chat bubble builder method
   @override
@@ -114,7 +112,7 @@ class BubbleSpecialThree extends StatelessWidget {
                       ),
                       Text(
                         AppUtils.getChatTime(time ?? DateTime.now().toString()),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 10,
                         ),

@@ -42,7 +42,7 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
 
   @override
   PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Inactive Users'));
+    return AppBar(title: const Text('Inactive Users'));
   }
 
   @override
@@ -63,16 +63,16 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
               // Header
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color.fromARGB(255, 28, 170, 61),
-                      const Color.fromARGB(255, 127, 224, 135),
+                      Color.fromARGB(255, 28, 170, 61),
+                      Color.fromARGB(255, 127, 224, 135),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
                   ),
@@ -90,7 +90,7 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
                     Obx(
                       () => Text(
                         'Total Users: ${controller.totalItems}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'newyork',
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -127,11 +127,11 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
                                     value: size,
                                     child: Text(
                                       size.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 13, // Adjust the font size
                                         fontWeight: FontWeight
                                             .bold, // Change font weight (e.g., bold)
-                                        color: const Color.fromARGB(
+                                        color: Color.fromARGB(
                                             143, 0, 0, 0), // Set text color
                                         fontFamily:
                                             'newyork', // Specify a custom font family if needed

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/transaction_item_entity.dart';
-import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 

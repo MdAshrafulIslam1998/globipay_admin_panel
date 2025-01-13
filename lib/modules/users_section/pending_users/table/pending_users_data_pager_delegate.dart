@@ -1,4 +1,3 @@
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/controller/pending_users_controller.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 

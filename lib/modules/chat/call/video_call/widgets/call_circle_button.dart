@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-/**
- * Created by Abdullah on 22/9/24.
- */
+/// Created by Abdullah on 22/9/24.
 
 class CircleButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;
   final Color color;
 
-  const CircleButton({
+  const CircleButton({super.key, 
     required this.icon,
     required this.onPressed,
     required this.color,
@@ -20,7 +18,7 @@ class CircleButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: color.withOpacity(0.8),

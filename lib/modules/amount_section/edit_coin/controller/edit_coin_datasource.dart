@@ -25,14 +25,14 @@ class EditCoinDataSource extends DataGridSource {
           columnName: 'edit',
           value: ElevatedButton(
             onPressed: () => controller.editCoin(coin['userId']),
-            child: Text("Edit"),
+            child: const Text("Edit"),
           ),
         ),
         DataGridCell(
           columnName: 'details',
           value: ElevatedButton(
             onPressed: () => controller.viewDetails(coin['userId']),
-            child: Text("Profile"),
+            child: const Text("Profile"),
           ),
         ),
       ]);
@@ -51,7 +51,7 @@ class EditCoinDataSource extends DataGridSource {
         }
         return Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(cell.value.toString()),
         );
       }).toList(),

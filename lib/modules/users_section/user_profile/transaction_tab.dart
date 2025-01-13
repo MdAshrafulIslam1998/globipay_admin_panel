@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 15/12/24.
- */
+/// Created by Abdullah on 15/12/24.
+library;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,7 @@ import 'package:shimmer/shimmer.dart';
 class TransactionsTab extends StatelessWidget {
 
   ProfileController controller;
-  TransactionsTab(this.controller);
+  TransactionsTab(this.controller, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +22,9 @@ class TransactionsTab extends StatelessWidget {
         Row(
           children: [
             Expanded(child: _buildSearchBar()),
-            Spacer(),
+            const Spacer(),
             IconButton(
-              icon: Icon(Icons.refresh),
+              icon: const Icon(Icons.refresh),
               onPressed: (){
                 controller.onRefreshTransactions();
 
@@ -33,11 +32,11 @@ class TransactionsTab extends StatelessWidget {
             ),
 
             ElevatedButton.icon(
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
               onPressed: (){
                 controller.onAddTransaction(context);
               },
-              label: Text('Add Transaction'),
+              label: const Text('Add Transaction'),
             ),
           ],
         ),
@@ -68,7 +67,7 @@ class TransactionsTab extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Search Transactions',
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -82,7 +81,7 @@ class TransactionsTab extends StatelessWidget {
 
   Widget _buildTransactionCard(UserTransactionHistoryResponseItem transaction) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
         leading: _getTransactionIcon(transaction.coin_type ?? ""),
         title: Text(
@@ -130,7 +129,7 @@ class TransactionsTab extends StatelessWidget {
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: ListTile(
-        leading: CircleAvatar(),
+        leading: const CircleAvatar(),
         title: Container(color: Colors.white, height: 10),
         subtitle: Container(color: Colors.white, height: 10),
       ),
@@ -142,8 +141,8 @@ class TransactionsTab extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton.icon(
         onPressed: controller.exportTransactions,
-        icon: Icon(Icons.download),
-        label: Text('Export Transactions'),
+        icon: const Icon(Icons.download),
+        label: const Text('Export Transactions'),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blue,
           shape: RoundedRectangleBorder(

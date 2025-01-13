@@ -26,7 +26,7 @@ class BubbleNormalImage extends StatelessWidget {
   final String? time;
 
   const BubbleNormalImage({
-    Key? key,
+    super.key,
     required this.id,
     required this.image,
     this.bubbleRadius = BUBBLE_RADIUS_IMAGE,
@@ -43,7 +43,7 @@ class BubbleNormalImage extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.time,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,15 +51,15 @@ class BubbleNormalImage extends StatelessWidget {
     Icon? stateIcon;
     if (sent) {
       stateTick = true;
-      stateIcon = Icon(Icons.done, size: 18, color: Color(0xFF97AD8E));
+      stateIcon = const Icon(Icons.done, size: 18, color: Color(0xFF97AD8E));
     }
     if (delivered) {
       stateTick = true;
-      stateIcon = Icon(Icons.done_all, size: 18, color: Color(0xFF97AD8E));
+      stateIcon = const Icon(Icons.done_all, size: 18, color: Color(0xFF97AD8E));
     }
     if (seen) {
       stateTick = true;
-      stateIcon = Icon(Icons.done_all, size: 18, color: Color(0xFF92DEDA));
+      stateIcon = const Icon(Icons.done_all, size: 18, color: Color(0xFF92DEDA));
     }
 
     return Container(
@@ -70,6 +70,14 @@ class BubbleNormalImage extends StatelessWidget {
           maxWidth: MediaQuery.of(context).size.width * .5,
         ),
         child: GestureDetector(
+          onLongPress: onLongPress,
+          onTap: (){
+            if (onTap != null) {
+              onTap!();
+            } else {
+              _showDetailScreen(context);
+            }
+          },
           child:  Hero(
             tag: id,
             child: Stack(
@@ -119,14 +127,6 @@ class BubbleNormalImage extends StatelessWidget {
               ],
             ),
           ),
-          onLongPress: onLongPress,
-          onTap: (){
-            if (onTap != null) {
-              onTap!();
-            } else {
-              _showDetailScreen(context);
-            }
-          },
         ),
       ),
     );
@@ -152,10 +152,10 @@ class DetailScreen extends StatelessWidget {
   final Widget image;
 
   const DetailScreen({
-    Key? key,
+    super.key,
     required this.tag,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +199,7 @@ class DetailScreen extends StatelessWidget {
               child: Container(
                 color: Colors.white.withOpacity(0.9),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     /*IconButton(

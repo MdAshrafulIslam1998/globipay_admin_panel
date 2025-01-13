@@ -9,9 +9,7 @@ import 'package:globipay_admin_panel/entity/response/login/login_response.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 
-/**
- * Created by Abdullah on 8/12/24.
- */
+/// Created by Abdullah on 8/12/24.
 class LoginController extends BaseController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -19,6 +17,7 @@ class LoginController extends BaseController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   AppRepository appRepository;
+  @override
   TokenRepository tokenRepository;
 
   LoginController(this.appRepository, this.tokenRepository);

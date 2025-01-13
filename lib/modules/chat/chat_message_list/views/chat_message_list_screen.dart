@@ -5,15 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'chat_message_list_screen_builder.dart';
 
 
-/**
- * Created by Abdullah on 16/10/24 08:01 PM.
- */
+/// Created by Abdullah on 16/10/24 08:01 PM.
 
 class ChatMessageListScreen extends StatelessWidget {
   const ChatMessageListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChatMessageListScreenBuilder();
+    return const ChatMessageListScreenBuilder();
   }
 }

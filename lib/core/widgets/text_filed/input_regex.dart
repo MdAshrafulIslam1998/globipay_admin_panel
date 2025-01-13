@@ -1,6 +1,4 @@
-/**
- * Created by Abdullah on 22/8/24.
- */
+/// Created by Abdullah on 22/8/24.
 enum InputRegex {
   NONE(r'', ""),
   EMAIL(r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$',

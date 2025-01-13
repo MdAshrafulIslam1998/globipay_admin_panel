@@ -1,8 +1,6 @@
 import 'package:globipay_admin_panel/modules/users_section/active_users/user.dart';
 
-/**
- * Created by Abdullah on 10/11/24.
- */
+/// Created by Abdullah on 10/11/24.
 
 class UserResponse {
   String responseCode;

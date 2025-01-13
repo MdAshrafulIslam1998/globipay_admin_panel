@@ -7,9 +7,7 @@ import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/data/models/call_model.dart';
 import 'dart:html' as html;
 
-/**
- * Created by Abdullah on 26/10/24.
- */
+/// Created by Abdullah on 26/10/24.
 const appId = "f808b49bca754c88aa1cab9d0fc789ce";
 
 
@@ -70,7 +68,7 @@ class VideoCallController extends BaseController{
   Future<void> initAgoraEngine() async {
 
     await engine.initialize(
-        RtcEngineContext(
+        const RtcEngineContext(
       appId: appId,
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
@@ -214,9 +212,5 @@ class VideoCallController extends BaseController{
     Get.back();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
 }

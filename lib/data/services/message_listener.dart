@@ -4,9 +4,7 @@ import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/entity/response/message/message.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-/**
- * Created by Abdullah on 11/1/25.
- */
+/// Created by Abdullah on 11/1/25.
 
 
 class MessagesListener {
@@ -25,9 +23,7 @@ class MessagesListener {
 
   /// Initialize the listener
   void initialize(SupabaseClient client) {
-    if (_supabaseClient == null) {
-      _supabaseClient = client;
-    }
+    _supabaseClient ??= client;
   }
 
   /// Start listening for messages

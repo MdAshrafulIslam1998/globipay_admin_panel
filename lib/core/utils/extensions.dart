@@ -7,9 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'custom_dialog.dart';
-/**
- * Created by Abdullah on 15/11/24.
- */
+/// Created by Abdullah on 15/11/24.
 
 
 extension StringExtensions on String {
@@ -22,7 +20,7 @@ extension StringExtensions on String {
       final inputDate = DateTime.parse(this);
       final now = DateTime.now();
       final today = DateTime(now.year, now.month, now.day);
-      final yesterday = today.subtract(Duration(days: 1));
+      final yesterday = today.subtract(const Duration(days: 1));
 
       if (inputDate.isAfter(today)) {
         return DateFormat('hh:mm a').format(inputDate); // Time with AM/PM
@@ -62,8 +60,8 @@ extension StringExtensions on String {
   }
 
   String includeBaseUrl() {
-    if(this == null || this.isEmpty) return "";
-    if(this.startsWith("http") || this.startsWith("https")) return this;
+    if(isEmpty) return "";
+    if(startsWith("http") || startsWith("https")) return this;
     return FlavorConfig.instance.url + this;
   }
 

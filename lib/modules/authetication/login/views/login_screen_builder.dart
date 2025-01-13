@@ -8,9 +8,7 @@ import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
 import 'package:globipay_admin_panel/modules/authetication/login/controller/login_controller.dart';
-/**
- * Created by Abdullah on 8/12/24.
- */
+/// Created by Abdullah on 8/12/24.
 
 class LoginScreenBuilder extends StatefulWidget {
   const LoginScreenBuilder({super.key});
@@ -62,7 +60,7 @@ class _LoginScreenBuilderState
           child: Center(
             child: SingleChildScrollView(
               child: Container(
-                constraints: BoxConstraints(
+                constraints: const BoxConstraints(
                   maxWidth: 500,
                 ),
                 padding: const EdgeInsets.all(20),
@@ -85,7 +83,7 @@ class _LoginScreenBuilderState
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
           // App Logo or Welcome Text
-                      Text(
+                      const Text(
                         'Admin Panel',
                         style: TextStyle(
                           fontSize: 22,
@@ -168,7 +166,7 @@ class _LoginScreenBuilderState
   }
 
   update(){
-    Timer.periodic(Duration(milliseconds: 16), (timer){
+    Timer.periodic(const Duration(milliseconds: 16), (timer){
       setState(() {
       });
     });

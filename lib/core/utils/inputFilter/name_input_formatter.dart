@@ -1,8 +1,6 @@
 import 'package:flutter/services.dart';
 
-/**
- * Created by Abdullah on 26/5/24.
- */
+/// Created by Abdullah on 26/5/24.
 
 class NameFormatter extends TextInputFormatter {
   @override

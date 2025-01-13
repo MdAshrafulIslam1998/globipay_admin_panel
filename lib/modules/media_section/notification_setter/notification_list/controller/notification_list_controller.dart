@@ -4,7 +4,6 @@ import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/constants/enum/notification_target_type.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
-import 'package:globipay_admin_panel/modules/media_section/notification_setter/user_model.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 

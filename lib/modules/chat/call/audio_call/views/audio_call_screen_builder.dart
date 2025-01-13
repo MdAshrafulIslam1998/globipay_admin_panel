@@ -13,7 +13,7 @@ enum CallState {
 class AudioCallScreenBuilder extends StatefulWidget {
   final dynamic data;
 
-  const AudioCallScreenBuilder({Key? key, this.data}) : super(key: key);
+  const AudioCallScreenBuilder({super.key, this.data});
 
   @override
   _AudioCallScreenBuilderState createState() => _AudioCallScreenBuilderState();
@@ -45,7 +45,7 @@ class _AudioCallScreenBuilderState extends State<AudioCallScreenBuilder>
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _callDuration++;
       });
@@ -96,7 +96,7 @@ class _AudioCallScreenBuilderState extends State<AudioCallScreenBuilder>
                   Text(
                     _getCallStatusText(),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -106,7 +106,7 @@ class _AudioCallScreenBuilderState extends State<AudioCallScreenBuilder>
                   // Call Duration Text
                   Text(
                     _formatDuration(_callDuration),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                     ),
@@ -149,7 +149,7 @@ class _AudioCallScreenBuilderState extends State<AudioCallScreenBuilder>
 
   // Widget for the audio call background (color-shifting animation)
   Widget audioCallBackground() {
-    return AudioCallProfileView(
+    return const AudioCallProfileView(
       userName: "John Doe",
       userImageUrl:
           "https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg", // Replace with actual user image URL

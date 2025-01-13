@@ -1,7 +1,6 @@
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/data/local/repository_impl/token_repository_impl.dart';
 import 'package:globipay_admin_panel/core/utils/storage/app_secure_storage.dart';
-import 'package:globipay_admin_panel/core/widgets/dropdown/searchable_dropdown.dart';
 import 'package:globipay_admin_panel/core/widgets/sidemenu/side_menu_controller.dart';
 import 'package:globipay_admin_panel/data/remote/app_remote_data_source.dart';
 import 'package:globipay_admin_panel/data/remote/app_remote_data_source_impl.dart';

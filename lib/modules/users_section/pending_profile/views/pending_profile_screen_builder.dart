@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 class PendingProfileScreenBuilder extends StatelessWidget {
   final PendingProfileController controller = Get.put(PendingProfileController());
 
+  const PendingProfileScreenBuilder({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Get screen size
@@ -220,7 +222,7 @@ class PendingProfileScreenBuilder extends StatelessWidget {
   @override
   PreferredSizeWidget? appBar() {
     return AppBar(
-      title: Text(
+      title: const Text(
         'Pending Profile',
       ),
       backgroundColor: const Color(0xFFF7F2FA),
@@ -321,10 +323,10 @@ class PendingProfileScreenBuilder extends StatelessWidget {
               errorBuilder: (context, error, stackTrace) => Container(
                 height: 180,
                 color: const Color(0xFFE2E8F0),
-                child: Icon(
+                child: const Icon(
                   Icons.broken_image,
                   size: 48,
-                  color: const Color(0xFF64748B),
+                  color: Color(0xFF64748B),
                 ),
               ),
             ),

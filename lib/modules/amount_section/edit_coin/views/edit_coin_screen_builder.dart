@@ -45,7 +45,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
 
   @override
   PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Edit Coin'));
+    return AppBar(title: const Text('Edit Coin'));
   }
 
   @override
@@ -64,13 +64,13 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
                   width: 150.0,
                   child: MaterialButton(
                     color: Colors.blue,
+                    onPressed: exportDataGridToExcel,
                     child: const Center(
                       child: Text(
                         'Export to Excel',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    onPressed: exportDataGridToExcel,
                   ),
                 ),
               ],
@@ -93,7 +93,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
             ),
           ),
           SfDataPagerTheme(
-            data: SfDataPagerThemeData(
+            data: const SfDataPagerThemeData(
               selectedItemColor: Color(0xFF7B61FF),
             ),
             child: SfDataPager(
@@ -123,7 +123,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
         label: Container(
           padding: const EdgeInsets.all(8),
           alignment: Alignment.center,
-          child: Text('Full Name', style: headerStyle),
+          child: const Text('Full Name', style: headerStyle),
         ),
       ),
       GridColumn(
@@ -131,7 +131,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
         label: Container(
           padding: const EdgeInsets.all(8),
           alignment: Alignment.center,
-          child: Text('Email', style: headerStyle),
+          child: const Text('Email', style: headerStyle),
         ),
       ),
       GridColumn(
@@ -139,7 +139,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
         label: Container(
           padding: const EdgeInsets.all(8),
           alignment: Alignment.center,
-          child: Text('Amount', style: headerStyle),
+          child: const Text('Amount', style: headerStyle),
         ),
       ),
       GridColumn(
@@ -147,7 +147,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
         label: Container(
           padding: const EdgeInsets.all(8),
           alignment: Alignment.center,
-          child: Text('Level', style: headerStyle),
+          child: const Text('Level', style: headerStyle),
         ),
       ),
       GridColumn(
@@ -155,7 +155,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
         label: Container(
           padding: const EdgeInsets.all(8),
           alignment: Alignment.center,
-          child: Text('Status', style: headerStyle),
+          child: const Text('Status', style: headerStyle),
         ),
       ),
       GridColumn(
@@ -163,7 +163,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
         label: Container(
           padding: const EdgeInsets.all(8),
           alignment: Alignment.center,
-          child: Text('Edit', style: headerStyle),
+          child: const Text('Edit', style: headerStyle),
         ),
       ),
       GridColumn(
@@ -171,7 +171,7 @@ class EditCoinScreenBuilder extends BaseView<EditCoinController> {
         label: Container(
           padding: const EdgeInsets.all(8),
           alignment: Alignment.center,
-          child: Text('Details', style: headerStyle),
+          child: const Text('Details', style: headerStyle),
         ),
       ),
     ];

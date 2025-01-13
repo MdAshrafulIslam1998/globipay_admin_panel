@@ -1,5 +1,4 @@
 import 'package:globipay_admin_panel/modules/amount_section/user_amount/controller/user_amount_controller.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class UserAmountDataPagerDelegate extends DataPagerDelegate {

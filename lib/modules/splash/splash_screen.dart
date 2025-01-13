@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Navigate based on token presence
     final token = await _tokenRepository.getToken();
-    if (token != null && token.isNotEmpty) {
+    if (token.isNotEmpty) {
       AppRoutes.pushAndPopAll(RoutePath.dashboard); // Navigate to dashboard
     } else {
       AppRoutes.pushAndPopAll(RoutePath.login); // Adjust for login if needed
@@ -92,9 +92,9 @@ class _SplashScreenState extends State<SplashScreen>
                       color: Colors.blueAccent,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                   // App Name
-                  const Text(
+                  Text(
                     'Globi Pay Admin',
                     style: TextStyle(
                       fontSize: 28,
@@ -102,9 +102,9 @@ class _SplashScreenState extends State<SplashScreen>
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   // Tagline
-                  const Text(
+                  Text(
                     'Your global payment partner',
                     style: TextStyle(
                       fontSize: 16,
@@ -112,9 +112,9 @@ class _SplashScreenState extends State<SplashScreen>
                       color: Colors.white70,
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30),
                   // Loading Indicator
-                  const CircularProgressIndicator(
+                  CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 ],

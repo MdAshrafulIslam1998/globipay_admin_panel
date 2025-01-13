@@ -13,13 +13,12 @@ import 'package:globipay_admin_panel/entity/response/misc/misc_response_item_ent
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
 
 class MiscellaneousController extends BaseController{
 
   final AppRepository _repository;
+  @override
   final TokenRepository tokenRepository;
   String currentRole = '';
 
@@ -59,7 +58,7 @@ class MiscellaneousController extends BaseController{
   }
 
   Future<String> getRole() async {
-    return await tokenRepository.getRole().toString();
+    return tokenRepository.getRole().toString();
   }
 
   @override
@@ -80,10 +79,10 @@ class MiscellaneousController extends BaseController{
     });
   }
 
-  void removeMisc(int? service_id) {
+  void removeMisc(int? serviceId) {
     askForConfirmation(
       onPositiveAction: () {
-        final repo = _repository.requestToRemoveMisc(service_id.toString());
+        final repo = _repository.requestToRemoveMisc(serviceId.toString());
         callService(repo, onSuccess: (response) {
           fetchMiscs(currentPage.value, pageSize.value);
         });
@@ -99,7 +98,7 @@ class MiscellaneousController extends BaseController{
       context: AppNavigatorService.navigatorKey.currentContext!,
         builder: (context) {
           return AlertDialog(
-            title: AppText('Details'),
+            title: const AppText('Details'),
             content: SingleChildScrollView(
               child: Column(
                 children: [
@@ -112,7 +111,7 @@ class MiscellaneousController extends BaseController{
                 onPressed: () {
                   AppRoutes.pop();
                 },
-                child: AppText('Close'),
+                child: const AppText('Close'),
               ),
             ],
           );

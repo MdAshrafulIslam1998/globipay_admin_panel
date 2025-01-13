@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 15/12/24.
- */
+/// Created by Abdullah on 15/12/24.
+library;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/activity_log_model.dart';
@@ -11,7 +10,7 @@ import 'package:shimmer/shimmer.dart';
 class ActivityLogTab extends StatelessWidget {
 
   ProfileController controller;
-  ActivityLogTab(this.controller);
+  ActivityLogTab(this.controller, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class ActivityLogTab extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Search Activity Logs',
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -58,7 +57,7 @@ class ActivityLogTab extends StatelessWidget {
 
   Widget _buildActivityLogCard(ActivityLogModel activity) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
         leading: _getActivityIcon(activity.type),
         title: Text(
@@ -106,7 +105,7 @@ class ActivityLogTab extends StatelessWidget {
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: ListTile(
-        leading: CircleAvatar(),
+        leading: const CircleAvatar(),
         title: Container(color: Colors.white, height: 10),
         subtitle: Container(color: Colors.white, height: 10),
       ),
@@ -118,8 +117,8 @@ class ActivityLogTab extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton.icon(
         onPressed: controller.exportActivityLogs,
-        icon: Icon(Icons.download),
-        label: Text('Export Activity Logs'),
+        icon: const Icon(Icons.download),
+        label: const Text('Export Activity Logs'),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blue,
           shape: RoundedRectangleBorder(

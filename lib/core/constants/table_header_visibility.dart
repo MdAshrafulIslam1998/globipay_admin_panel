@@ -5,9 +5,7 @@ import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/table/table_header_const.dart';
 import 'enum/role_name.dart';
 
-/**
- * Created by Abdullah on 13/12/24.
- */
+/// Created by Abdullah on 13/12/24.
 
 abstract class TableHeaderVisibility {
   static getTableVisibleColumn({required TableName tableName}) async {
@@ -178,7 +176,7 @@ abstract class TableHeaderVisibility {
     ], //moderator
   };
 
-  static Map<String, List<String>> _USER_TRANSACTION_TABLE = {
+  static final Map<String, List<String>> _USER_TRANSACTION_TABLE = {
     RoleName.ADMIN.code: [
       'name',
       'email',
@@ -203,7 +201,7 @@ abstract class TableHeaderVisibility {
     ], //moderator
   };
 
-  static Map<String, List<String>> _USER_AMOUNT_TABLE = {
+  static final Map<String, List<String>> _USER_AMOUNT_TABLE = {
     RoleName.ADMIN.code: [
       'name',
       'email',

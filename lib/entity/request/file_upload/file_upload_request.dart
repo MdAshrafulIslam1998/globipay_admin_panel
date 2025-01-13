@@ -1,9 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
-/**
- * Created by Abdullah on 6/12/24.
- */
+/// Created by Abdullah on 6/12/24.
 
 class FileUploadRequest{
   String? documents;

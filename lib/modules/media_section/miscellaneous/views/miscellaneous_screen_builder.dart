@@ -13,9 +13,7 @@ import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
 
 class MiscellaneousScreenBuilder extends StatefulWidget {
   const MiscellaneousScreenBuilder({super.key});
@@ -44,7 +42,7 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
 
   @override
   PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Miscellaneous'));
+    return AppBar(title: const Text('Miscellaneous'));
   }
 
   @override
@@ -65,16 +63,16 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
               // Header
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color.fromARGB(255, 28, 170, 61),
-                      const Color.fromARGB(255, 127, 224, 135),
+                      Color.fromARGB(255, 28, 170, 61),
+                      Color.fromARGB(255, 127, 224, 135),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
                   ),
@@ -92,7 +90,7 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                     Obx(
                           () => Text(
                         'Total Users: ${controller.totalItems}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'newyork',
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -118,7 +116,7 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                               BorderRadius.circular(8), // Rounded edges
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             '+ Add New Item',
                             style: TextStyle(
                               fontSize: 14,
@@ -128,7 +126,7 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                           ),
                         ),
 
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
 
                         const Text(
                           'Show entries:   ',
@@ -157,11 +155,11 @@ class _MiscellaneousScreenBuilderState extends BaseViewState<MiscellaneousScreen
                                 value: size,
                                 child: Text(
                                   size.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 13, // Adjust the font size
                                     fontWeight: FontWeight
                                         .bold, // Change font weight (e.g., bold)
-                                    color: const Color.fromARGB(
+                                    color: Color.fromARGB(
                                         143, 0, 0, 0), // Set text color
                                     fontFamily:
                                     'newyork', // Specify a custom font family if needed

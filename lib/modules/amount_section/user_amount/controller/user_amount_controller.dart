@@ -16,6 +16,7 @@ import 'package:globipay_admin_panel/router/route_path.dart';
 
 class UserAmountController extends BaseController {
   final AppRepository _repository;
+  @override
   final TokenRepository tokenRepository;
   String currentRole = '';
 
@@ -56,7 +57,7 @@ class UserAmountController extends BaseController {
   }
 
   Future<String> getRole() async {
-    return await tokenRepository.getRole().toString();
+    return tokenRepository.getRole().toString();
   }
 
   @override

@@ -1,6 +1,4 @@
-/**
- * Created by Abdullah on 10/11/24.
- */
+/// Created by Abdullah on 10/11/24.
 class User {
   final int id;
   final String name;

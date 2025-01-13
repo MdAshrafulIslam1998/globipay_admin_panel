@@ -6,6 +6,8 @@ import 'package:globipay_admin_panel/modules/media_section/about_us/controller/a
 class AboutUsScreenBuilder extends StatelessWidget {
   final AboutUsController controller = Get.put(AboutUsController());
 
+  const AboutUsScreenBuilder({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +18,7 @@ class AboutUsScreenBuilder extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF3B82F6),
+            color: const Color(0xFF3B82F6),
           ),
         ),
       ),
@@ -40,7 +42,7 @@ class AboutUsScreenBuilder extends StatelessWidget {
                 TextField(
                   controller: controller.aboutUsContentController,
                   maxLines: 4,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter About Us content',
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -54,7 +56,7 @@ class AboutUsScreenBuilder extends StatelessWidget {
                       onPressed: controller.start,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
-                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                       ),
                       child: Text(
                         'Start',
@@ -72,7 +74,7 @@ class AboutUsScreenBuilder extends StatelessWidget {
                       onPressed: controller.stop,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
-                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                       ),
                       child: Text(
                         'Stop',

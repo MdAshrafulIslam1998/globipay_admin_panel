@@ -312,7 +312,7 @@ showCustomDialog(message,
             title ?? "",
           ),
           content: Padding(
-            padding: EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10),
             child: Text(
                 message
             ),
@@ -329,7 +329,7 @@ showCustomDialog(message,
                 onPressed: () {
                   AppRoutes.pop();
                 },
-                child: Text(
+                child: const Text(
                   "Cancel",
                 ),
               ),
@@ -340,7 +340,7 @@ showCustomDialog(message,
                   borderRadius: BorderRadius.circular(0),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 "Ok",
               ),
               onPressed: () {

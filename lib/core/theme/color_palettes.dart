@@ -2,9 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-/**
- * Created by Abdullah on 22/8/24.
- */
+/// Created by Abdullah on 22/8/24.
 
 abstract class ColorPalettes{
 

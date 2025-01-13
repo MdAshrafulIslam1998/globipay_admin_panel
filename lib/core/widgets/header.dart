@@ -10,6 +10,8 @@ import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:go_router/go_router.dart';
 
 class Header extends StatelessWidget {
+  const Header({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,4 +1,3 @@
-import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/category_coin_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'transaction_item_entity.g.dart';

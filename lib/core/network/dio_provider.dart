@@ -9,9 +9,7 @@ import 'package:universal_io/io.dart';
 import '../../flavors/flavor_config.dart';
 import '../constants/app_constant.dart';
 
-/**
- * Created by Abdullah on 12/10/24.
- */
+/// Created by Abdullah on 12/10/24.
 
 class DioProvider {
   static final String baseUrl = FlavorConfig.instance.url;

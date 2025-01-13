@@ -1,8 +1,6 @@
 import 'package:hive/hive.dart';
 
-/**
- * Created by Abdullah on 13/10/24.
- */
+/// Created by Abdullah on 13/10/24.
 
 class AppStorage {
   final boxName;

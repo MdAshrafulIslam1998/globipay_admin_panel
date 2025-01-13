@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 21/8/24.
- */
+/// Created by Abdullah on 21/8/24.
+library;
 import 'package:kiwi/kiwi.dart';
 
 abstract class Injector {

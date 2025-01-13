@@ -35,9 +35,7 @@ import 'package:globipay_admin_panel/entity/response/user_transaction_history/us
 
 import '../../entity/response/promotional/add_promotional_banner_response_entity.dart';
 
-/**
- * Created by Abdullah on 13/10/24.
- */
+/// Created by Abdullah on 13/10/24.
 
 
 abstract class AppRemoteDataSource {

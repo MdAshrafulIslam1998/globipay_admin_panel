@@ -1,7 +1,6 @@
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/pagination/pagination.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'dart:convert';
 
 /**
  * Created by Abdullah on 8/12/24.

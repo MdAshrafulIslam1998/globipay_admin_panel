@@ -1,8 +1,6 @@
 import 'package:flutter_svg/svg.dart';
 
-/**
- * Created by Abdullah on 11/10/24.
- */
+/// Created by Abdullah on 11/10/24.
 
 class AppSvgImage extends SvgPicture {
   AppSvgImage.asset(super.assetName,

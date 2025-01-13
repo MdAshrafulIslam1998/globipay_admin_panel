@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import 'dart:html' as web;
 
 class AddPromotionalBannerView extends StatefulWidget {
+  const AddPromotionalBannerView({super.key});
+
   @override
   _AddPromotionalBannerViewState createState() => _AddPromotionalBannerViewState();
 }
@@ -24,8 +26,8 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
   DateTime? _startDate;
   DateTime? _endDate;
   Color _bannerColor = Colors.deepPurple;
-  bool _isVisibleToAll = true;
-  double _priority = 5.0;
+  final bool _isVisibleToAll = true;
+  final double _priority = 5.0;
 
 
   // Date Range Picker
@@ -64,7 +66,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select Banner Background Color'),
+          title: const Text('Select Banner Background Color'),
           content: SingleChildScrollView(
             child: BlockPicker(
               pickerColor: _bannerColor,
@@ -89,7 +91,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
     if (_imageFile == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please upload a banner image'),
+          content: const Text('Please upload a banner image'),
           backgroundColor: Colors.red[600],
         ),
       );
@@ -99,7 +101,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
     if (_startDate == null || _endDate == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please select a date range'),
+          content: const Text('Please select a date range'),
           backgroundColor: Colors.red[600],
         ),
       );
@@ -140,7 +142,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
           child: SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              padding: EdgeInsets.all(32),
+              padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
@@ -158,7 +160,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Title
-                    Text(
+                    const Text(
                       'Create Promotional Banner',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -167,7 +169,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                         color: Colors.deepPurple,
                       ),
                     ),
-                    SizedBox(height: 32),
+                    const SizedBox(height: 32),
 
                     // Image Upload Section
                     WebImagePicker(
@@ -177,14 +179,14 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                         _imageFileWeb = file;
                       });
                     }),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
                     // Title Input
                     TextFormField(
                       controller: _titleController,
                       decoration: InputDecoration(
                         labelText: 'Banner Title',
-                        prefixIcon: Icon(Icons.title, color: Colors.deepPurple),
+                        prefixIcon: const Icon(Icons.title, color: Colors.deepPurple),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -193,7 +195,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                           ? 'Please enter a title'
                           : null,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Description Input
                     TextFormField(
@@ -201,7 +203,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                       maxLines: 3,
                       decoration: InputDecoration(
                         labelText: 'Description',
-                        prefixIcon: Icon(Icons.description, color: Colors.deepPurple),
+                        prefixIcon: const Icon(Icons.description, color: Colors.deepPurple),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -210,12 +212,12 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                           ? 'Please enter a description'
                           : null,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Date Range Picker
                     ElevatedButton.icon(
                       onPressed: _selectDateRange,
-                      icon: Icon(Icons.calendar_month),
+                      icon: const Icon(Icons.calendar_month),
                       label: Text(
                         _startDate == null || _endDate == null
                             ? 'Select Date Range'
@@ -224,7 +226,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple.shade50,
                         foregroundColor: Colors.deepPurple,
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 16,
                             horizontal: 24
                         ),
@@ -233,7 +235,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                         ),
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Additional Options
                     /*Row(
@@ -274,7 +276,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                         ),
                       ],
                     ),*/
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Priority Slider
                     /*Text(
@@ -295,27 +297,27 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                         });
                       },
                     ),*/
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
                     // Submit Button
                     ElevatedButton(
                       onPressed: _submitBanner,
-                      child: Text(
-                        'Create Promotional Banner',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple,
                         foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 16,
                             horizontal: 32
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'Create Promotional Banner',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),

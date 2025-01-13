@@ -42,12 +42,10 @@ class ActiveUsersController extends BaseController {
 
       // Parse mock response
       var userResponse = UserResponse.fromJson(mockResponse);
-      if (userResponse != null) {
-        users.assignAll(userResponse.users);             // Update the users list
-        totalItems.value = userResponse.pagination.total; // Update total items for pagination
-        currentPage.value = userResponse.pagination.currentPage;
-      }
-    } catch (e) {
+      users.assignAll(userResponse.users);             // Update the users list
+      totalItems.value = userResponse.pagination.total; // Update total items for pagination
+      currentPage.value = userResponse.pagination.currentPage;
+        } catch (e) {
       print("Error fetching users: $e");                  // Error handling
     } finally {
       isLoading.value = false;

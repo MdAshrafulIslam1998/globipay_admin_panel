@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'dart:convert';
 /**
  * Created by Abdullah on 22/12/24.
  */

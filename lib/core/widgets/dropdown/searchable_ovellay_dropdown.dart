@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 16/12/24.
- */
+/// Created by Abdullah on 16/12/24.
+library;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
@@ -23,14 +22,14 @@ class SearchableDropdownOverlay<T> extends StatelessWidget {
   final String title;
 
    SearchableDropdownOverlay({
-    Key? key,
+    super.key,
     required this.controller,
     required this.itemBuilder,
     required this.title,
     this.selectedItemBuilder,
     required this.displayStringForItemSelection ,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   // Show dropdown as a bottom sheet
   static Future<void> show<T>({
@@ -163,7 +162,7 @@ class SearchableDropdownOverlay<T> extends StatelessWidget {
                             onPressed: (){
                               controller.loadMoreData(query);
                             } ,
-                            child:  Text('Load More')
+                            child:  const Text('Load More')
                         )
                             : const SizedBox.shrink();
                       }

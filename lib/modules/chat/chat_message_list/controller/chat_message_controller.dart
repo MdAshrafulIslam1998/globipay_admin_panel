@@ -23,12 +23,11 @@ import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-/**
- * Created by Abdullah on 16/10/24 08:01 PM.
- */
+/// Created by Abdullah on 16/10/24 08:01 PM.
 class ChatMessageController extends BaseController {
-  AppRepository _appRepository;
+  final AppRepository _appRepository;
 
+  @override
   TokenRepository tokenRepository;
   final ChatSharedController sharedController =
       Injector.resolve<ChatSharedController>();
@@ -83,7 +82,7 @@ class ChatMessageController extends BaseController {
       appPrint('Response data: $response');
 
       // Map the result to your chat session entities
-      final chatSessions = (response as List)
+      final chatSessions = (response)
           .map((item) => ChatSessionResponse.fromJson(item))
           .toList();
 
@@ -127,7 +126,7 @@ class ChatMessageController extends BaseController {
       "https://static.vecteezy.com/system/resources/previews/013/948/549/non_2x/google-logo-on-transparent-white-background-free-vector.jpg",
       "https://cdn.iconscout.com/icon/free/png-512/free-apple-pay-logo-icon-download-in-svg-png-gif-file-formats--payment-method-social-media-pack-design-development-icons-4069416.png?f=webp&w=256"
     ];
-    var random = new Random();
+    var random = Random();
     var randomIndex = random.nextInt(temp.length);
     return temp[randomIndex];
   }
@@ -152,7 +151,7 @@ class ChatMessageController extends BaseController {
             final newSession = payload['new'];
             update();
             _updateUI(newSession);
-            appPrint('New chat session INSERT: ${newSession}');
+            appPrint('New chat session INSERT: $newSession');
           }
         },
       )
@@ -169,7 +168,7 @@ class ChatMessageController extends BaseController {
             update();
             _updateUI(newSession);
 
-            appPrint('New UPDATED chat session UPDATE: ${newSession}');
+            appPrint('New UPDATED chat session UPDATE: $newSession');
           }
         },
       ).subscribe();

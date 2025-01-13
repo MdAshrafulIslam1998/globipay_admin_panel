@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 21/10/24.
- */
+/// Created by Abdullah on 21/10/24.
+library;
 
 class MessageWithUser {
   final String id;

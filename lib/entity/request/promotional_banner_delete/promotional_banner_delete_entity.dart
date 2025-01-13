@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
+library;
 
 
 class PromotionalBannerDeleteRequestEntity {

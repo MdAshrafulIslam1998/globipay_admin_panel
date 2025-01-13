@@ -33,7 +33,7 @@ class MessageTemplate {
 class MessageTemplatesView extends StatelessWidget {
   final ChatController controller;
 
-  MessageTemplatesView(this.controller);
+  const MessageTemplatesView(this.controller, {super.key});
 
   @override
   Widget build(BuildContext context) {

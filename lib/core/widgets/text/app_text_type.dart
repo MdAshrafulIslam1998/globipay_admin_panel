@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 11/10/24.
- */
+/// Created by Abdullah on 11/10/24.
+library;
 
 enum AppTextType {
   labelLarge,

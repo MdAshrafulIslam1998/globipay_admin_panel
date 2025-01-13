@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
 
-/**
- * Created by Abdullah on 13/12/24.
- */
+/// Created by Abdullah on 13/12/24.
 
 class ChatCloseDialog extends StatelessWidget {
 
@@ -17,7 +15,7 @@ class ChatCloseDialog extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                AppText("Close Chat",),
+                const AppText("Close Chat",),
                 InputField(
                   hintText: "Reason",
                   maxLines: 5,

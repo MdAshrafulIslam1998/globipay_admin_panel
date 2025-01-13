@@ -41,9 +41,7 @@ import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:storage_client/storage_client.dart';
 import 'dart:typed_data';
 
-/**
- * Created by Abdullah on 16/10/24 08:01 PM.
- */
+/// Created by Abdullah on 16/10/24 08:01 PM.
 class ChatController extends BaseController {
   // Variables
   RxList<Message> messages = RxList<Message>([]);
@@ -59,6 +57,7 @@ class ChatController extends BaseController {
 
 
   // Constructor
+  @override
   final TokenRepository tokenRepository;
   final AppRepository appRepository;
 
@@ -78,7 +77,7 @@ class ChatController extends BaseController {
 
   @override
   void onInit() async{
-    incomingMessageChannelSubscription = await supabase.channel('public:messages');
+    incomingMessageChannelSubscription = supabase.channel('public:messages');
     fetchTemplates();
     _initializeMessages();
     _onListener();
@@ -186,12 +185,7 @@ class ChatController extends BaseController {
       'delivery_status': {
         'sent': DateTime.now().toIso8601String(),
       } // Corrected structure
-    }).select('id').execute(); // Add .select('id') to fetch the inserted id
-
-    if (response == null) {
-      print('Error inserting message: ${response}');
-      return;
-    }
+    }).select('id').execute();
 
     // Access the inserted id
     String? messageID;
@@ -459,7 +453,7 @@ class ChatController extends BaseController {
   }
 
   void onAudioCall() {
-    SnackBar snackBar = SnackBar(
+    SnackBar snackBar = const SnackBar(
       content: Text("Upcoming feature"),
       backgroundColor: Colors.green,
     );
@@ -481,7 +475,7 @@ class ChatController extends BaseController {
 
 
         return AlertDialog(
-          title: Text("Close Chat"),
+          title: const Text("Close Chat"),
           content: Form(
             key: chatCloseFormKey,
             child: Column(
@@ -495,7 +489,7 @@ class ChatController extends BaseController {
                   hintText: "Primary Coin",
 
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 // Secondary Coin Input Field
                 InputField(
                   controller: secondaryCoinController,
@@ -514,7 +508,7 @@ class ChatController extends BaseController {
               onPressed: () {
                 AppRoutes.pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             // Submit Button
             ElevatedButton(
@@ -524,7 +518,7 @@ class ChatController extends BaseController {
                   requestToCloseChatSession();
                 }
               },
-              child: Text("Submit"),
+              child: const Text("Submit"),
             ),
           ],
         );
@@ -624,19 +618,14 @@ class ChatController extends BaseController {
       final  response = await supabase.storage.from('chats').uploadBinary(
         fileName,
         imageFile,
-        fileOptions: FileOptions(contentType: 'image/png'), // Set MIME type for PNG
+        fileOptions: const FileOptions(contentType: 'image/png'), // Set MIME type for PNG
       );
 
       // Check if the upload was successful
-      if (response != null) {
-        // Get the public URL of the uploaded image
-        final String publicUrl = supabase.storage.from('chats').getPublicUrl(fileName);
-        return publicUrl; // Return the URL of the uploaded image
-      } else {
-        appPrint('Image upload failed: ${response}');
-        return null;
-      }
-    } catch (e) {
+      // Get the public URL of the uploaded image
+      final String publicUrl = supabase.storage.from('chats').getPublicUrl(fileName);
+      return publicUrl; // Return the URL of the uploaded image
+        } catch (e) {
       print('Error uploading image: $e');
       return null;
     }

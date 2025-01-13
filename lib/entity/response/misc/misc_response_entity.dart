@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 14/12/24.
- */
+/// Created by Abdullah on 14/12/24.
+library;
 
 import 'package:globipay_admin_panel/entity/response/misc/misc_response_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';

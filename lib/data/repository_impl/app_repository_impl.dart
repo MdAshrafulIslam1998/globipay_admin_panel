@@ -38,9 +38,7 @@ import 'package:globipay_admin_panel/entity/response/user_transaction_history/us
 import '../remote/app_remote_data_source.dart';
 import '../repository/app_repository.dart';
 
-/**
- * Created by Abdullah on 13/10/24.
- */
+/// Created by Abdullah on 13/10/24.
 
 class AppRepositoryImpl extends AppRepository {
   AppRemoteDataSource remoteDataSource;

@@ -1,6 +1,5 @@
-/**
- * Created by Abdullah on 21/12/24.
- */
+/// Created by Abdullah on 21/12/24.
+library;
 
 enum UserStatus {
   VERIFIED,
