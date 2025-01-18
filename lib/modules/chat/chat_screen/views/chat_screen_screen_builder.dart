@@ -195,7 +195,7 @@ class _ChatScreenScreenBuilderState
 
         if (chat.message_type == "image")
           Align(
-            alignment: Alignment.centerLeft,
+            alignment:chat.sender_id == controller.sharedController.currentUserId ? Alignment.centerRight : Alignment.centerLeft,
             child: BubbleNormalImage(
               id: chat.id ?? "",
               image: CachedNetworkImage(
