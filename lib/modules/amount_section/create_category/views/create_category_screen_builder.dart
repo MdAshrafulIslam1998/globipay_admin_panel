@@ -249,7 +249,7 @@ class _CategoryScreenBuilderState extends BaseViewState<
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text((category.messageStatus ?? false ) ? 'Running' : 'Inactive',
+                      child: Text((category.message_status ?? false ) ? 'Running' : 'Inactive',
                         textAlign: TextAlign.center,
                       ),
                     ),

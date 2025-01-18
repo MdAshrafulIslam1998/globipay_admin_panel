@@ -13,8 +13,7 @@ class CategoryItemEntity {
   String? image;
   String? bgcolor;
   String? message;
-  @JsonKey(name: 'message_status')
-  bool? messageStatus;
+  bool? message_status;
 
 
   CategoryItemEntity({
@@ -23,7 +22,7 @@ class CategoryItemEntity {
      this.image,
      this.bgcolor,
      this.message,
-     this.messageStatus,
+     this.message_status,
   });
 
   factory CategoryItemEntity.fromJson(Map<String, dynamic> json) => _$CategoryItemEntityFromJson(json);

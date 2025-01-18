@@ -20,6 +20,9 @@ UserProfileData _$UserProfileDataFromJson(Map<String, dynamic> json) =>
       selfiePath: json['selfie_path'] as String?,
       frontIdPath: json['front_id_path'] as String?,
       backIdPath: json['back_id_path'] as String?,
+      zipCode: json['zip_code'] as String?,
+      city: json['city'] as String?,
+      state: json['state'] as String?,
     );
 
 Map<String, dynamic> _$UserProfileDataToJson(UserProfileData instance) =>
@@ -36,4 +39,7 @@ Map<String, dynamic> _$UserProfileDataToJson(UserProfileData instance) =>
       'selfie_path': instance.selfiePath,
       'front_id_path': instance.frontIdPath,
       'back_id_path': instance.backIdPath,
+      'zip_code': instance.zipCode,
+      'city': instance.city,
+      'state': instance.state,
     };

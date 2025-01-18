@@ -99,7 +99,7 @@ class CreateCategoryController extends BaseController {
           categories.firstWhereOrNull((element) => element.id.toString() ==
               cat.id.toString());
       messageController.text = category?.message ?? '';
-      messageStatus.value = category?.messageStatus ?? false;
+      messageStatus.value = category?.message_status ?? false;
       showMessageEditDialog(cat);
     } catch (e) {
       showSnackBar(message: 'Something went wrong', status: SnackBarStatus.ERROR);
@@ -285,7 +285,7 @@ class CreateCategoryController extends BaseController {
     return CategoryItemEntity(
       id: id,
       message: messageController.text,
-      messageStatus: messageStatus.value,
+      message_status: messageStatus.value,
     );
   }
 

@@ -354,7 +354,7 @@ class ChatMessageController extends BaseController {
 
       if (message.category != "-1") {
         // Actual Implementation
-        if (category.messageStatus ?? false) {
+        if (category.message_status ?? false) {
           sendOpeningTextMessage(category.message ?? "Hi, how can i help you ?",
               message.session_id ?? "");
         }

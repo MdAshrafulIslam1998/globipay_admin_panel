@@ -41,6 +41,17 @@ class UserProfileData {
   @JsonKey(name: "back_id_path")
   String? backIdPath;
 
+  @JsonKey(name: "zip_code")
+  String? zipCode;
+
+  @JsonKey(name: "city")
+  String? city;
+
+  @JsonKey(name: "state")
+  String? state;
+
+
+
   UserProfileData({
     this.userCode,
     this.userName,
@@ -54,6 +65,10 @@ class UserProfileData {
     this.selfiePath,
     this.frontIdPath,
     this.backIdPath,
+    this.zipCode,
+    this.city,
+    this.state,
+
   });
 
   factory UserProfileData.fromJson(Map<String, dynamic> json) => 

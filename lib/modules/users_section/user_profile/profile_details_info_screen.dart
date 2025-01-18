@@ -62,6 +62,24 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
           "Address",
           profile?.address ?? "",
         ),
+      if (_hasData(profile?.city))
+        _buildInfoCard(
+          Icons.location_city_outlined,
+          "City",
+          profile?.city ?? "",
+        ),
+      if (_hasData(profile?.state))
+        _buildInfoCard(
+          Icons.public_outlined,
+          "State",
+          profile?.state ?? "",
+        ),
+      if (_hasData(profile?.zipCode))
+        _buildInfoCard(
+          Icons.location_on_outlined,
+          "Zip Code",
+          profile?.zipCode ?? "",
+        ),
     ];
 
     // Split fields into two columns
@@ -75,174 +93,172 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
 
     return Container(
       child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: 1200,
-            maxHeight: screenSize.height,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Obx(() {
-              if (controller.profileData.value == null) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Color(0xFF3B82F6),
-                  ),
-                );
-              }
-
-              var profile = controller.profileData.value;
-              final infoFields = _buildDynamicInfoFields(profile);
-              final midPoint = (infoFields.length / 2).ceil();
-
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      spreadRadius: 2,
-                      blurRadius: 20,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(24),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (_hasData(profile?.userCode))
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFFEF3C7),
-                              border: Border(
-                                bottom: BorderSide(
-                                  color:
-                                      const Color(0xFFD97706).withOpacity(0.2),
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Profile for ${profile?.userCode ?? ""}",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFFD97706),
-                                ),
-                              ),
-                            ),
-                          ),
-                        Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (infoFields.isNotEmpty) ...[
-                                _buildSectionTitle("Personal Information"),
-                                const SizedBox(height: 24),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        children: infoFields
-                                            .sublist(0, midPoint)
-                                            .map((field) => Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 12),
-                                                  child: field,
-                                                ))
-                                            .toList(),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 24),
-                                    Expanded(
-                                      child: Column(
-                                        children: infoFields
-                                            .sublist(midPoint)
-                                            .map((field) => Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 12),
-                                                  child: field,
-                                                ))
-                                            .toList(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-
-                              if (_hasData(profile?.status)) ...[
-                                const SizedBox(height: 24),
-                                _buildInfoCard(
-                                  Icons.verified_user_outlined,
-                                  "Current Status",
-                                  profile?.status ?? "",
-                                ),
-                              ],
-
-                              // Only show documents section if any document exists
-                              if (_hasData(profile?.selfiePath) ||
-                                  _hasData(profile?.frontIdPath) ||
-                                  _hasData(profile?.backIdPath)) ...[
-                                const SizedBox(height: 32),
-                                _buildSectionTitle("Verification Documents"),
-                                const SizedBox(height: 24),
-                                Row(
-                                  children: [
-                                    if (_hasData(profile?.selfiePath))
-                                      Expanded(
-                                        child: _buildDocumentCard(
-                                          (profile?.selfiePath ?? "")
-                                              .includeBaseUrl(),
-                                          "Profile Picture",
-                                        ),
-                                      ),
-                                    if (_hasData(profile?.frontIdPath)) ...[
-                                      const SizedBox(width: 16),
-                                      Expanded(
-                                        child: _buildDocumentCard(
-                                          (profile?.frontIdPath ?? "")
-                                              .includeBaseUrl(),
-                                          "ID Card Front",
-                                        ),
-                                      ),
-                                    ],
-                                    if (_hasData(profile?.backIdPath)) ...[
-                                      const SizedBox(width: 16),
-                                      Expanded(
-                                        child: _buildDocumentCard(
-                                          (profile?.backIdPath ?? "")
-                                              .includeBaseUrl(),
-                                          "ID Card Back",
-                                        ),
-                                      ),
-                                    ],
-                                  ],
-                                ),
-                              ],
-
-                              const SizedBox(height: 32),
-                              _buildStatusUpdateSection(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Obx(() {
+            if (controller.profileData.value == null) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Color(0xFF3B82F6),
                 ),
               );
-            }),
-          ),
+            }
+
+            var profile = controller.profileData.value;
+            final infoFields = _buildDynamicInfoFields(profile);
+            final midPoint = (infoFields.length / 2).ceil();
+
+            return Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    spreadRadius: 2,
+                    blurRadius: 20,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (_hasData(profile?.userCode))
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFEF3C7),
+                            border: Border(
+                              bottom: BorderSide(
+                                color:
+                                const Color(0xFFD97706).withOpacity(0.2),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Center(
+                            child: SelectableText(
+                              "Profile for ${profile?.userCode ?? ""}",
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFFD97706),
+                              ),
+                              toolbarOptions: const ToolbarOptions(
+                                copy: true, // Enable the copy option
+                                selectAll: true, // Enable the select-all option
+                              ),
+                              showCursor: true, // Optional: Shows a cursor when text is selected
+                              cursorColor: Colors.orange, // Optional: Set the cursor color
+                              cursorWidth: 2.0, // Optional: Adjust cursor width
+                            ),
+                          ),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (infoFields.isNotEmpty) ...[
+                              _buildHeaderSectionTitle("Personal Information"),
+                              const SizedBox(height: 24),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: infoFields
+                                          .sublist(0, midPoint)
+                                          .map((field) => Padding(
+                                        padding:
+                                        const EdgeInsets.only(
+                                            bottom: 12),
+                                        child: field,
+                                      ))
+                                          .toList(),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 24),
+                                  Expanded(
+                                    child: Column(
+                                      children: infoFields
+                                          .sublist(midPoint)
+                                          .map((field) => Padding(
+                                        padding:
+                                        const EdgeInsets.only(
+                                            bottom: 12),
+                                        child: field,
+                                      ))
+                                          .toList(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+
+                            if (_hasData(profile?.status)) ...[
+                              const SizedBox(height: 24),
+                              _buildInfoCard(
+                                Icons.verified_user_outlined,
+                                "Current Status",
+                                profile?.status ?? "",
+                              ),
+                            ],
+
+                            // Only show documents section if any document exists
+                            if (_hasData(profile?.selfiePath) ||
+                                _hasData(profile?.frontIdPath) ||
+                                _hasData(profile?.backIdPath)) ...[
+                              const SizedBox(height: 32),
+                              _buildVerificationSectionTitle("Verification Documents"),
+                              const SizedBox(height: 24),
+                              Row(
+                                children: [
+                                  if (_hasData(profile?.selfiePath))
+                                    Expanded(
+                                      child: _buildDocumentCard(
+                                        (profile?.selfiePath ?? "")
+                                            .includeBaseUrl(),
+                                        "Profile Picture",
+                                      ),
+                                    ),
+                                  if (_hasData(profile?.frontIdPath)) ...[
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: _buildDocumentCard(
+                                        (profile?.frontIdPath ?? "")
+                                            .includeBaseUrl(),
+                                        "ID Card Front",
+                                      ),
+                                    ),
+                                  ],
+                                  if (_hasData(profile?.backIdPath)) ...[
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: _buildDocumentCard(
+                                        (profile?.backIdPath ?? "")
+                                            .includeBaseUrl(),
+                                        "ID Card Back",
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
         ),
       ),
     );
@@ -258,7 +274,82 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title) {
+  Widget _buildHeaderSectionTitle(String title) {
+    return Row(
+      children: [
+        Text(
+          title,
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xFF1E293B),
+          ),
+        ),
+        Spacer(),
+        Container(
+          width: 200,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF8FAFC),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: const Color(0xFFE2E8F0),
+              width: 1,
+            ),
+          ),
+          child: Obx(() => DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: controller.selectedStatus.value,
+              isExpanded: true,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              borderRadius: BorderRadius.circular(12),
+              items: statusOptions.map((String status) {
+                return DropdownMenuItem<String>(
+                  value: status,
+                  child: Text(
+                    status,
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF1E293B),
+                    ),
+                  ),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  controller.onStatusChanged(newValue);
+                  print('Status changed to: $newValue'); // Debug print
+                }
+              },
+            ),
+          )),
+        ),
+        const SizedBox(width: 12),
+        ElevatedButton(
+          onPressed: () {
+            controller.updateStatus();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF3B82F6),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 0,
+          ),
+          child: Text(
+            'Update Status',
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  Widget _buildVerificationSectionTitle(String title) {
     return Text(
       title,
       style: GoogleFonts.poppins(
@@ -368,66 +459,7 @@ class ProfileDetailsInfoScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
-          width: 200,
-          decoration: BoxDecoration(
-            color: const Color(0xFFF8FAFC),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: const Color(0xFFE2E8F0),
-              width: 1,
-            ),
-          ),
-          child: Obx(() => DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: controller.selectedStatus.value,
-                  isExpanded: true,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  borderRadius: BorderRadius.circular(12),
-                  items: statusOptions.map((String status) {
-                    return DropdownMenuItem<String>(
-                      value: status,
-                      child: Text(
-                        status,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF1E293B),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      controller.onStatusChanged(newValue);
-                      print('Status changed to: $newValue'); // Debug print
-                    }
-                  },
-                ),
-              )),
-        ),
-        const SizedBox(width: 12),
-        ElevatedButton(
-          onPressed: () {
-            controller.updateStatus();
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF3B82F6),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            elevation: 0,
-          ),
-          child: Text(
-            'Update Status',
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          ),
-        ),
+
       ],
     );
   }
