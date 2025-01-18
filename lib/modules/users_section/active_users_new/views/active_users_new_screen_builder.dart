@@ -49,7 +49,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
 
   @override
   PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Active Users'));
+    return AppBar(title: const Text('Active Users'));
   }
 
   @override
@@ -70,7 +70,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
               // Header
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
+                decoration: const  BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
                       const Color.fromARGB(255, 28, 170, 61),
@@ -97,7 +97,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                     Obx(
                       () => Text(
                         'Total Users: ${controller.totalItems}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'newyork',
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -134,11 +134,11 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                                     value: size,
                                     child: Text(
                                       size.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 13, // Adjust the font size
                                         fontWeight: FontWeight
                                             .bold, // Change font weight (e.g., bold)
-                                        color: const Color.fromARGB(
+                                        color: Color.fromARGB(
                                             143, 0, 0, 0), // Set text color
                                         fontFamily:
                                             'newyork', // Specify a custom font family if needed

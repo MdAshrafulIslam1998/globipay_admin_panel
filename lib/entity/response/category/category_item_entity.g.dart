@@ -12,6 +12,8 @@ CategoryItemEntity _$CategoryItemEntityFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String?,
       image: json['image'] as String?,
       bgcolor: json['bgcolor'] as String?,
+      message: json['message'] as String?,
+      messageStatus: json['messageStatus'] as bool?,
     );
 
 Map<String, dynamic> _$CategoryItemEntityToJson(CategoryItemEntity instance) =>
@@ -20,4 +22,6 @@ Map<String, dynamic> _$CategoryItemEntityToJson(CategoryItemEntity instance) =>
       'name': instance.name,
       'image': instance.image,
       'bgcolor': instance.bgcolor,
+      'message': instance.message,
+      'messageStatus': instance.messageStatus,
     };

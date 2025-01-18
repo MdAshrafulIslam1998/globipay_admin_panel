@@ -193,7 +193,10 @@ class _CategoryScreenBuilderState extends BaseViewState<
       columnWidths: const {
         0: FixedColumnWidth(80), // Logo column
         1: FlexColumnWidth(1), // Name column
-        2: FixedColumnWidth(80), // Delete column
+        2: FlexColumnWidth(1), // Name column
+        3: FixedColumnWidth(80), // Name column
+        4: FixedColumnWidth(80), // Name column
+        5: FixedColumnWidth(80), // Delete column
       },
       border: TableBorder.all(
         color: Colors.grey.shade300,
@@ -207,6 +210,9 @@ class _CategoryScreenBuilderState extends BaseViewState<
           children: [
             _buildTableHeader('Brand Logo'),
             _buildTableHeader('Brand Name'),
+            _buildTableHeader('Opening Message'),
+            _buildTableHeader('Message Status'),
+            _buildTableHeader('Edit'),
             _buildTableHeader('Delete'),
           ],
         ),
@@ -229,7 +235,30 @@ class _CategoryScreenBuilderState extends BaseViewState<
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(category.name ?? ''),
+                        child: Text(
+                            category.name ?? '',
+                            textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Text(category.message ?? 'This is a opening  message',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Text((category.messageStatus ?? false ) ? 'Running' : 'Inactive',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.green),
+                        onPressed: () =>
+                            controller.editCategory(category),
                       ),
                     ),
                     TableCell(

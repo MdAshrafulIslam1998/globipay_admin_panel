@@ -15,6 +15,7 @@ import 'package:globipay_admin_panel/entity/request/promotional/add_promotional_
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/dashboard/dashboard_transaction_balance_entity.dart';
@@ -260,5 +261,10 @@ class AppRepositoryImpl extends AppRepository {
   @override
   Future<List<RecentTransactionResponseEntity>> requestForRecentTransactionHistory() {
     return remoteDataSource.requestForRecentTransactionHistory();
+  }
+
+  @override
+  Future requestToUpdateCategory(CategoryItemEntity req) {
+    return remoteDataSource.requestToUpdateCategory(req);
   }
 }

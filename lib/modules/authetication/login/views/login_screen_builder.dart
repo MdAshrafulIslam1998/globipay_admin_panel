@@ -166,13 +166,24 @@ class _LoginScreenBuilderState
         ),
     );
   }
+  late Timer _timer;
 
-  update(){
-    Timer.periodic(Duration(milliseconds: 16), (timer){
-      setState(() {
-      });
+  update() {
+    _timer = Timer.periodic(Duration(milliseconds: 16), (timer) {
+      if (mounted) {
+        setState(() {});
+      } else {
+        timer.cancel();
+      }
     });
   }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
+  }
+
 }
 
 

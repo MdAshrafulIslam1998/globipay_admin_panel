@@ -16,7 +16,6 @@ import 'package:globipay_admin_panel/modules/media_section/miscellaneous/views/m
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/add_notifications/add_notification_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/add_promotional_banner_view.dart';
 import 'package:globipay_admin_panel/modules/splash/splash_screen.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users/views/active_users_screen.dart';
 import 'package:globipay_admin_panel/modules/amount_section/edit_coin/views/edit_coin_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_profile/views/pending_profile_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/notification_list/views/notification_setter_screen.dart';
@@ -58,11 +57,7 @@ abstract class AppRoutesList {
             name: RoutePath.dashboard,
             builder: (context, state) => DashboardScreen(),
           ),
-          GoRoute(
-            path: RoutePath.activeUsers,
-            name: RoutePath.activeUsers,
-            builder: (context, state) => ActiveUsersScreen(),
-          ),
+
           GoRoute(
             path: RoutePath.editCoin,
             name: RoutePath.editCoin,

@@ -11,6 +11,7 @@ import 'package:globipay_admin_panel/entity/request/notification/create_notifica
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
 import 'package:globipay_admin_panel/entity/request/staff/add_staff_request_entity.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/dashboard/dashboard_transaction_balance_entity.dart';
 import 'package:globipay_admin_panel/entity/response/dashboard/recent_transaction_response_entity.dart';
@@ -651,6 +652,20 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => (response.data as List).map((e) => RecentTransactionResponseEntity.fromJson(e)).toList());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future requestToUpdateCategory(CategoryItemEntity req) {
+    var endpoint = '$BASE_URL/${AppApi.updateCategory}/${req.id}';
+    var dioCall = dioClientWithAuth.put(
+      endpoint,
+      data: req.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
     } catch (e) {
       rethrow;
     }

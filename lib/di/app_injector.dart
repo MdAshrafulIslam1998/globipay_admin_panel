@@ -20,7 +20,6 @@ import 'package:globipay_admin_panel/modules/media_section/miscellaneous/add_mis
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/controller/miscellaneous_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/add_notifications/controller/add_notification_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promotional_banner_controller.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users/controller/active_users_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/base_panel/controller/base_panel_controller.dart';
 import 'package:globipay_admin_panel/modules/dashboard_section/dashboard/controller/dashboard_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_controller.dart';
@@ -72,7 +71,6 @@ abstract class AppInjector extends Injector {
   @Register.factory(LoginController)
   @Register.factory(DashboardController)
   @Register.factory(BasePanelController)
-  @Register.factory(ActiveUsersController)
   @Register.factory(StaffSectionController)
   @Register.factory(EditLevelController)
   @Register.factory(AddLevelController)

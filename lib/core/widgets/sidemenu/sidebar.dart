@@ -18,8 +18,10 @@ import 'menu_tile.dart';
 
 class Sidebar extends StatelessWidget {
 
+  late BuildContext cx;
   @override
   Widget build(BuildContext context) {
+    cx = context;
 
     return Drawer(
       // width: Responsive.isMobile(context) ? double.infinity : null,
@@ -361,7 +363,7 @@ class Sidebar extends StatelessWidget {
   void navigate(String routePath){
     if(AppConstants.currentPath != routePath){
       AppConstants.currentPath = routePath;
-      AppRoutes.pushNamed(routePath);
+      cx.go(routePath);
     }
   }
 

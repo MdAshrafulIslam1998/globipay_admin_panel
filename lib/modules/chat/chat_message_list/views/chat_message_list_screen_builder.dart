@@ -309,20 +309,14 @@ class _ChatMessageListScreenBuilderState
         AppSpaces.spaceBetweenChild,
         Expanded(
           child: Obx(
-                () => ListView.builder(
-              controller: _scrollController,
-              physics: const BouncingScrollPhysics(),
-              itemCount: controller.chatList.value.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final chat = controller.chatList[index];
-                return controller.chatList.value.length == 0
+                () =>
+                controller.chatList.value.length == 0
                     ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.search_off,
+                        Icons.messenger_outline_rounded,
                         size: 48,
                         color: Colors.grey.shade400,
                       ),
@@ -336,7 +330,15 @@ class _ChatMessageListScreenBuilderState
                       ),
                     ],
                   ),
-                ) : _buildAnimatedChatItem(chat, index);
+                ) :
+                ListView.builder(
+              controller: _scrollController,
+              physics: const BouncingScrollPhysics(),
+              itemCount: controller.chatList.value.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                final chat = controller.chatList[index];
+                return _buildAnimatedChatItem(chat, index);
 
               },
             ),
@@ -382,26 +384,28 @@ class _ChatMessageListScreenBuilderState
             ),
           ),
           const Spacer(),
-          //_buildUnreadBadge(),
+          _buildRightButtons(),
         ],
       ),
     );
   }
 
-  Widget _buildUnreadBadge() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        '${controller.chatList.where((chat) => chat.status == 'new').length} new',
-        style: TextStyle(
-          color: Theme.of(context).primaryColor,
-          fontWeight: FontWeight.bold,
+  Widget _buildRightButtons() {
+    return Row(
+      children: [
+        IconButton.outlined(
+          hoverColor:Colors.blue,
+          splashColor: Colors.orange[100],
+
+          icon: const Icon(
+              Icons.refresh, color: Colors.white,
+          ),
+          onPressed: () {
+            controller.fetchCategories();
+          },
+
         ),
-      ),
+      ],
     );
   }
 
@@ -480,6 +484,33 @@ class ChatListItem extends StatelessWidget {
                           _buildUserInfo(),
                           const SizedBox(height: 8),
                           _buildMessagePreview(),
+                          // Show Category Name as like chip design
+
+                          Visibility(
+                            visible: chat.categoryName !=null && chat.categoryName!.isNotEmpty,
+                            child:
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            margin: (chat.categoryName !=null && chat.categoryName!.isNotEmpty)? const EdgeInsets.only(top: 8) : null,
+                            decoration: BoxDecoration(
+                              //color: Colors.blue.shade100,
+                              border: Border.all(
+                                color: Theme.of(context).primaryColor.withOpacity(0.8),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: AppText(
+                              chat.categoryName ?? '',
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                          ),
+
                         ],
                       ),
                     ),

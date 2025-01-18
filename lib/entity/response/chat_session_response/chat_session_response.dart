@@ -24,22 +24,38 @@ class ChatSessionResponse {
   bool? is_last_message_seen;
   String? message_type;
   String? status;
+  String? categoryName;
+  String? categoryImage;
 
 
 
-  ChatSessionResponse({
-    this.session_id,
-    this.created_at,
-    this.category,
-    this.user_name,
-    this.avatar_url,
-    this.attachment,
-    this.last_message,
-    this.isTyping,
-    this.customer_id,
-    this.status,
+  ChatSessionResponse(
 
+  {
+
+  this
+
+      .
+
+  session_id,
+  this.created_at,
+  this.category,
+  this.user_name,
+  this.avatar_url,
+  this.attachment,
+  this.last_message,
+  this.isTyping,
+  this.customer_id,
+  this.last_message_timestamp,
+  this.is_receiver_typing,
+  this.is_sender_typing,
+  this.is_last_message_seen,
+  this.message_type,
+  this.status,
+  this.categoryName,
+  this.categoryImage,
   });
+
 
   factory ChatSessionResponse.fromJson(Map<String, dynamic> json) => _$ChatSessionResponseFromJson(json);
 

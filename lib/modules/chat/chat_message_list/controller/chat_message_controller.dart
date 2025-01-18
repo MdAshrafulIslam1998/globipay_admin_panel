@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_controller.dart';
 import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
+import 'package:globipay_admin_panel/core/constants/enum/user_type.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
@@ -16,6 +17,8 @@ import 'package:globipay_admin_panel/core/widgets/button/app_button.dart';
 import 'package:globipay_admin_panel/core/widgets/button/app_outline_button.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/data/services/supabase_service.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
+import 'package:globipay_admin_panel/entity/response/category/category_response.dart';
 import 'package:globipay_admin_panel/entity/response/chat_item/chat_item_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/chat_session_response/chat_session_response.dart';
 import 'package:globipay_admin_panel/modules/chat/controller/chat_shared_controller.dart';
@@ -40,11 +43,13 @@ class ChatMessageController extends BaseController {
   var userName = "".obs;
   final supabase = SupabaseService().client;
 
+  List<CategoryItemEntity> categories = List<CategoryItemEntity>.empty(growable: true);
+
   @override
-  onInit() {
+  onInit() async{
     super.onInit();
+    fetchCategories();
     _listenForChatSessionChanges();
-    requestForMessageList();
     _getUserInfo();
   }
 
@@ -76,7 +81,7 @@ class ChatMessageController extends BaseController {
 
       // Since the response is a list, check if it is empty
       if (response == null || (response as List).isEmpty) {
-        throw Exception('Failed to fetch chat sessions: No data found.');
+        chatList.value = [];
       }
 
       // Debugging log to see raw data
@@ -84,7 +89,7 @@ class ChatMessageController extends BaseController {
 
       // Map the result to your chat session entities
       final chatSessions = (response as List)
-          .map((item) => ChatSessionResponse.fromJson(item))
+          .map((item) => getModifiedChatSessionResponse(item))
           .toList();
 
       // Update your chat list with the fetched chat sessions
@@ -95,11 +100,33 @@ class ChatMessageController extends BaseController {
     }
   }
 
+  ChatSessionResponse getModifiedChatSessionResponse(session) {
+    ChatSessionResponse chatSessionResponse =
+        ChatSessionResponse.fromJson(session);
+    CategoryItemEntity? category =
+        getCategoryById(chatSessionResponse.category ?? "");
+    chatSessionResponse.categoryName = category?.name ?? "";
+    chatSessionResponse.categoryImage = category?.image ?? "";
+    return chatSessionResponse;
+  }
+
   void onMessageItemClicked(ChatSessionResponse message) async {
     appPrint("Session ID  : ${message.session_id}");
 
     if (message.status == "pending") {
-      showPendingDialog(message);
+      if(categories.isEmpty){
+        await fetchCategories();
+      }
+
+      CategoryItemEntity? category = getCategoryById(message.category ?? "");
+
+      if (category == null && message.category != "-1") {
+        appPrint('Category not found for chat session: ${message.category}');
+        showSnackBar(message: 'Category not found for chat session');
+        return;
+      }
+
+      showPendingDialog(message: message, category: category ?? CategoryItemEntity());
       return;
     }
 
@@ -107,6 +134,15 @@ class ChatMessageController extends BaseController {
     sharedController.setCustomerID(message.customer_id);
     sharedController.setChatSessionResponse(message);
     goToChatScreen();
+  }
+
+  CategoryItemEntity? getCategoryById(String id) {
+    try {
+      return categories.firstWhereOrNull((element) => element.id.toString() == id);
+    } catch (e) {
+      appPrint('Error getting category by id: $e');
+      return null;
+    }
   }
 
   void onAudioCall() {
@@ -119,18 +155,6 @@ class ChatMessageController extends BaseController {
 
   // Network call
 
-  String getRandomUrl() {
-    var temp = [
-      "https://img.icons8.com/?size=512&id=Iirw95F6Nl9c&format=png",
-      "https://content.builtformars.com/uploads/images/Cashapp-company-logo.jpg",
-      "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png",
-      "https://static.vecteezy.com/system/resources/previews/013/948/549/non_2x/google-logo-on-transparent-white-background-free-vector.jpg",
-      "https://cdn.iconscout.com/icon/free/png-512/free-apple-pay-logo-icon-download-in-svg-png-gif-file-formats--payment-method-social-media-pack-design-development-icons-4069416.png?f=webp&w=256"
-    ];
-    var random = new Random();
-    var randomIndex = random.nextInt(temp.length);
-    return temp[randomIndex];
-  }
 
   void requestForMessageList() {
     fetchAdminChatSessions();
@@ -194,7 +218,10 @@ class ChatMessageController extends BaseController {
     chatList.refresh();
   }
 
-  void showPendingDialog(ChatSessionResponse message) {
+  void showPendingDialog({
+    required ChatSessionResponse message,
+    required CategoryItemEntity category,
+  }) {
     showDialog(
       context: AppNavigatorService.navigatorKey.currentContext!,
       barrierDismissible: false,
@@ -283,7 +310,10 @@ class ChatMessageController extends BaseController {
                       Expanded(
                         child: AppButton(
                           onPress: () {
-                            chatAccept(message);
+                            chatAccept(
+                              message: message,
+                              category: category,
+                            );
                           },
                           text: 'Accept',
                         ),
@@ -300,24 +330,76 @@ class ChatMessageController extends BaseController {
     );
   }
 
-  void chatAccept(ChatSessionResponse message) {
-    updateSupabaseChatSession(message);
+  void chatAccept({
+      required ChatSessionResponse message,
+      required CategoryItemEntity category,}
+      ) {
+    updateSupabaseChatSession(
+      message: message,
+      category: category,
+    );
     //goToChatScreen();
   }
-  updateSupabaseChatSession(ChatSessionResponse message) async{
 
+  updateSupabaseChatSession({
+    required ChatSessionResponse message,
+    required CategoryItemEntity category,
+  }) async {
     appPrint("Session ID ::::::::::::>>>> : ${sharedController.chatSessionId}");
-// Update the chat session status to closed
     try {
       await supabase.from('chat_sessions').update({
         'status': 'open',
         'created_at': DateTime.now().toIso8601String(),
       }).eq('session_id', message.session_id).execute();
+
+      if (message.category != "-1") {
+        // Actual Implementation
+        if (category.messageStatus ?? false) {
+          sendOpeningTextMessage(category.message ?? "Hi, how can i help you ?",
+              message.session_id ?? "");
+        }
+      }
     } catch (e) {
-      print('Error closing chat session: $e');
+      appPrint('Error closing chat session: $e');
     }
     AppRoutes.pop();
     fetchAdminChatSessions();
+  }
+
+  Future<void> sendOpeningTextMessage(String text,String chatSessionId) async {
+    final userID = await tokenRepository.getStuffId();
+
+    final response = await supabase.from('messages').insert({
+      'session_id': chatSessionId,
+      'sender_id': userID,
+      'message': text,
+      'message_type':  'text', // Specify message type
+      'status': 'sent', // Initial status
+      'created_at': DateTime.now().toIso8601String(),
+      'updated_at': DateTime.now().toIso8601String(),
+      'message_from': UserType.Admin.name,
+      'delivery_status': {
+        'sent': DateTime.now().toIso8601String(),
+      } // Corrected structure
+    }).select('id').execute(); // Add .select('id') to fetch the inserted id
+
+  }
+
+  PaginationRequest generatePaginationRequestForCategories() {
+    return PaginationRequest(limit: 200, page: 1);
+  }
+
+  Future<void> fetchCategories() async {
+    categories.clear();
+    final repo = _appRepository.requestForCategories(generatePaginationRequestForCategories());
+    callService(repo, onSuccess: (CategoryResponseEntity response) {
+      parserCategories(response);
+    });
+  }
+
+  void parserCategories(CategoryResponseEntity response) {
+    categories = response.categories ?? [];
+    requestForMessageList();
 
   }
 }

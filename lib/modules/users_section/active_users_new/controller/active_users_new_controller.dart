@@ -85,11 +85,14 @@ class ActiveUsersNewController extends BaseController {
       },
     );
   }
-
+/*
   void onUserMessageClicked(UserResponseItemEntity user) async{
     final userId = await tokenRepository.getStuffId();
 
-    appPrint("User ID: $userId");
+    appPrint("In Logged User ID: $userId");
+    appPrint("Customer ID: ${user.userId}");
+
+    SupabaseService().client.from('chat_sessions')
 
     final response = await SupabaseService().client.rpc('start_chat_session', params: {
       '_customer_id': user.userId,
@@ -105,11 +108,58 @@ class ActiveUsersNewController extends BaseController {
       sharedController.setCustomerID(user.userId);
 
       AppRoutes.pushNamed(RoutePath.chat);
-
     }
+  }*/
+  void onUserMessageClicked(UserResponseItemEntity user) async {
 
+    // Query to check if a session exists
+    final response = await SupabaseService()
+        .client
+        .from('chat_sessions')
+        .select('session_id, status')
+        .eq('customer_id', user.userId)
+        .eq('category', '-1')
+        .eq('status', 'open') // Check only for open sessions
+        .maybeSingle(); // To get a single session or null if none exists
 
+    if (response != null) {
+      // Session exists, retrieve session_id and status
+      final sessionId = response['session_id'];
+      final status = response['status'];
+      appPrint("Existing session found: sessionId=$sessionId, status=$status");
+      final userID = await tokenRepository.getStuffId();
+      sharedController.setCurrentUserId(userID);
+
+      sharedController.setChatSessionId(sessionId);
+      sharedController.setCustomerID(user.userId);
+
+      AppRoutes.pushNamed(RoutePath.chat);
+      // Perform any actions with sessionId and status here
+    } else {
+      // No session exists, trigger new session creation
+      appPrint("No session found, creating a new one.");
+      newChatSession(user); // Trigger the newChatSession function
+    }
   }
+
+  void newChatSession(UserResponseItemEntity user)async{
+    final response = await SupabaseService().client.rpc('start_chat_session', params: {
+      '_customer_id': user.userId,
+      '_category': "-1",
+    }).execute();
+
+    if (response.data != null) {
+      final userID = await tokenRepository.getStuffId();
+      sharedController.setCurrentUserId(userID);
+      String sessionId = response.data;
+
+      sharedController.setChatSessionId(sessionId);
+      sharedController.setCustomerID(user.userId);
+
+      AppRoutes.pushNamed(RoutePath.chat);
+    }
+  }
+
 
   void requestToDeleteUser(UserResponseItemEntity user) async {
     final repo = _repository.requestToUpdateUserStatus(

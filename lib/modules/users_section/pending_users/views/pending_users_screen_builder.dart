@@ -163,7 +163,7 @@ class _PendingUsersScreenBuilderState extends BaseViewState<
                       onActionTap: (user, action) {
                         switch (action) {
                           case 'document':
-                            AppRoutes.pushNamed(RoutePath.pendingProfile);
+                            AppRoutes.pushNamed(RoutePath.pendingProfile,extra: user);
                             break;
                          
                         }
@@ -237,7 +237,7 @@ class _PendingUsersScreenBuilderState extends BaseViewState<
       'email': {'title': 'Email', 'paddingPercent': 25},
       'date': {'title': 'Date', 'paddingPercent': 10},
       'status': {'title': 'Status', 'paddingPercent': 5},
-      'document': {'title': 'document', 'paddingPercent': 5},
+      'document': {'title': 'Document', 'paddingPercent': 5},
     };
 
     return visibleColumns.map((colName) {
