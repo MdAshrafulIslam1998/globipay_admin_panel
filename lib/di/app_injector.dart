@@ -35,7 +35,6 @@ import 'package:globipay_admin_panel/modules/users_section/blocked_users/control
 import 'package:globipay_admin_panel/modules/users_section/pending_users/controller/pending_users_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/notification_list/controller/notification_list_controller.dart';
-import 'package:globipay_admin_panel/modules/users_section/pending_profile/controller/pending_profile_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/edit_coin/controller/edit_coin_controller.dart';
 import '../core/di/injector.dart';
 
@@ -84,7 +83,6 @@ abstract class AppInjector extends Injector {
   @Register.factory(PendingUsersController)
   @Register.factory(ActiveUsersNewController)
   @Register.factory(NotificationsController)
-  @Register.factory(PendingProfileController)
   @Register.factory(EditCoinController)
 
   //Singleton

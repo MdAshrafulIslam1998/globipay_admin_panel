@@ -72,10 +72,10 @@ class UserAmountController extends BaseController {
   }
 
   void onEditCoinClicked(TransactionItemEntity transaction) {
-    AppRoutes.pushNamed(RoutePath.pendingProfile, extra: transaction);
+    AppRoutes.pushNamed(RoutePath.userProfile, extra: transaction);
   }
 
   void onUserDetailsClicked(TransactionItemEntity transaction){
-    AppRoutes.pushNamed(RoutePath.pendingProfile, extra: transaction);
+    AppRoutes.pushNamed(RoutePath.userProfile, extra: transaction);
   }
 }

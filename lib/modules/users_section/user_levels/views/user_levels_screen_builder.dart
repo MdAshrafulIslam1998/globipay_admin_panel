@@ -189,7 +189,7 @@ class _UserLevelsScreenBuilderState
                       onActionTap: (user, action) {
                         switch (action) {
                           case 'details':
-                            AppRoutes.pushNamed(RoutePath.pendingProfile);
+                            AppRoutes.pushNamed(RoutePath.userProfile);
                             break;
 
                         }

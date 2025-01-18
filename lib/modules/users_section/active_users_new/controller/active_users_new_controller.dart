@@ -74,7 +74,7 @@ class ActiveUsersNewController extends BaseController {
   }
 
   void onUserDetailsClicked(UserResponseItemEntity user) {
-    AppRoutes.pushNamed(RoutePath.pendingProfile,extra: user);
+    AppRoutes.pushNamed(RoutePath.userProfile,extra: user);
   }
 
   void onUserDeleteClicked(UserResponseItemEntity user) {

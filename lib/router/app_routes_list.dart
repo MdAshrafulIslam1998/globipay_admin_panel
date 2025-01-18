@@ -17,7 +17,6 @@ import 'package:globipay_admin_panel/modules/media_section/notification_setter/a
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/add_promotional_banner_view.dart';
 import 'package:globipay_admin_panel/modules/splash/splash_screen.dart';
 import 'package:globipay_admin_panel/modules/amount_section/edit_coin/views/edit_coin_screen.dart';
-import 'package:globipay_admin_panel/modules/users_section/pending_profile/views/pending_profile_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/notification_list/views/notification_setter_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/views/active_users_new_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/views/pending_users_screen.dart';
@@ -30,6 +29,7 @@ import 'package:globipay_admin_panel/modules/media_section/about_us/views/about_
 import 'package:globipay_admin_panel/modules/users_section/add_level/views/add_level_screen.dart';
 import 'package:globipay_admin_panel/modules/users_section/edit_level/views/edit_level_screen.dart';
 import 'package:globipay_admin_panel/modules/staff_section/views/staff_section_screen.dart';
+import 'package:globipay_admin_panel/modules/users_section/user_profile/views/user_profile_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../modules/chat/call/video_call/video_call_screen.dart';
 import 'route_path.dart';
@@ -64,9 +64,9 @@ abstract class AppRoutesList {
             builder: (context, state) => EditCoinScreen(),
           ),
           GoRoute(
-            path: RoutePath.pendingProfile,
-            name: RoutePath.pendingProfile,
-            builder: (context, state) => PendingProfileScreen(user: state.extra as UserResponseItemEntity?),
+            path: RoutePath.userProfile,
+            name: RoutePath.userProfile,
+            builder: (context, state) => UserProfileScreen(user: state.extra as UserResponseItemEntity?),
           ),
           GoRoute(
             path: RoutePath.notificationSetter,
