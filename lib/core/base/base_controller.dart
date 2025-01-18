@@ -25,6 +25,8 @@ import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/response/message/message.dart';
+import 'package:globipay_admin_panel/router/app_routes.dart';
+import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:globipay_admin_panel/utils/views/chat_notifications_snack_bar.dart';
 import '../network/exceptions/service_unavailable_exception.dart';
 import '../network/exceptions/unauthorize_exception.dart';
@@ -134,7 +136,15 @@ class BaseController extends GetxController{
       if (isShowLoader) hideLoader();
 
       _exception = exception;
-      // TODO : manage unauthorized exception
+      if (currentPath != RoutePath.login) {
+        showCustomDialog("Your session has expired. Please login again.",
+            positiveButtonAction: () =>
+                AppRoutes.pushAndPopAll(RoutePath.login),
+            positiveButtonText: "Login");
+      } else {
+        showErrorMessage(exception.message,
+            isToast: isShowToast, willShowError: willShowError);
+      }
 
     } on TimeoutException catch (exception) {
       if (isShowLoader) {

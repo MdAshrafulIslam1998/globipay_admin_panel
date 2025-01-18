@@ -73,6 +73,8 @@ Exception _parseDioErrorResponse(DioError dioError) {
       return BadRequestException(serverMessage ?? "");
     case HttpStatus.unauthorized:
       return UnauthorizedException(serverMessage ?? "");
+    case HttpStatus.forbidden:
+      return UnauthorizedException(serverMessage ?? "");
     case HttpStatus.conflict:
       return ConflictException(serverMessage ?? "");
     default:
