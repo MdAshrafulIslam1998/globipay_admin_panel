@@ -6,7 +6,7 @@ import 'dart:convert';
 
 part 'category_item_entity.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class CategoryItemEntity {
   int? id;
   String? name;

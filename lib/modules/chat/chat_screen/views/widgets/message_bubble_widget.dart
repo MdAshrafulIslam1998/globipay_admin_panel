@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:globipay_admin_panel/core/utils/app_utils.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ///iMessage's chat bubble type
 ///
@@ -104,11 +106,44 @@ class BubbleSpecialThree extends StatelessWidget {
                     children: [
                       Flexible(
                         child:
-                      Text(
-                        text,
-                        style: textStyle,
-                        textAlign: TextAlign.left,
-                      ),),
+                        SelectableText(
+                          text,
+                          style: textStyle,
+                          textAlign: TextAlign.left,
+                          showCursor: true, // Shows the cursor when interacting with the text
+                          cursorColor: Colors.orange, // Sets the cursor color
+                          cursorWidth: 2.0, // Adjusts the cursor width
+                          selectionControls: MaterialTextSelectionControls(
+                            // Overrides the Material text selection controls
+
+                          ),
+                          contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+                            return AdaptiveTextSelectionToolbar(
+                              anchors: editableTextState.contextMenuAnchors,
+                              children: [
+                                TextSelectionToolbarTextButton(
+                                  onPressed: () {
+                                    Clipboard.setData(
+                                      ClipboardData(text: editableTextState.textEditingValue.text),
+                                    );
+                                    Navigator.of(context).pop(); // Closes the context menu
+                                  },
+                                  padding: EdgeInsets.zero,
+                                  child: const Text('Copy'),
+                                ),
+                                TextSelectionToolbarTextButton(
+                                  onPressed: () {
+                                    editableTextState.selectAll(SelectionChangedCause.toolbar);
+                                  },
+                                  padding: EdgeInsets.zero,
+                                  child: const Text('Select All'),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+
+                      ),
                       const SizedBox(
                         width: 15,
                       ),
