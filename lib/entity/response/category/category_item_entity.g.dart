@@ -18,10 +18,10 @@ CategoryItemEntity _$CategoryItemEntityFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CategoryItemEntityToJson(CategoryItemEntity instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'image': instance.image,
-      'bgcolor': instance.bgcolor,
-      'message': instance.message,
-      'message_status': instance.message_status,
+      if (instance.id case final value?) 'id': value,
+      if (instance.name case final value?) 'name': value,
+      if (instance.image case final value?) 'image': value,
+      if (instance.bgcolor case final value?) 'bgcolor': value,
+      if (instance.message case final value?) 'message': value,
+      if (instance.message_status case final value?) 'message_status': value,
     };

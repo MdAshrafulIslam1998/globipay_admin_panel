@@ -292,7 +292,7 @@ class CreateCategoryController extends BaseController {
   updateCategoryOpeningMessage(String id ){
     int categoryId = int.parse(id);
     final req = updateCategory(categoryId);
-    final repo = _repository.requestToUpdateCategory(req);
+    /*final repo = _repository.requestToUpdateCategory(req);
     callService(repo, onSuccess: (response){
       showCustomDialog(
         "Category updated successfully",
@@ -301,7 +301,7 @@ class CreateCategoryController extends BaseController {
         },
         positiveButtonText: "Ok",
       );
-    });
+    });*/
 
 
 
