@@ -243,7 +243,7 @@ class _CategoryScreenBuilderState extends BaseViewState<
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text(category.message ?? 'This is a opening  message',
+                      child: Text(category.message ?? '',
                         textAlign: TextAlign.center,
                       ),
                     ),
