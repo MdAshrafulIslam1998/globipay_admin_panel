@@ -69,6 +69,7 @@ abstract class TableHeaderVisibility {
       'levelName',
       'date',
       'status',
+      'details',
       'message'
     ], //moderator
   };

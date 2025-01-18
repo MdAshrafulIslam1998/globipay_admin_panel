@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/entity/response/user_profile/user_profile_details_response.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_profile/profile_details_info_screen.dart';
@@ -102,7 +103,7 @@ class ProfileScreen extends BaseView<ProfileController> {
     );
   }
 
-  Widget _buildProfileHeader(ProfileData profile) {
+  Widget _buildProfileHeader(UserProfileData profile) {
     return Center(
       child: Column(
         children: [
@@ -114,14 +115,14 @@ class ProfileScreen extends BaseView<ProfileController> {
           ),
           SizedBox(height: 10),
           Text(
-            profile.fullName,
+            profile?.email??"",
             style: GoogleFonts.poppins(
               fontSize: 22,
               fontWeight: FontWeight.w600,
             ),
           ),
           Text(
-            profile.email,
+            profile?.email??"",
             style: GoogleFonts.poppins(
               color: Colors.grey,
             ),
@@ -131,7 +132,7 @@ class ProfileScreen extends BaseView<ProfileController> {
     );
   }
 
-  Widget _buildPersonalDetails(ProfileData profile) {
+  Widget _buildPersonalDetails(UserProfileData profile) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(
@@ -142,7 +143,7 @@ class ProfileScreen extends BaseView<ProfileController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDetailRow('Email', profile.email),
+            _buildDetailRow('Email', profile?.email??''),
             Divider(),
             // Add more personal details here
           ],
