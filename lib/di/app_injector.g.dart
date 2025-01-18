@@ -55,7 +55,6 @@ class _$AppInjector extends AppInjector {
           c.resolve<AppRepository>(), c.resolve<TokenRepository>()))
       ..registerFactory(
           (c) => NotificationsController(c.resolve<AppRepository>()))
-      ..registerFactory((c) => PendingProfileController())
       ..registerFactory((c) => EditCoinController())
       ..registerSingleton((c) => ChatSharedController())
       ..registerSingleton((c) => AppSecureStorage());

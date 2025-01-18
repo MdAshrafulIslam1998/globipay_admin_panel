@@ -48,4 +48,7 @@ abstract class AppApi {
   static const String totalTransactions = '$prefix/transactions/totals';
   static const String recentTransaction = '$prefix/transactions/recent';
   static const String updateCategory = '$prefix/categories';
+  static const String userProfileDetails = '$prefix/users/profileweb';
+  static const String updateUserStatus = '$prefix/user/update_columns';
+  static const String activityLogs = '$prefix/activity-logs';
 }

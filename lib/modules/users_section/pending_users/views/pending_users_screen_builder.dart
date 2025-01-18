@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_pager_delegate.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_source.dart';
-import 'package:globipay_admin_panel/modules/users_section/pending_profile/controller/pending_profile_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/controller/pending_users_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/table/pending_users_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/users_section/pending_users/table/pending_users_data_source.dart';
@@ -163,7 +160,7 @@ class _PendingUsersScreenBuilderState extends BaseViewState<
                       onActionTap: (user, action) {
                         switch (action) {
                           case 'document':
-                            AppRoutes.pushNamed(RoutePath.pendingProfile,extra: user);
+                            AppRoutes.pushNamed(RoutePath.userProfile,extra: user);
                             break;
                          
                         }

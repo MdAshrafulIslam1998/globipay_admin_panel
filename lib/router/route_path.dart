@@ -16,7 +16,7 @@ abstract class RoutePath {
   static const String pendingUsers = _RoutePath._pendingUsers;
   static const String activeUsersNew = _RoutePath._activeUsersNew;
   static const String notificationSetter = _RoutePath._notificationSetter;
-  static const String pendingProfile = _RoutePath._pendingProfile;
+  static const String userProfile = _RoutePath._userProfile;
   static const String editCoin = _RoutePath._editCoin;
   static const String login = _RoutePath._login;
   static const String audioCall = _RoutePath._audioCall;
@@ -53,7 +53,7 @@ class _RoutePath {
   static const String _pendingUsers = '/pendingUsers';
   static const String _activeUsersNew = '/activeUsersNew';
   static const String _notificationSetter = '/notificationSetter';
-  static const String _pendingProfile = '/pendingProfile';
+  static const String _userProfile = '/pendingProfile';
   static const String _editCoin = '/editCoin';
   static const String _login = '/login';
   static const String _audioCall = '/audioCall';

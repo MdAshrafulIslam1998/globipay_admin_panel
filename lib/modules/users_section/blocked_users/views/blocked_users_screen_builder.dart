@@ -160,7 +160,7 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
                       onActionTap: (user, action) {
                         switch (action) {
                           case 'document':
-                            AppRoutes.pushNamed(RoutePath.pendingProfile);
+                            AppRoutes.pushNamed(RoutePath.userProfile);
                             break;
                          
                         }
