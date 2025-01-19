@@ -17,7 +17,6 @@ import 'package:flutter_svg/svg.dart';
 import 'menu_tile.dart';
 
 class Sidebar extends StatelessWidget {
-
   late BuildContext cx;
   @override
   Widget build(BuildContext context) {
@@ -55,7 +54,7 @@ class Sidebar extends StatelessWidget {
                     MenuTile(
                       isActive: AppConstants.currentPath == RoutePath.dashboard,
                       title: "Dashboard",
-                     // activeIconSrc: "assets/icons/bulb_filled.svg",
+                      // activeIconSrc: "assets/icons/bulb_filled.svg",
                       activeIconSrc: "assets/icons/ash_home_filled.svg",
                       inactiveIconSrc: "assets/icons/ash_home_light.svg",
                       onPressed: () {
@@ -68,10 +67,16 @@ class Sidebar extends StatelessWidget {
                         dividerColor: Colors.transparent,
                       ),
                       child: ExpansionTile(
-                        leading: const Icon(
-                          Icons.person_2,
-                          color: AppColors.iconBlack,
+                        leading: SvgPicture.asset(
+                          'assets/icons/ash_usermain_filled.svg',
+                          height: 24,
+                          width: 24,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.iconBlack,
+                            BlendMode.srcIn,
+                          ),
                         ),
+
                         title: Text(
                           "Users",
                           style: TextStyle(
@@ -83,41 +88,52 @@ class Sidebar extends StatelessWidget {
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.activeUsersNew,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.activeUsersNew,
                             title: "Active Users",
-                            activeIconSrc: "assets/icons/ash_activeuser_filled.svg",
-                            inactiveIconSrc: "assets/icons/ash_activeuser_filled.svg",
+                            activeIconSrc:
+                                "assets/icons/ash_activeuser_filled.svg",
+                            inactiveIconSrc:
+                                "assets/icons/ash_activeuser_light.svg",
                             onPressed: () {
                               navigate(RoutePath.activeUsersNew);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.pendingUsers,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.pendingUsers,
                             title: "Pending Users",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc:
+                                "assets/icons/ash_pendinguser_filled.svg",
+                            inactiveIconSrc:
+                                "assets/icons/ash_pendinguser_light.svg",
                             onPressed: () {
                               navigate(RoutePath.pendingUsers);
                             },
                           ),
-
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.blockedUsers,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.blockedUsers,
                             title: "Inactive Users",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc:
+                                "assets/icons/ash_inactiveuser_filled.svg",
+                            inactiveIconSrc:
+                                "assets/icons/ash_inactiveuser_light.svg",
                             onPressed: () {
                               navigate(RoutePath.blockedUsers);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.userLevels,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.userLevels,
                             title: "User Levels",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc:
+                                "assets/icons/ash_userlevel_filled.svg",
+                            inactiveIconSrc:
+                                "assets/icons/ash_userlevel_light.svg",
                             onPressed: () {
                               navigate(RoutePath.userLevels);
                             },
@@ -132,32 +148,37 @@ class Sidebar extends StatelessWidget {
                         dividerColor: Colors.transparent,
                       ),
                       child: ExpansionTile(
-                        leading: const Icon(
-                          Icons.chat_bubble,
-                          color: AppColors.iconBlack,
+                        leading: SvgPicture.asset(
+                          'assets/icons/ash_chatmain_filled.svg',
+                          height: 24,
+                          width: 24,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.iconBlack,
+                            BlendMode.srcIn,
+                          ),
                         ),
                         title: Text(
                           "Chat",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color:
-                            Theme.of(context).textTheme.bodyMedium!.color,
+                                Theme.of(context).textTheme.bodyMedium!.color,
                           ),
                         ),
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.chatMessageList,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.chatMessageList,
                             title: "Chat List",
-                            leading: Icon(
-                              Icons.chat,
-                              color: AppColors.iconBlack,
-                            ),
+                            activeIconSrc:
+                                "assets/icons/ash_chatlist_filled.svg", // Add icons if needed
+                            inactiveIconSrc:
+                                "assets/icons/ash_chatlist_light.svg",
                             onPressed: () {
                               navigate(RoutePath.chatMessageList);
                             },
                           ),
-
                         ],
                       ),
                     ),
@@ -169,7 +190,7 @@ class Sidebar extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         leading: SvgPicture.asset(
-                          'assets/icons/bulb_filled.svg',
+                          'assets/icons/ash_amountmain_filled.svg',
                           height: 24,
                           width: 24,
                           colorFilter: const ColorFilter.mode(
@@ -188,30 +209,39 @@ class Sidebar extends StatelessWidget {
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.userAmount,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.userAmount,
                             title: "User Amount",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc:
+                                "assets/icons/ash_useramount_filled.svg",
+                            inactiveIconSrc:
+                                "assets/icons/ash_useramount_light.svg",
                             onPressed: () {
                               navigate(RoutePath.userAmount);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.transHistory,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.transHistory,
                             title: "Transaction History",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc:
+                                "assets/icons/ash_transaction_filled.svg",
+                            inactiveIconSrc:
+                                "assets/icons/ash_transaction_light.svg",
                             onPressed: () {
                               navigate(RoutePath.transHistory);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.createCategory,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.createCategory,
                             title: "Create Category",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc:
+                                "assets/icons/ash_addcategory_filled.svg",
+                            inactiveIconSrc:
+                                "assets/icons/ash_addcategory_light.svg",
                             onPressed: () {
                               navigate(RoutePath.createCategory);
                             },
@@ -225,7 +255,7 @@ class Sidebar extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         leading: SvgPicture.asset(
-                          'assets/icons/bulb_filled.svg',
+                          'assets/icons/ash_media_filled.svg',
                           height: 24,
                           width: 24,
                           colorFilter: const ColorFilter.mode(
@@ -244,31 +274,37 @@ class Sidebar extends StatelessWidget {
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive:
-                                AppConstants.currentPath == RoutePath.notificationSetter,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.notificationSetter,
                             title: "Notification Setter",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc:
+                                "assets/icons/ash_notification_filled.svg",
+                            inactiveIconSrc:
+                                "assets/icons/ash_notification_light.svg",
                             onPressed: () {
                               navigate(RoutePath.notificationSetter);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.promoBanner,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.promoBanner,
                             title: "Promotional Banner",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc: "assets/icons/ash_ad_filled.svg",
+                            inactiveIconSrc: "assets/icons/ash_ad_light.svg",
                             onPressed: () {
                               navigate(RoutePath.promoBanner);
                             },
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.messageTemplates,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.messageTemplates,
                             title: "Message Templates",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc:
+                                "assets/icons/ash_textadd_filled.svg",
+                            inactiveIconSrc:
+                                "assets/icons/ash_textadd_light.svg",
                             count: 6,
                             onPressed: () {
                               navigate(RoutePath.messageTemplates);
@@ -276,10 +312,11 @@ class Sidebar extends StatelessWidget {
                           ),
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.misc,
+                            isActive:
+                                AppConstants.currentPath == RoutePath.misc,
                             title: "Miscellaneous",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc: "assets/icons/ash_other_filled.svg",
+                            inactiveIconSrc: "assets/icons/ash_other_light.svg",
                             onPressed: () {
                               navigate(RoutePath.misc);
                             },
@@ -293,7 +330,7 @@ class Sidebar extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         leading: SvgPicture.asset(
-                          'assets/icons/bulb_filled.svg',
+                          'assets/icons/ash_admin_filled.svg',
                           height: 24,
                           width: 24,
                           colorFilter: const ColorFilter.mode(
@@ -312,10 +349,11 @@ class Sidebar extends StatelessWidget {
                         children: [
                           MenuTile(
                             isSubmenu: false,
-                            isActive: AppConstants.currentPath == RoutePath.staffSection,
+                            isActive: AppConstants.currentPath ==
+                                RoutePath.staffSection,
                             title: "Staff Section",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc: "assets/icons/ash_staff_filled.svg",
+                            inactiveIconSrc: "assets/icons/ash_staff_light.svg",
                             onPressed: () {
                               navigate(RoutePath.staffSection);
                             },
@@ -340,7 +378,6 @@ class Sidebar extends StatelessWidget {
                         Icons.bolt,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
-
                       gapW8,
                       Text(
                         'Globi Pay Admin',
@@ -362,11 +399,10 @@ class Sidebar extends StatelessWidget {
     );
   }
 
-  void navigate(String routePath){
-    if(AppConstants.currentPath != routePath){
+  void navigate(String routePath) {
+    if (AppConstants.currentPath != routePath) {
       AppConstants.currentPath = routePath;
       cx.go(routePath);
     }
   }
-
 }
