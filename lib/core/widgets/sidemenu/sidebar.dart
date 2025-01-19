@@ -54,8 +54,9 @@ class Sidebar extends StatelessWidget {
                     MenuTile(
                       isActive: AppConstants.currentPath == RoutePath.dashboard,
                       title: "Dashboard",
-                      activeIconSrc: "assets/icons/bulb_filled.svg",
-                      inactiveIconSrc: "assets/icons/bulb_light.svg",
+                     // activeIconSrc: "assets/icons/bulb_filled.svg",
+                      activeIconSrc: "assets/icons/ash_home_filled.svg",
+                      inactiveIconSrc: "assets/icons/ash_home_light.svg",
                       onPressed: () {
                         navigate(RoutePath.dashboard);
                       },
@@ -83,8 +84,8 @@ class Sidebar extends StatelessWidget {
                             isSubmenu: false,
                             isActive: AppConstants.currentPath == RoutePath.activeUsersNew,
                             title: "Active Users",
-                            activeIconSrc: "assets/icons/fire_filled.svg",
-                            inactiveIconSrc: "assets/icons/fire_light.svg",
+                            activeIconSrc: "assets/icons/ash_activeuser_filled.svg",
+                            inactiveIconSrc: "assets/icons/ash_activeuser_filled.svg",
                             onPressed: () {
                               navigate(RoutePath.activeUsersNew);
                             },

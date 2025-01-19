@@ -24,8 +24,6 @@ class ActiveUsersNewScreenBuilder extends StatefulWidget {
 
 class _ActiveUsersNewScreenBuilderState extends BaseViewState<
     ActiveUsersNewScreenBuilder, ActiveUsersNewController> {
-  
-
   late Map<String, double> columnWidths = {
     'code': double.nan,
     'name': double.nan,
@@ -48,15 +46,9 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
   }
 
   @override
-  PreferredSizeWidget? appBar() {
-    return AppBar(title: const Text('Active Users'));
-  }
-
-  @override
   Widget body(BuildContext context) {
-
     return Container(
-      color: const Color.fromARGB(255, 240, 238, 255),
+      color: const Color(0xFFFFFFFF), // Updated background color to white
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
@@ -68,41 +60,28 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Header
+              // Header Container modification
               Container(
-                padding: const EdgeInsets.all(16),
-                decoration: const  BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color.fromARGB(255, 28, 170, 61),
-                      const Color.fromARGB(255, 127, 224, 135),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: const BorderRadius.only(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20), // Increased padding for height
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF4F7FF), // Blue accent color
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 8,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Obx(
-                      () => Text(
-                        'Total Users: ${controller.totalItems}',
-                        style: const TextStyle(
-                          fontFamily: 'newyork',
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                    const Text(
+                      'Active Users',
+                      style: TextStyle(
+                        fontFamily: 'newyork',
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF2C3E50),
                       ),
                     ),
                     Row(
@@ -113,7 +92,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                             fontFamily: 'newyork',
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Color(0xFF2C3E50),
                           ),
                         ),
                         Container(
@@ -122,7 +101,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Colors.white,
+                              color: Colors.grey[300]!,
                               width: 1,
                             ),
                           ),
@@ -160,76 +139,101 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
               ),
               // DataGrid
               Expanded(
-                child: Obx(
-                  () => SfDataGrid(
-                    source: UserDataSource(
-                      controller.users.value,
-                      onActionTap: (user, action) {
-                        switch (action) {
-                          case 'details':
-                            controller.onUserDetailsClicked(user);
-                            break;
-                          case 'delete':
-                            controller.onUserDeleteClicked(user);
-                            break;
-                          case 'message':
-                            controller.onUserMessageClicked(user);
-                            break;
-                        }
-                      },
-                      visibleColumns: controller.visibleColumns.value,
-                    ),
-                    allowColumnsResizing: true,
-                    onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
-                      setState(() {
-                        columnWidths[details.column.columnName] = details.width;
-                      });
-                      return true;
-                    },
-                    gridLinesVisibility: GridLinesVisibility.both,
-                    headerGridLinesVisibility: GridLinesVisibility.both,
-                    columnWidthMode: ColumnWidthMode.fill,
-                    columns: _buildColumns(controller.visibleColumns.value),
-                    rowHeight: 50,
-                    headerRowHeight: 60,
-                  ),
-                ),
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0), // Added horizontal padding
+                    child: Obx(
+                      () => SfDataGridTheme(
+                        data: SfDataGridThemeData(
+                          headerColor: const Color(
+                              0xFFEDF7ED), // Updated header background color
+                        ),
+                        child: SfDataGrid(
+                          source: UserDataSource(
+                            controller.users.value,
+                            onActionTap: (user, action) {
+                              switch (action) {
+                                case 'details':
+                                  controller.onUserDetailsClicked(user);
+                                  break;
+                                case 'delete':
+                                  controller.onUserDeleteClicked(user);
+                                  break;
+                                case 'message':
+                                  controller.onUserMessageClicked(user);
+                                  break;
+                              }
+                            },
+                            visibleColumns: controller.visibleColumns.value,
+                          ),
+                          allowColumnsResizing: true,
+                          onColumnResizeUpdate:
+                              (ColumnResizeUpdateDetails details) {
+                            setState(() {
+                              columnWidths[details.column.columnName] =
+                                  details.width;
+                            });
+                            return true;
+                          },
+                          gridLinesVisibility: GridLinesVisibility.both,
+                          headerGridLinesVisibility: GridLinesVisibility.both,
+                          columnWidthMode: ColumnWidthMode.fill,
+                          columns:
+                              _buildColumns(controller.visibleColumns.value),
+                          rowHeight: 50,
+                          headerRowHeight: 60,
+                        ),
+                      ),
+                    )),
               ),
               // Pagination
+              // Footer Container modification
               Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 232, 236, 233),
-                  borderRadius: const BorderRadius.only(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF4F7FF), // Blue accent color
+                  borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16),
                   ),
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.grey[300]!,
-                      width: 1,
-                    ),
-                  ),
                 ),
-                child: Obx(
-                  () => SfDataPagerTheme(
-                    data: SfDataPagerThemeData(
-                      itemColor: Colors.white, // Unselected button color
-                      selectedItemColor: const Color.fromARGB(
-                          164, 12, 87, 62), // Selected button color
-                      itemBorderRadius: BorderRadius.circular(50),
-                      backgroundColor: const Color.fromARGB(255, 232, 236, 233),
-                    ),
-                    child: SfDataPager(
-                      delegate: UserDataPagerDelegate(controller),
-                      pageCount: max(
-                        1,
-                        (controller.totalItems.value /
-                                controller.pageSize.value)
-                            .ceilToDouble(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Obx(
+                      () => Text(
+                        'Total Users: ${controller.totalItems}',
+                        style: const TextStyle(
+                          fontFamily: 'newyork',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF2C3E50),
+                        ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                      child: Obx(
+                        () => SfDataPagerTheme(
+                          data: SfDataPagerThemeData(
+                            itemColor: Colors.white,
+                            selectedItemColor: const Color(0xFF2C3E50),
+                            itemBorderRadius: BorderRadius.circular(50),
+                            backgroundColor: const Color(0xFFF4F7FF),
+                          ),
+                          child: SfDataPager(
+                            delegate: UserDataPagerDelegate(controller),
+                            pageCount: max(
+                              1,
+                              (controller.totalItems.value /
+                                      controller.pageSize.value)
+                                  .ceilToDouble(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
