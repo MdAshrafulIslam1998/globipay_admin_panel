@@ -8,6 +8,7 @@ import 'package:globipay_admin_panel/entity/request/file_upload/byte_file_upload
 import 'package:globipay_admin_panel/entity/request/file_upload/file_upload_request.dart';
 import 'package:globipay_admin_panel/entity/request/level/add_level_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/login/login_request.dart';
+import 'package:globipay_admin_panel/entity/request/message_fcm/message_fcm.dart';
 import 'package:globipay_admin_panel/entity/request/message_templates/add_message_templates_request.dart';
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/notification/create_notification_request_entity.dart';
@@ -99,6 +100,8 @@ abstract class AppRepository{
     PaginationRequest paginationRequest,
     {String? userId, String? search}
 );
+
+  Future sendMessageFCM(MessageFcm req);
 
 
 }

@@ -23,6 +23,7 @@ class NotificationsController extends BaseController {
   final AppRepository appRepository;
 
   NotificationsController(this.appRepository);
+
   @override
   void onInit() {
     requestForAllNotifications();

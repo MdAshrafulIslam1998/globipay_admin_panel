@@ -49,6 +49,7 @@ class _ChatScreenScreenBuilderState
   @override
   void dispose() {
     controller.incomingMessageChannelSubscription.unsubscribe();
+    controller.userActive.unsubscribe();
     controller.dispose();
 
     super.dispose();

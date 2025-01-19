@@ -6,6 +6,7 @@ import 'package:globipay_admin_panel/entity/request/agora/agora_token_request_en
 import 'package:globipay_admin_panel/entity/request/call/send_call_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/category/add_category_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/level/add_level_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/message_fcm/message_fcm.dart';
 import 'package:globipay_admin_panel/entity/request/misc/add_misc_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/notification/create_notification_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/promotional_banner_delete/promotional_banner_delete_entity.dart';
@@ -727,6 +728,20 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
   Future requestToUpdateCategory(CategoryItemEntity req) {
     var endpoint = '$BASE_URL/${AppApi.updateCategory}/${req.id}';
     var dioCall = dioClientWithAuth.put(
+      endpoint,
+      data: req.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> sendMessageFCM(MessageFcm req) {
+    var endpoint = '$BASE_URL/${AppApi.messageFCM}';
+    var dioCall = dioClientWithAuth.post(
       endpoint,
       data: req.toJson(),
     );

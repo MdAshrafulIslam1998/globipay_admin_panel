@@ -18,8 +18,10 @@ import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/request/agora/agora_token_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/call/send_call_request_entity.dart';
 import 'package:globipay_admin_panel/entity/request/chat_close/chat_close_request_entity.dart';
+import 'package:globipay_admin_panel/entity/request/message_fcm/message_fcm.dart';
 import 'package:globipay_admin_panel/entity/response/agora/agora_token_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/chat_close/chat_close_response_entity.dart';
+import 'package:globipay_admin_panel/entity/response/chat_user/chat_user_item.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/message_templates_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/messages_templates_response_entity.dart';
 import 'package:globipay_admin_panel/modules/chat/chat_screen/views/message_templates_view.dart';
@@ -57,6 +59,7 @@ class ChatController extends BaseController {
   TextEditingController primaryCoinController = TextEditingController();
   TextEditingController secondaryCoinController = TextEditingController();
 
+  Rxn<ChatUserItem> userModel = Rxn<ChatUserItem>(null);
 
   // Constructor
   final TokenRepository tokenRepository;
@@ -75,10 +78,12 @@ class ChatController extends BaseController {
   String searchQuery = '';
 
   late RealtimeChannel incomingMessageChannelSubscription ;
+  late RealtimeChannel userActive ;
 
   @override
   void onInit() async{
     incomingMessageChannelSubscription = await supabase.channel('public:messages');
+    userActive = await supabase.channel('public:users');
     fetchTemplates();
     _initializeMessages();
     _onListener();
@@ -150,26 +155,32 @@ class ChatController extends BaseController {
 
   void _initializeMessages() async{
     await markAllMessageAsSeen();
-    getUserInfo();
+    getChatUserInfo();
     listenForMessages();
     fetchMessagesForSession(sharedController.chatSessionId ?? "");
   }
 
   //
-  Future<void> getUserInfo() async {
-    final userId = await tokenRepository.getUserID();
+  Future<void> getChatUserInfo() async {
+    final cId = sharedController.customer_id;
     final response = await supabase
         .from('users')
         .select()
-        .eq('user_id', userId)
+        .eq('user_id', cId)
         .single(); // Use .single() to get a single row result
 
     if (response != null) {
+      var temp = response;
+      appPrint('User::::::::::::::::::: $temp');
+      final user = ChatUserItem.fromJson(response);
+      userModel.value = user;
       appPrint('User::::::::::::::::::: $response');
       // Now you can use userInfo as needed
     } else {
       appPrint('Error fetching user info: ${response.error?.message}');
     }
+    userActiveStatus();
+
   }
 
   // Method to send a text message
@@ -188,6 +199,7 @@ class ChatController extends BaseController {
       } // Corrected structure
     }).select('id').execute(); // Add .select('id') to fetch the inserted id
 
+    triggerMessageFcmNotification(text);
     if (response == null) {
       print('Error inserting message: ${response}');
       return;
@@ -250,6 +262,8 @@ class ChatController extends BaseController {
       isSeen: false,
       messageType: 'image'
     );
+    triggerMessageFcmNotification("New Image Message");
+
   }
 
   // Real-time listener for new messages
@@ -316,6 +330,35 @@ class ChatController extends BaseController {
       ).subscribe();
   }
 
+  void userActiveStatus() async{
+    appPrint('Setting up listener for user chat active...');
+
+    userActive..on(
+      RealtimeListenTypes.postgresChanges,
+      ChannelFilter(
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'users',
+        // Here we apply the filter for customer_id
+        filter: 'user_id=eq.${sharedController.customer_id}',
+      ),
+          (payload, [ref]) async {
+        if (payload['new'] != null) {
+          final updatedUser = ChatUserItem.fromJson(payload['new']);
+
+          Future.delayed(const Duration(seconds: 1)).then((value) async{
+            if(updatedUser.userId == sharedController.customer_id){
+              userModel.value = updatedUser;
+            }
+
+          });
+
+        } else {
+          appPrint('User Active Status not found in payload: $payload');
+        }
+      },
+    ).subscribe();
+  }
   // Mark message as delivered
   Future<void> markMessageAsDelivered(String messageId) async {
     try {
@@ -853,6 +896,33 @@ class ChatController extends BaseController {
     final repo = appRepository.requestForMessageTemplates(req);
     callService(repo,onSuccess: (response){
       parseMessageTemplates(response);
+    });
+  }
+
+  void triggerMessageFcmNotification(String message) {
+    appPrint("------------------->>>>>> ${userModel.value?.toJson()}");
+    appPrint("------------------->>>>>> ${userModel.value?.userActiveChat}");
+    appPrint("------------------->>>>>> ${!(userModel.value?.userActiveChat ?? false)}");
+    if(!(userModel.value?.userActiveChat ?? false )){
+      sendFCMNotification(message);
+    }
+  }
+
+  MessageFcm messageFcm(String message){
+    return MessageFcm(
+      userId: sharedController.customer_id,
+      title: "New Message",
+      details: message,
+      richMediaUrl: "",
+      deepLink: "",
+    );
+  }
+
+  void sendFCMNotification(String message) async {
+    final req = messageFcm(message);
+    final repo = appRepository.sendMessageFCM(req);
+    callService(repo, isShowLoader : false, onSuccess: (response){
+      appPrint("FCM Sent Successfully");
     });
   }
 

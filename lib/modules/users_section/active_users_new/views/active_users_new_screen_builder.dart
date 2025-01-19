@@ -46,13 +46,19 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
   }
 
   @override
+  EdgeInsets setPagePadding() {
+    return const EdgeInsets.all(0);
+  }
+
+  @override
   Widget body(BuildContext context) {
     return Container(
       color: const Color(0xFFFFFFFF), // Updated background color to white
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         child: Card(
-          elevation: 6,
+          //elevation: 6,
+          color: const Color(0xFFFFFFFF), // Updated background color to white
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -63,8 +69,8 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
               // Header Container modification
               Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 20), // Increased padding for height
+                    horizontal: 14,
+                    vertical: 10), // Increased padding for height
                 decoration: const BoxDecoration(
                   color: Color(0xFFF4F7FF), // Blue accent color
                   borderRadius: BorderRadius.only(
@@ -79,7 +85,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                       'Active Users',
                       style: TextStyle(
                         fontFamily: 'newyork',
-                        fontSize: 26,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF2C3E50),
                       ),
@@ -141,7 +147,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0), // Added horizontal padding
+                        horizontal: 0.0), // Added horizontal padding
                     child: Obx(
                       () => SfDataGridTheme(
                         data: SfDataGridThemeData(

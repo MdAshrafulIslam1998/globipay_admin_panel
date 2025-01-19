@@ -23,6 +23,7 @@ class UserDataSource extends DataGridSource {
                 switch (columnName) {
                   case 'code':
                     return DataGridCell<String>(
+
                         columnName: 'code', value: user.user_code ?? 'NAN');
                   case 'name':
                     return DataGridCell<String>(
