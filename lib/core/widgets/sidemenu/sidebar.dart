@@ -26,6 +26,7 @@ class Sidebar extends StatelessWidget {
     return Drawer(
       // width: Responsive.isMobile(context) ? double.infinity : null,
       // width: MediaQuery.of(context).size.width < 1300 ? 260 : null,
+      backgroundColor: Color(0xFFF4F7FF),
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,7 +337,7 @@ class Sidebar extends StatelessWidget {
                   Row(
                     children: [
                       Icon(
-                        Icons.propane_outlined,
+                        Icons.bolt,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
 
