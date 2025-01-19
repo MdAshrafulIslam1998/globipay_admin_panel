@@ -45,6 +45,7 @@ class EditCoinDataSource extends DataGridSource {
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
+      color: Colors.white,
       cells: row.getCells().map<Widget>((cell) {
         if (cell.value is Widget) {
           return Container(alignment: Alignment.center, child: cell.value);

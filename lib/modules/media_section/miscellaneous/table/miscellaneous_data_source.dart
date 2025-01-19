@@ -74,6 +74,7 @@ class MiscellaneousDataSource extends DataGridSource {
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
+      color: Colors.white,
       cells: row.getCells().map<Widget>((cell) {
         if (cell.columnName == MiscTableHeaderConst.DETAILS) {
           // Extract entity and pass it to the callback

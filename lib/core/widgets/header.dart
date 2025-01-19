@@ -20,25 +20,25 @@ class Header extends StatelessWidget {
         bottom: false,
         child: Row(
           children: [
-            Expanded(
-              flex: 1,
-              child: TextFormField(
-                // style: Theme.of(context).textTheme.labelLarge,
-                decoration: InputDecoration(
-                  hintText: "Search...",
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.only(
-                        left: AppDefaults.padding,
-                        right: AppDefaults.padding / 2),
-                    child: SvgPicture.asset("assets/icons/search_light.svg"),
-                  ),
-                  filled: true,
-                  fillColor: Theme.of(context).scaffoldBackgroundColor,
-                  border: AppDefaults.outlineInputBorder,
-                  focusedBorder: AppDefaults.focusedOutlineInputBorder,
-                ),
-              ),
-            ),
+            // Expanded(
+            //   flex: 1,
+            //   child: TextFormField(
+            //     // style: Theme.of(context).textTheme.labelLarge,
+            //     decoration: InputDecoration(
+            //       hintText: "Search...",
+            //       prefixIcon: Padding(
+            //         padding: const EdgeInsets.only(
+            //             left: AppDefaults.padding,
+            //             right: AppDefaults.padding / 2),
+            //         child: SvgPicture.asset("assets/icons/search_light.svg"),
+            //       ),
+            //       filled: true,
+            //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+            //       border: AppDefaults.outlineInputBorder,
+            //       focusedBorder: AppDefaults.focusedOutlineInputBorder,
+            //     ),
+            //   ),
+            // ),
             Expanded(
               flex: 2,
               child: Row(

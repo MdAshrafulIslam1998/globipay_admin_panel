@@ -68,6 +68,7 @@ class BlockedUsersDataSource extends DataGridSource {
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
+      color: Colors.white,
       cells: row.getCells().map<Widget>((cell) {
         if (cell.columnName == 'document') {
           return Container(

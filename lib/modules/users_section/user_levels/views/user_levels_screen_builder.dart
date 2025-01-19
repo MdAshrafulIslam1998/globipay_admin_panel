@@ -1,32 +1,24 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
 import 'package:globipay_admin_panel/core/constants/table_header_visibility.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_pager_delegate.dart';
-import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_source.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/controller/user_levels_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/table/user_levels_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/users_section/user_levels/table/user_levels_data_source.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 
 class UserLevelsScreenBuilder extends StatefulWidget {
   const UserLevelsScreenBuilder({super.key});
-
   @override
-  State<UserLevelsScreenBuilder> createState() =>
-      _UserLevelsScreenBuilderState();
+  State<UserLevelsScreenBuilder> createState() => _UserLevelsScreenBuilderState();
 }
 
-class _UserLevelsScreenBuilderState
-    extends BaseViewState<UserLevelsScreenBuilder, UserLevelsController> {
+class _UserLevelsScreenBuilderState extends BaseViewState<UserLevelsScreenBuilder, UserLevelsController> {
   late Map<String, double> columnWidths = {
     'name': double.nan,
     'email': double.nan,
@@ -45,14 +37,9 @@ class _UserLevelsScreenBuilderState
   }
 
   @override
-  PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('User Levels'));
-  }
-
-  @override
   Widget body(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 240, 238, 255),
+      color: const Color(0xFFFFFFFF),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
@@ -65,77 +52,60 @@ class _UserLevelsScreenBuilderState
             children: [
               // Header
               Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color.fromARGB(255, 28, 170, 61),
-                      const Color.fromARGB(255, 127, 224, 135),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: const BorderRadius.only(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 20,
+                ),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF4F7FF),
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 8,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Obx(
-                      () => Text(
-                        'Total Users: ${controller.totalItems}',
-                        style: TextStyle(
-                          fontFamily: 'newyork',
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                    const Text(
+                      'User Levels',
+                      style: TextStyle(
+                        fontFamily: 'newyork',
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF2C3E50),
                       ),
                     ),
                     Row(
                       children: [
                         TextButton(
                           onPressed: () {
-                            // Add new level Button
                             AppRoutes.pushNamed(RoutePath.addLevel);
                           },
                           style: TextButton.styleFrom(
-                            backgroundColor:
-                                Colors.blue, // Button background color
+                            backgroundColor: const Color(0xFF2C3E50),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 10),
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // Rounded edges
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             '+ Add New Level',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white, // Text color
+                              color: Colors.white,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                            width: 16), // Spacing between button and dropdown
+                        const SizedBox(width: 16),
                         const Text(
                           'Show entries:   ',
                           style: TextStyle(
                             fontFamily: 'newyork',
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Color(0xFF2C3E50),
                           ),
                         ),
                         Container(
@@ -144,7 +114,7 @@ class _UserLevelsScreenBuilderState
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Colors.white,
+                              color: Colors.grey[300]!,
                               width: 1,
                             ),
                           ),
@@ -156,14 +126,11 @@ class _UserLevelsScreenBuilderState
                                     value: size,
                                     child: Text(
                                       size.toString(),
-                                      style: TextStyle(
-                                        fontSize: 13, // Adjust the font size
-                                        fontWeight: FontWeight
-                                            .bold, // Change font weight (e.g., bold)
-                                        color: const Color.fromARGB(
-                                            143, 0, 0, 0), // Set text color
-                                        fontFamily:
-                                            'newyork', // Specify a custom font family if needed
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(143, 0, 0, 0),
+                                        fontFamily: 'newyork',
                                       ),
                                     ),
                                   );
@@ -182,71 +149,89 @@ class _UserLevelsScreenBuilderState
               ),
               // DataGrid
               Expanded(
-                child: Obx(
-                  () => SfDataGrid(
-                    source: UserLevelsDataSource(
-                      controller.users.value,
-                      onActionTap: (user, action) {
-                        switch (action) {
-                          case 'details':
-                            AppRoutes.pushNamed(RoutePath.userProfile);
-                            break;
-
-                        }
-                      },
-                      visibleColumns: controller.visibleColumns.value,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Obx(
+                    () => SfDataGridTheme(
+                      data: SfDataGridThemeData(
+                        headerColor: const Color(0xFFEDF7ED),
+                      ),
+                      child: SfDataGrid(
+                        source: UserLevelsDataSource(
+                          controller.users.value,
+                          onActionTap: (user, action) {
+                            switch (action) {
+                              case 'details':
+                                AppRoutes.pushNamed(RoutePath.userProfile);
+                                break;
+                            }
+                          },
+                          visibleColumns: controller.visibleColumns.value,
+                        ),
+                        allowColumnsResizing: true,
+                        onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
+                          setState(() {
+                            columnWidths[details.column.columnName] = details.width;
+                          });
+                          return true;
+                        },
+                        gridLinesVisibility: GridLinesVisibility.both,
+                        headerGridLinesVisibility: GridLinesVisibility.both,
+                        columnWidthMode: ColumnWidthMode.fill,
+                        columns: _buildColumns(controller.visibleColumns.value),
+                        rowHeight: 50,
+                        headerRowHeight: 60,
+                      ),
                     ),
-                    allowColumnsResizing: true,
-                    onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
-                      setState(() {
-                        columnWidths[details.column.columnName] = details.width;
-                      });
-                      return true;
-                    },
-                    gridLinesVisibility: GridLinesVisibility.both,
-                    headerGridLinesVisibility: GridLinesVisibility.both,
-                    columnWidthMode: ColumnWidthMode.fill,
-                    columns: _buildColumns(controller.visibleColumns.value),
-                    rowHeight: 50,
-                    headerRowHeight: 60,
                   ),
                 ),
               ),
               // Pagination
               Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 232, 236, 233),
-                  borderRadius: const BorderRadius.only(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF4F7FF),
+                  borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16),
                   ),
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.grey[300]!,
-                      width: 1,
-                    ),
-                  ),
                 ),
-                child: Obx(
-                  () => SfDataPagerTheme(
-                    data: SfDataPagerThemeData(
-                      itemColor: Colors.white, // Unselected button color
-                      selectedItemColor: const Color.fromARGB(
-                          164, 12, 87, 62), // Selected button color
-                      itemBorderRadius: BorderRadius.circular(50),
-                      backgroundColor: const Color.fromARGB(255, 232, 236, 233),
-                    ),
-                    child: SfDataPager(
-                      delegate: UserLevelsDataPagerDelegate(controller),
-                      pageCount: max(
-                        1,
-                        (controller.totalItems.value /
-                                controller.pageSize.value)
-                            .ceilToDouble(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Obx(
+                      () => Text(
+                        'Total Users: ${controller.totalItems}',
+                        style: const TextStyle(
+                          fontFamily: 'newyork',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF2C3E50),
+                        ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                      child: Obx(
+                        () => SfDataPagerTheme(
+                          data: SfDataPagerThemeData(
+                            itemColor: Colors.white,
+                            selectedItemColor: const Color(0xFF2C3E50),
+                            itemBorderRadius: BorderRadius.circular(50),
+                            backgroundColor: const Color(0xFFF4F7FF),
+                          ),
+                          child: SfDataPager(
+                            delegate: UserLevelsDataPagerDelegate(controller),
+                            pageCount: max(
+                              1,
+                              (controller.totalItems.value /
+                                      controller.pageSize.value)
+                                  .ceilToDouble(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -272,7 +257,6 @@ class _UserLevelsScreenBuilderState
       final columnData = columnDefinitions[colName];
       final title = (columnData?['title'] as String?) ?? colName;
       final paddingPercent = (columnData?['paddingPercent'] as int?) ?? 10;
-
       return GridColumn(
         columnName: colName,
         width: columnWidths[colName]!,
@@ -283,7 +267,6 @@ class _UserLevelsScreenBuilderState
 
   Widget _buildHeaderCell(String text, int paddingPercent) {
     final double horizontalPadding = paddingPercent.toDouble();
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       alignment: Alignment.center,
