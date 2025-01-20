@@ -5,6 +5,7 @@ import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
 import 'package:globipay_admin_panel/core/constants/table_header_visibility.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/data/model/pagination_request.dart';
+import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/data/api/app_api.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
@@ -27,6 +28,7 @@ class TransHistoryController extends BaseController {
 
   TransHistoryController(this._repository, this.tokenRepository);
 
+  var CURRENT_API_PATH = null;
   //Rx Variables
   var transactions = <TransactionItemEntity>[].obs;
   var totalItems = 0.obs;
@@ -35,10 +37,21 @@ class TransHistoryController extends BaseController {
   var isLoading = false.obs;
   RxList<String> visibleColumns = RxList<String>();
 
-  PaginationRequest paginationRequest(int page, int limit) => PaginationRequest(
+  @override
+  void onInit() {
+    clearSelectedCategory();
+    requestForCategories();
+    fetchTransactionHistory(currentPage.value, pageSize.value);
+    getVisibleColumns();
+    super.onInit();
+  }
+
+  PaginationRequest paginationRequest(int page, int limit,) => PaginationRequest(
         page: page,
         limit: limit,
+        category: selectedCategory.value?.id,
       );
+
 
   parseTransactionList(AllTransactionsResponseEntity response) {
     transactions.value = response.transactions ?? [];
@@ -47,59 +60,52 @@ class TransHistoryController extends BaseController {
   }
 
   Future<void> fetchTransactionHistory(int page, int limit) async {
-    final request = paginationRequest(page, limit);
-    final repo = _repository.requestForAllTransactions(paginationRequest: request);
+    final request = paginationRequest(page, limit,);
+    final repo = _repository.requestForAllTransactions(
+        paginationRequest: request,
+        path: CURRENT_API_PATH
+    );
     callService(repo, onSuccess: (response) {
       parseTransactionList(response);
     });
+  }
+
+  Future<void> fetchAllTransactions(int page, int limit) async {
+    transactions.clear();
+    clearSelectedCategory();
+    CURRENT_API_PATH = null;
+    fetchTransactionHistory(page, limit);
   }
 
    Future<void> fetchUserWiseTransactionHistory(int page, int limit) async {
-
+     clearSelectedCategory();
     transactions.clear();
-    final request = paginationRequest(page, limit);
-    final repo = _repository.requestForAllTransactions(paginationRequest: request, path: AppApi.USER_WISE_TRANSACTIONS);
-    callService(repo, onSuccess: (response) {
-      parseTransactionList(response);
-    });
-
+    CURRENT_API_PATH = AppApi.USER_WISE_TRANSACTIONS;
+    fetchTransactionHistory(page, limit);
   }
 
+  Future<void> fetchCategoryWiseTransactionHistory(int page, int limit) async {
+    transactions.clear();
+    CURRENT_API_PATH = AppApi.CAT_WISE_TRANSACTIONS;
+    fetchTransactionHistory(page, limit);
+  }
 
   void setCategorySelectionVisibility(bool? value) {
     isCategorySelectionVisible.value = value ?? false;
   }
 
-  PaginationRequest categoryWisePagination(CategoryItemEntity? item, int page, int limit) {
-    return PaginationRequest(
-        page: currentPage.value,
-        limit: pageSize.value,
-        category: item?.id ?? 0
-    );
-  }
-
   void setSelectedCategory(CategoryItemEntity? categoryItemEntity) {
     selectedCategory.value = categoryItemEntity;
-    if(categoryItemEntity != null){
+    if (categoryItemEntity != null) {
       fetchCategoryWiseTransactionHistory(currentPage.value, pageSize.value);
     }
   }
-
-  Future<void> fetchCategoryWiseTransactionHistory(int page, int limit) async {
-    transactions.clear();
-    final request = categoryWisePagination(selectedCategory.value,page, limit);
-    final repo = _repository.requestForAllTransactions(paginationRequest: request, path: AppApi.CAT_WISE_TRANSACTIONS);
-    callService(repo, onSuccess: (response) {
-      parseTransactionList(response);
-    });
-
+  void clearSelectedCategory() {
+    selectedCategory.value = null;
   }
 
-
-
-
   void updatePageSize(int newSize) {
-    print("Updating page size to $newSize and fetching users from page 1");
+    appPrint("Updating page size to $newSize and fetching users from page 1");
     pageSize.value = newSize;
     fetchTransactionHistory(1, newSize);
   }
@@ -109,13 +115,7 @@ class TransHistoryController extends BaseController {
   }
 
   
-  @override
-  void onInit() {
-    requestForCategories();
-    fetchTransactionHistory(currentPage.value, pageSize.value);
-    getVisibleColumns();
-    super.onInit();
-  }
+
 
   getVisibleColumns() async {
     visibleColumns.value = await TableHeaderVisibility.getTableVisibleColumn(
@@ -124,7 +124,7 @@ class TransHistoryController extends BaseController {
 
   void requestForCategories(){
     categoriesList.clear();
-    final repo = _repository.requestForCategories(paginationRequest(1, 100));
+    final repo = _repository.requestForCategories(paginationRequest(1, 100,));
     callService(repo, onSuccess: (response) {
       categoriesList.value = response.categories ?? [];
     });

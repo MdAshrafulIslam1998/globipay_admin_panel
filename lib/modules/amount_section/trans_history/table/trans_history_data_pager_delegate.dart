@@ -1,3 +1,4 @@
+import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/controller/trans_history_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/blocked_users/controller/blocked_users_controller.dart';
@@ -11,27 +12,27 @@ class TransHistoryDataPagerDelegate extends DataPagerDelegate {
 
   @override
   Future<bool> handlePageChange(int oldPageIndex, int newPageIndex) async {
-    print("Page change requested from $oldPageIndex to $newPageIndex");
+    appPrint("Page change requested from $oldPageIndex to $newPageIndex");
     try {
       await controller.fetchTransactionHistory(newPageIndex + 1, controller.pageSize.value);
-      print("Page change successful to ${newPageIndex + 1}");
+      appPrint("Page change successful to ${newPageIndex + 1}");
       return true;
     } catch (e) {
-      print("Error handling page change: $e");
+      appPrint("Error handling page change: $e");
       return false;
     }
   }
 
   @override
   int get rowCount {
-    print("Total row count requested: ${controller.totalItems.value}");
+    appPrint("Total row count requested: ${controller.totalItems.value}");
     return controller.totalItems.value;
   }
 
   @override
   int get pageCount {
     int pageCount = rowCount > 0 ? (rowCount / controller.pageSize.value).ceil() : 0;
-    print("Calculated page count: $pageCount");
+    appPrint("Calculated page count: $pageCount");
     return pageCount;
   }
 

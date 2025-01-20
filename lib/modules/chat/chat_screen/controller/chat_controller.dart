@@ -921,7 +921,11 @@ class ChatController extends BaseController {
   void sendFCMNotification(String message) async {
     final req = messageFcm(message);
     final repo = appRepository.sendMessageFCM(req);
-    callService(repo, isShowLoader : false, onSuccess: (response){
+    callService(
+        repo,
+        isShowLoader : false,
+        willShowError: false,
+        onSuccess: (response){
       appPrint("FCM Sent Successfully");
     });
   }

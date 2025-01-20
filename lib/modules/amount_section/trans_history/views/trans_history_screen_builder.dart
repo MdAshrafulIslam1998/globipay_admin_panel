@@ -162,6 +162,20 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ElevatedButton.icon(
+                      icon: Icon(Icons.ac_unit),
+                      label: Text('All'),
+                      onPressed: () {
+                        controller.fetchAllTransactions(
+                            1, controller.pageSize.value);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[100],
+                        foregroundColor: Colors.green[800],
+                      ),
+                    ),
+                    AppSpaces.horizontalSpace,
+
+                    ElevatedButton.icon(
                       icon: Icon(Icons.person),
                       label: Text('User'),
                       onPressed: () {
@@ -191,20 +205,20 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                     Obx(
                       () => Visibility(
                         visible: controller.isCategorySelectionVisible.value,
-                        child: Container(
-                          width: 120,
-                          height: 40,
-                          margin: const EdgeInsets.only(left: 12),
-                          decoration: BoxDecoration(
-                            color: Colors.green[100],
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 1,
+                        child: IntrinsicWidth(
+                          child: Container(
+                            height: 40,
+                            margin: const EdgeInsets.only(left: 12),
+                            decoration: BoxDecoration(
+                              color: Colors.green[100],
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1,
+                              ),
                             ),
-                          ),
-                          child:Container(
-                            child: DropdownButtonFormField<CategoryItemEntity>(
+                            child:DropdownButtonFormField<CategoryItemEntity>(
+                              isExpanded: true,
                             value: controller.selectedCategory.value,
                             hint: Text('Select'),
                             onChanged: (CategoryItemEntity? newValue) {
@@ -219,10 +233,11 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                             items: controller.categoriesList.map((CategoryItemEntity item) {
                               return DropdownMenuItem<CategoryItemEntity>(
                                 value: item,
-                                child: Text(item.name ?? ""),
+                                child: Text(item.name ?? "Unknown",overflow: TextOverflow.ellipsis,),
                               );
                             }).toList(),
-                          ),),
+                                                      ),
+                          ),
                         ),
                       ),
                     ),

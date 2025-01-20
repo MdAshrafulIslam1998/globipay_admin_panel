@@ -10,6 +10,7 @@ import 'package:globipay_admin_panel/core/di/injector.dart';
 import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/data/repository/app_repository.dart';
 import 'package:globipay_admin_panel/data/services/supabase_service.dart';
+import 'package:globipay_admin_panel/entity/response/chat_session_response/chat_session_response.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/chat/controller/chat_shared_controller.dart';
@@ -119,26 +120,39 @@ class ActiveUsersNewController extends BaseController {
         .select('session_id, status')
         .eq('customer_id', user.userId)
         .eq('category', '-1')
-        .eq('status', 'open') // Check only for open sessions
-        .maybeSingle(); // To get a single session or null if none exists
+        .neq('status', 'closed')
+        .execute(); // To get a single session or null if none exists
 
     if (response != null) {
       // Session exists, retrieve session_id and status
-      final sessionId = response['session_id'];
-      final status = response['status'];
-      appPrint("Existing session found: sessionId=$sessionId, status=$status");
-      final userID = await tokenRepository.getStuffId();
-      sharedController.setCurrentUserId(userID);
+      //final sessionId = response['session_id'];
+      // final status = response['status'];
+      appPrint("Is Session Found : YES ${response.data}");
+      var sessions = <ChatSessionResponse>[];
+      // converte this data to List of ChatSessionResponse
+      try {
+        List<ChatSessionResponse> list = (response.data as List).map((e) =>
+            ChatSessionResponse.fromJson(e)).toList();
+        sessions = list;
+      } catch (e) {
+        sessions = [];
+        appPrint("Error to parse session to List<ChatSessionResponse> : $e");
+      }
 
-      sharedController.setChatSessionId(sessionId);
-      sharedController.setCustomerID(user.userId);
-
-      AppRoutes.pushNamed(RoutePath.chat);
-      // Perform any actions with sessionId and status here
-    } else {
-      // No session exists, trigger new session creation
-      appPrint("No session found, creating a new one.");
-      newChatSession(user); // Trigger the newChatSession function
+      if (sessions.isNotEmpty) {
+        var sessionId = sessions.first.session_id ?? '';
+        var status = sessions.first.status ?? '';
+        appPrint("Session ID: $sessionId");
+        appPrint("Status: $status");
+        final userID = await tokenRepository.getStuffId();
+        sharedController.setCurrentUserId(userID);
+        sharedController.setChatSessionId(sessionId);
+        sharedController.setCustomerID(user.userId);
+        AppRoutes.pushNamed(RoutePath.chat);
+      } else {
+        appPrint("Is Session Found : No .. Creating One");
+        newChatSession(user); // Trigger the newChatSession function
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/transaction_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
+import 'package:globipay_admin_panel/modules/amount_section/user_amount/table/helper/category_visualize_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -72,118 +73,29 @@ class TransHistoryDataSource extends DataGridSource {
     return DataGridRowAdapter(
       color: Colors.white,
       cells: row.getCells().map<Widget>((cell) {
-        if (cell.columnName == 'date') {
+        if (cell.columnName == 'coin') {
           return Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Text(
               cell.value.toString(),
-              overflow: TextOverflow
-                  .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
-                fontFamily: 'iAWriterQuattroS',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        } else if (cell.columnName == 'name') {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
-            child: Text(
-              cell.value.toString(),
-              overflow: TextOverflow
-                  .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
-                fontFamily: 'iAWriterQuattroS',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        } else if (cell.columnName == 'email') {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
-            child: Text(
-              cell.value.toString(),
-              overflow: TextOverflow
-                  .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
-                fontFamily: 'iAWriterQuattroS',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        } else if (cell.columnName == 'coin_type') {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
-            child: Text(
-              cell.value.toString(),
-              overflow: TextOverflow
-                  .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
-                fontFamily: 'iAWriterQuattroS',
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
             ),
           );
         }
-        else if (cell.columnName == 'category_name') {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
-            child: Text(
-              cell.value.toString(),
-              overflow: TextOverflow
-                  .ellipsis, // Ensure text is truncated with ellipsis
-              style: TextStyle(
-                fontFamily: 'iAWriterQuattroS',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        } else if (cell.columnName == 'coin') {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 14.0), // Add padding right
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: const Color(0xFF237025).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                cell.value.toString(),
-                overflow: TextOverflow
-                    .ellipsis, // Ensure text is truncated with ellipsis
-                style: const TextStyle(
-                  fontFamily: 'iAWriterQuattroS',
-                  color: Color(0xFF237025),
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          );
-        }
+
         return Container(
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 14.0), // Add padding right
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Text(
             cell.value.toString(),
-            overflow:
-                TextOverflow.ellipsis, // Ensure text is truncated with ellipsis
             style: const TextStyle(
               fontFamily: 'iAWriterQuattroS',
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF444444),
             ),
           ),
         );
