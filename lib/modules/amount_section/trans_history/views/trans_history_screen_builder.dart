@@ -6,6 +6,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
 import 'package:globipay_admin_panel/core/constants/enum/sort_type.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/controller/trans_history_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/table/trans_history_data_pager_delegate.dart';
@@ -17,10 +18,8 @@ import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-
 class TransactionHistoryScreenBuilder extends StatefulWidget {
   const TransactionHistoryScreenBuilder({super.key});
-
   @override
   State<TransactionHistoryScreenBuilder> createState() =>
       _TransactionHistoryScreenBuilderState();
@@ -43,72 +42,65 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
     super.initState();
   }
 
-  @override
-  PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('Transaction History'));
-  }
+
 
   @override
   Widget body(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 240, 238, 255),
+      color: AppColors.projectWhite,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         child: Card(
-          elevation: 6,
+          color: AppColors.projectWhite,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Header
+              // Header section with updated design
               Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color.fromARGB(255, 28, 170, 61),
-                      const Color.fromARGB(255, 127, 224, 135),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: const BorderRadius.only(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                decoration: const BoxDecoration(
+                  color: AppColors.projectBlue,
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 8,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Obx(
-                      () => Text(
-                        'Total Users: ${controller.totalItems}',
-                        style: TextStyle(
-                          fontFamily: 'newyork',
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                    const Text(
+                      'Transaction History',
+                      style: TextStyle(
+                        fontFamily: 'newyork',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.projectFontBlue,
                       ),
                     ),
                     Row(
                       children: [
+                        Obx(
+                          () => Text(
+                            'Total Users: ${controller.totalItems}',
+                            style: const TextStyle(
+                              fontFamily: 'newyork',
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.projectFontBlue,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
                         const Text(
                           'Show entries:   ',
                           style: TextStyle(
                             fontFamily: 'newyork',
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: AppColors.projectFontBlue,
                           ),
                         ),
                         Container(
@@ -117,7 +109,7 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Colors.white,
+                              color: Colors.grey[300]!,
                               width: 1,
                             ),
                           ),
@@ -129,16 +121,11 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                                     value: size,
                                     child: Text(
                                       size.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 13,
-                                        // Adjust the font size
                                         fontWeight: FontWeight.bold,
-                                        // Change font weight (e.g., bold)
-                                        color:
-                                            const Color.fromARGB(143, 0, 0, 0),
-                                        // Set text color
-                                        fontFamily:
-                                            'newyork', // Specify a custom font family if needed
+                                        color: Color.fromARGB(143, 0, 0, 0),
+                                        fontFamily: 'newyork',
                                       ),
                                     ),
                                   );
@@ -155,9 +142,9 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                   ],
                 ),
               ),
+              // Filter buttons section
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -169,8 +156,8 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                             1, controller.pageSize.value);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green[100],
-                        foregroundColor: Colors.green[800],
+                        backgroundColor: AppColors.projectButtonBlue2.withOpacity(0.1),
+                        foregroundColor: AppColors.projectButtonBlue2,
                       ),
                     ),
                     AppSpaces.horizontalSpace,
@@ -183,11 +170,10 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green[100],
-                        foregroundColor: Colors.green[800],
+                        backgroundColor: AppColors.projectButtonBlue2.withOpacity(0.1),
+                        foregroundColor: AppColors.projectButtonBlue2,
                       ),
                     ),
-
                     Obx(
                       () => Visibility(
                         visible: controller.isCategorySelectionVisible.value,
@@ -195,24 +181,18 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                           width: 120,
                           height: 40,
                           margin: const EdgeInsets.only(left: 12),
-                          decoration: BoxDecoration(
-                            color: Colors.green[100],
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 1,
-                            ),
-                          ),
-                          child:Container(
-                            child: DropdownButtonFormField<CategoryItemEntity>(
+                          child: DropdownButtonFormField<CategoryItemEntity>(
                             value: controller.selectedCategory.value,
                             hint: Text('Select'),
                             onChanged: (CategoryItemEntity? newValue) {
-                              controller.setSelectedCategory(newValue); // Use a method in your controller
+                              controller.setSelectedCategory(newValue);
                             },
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColors.projectBlue.withOpacity(0.1),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide.none,
                               ),
                               contentPadding: EdgeInsets.symmetric(horizontal: 12),
                             ),
@@ -222,71 +202,79 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                                 child: Text(item.name ?? ""),
                               );
                             }).toList(),
-                          ),),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
+              // DataGrid section with updated design
               Expanded(
-                child: Obx(
-                  () => SfDataGrid(
-                    source: TransHistoryDataSource(
-                      controller.transactions.value,
-                      visibleColumns: controller.visibleColumns.value,
-                    ),
-                    allowColumnsResizing: true,
-                    onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
-                      setState(() {
-                        columnWidths[details.column.columnName] = details.width;
-                      });
-                      return true;
-                    },
-                    gridLinesVisibility: GridLinesVisibility.both,
-                    headerGridLinesVisibility: GridLinesVisibility.both,
-                    columnWidthMode: ColumnWidthMode.fill,
-                    columns: _buildColumns(controller.visibleColumns.value),
-                    rowHeight: 50,
-                    headerRowHeight: 60,
-                  ),
-                ),
-              ),
-              // Pagination
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 232, 236, 233),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16),
-                  ),
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.grey[300]!,
-                      width: 1,
-                    ),
-                  ),
-                ),
-                child: Obx(
-                  () => SfDataPagerTheme(
-                    data: SfDataPagerThemeData(
-                      itemColor: Colors.white, // Unselected button color
-                      selectedItemColor: const Color.fromARGB(
-                          164, 12, 87, 62), // Selected button color
-                      itemBorderRadius: BorderRadius.circular(50),
-                      backgroundColor: const Color.fromARGB(255, 232, 236, 233),
-                    ),
-                    child: SfDataPager(
-                      delegate: TransHistoryDataPagerDelegate(controller),
-                      pageCount: max(
-                        1,
-                        (controller.totalItems.value /
-                                controller.pageSize.value)
-                            .ceilToDouble(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  child: Obx(
+                    () => SfDataGridTheme(
+                      data: SfDataGridThemeData(
+                        headerColor: AppColors.projectHeaderBlue,
+                      ),
+                      child: SfDataGrid(
+                        source: TransHistoryDataSource(
+                          controller.transactions.value,
+                          visibleColumns: controller.visibleColumns.value,
+                        ),
+                        allowColumnsResizing: true,
+                        onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
+                          setState(() {
+                            columnWidths[details.column.columnName] = details.width;
+                          });
+                          return true;
+                        },
+                        gridLinesVisibility: GridLinesVisibility.both,
+                        headerGridLinesVisibility: GridLinesVisibility.both,
+                        columnWidthMode: ColumnWidthMode.fill,
+                        columns: _buildColumns(controller.visibleColumns.value),
+                        rowHeight: 50,
+                        headerRowHeight: 60,
                       ),
                     ),
                   ),
+                ),
+              ),
+              // Pagination section with updated design
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF4F7FF),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Obx(
+                        () => SfDataPagerTheme(
+                          data: SfDataPagerThemeData(
+                            itemColor: Colors.white,
+                            selectedItemColor: const Color(0xFF2C3E50),
+                            itemBorderRadius: BorderRadius.circular(50),
+                            backgroundColor: const Color(0xFFF4F7FF),
+                          ),
+                          child: SfDataPager(
+                            delegate: TransHistoryDataPagerDelegate(controller),
+                            pageCount: max(
+                              1,
+                              (controller.totalItems.value / controller.pageSize.value)
+                                  .ceilToDouble(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -305,12 +293,10 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
       'coin_type': {'title': 'Coin Type', 'paddingPercent': 5},
       'category_name': {'title': 'Brand', 'paddingPercent': 5},
     };
-
     return visibleColumns.map((colName) {
       final columnData = columnDefinitions[colName];
       final title = (columnData?['title'] as String?) ?? colName;
       final paddingPercent = (columnData?['paddingPercent'] as int?) ?? 10;
-
       return GridColumn(
         columnName: colName,
         width: columnWidths[colName]!,
@@ -321,7 +307,6 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
 
   Widget _buildHeaderCell(String text, int paddingPercent) {
     final double horizontalPadding = paddingPercent.toDouble();
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       alignment: Alignment.center,

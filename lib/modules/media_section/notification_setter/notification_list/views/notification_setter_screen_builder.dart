@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/constants/enum/notification_target_type.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/utils/extensions.dart';
 import 'package:globipay_admin_panel/entity/response/notification/notification_response_item_entity.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/notification_list/controller/notification_list_controller.dart';
@@ -34,21 +35,24 @@ class _NotificationsScreenBuilderState
         title: Text('Notification Management',
             style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
-          ElevatedButton.icon(
-            icon: Icon(Icons.add, color: Colors.white),
-            label: Text('Create Notifications',
-                style: TextStyle(color: Colors.white)),
-            onPressed: () {
-              controller.navigateToCreateNotification();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue.shade600,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0), // Add right-side margin
+            child: ElevatedButton.icon(
+              icon: Icon(Icons.add, color: Colors.white),
+              label: Text('Create Notifications',
+                  style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                controller.navigateToCreateNotification();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.projectButtonBlue2,
+                padding: EdgeInsets.symmetric(horizontal: 13, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
             ),
-          ),
+          )
         ],
       ),
       body: Column(
@@ -144,13 +148,12 @@ class _NotificationsScreenBuilderState
               notification.createdAt ?? "",
               overflow: TextOverflow.ellipsis,
             ),
-
           ],
         ),
         trailing: IconButton(
           icon: Icon(Icons.delete, color: Colors.red),
-          onPressed: () =>
-              controller.removeNotification(notification.notificationId.toString() ?? ""),
+          onPressed: () => controller
+              .removeNotification(notification.notificationId.toString() ?? ""),
           tooltip: 'Remove Notification',
         ),
       ),
