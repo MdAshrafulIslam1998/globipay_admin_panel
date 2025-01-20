@@ -21,43 +21,48 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
 
   @override
   Widget body(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Create Miscellaneous Item',
-          style: TextStyle(fontWeight: FontWeight.bold),
+  return Scaffold(
+    appBar: AppBar(
+      title: Text(
+        'Create Miscellaneous Item',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: AppColors.projectButtonBlue2, // Change font color here
         ),
-        elevation: 1,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Card(
-            elevation: 6,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 16),
-                  _buildCategoryDropdown(),
-                  SizedBox(height: 16),
-                  _buildContentTypeDropdown(),
-                  SizedBox(height: 16),
-                  _buildRichTextEditor(),
-                  SizedBox(height: 16),
-                  _buildSubmitButton(),
-                ],
-              ),
+      elevation: 1,
+      backgroundColor: Colors.white, // Change background color here
+    ),
+    body: SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Card(
+          elevation: 6,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          color: AppColors.projectBlue, // Change card background color here
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 16),
+                _buildCategoryDropdown(),
+                SizedBox(height: 16),
+                _buildContentTypeDropdown(),
+                SizedBox(height: 16),
+                _buildRichTextEditor(),
+                SizedBox(height: 16),
+                _buildSubmitButton(),
+              ],
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildCategoryDropdown() {
     return Column(
@@ -165,7 +170,7 @@ class AddMiscItemScreenBuilder extends BaseView<AddMiscController> {
     return ElevatedButton(
       onPressed: controller.addMiscItem,
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.projectButtonBlue2,
         foregroundColor: Colors.white,
         padding: EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
