@@ -5,6 +5,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/constants/enum/table_name.dart';
 import 'package:globipay_admin_panel/core/constants/table_header_visibility.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/controller/active_users_new_controller.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_pager_delegate.dart';
 import 'package:globipay_admin_panel/modules/users_section/active_users_new/table/user_new_data_source.dart';
@@ -53,12 +54,12 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
   @override
   Widget body(BuildContext context) {
     return Container(
-      color: const Color(0xFFFFFFFF), // Updated background color to white
+      color: AppColors.projectWhite, // Updated background color to white
       child: Padding(
         padding: const EdgeInsets.all(0.0),
         child: Card(
           //elevation: 6,
-          color: const Color(0xFFFFFFFF), // Updated background color to white
+          color: AppColors.projectWhite, // Updated background color to white
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -72,7 +73,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                     horizontal: 14,
                     vertical: 10), // Increased padding for height
                 decoration: const BoxDecoration(
-                  color: Color(0xFFF4F7FF), // Blue accent color
+                  color: AppColors.projectBlue, // Blue accent color
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
@@ -87,7 +88,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                         fontFamily: 'newyork',
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF2C3E50),
+                        color: AppColors.projectFontBlue,
                       ),
                     ),
                     Row(
@@ -98,7 +99,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                             fontFamily: 'newyork',
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF2C3E50),
+                            color: AppColors.projectFontBlue,
                           ),
                         ),
                         Container(
@@ -151,8 +152,7 @@ class _ActiveUsersNewScreenBuilderState extends BaseViewState<
                     child: Obx(
                       () => SfDataGridTheme(
                         data: SfDataGridThemeData(
-                          headerColor: const Color(
-                              0xFFEDF7ED), // Updated header background color
+                          headerColor: AppColors.projectHeaderBlue, // Updated header background color
                         ),
                         child: SfDataGrid(
                           source: UserDataSource(

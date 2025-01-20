@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/entity/response/messages_templates/message_templates_item_entity.dart';
 import 'package:globipay_admin_panel/modules/media_section/message_templates/message_templates_model.dart';
 import 'package:globipay_admin_panel/modules/media_section/message_templates/templates_list/controller/message_templates_controller.dart';
 import 'package:globipay_admin_panel/router/app_routes.dart';
 import 'package:globipay_admin_panel/router/route_path.dart';
 
-class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController> {
-
-  MessageTemplatesScreenBuilder(){
+class MessageTemplatesScreenBuilder
+    extends BaseView<MessageTemplatesController> {
+  MessageTemplatesScreenBuilder() {
     controller.onInit();
   }
 
@@ -17,19 +18,27 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
   Widget body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Message Management',
-            style: TextStyle(fontWeight: FontWeight.bold)
+        backgroundColor: AppColors.projectBlue, // Set the AppBar color
+        title: const Text(
+          'Message Management',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.projectButtonBlue2, // Ensure the text color contrasts with the background
+          ),
         ),
         actions: [
           ElevatedButton.icon(
             icon: const Icon(Icons.add, color: Colors.white),
-            label: const Text('Create Templates', style: TextStyle(color: Colors.white)),
+            label: const Text(
+              'Create Templates',
+              style: TextStyle(color: Colors.white),
+            ),
             onPressed: () {
-             controller.navigateToAddTemplated();
+              controller.navigateToAddTemplated();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue.shade600,
-              padding: const  EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              backgroundColor: AppColors.projectButtonBlue2,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -69,28 +78,26 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
 
     return filteredTemplates.isEmpty
         ? Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.messenger_outline, size: 100, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            'No Templates Found',
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[600]
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.messenger_outline,
+                    size: 100, color: Colors.grey),
+                const SizedBox(height: 16),
+                Text(
+                  'No Templates Found',
+                  style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-    )
+          )
         : ListView.builder(
-      itemCount: filteredTemplates.length,
-      itemBuilder: (context, index) {
-        final notification = filteredTemplates[index];
-        return _buildMessageCard(notification);
-      },
-    );
+            itemCount: filteredTemplates.length,
+            itemBuilder: (context, index) {
+              final notification = filteredTemplates[index];
+              return _buildMessageCard(notification);
+            },
+          );
   }
 
   Widget _buildMessageCard(MessageTemplatesItemEntity templates) {
@@ -100,8 +107,9 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
+      color: AppColors.projectBlue,
       child: ListTile(
-        contentPadding: const  EdgeInsets.all(16),
+        contentPadding: const EdgeInsets.all(16),
         title: Text(
           templates.title ?? "",
           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -126,7 +134,8 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
         ),
         trailing: IconButton(
           icon: const Icon(Icons.delete, color: Colors.red),
-          onPressed: () => controller.removeMessageTemplate(templates.uid.toString()),
+          onPressed: () =>
+              controller.removeMessageTemplate(templates.uid.toString()),
           tooltip: 'Remove Templates',
         ),
       ),
@@ -137,7 +146,7 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color:  Colors.green[100],
+        color: Colors.green[100],
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -149,7 +158,6 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
       ),
     );
   }
-
 
   Widget _buildUserSelection() {
     return Column(
@@ -166,18 +174,18 @@ class MessageTemplatesScreenBuilder extends BaseView<MessageTemplatesController>
         ),
         SizedBox(height: 10),
         Obx(() => Wrap(
-          spacing: 8,
-          children: controller.searchUsers('').map((message) =>
-              ActionChip(
-                label: Text(message.title ?? ""),
-                onPressed: () => controller.addSelectedTemplates(message),
-              )
-          ).toList(),
-        )),
+              spacing: 8,
+              children: controller
+                  .searchUsers('')
+                  .map((message) => ActionChip(
+                        label: Text(message.title ?? ""),
+                        onPressed: () =>
+                            controller.addSelectedTemplates(message),
+                      ))
+                  .toList(),
+            )),
         SizedBox(height: 10),
-
       ],
     );
   }
 }
-

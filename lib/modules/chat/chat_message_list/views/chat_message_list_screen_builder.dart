@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
 import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 import 'package:globipay_admin_panel/entity/response/chat_session_response/chat_session_response.dart';
@@ -352,12 +353,7 @@ class _ChatMessageListScreenBuilderState
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).primaryColor.withOpacity(0.8),
-            Theme.of(context).primaryColor,
-          ],
-        ),
+        color: AppColors.projectBlue,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -370,7 +366,7 @@ class _ChatMessageListScreenBuilderState
       child: Row(
         children: [
           const Icon(Icons.chat_bubble_outline,
-              color: Colors.white,
+              color: AppColors.projectButtonBlue2,
               size: 28
           ),
           const SizedBox(width: 12),
@@ -379,7 +375,7 @@ class _ChatMessageListScreenBuilderState
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppColors.projectButtonBlue2,
               letterSpacing: 0.5,
             ),
           ),
@@ -394,11 +390,11 @@ class _ChatMessageListScreenBuilderState
     return Row(
       children: [
         IconButton.outlined(
-          hoverColor:Colors.blue,
+          hoverColor: const Color.fromARGB(255, 225, 206, 227),
           splashColor: Colors.orange[100],
 
           icon: const Icon(
-              Icons.refresh, color: Colors.white,
+              Icons.refresh, color: AppColors.projectButtonBlue2,
           ),
           onPressed: () {
             controller.fetchCategories();

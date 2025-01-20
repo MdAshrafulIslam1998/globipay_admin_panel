@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_field.dart';
 import 'package:globipay_admin_panel/core/widgets/text_filed/input_regex.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
@@ -20,9 +21,13 @@ class AddTemplatesScreenBuilder extends BaseView<AddTemplatesController> {
   Widget body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.projectBlue, 
         title: const Text(
           'Create Templates',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.projectButtonBlue2,
+          ),
         ),
         elevation: 1,
       ),
@@ -31,6 +36,7 @@ class AddTemplatesScreenBuilder extends BaseView<AddTemplatesController> {
           padding: const EdgeInsets.all(16.0),
           child: Card(
             elevation: 6,
+            color: AppColors.projectBlue,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
@@ -146,7 +152,7 @@ class AddTemplatesScreenBuilder extends BaseView<AddTemplatesController> {
     return ElevatedButton(
       onPressed: controller.addTemplates,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: AppColors.projectButtonBlue2,
         foregroundColor: Colors.white,
         padding: EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
