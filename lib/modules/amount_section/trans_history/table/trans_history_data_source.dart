@@ -74,16 +74,8 @@ class TransHistoryDataSource extends DataGridSource {
       color: Colors.white,
       cells: row.getCells().map<Widget>((cell) {
         if (cell.columnName == 'coin') {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Text(
-              cell.value.toString(),
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+          return CoinText(
+            rawData: cell.value.toString(),
           );
         }
 
@@ -100,6 +92,33 @@ class TransHistoryDataSource extends DataGridSource {
           ),
         );
       }).toList(),
+    );
+  }
+}
+
+class CoinText extends StatelessWidget {
+  final String rawData;
+  const CoinText({super.key, required this.rawData});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Center(
+            child: Text(
+              rawData,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+              softWrap: true,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        )
+      ],
     );
   }
 }

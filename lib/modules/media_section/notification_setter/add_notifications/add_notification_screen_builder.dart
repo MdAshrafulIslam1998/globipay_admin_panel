@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
 import 'package:globipay_admin_panel/core/widgets/dropdown/app_drop_down.dart';
 import 'package:globipay_admin_panel/core/widgets/dropdown/searchable_dropdown.dart';
@@ -199,7 +200,7 @@ class _AddNotificationScreenBuilderState extends BaseViewState<
     return ElevatedButton(
       onPressed: controller.createNotification,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: AppColors.projectButtonBlue2,
         foregroundColor: Colors.white,
         padding: EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(

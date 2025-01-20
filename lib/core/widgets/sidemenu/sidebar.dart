@@ -51,16 +51,22 @@ class Sidebar extends StatelessWidget {
                 ),
                 child: ListView(
                   children: [
-                    MenuTile(
-                      isActive: AppConstants.currentPath == RoutePath.dashboard,
-                      title: "Dashboard",
-                      // activeIconSrc: "assets/icons/bulb_filled.svg",
-                      activeIconSrc: "assets/icons/ash_home_filled.svg",
-                      inactiveIconSrc: "assets/icons/ash_home_light.svg",
-                      onPressed: () {
-                        navigate(RoutePath.dashboard);
-                      },
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        dividerColor: Colors.transparent,
+                      ),
+                      child: MenuTile(
+                        isSubmenu: true,
+                        isActive: AppConstants.currentPath == RoutePath.dashboard,
+                        title: "Dashboard",
+                        activeIconSrc: "assets/icons/ash_home_filled.svg",
+                        inactiveIconSrc: "assets/icons/ash_home_light.svg",
+                        onPressed: () {
+                          navigate(RoutePath.dashboard);
+                        },
+                      ),
                     ),
+
                     // Users Section with ExpansionTile
                     Theme(
                       data: Theme.of(context).copyWith(

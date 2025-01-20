@@ -33,9 +33,7 @@ class MenuTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: isSubmenu ? AppDefaults.padding * 6 : 0,
-          right: isSubmenu ? AppDefaults.padding : 0),
+      padding: EdgeInsets.only(left: !isSubmenu ? 10 : 0,),
       child: Container(
         child: ListTile(
           shape: RoundedRectangleBorder(

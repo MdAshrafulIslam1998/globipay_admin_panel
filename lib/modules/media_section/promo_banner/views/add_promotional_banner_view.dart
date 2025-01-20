@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/widgets/web_image/web_image.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/controller/promotional_banner_controller.dart';
 import 'package:intl/intl.dart';
@@ -308,7 +309,7 @@ class _AddPromotionalBannerViewState extends BaseViewState<AddPromotionalBannerV
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
+                        backgroundColor: AppColors.projectButtonBlue2,
                         foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(
                             vertical: 16,

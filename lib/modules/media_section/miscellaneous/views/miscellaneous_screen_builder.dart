@@ -202,7 +202,7 @@ class _MiscellaneousScreenBuilderState
                     () => SfDataPagerTheme(
                       data: SfDataPagerThemeData(
                         itemColor: Colors.white,
-                        selectedItemColor: const Color(0xFF2196F3),
+                        selectedItemColor: const Color(0xFF2C3E50),
                         itemBorderRadius: BorderRadius.circular(50),
                         backgroundColor: const Color(0xFFF4F7FF),
                       ),

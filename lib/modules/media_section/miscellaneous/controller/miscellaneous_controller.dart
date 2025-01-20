@@ -103,7 +103,7 @@ class MiscellaneousController extends BaseController{
             content: SingleChildScrollView(
               child: Column(
                 children: [
-                  AppText('Content: ${user.content}'),
+                  SelectableText('Content: ${user.content}'),
                 ],
               ),
             ),

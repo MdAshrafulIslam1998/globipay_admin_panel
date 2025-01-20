@@ -149,7 +149,10 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ElevatedButton.icon(
-                      icon: Icon(Icons.ac_unit),
+                      icon: Icon(Icons.ac_unit,
+                        color: Colors.black54,
+
+                      ),
                       label: Text('All'),
                       onPressed: () {
                         controller.fetchAllTransactions(
@@ -163,20 +166,24 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                     AppSpaces.horizontalSpace,
 
                     ElevatedButton.icon(
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.person,
+                      color: Colors.black54,
+                      ),
                       label: Text('User'),
                       onPressed: () {
                         controller.fetchUserWiseTransactionHistory(
                             1, controller.pageSize.value);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.projectButtonBlue2.withOpacity(0.1),
-                        foregroundColor: AppColors.projectButtonBlue2,
+                        backgroundColor: Colors.green[100],
+                        foregroundColor: Colors.green[800],
                       ),
                     ),
                     AppSpaces.horizontalSpace,
                     ElevatedButton.icon(
-                      icon: Icon(Icons.category_outlined),
+                      icon: Icon(Icons.category_outlined,
+                        color: Colors.black54,
+                      ),
                       label: Text('Category'),
                       onPressed: () {
                         controller.setCategorySelectionVisibility(
@@ -184,8 +191,8 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.projectButtonBlue2.withOpacity(0.1),
-                        foregroundColor: AppColors.projectButtonBlue2,
+                        backgroundColor: Colors.green[100],
+                        foregroundColor: Colors.green[800],
                       ),
                     ),
                     Obx(
