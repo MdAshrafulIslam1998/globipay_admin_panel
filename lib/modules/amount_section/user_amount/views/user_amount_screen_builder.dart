@@ -6,6 +6,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:globipay_admin_panel/core/base/base_view_state.dart';
 import 'package:globipay_admin_panel/core/constants/app_spaces.dart';
 import 'package:globipay_admin_panel/core/constants/enum/sort_type.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/entity/response/category/category_item_entity.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/controller/trans_history_controller.dart';
 import 'package:globipay_admin_panel/modules/amount_section/trans_history/table/trans_history_data_pager_delegate.dart';
@@ -44,16 +45,13 @@ class CustomColumnSizer extends ColumnSizer {
     return super.computeCellWidth(column, row, cellValue, textStyle);
   }
 }
-
 class UserAmountScreenBuilder extends StatefulWidget {
   const UserAmountScreenBuilder({super.key});
-
   @override
   State<UserAmountScreenBuilder> createState() => _UserAmountScreenBuilderState();
 }
 
-class _UserAmountScreenBuilderState
-    extends BaseViewState<UserAmountScreenBuilder, UserAmountController> {
+class _UserAmountScreenBuilderState extends BaseViewState<UserAmountScreenBuilder, UserAmountController> {
   final CustomColumnSizer _customColumnSizer = CustomColumnSizer();
   late Map<String, double> columnWidths = {
     'name': double.nan,
@@ -72,72 +70,64 @@ class _UserAmountScreenBuilderState
     super.initState();
   }
 
-  @override
-  PreferredSizeWidget? appBar() {
-    return AppBar(title: Text('User Amount'));
-  }
 
   @override
   Widget body(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 240, 238, 255),
+      color: AppColors.projectWhite,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         child: Card(
-          elevation: 6,
+          color: AppColors.projectWhite,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Header section remains exactly the same
+              // Header section with updated design
               Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color.fromARGB(255, 28, 170, 61),
-                      const Color.fromARGB(255, 127, 224, 135),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: const BorderRadius.only(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                decoration: const BoxDecoration(
+                  color: AppColors.projectBlue,
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 8,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Obx(
-                      () => Text(
-                        'Total Users: ${controller.totalItems}',
-                        style: TextStyle(
-                          fontFamily: 'newyork',
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                    const Text(
+                      'User Amount',
+                      style: TextStyle(
+                        fontFamily: 'newyork',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.projectFontBlue,
                       ),
                     ),
                     Row(
                       children: [
+                        Obx(
+                          () => Text(
+                            'Total Users: ${controller.totalItems}',
+                            style: const TextStyle(
+                              fontFamily: 'newyork',
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.projectFontBlue,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
                         const Text(
                           'Show entries:   ',
                           style: TextStyle(
                             fontFamily: 'newyork',
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: AppColors.projectFontBlue,
                           ),
                         ),
                         Container(
@@ -146,7 +136,7 @@ class _UserAmountScreenBuilderState
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Colors.white,
+                              color: Colors.grey[300]!,
                               width: 1,
                             ),
                           ),
@@ -158,10 +148,10 @@ class _UserAmountScreenBuilderState
                                     value: size,
                                     child: Text(
                                       size.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromARGB(143, 0, 0, 0),
+                                        color: Color.fromARGB(143, 0, 0, 0),
                                         fontFamily: 'newyork',
                                       ),
                                     ),
@@ -179,74 +169,83 @@ class _UserAmountScreenBuilderState
                   ],
                 ),
               ),
-              // Updated DataGrid section
+              // DataGrid section with original row settings and updated design
               Expanded(
-                child: Obx(
-                  () => SfDataGrid(
-                    source: UserAmountDataSource(
-                      controller.transactions.value,
-                      onActionTap: (user, action) {
-                        switch (action) {
-                          case 'details':
-                            controller.onUserDetailsClicked(user);
-                            break;
-                        }
-                      },
-                      visibleColumns: controller.visibleColumns.value,
-                    ),
-                    // onQueryRowHeight: (details) {
-                    //   return details.getIntrinsicRowHeight(details.rowIndex);
-                    // },
-                    allowColumnsResizing: true,
-                    onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
-                      setState(() {
-                        columnWidths[details.column.columnName] = details.width;
-                      });
-                      return true;
-                    },
-                    gridLinesVisibility: GridLinesVisibility.both,
-                    headerGridLinesVisibility: GridLinesVisibility.both,
-                    columnWidthMode: ColumnWidthMode.fill,
-                    columnSizer: _customColumnSizer,
-                    columns: _buildColumns(controller.visibleColumns.value),
-                    rowHeight: 230,
-                    headerRowHeight: 60,
-                  ),
-                ),
-              ),
-              // Pagination section remains exactly the same
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 232, 236, 233),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16),
-                  ),
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.grey[300]!,
-                      width: 1,
-                    ),
-                  ),
-                ),
-                child: Obx(
-                  () => SfDataPagerTheme(
-                    data: SfDataPagerThemeData(
-                      itemColor: Colors.white,
-                      selectedItemColor: const Color.fromARGB(164, 12, 87, 62),
-                      itemBorderRadius: BorderRadius.circular(50),
-                      backgroundColor: const Color.fromARGB(255, 232, 236, 233),
-                    ),
-                    child: SfDataPager(
-                      delegate: UserAmountDataPagerDelegate(controller),
-                      pageCount: max(
-                        1,
-                        (controller.totalItems.value / controller.pageSize.value)
-                            .ceilToDouble(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  child: Obx(
+                    () => SfDataGridTheme(
+                      data: SfDataGridThemeData(
+                        headerColor: AppColors.projectHeaderBlue,
+                      ),
+                      child: SfDataGrid(
+                        source: UserAmountDataSource(
+                          controller.transactions.value,
+                          onActionTap: (user, action) {
+                            switch (action) {
+                              case 'details':
+                                controller.onUserDetailsClicked(user);
+                                break;
+                            }
+                          },
+                          visibleColumns: controller.visibleColumns.value,
+                        ),
+                        // onQueryRowHeight: (details) {
+                        //   return details.getIntrinsicRowHeight(details.rowIndex);
+                        // },
+                        allowColumnsResizing: true,
+                        onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
+                          setState(() {
+                            columnWidths[details.column.columnName] = details.width;
+                          });
+                          return true;
+                        },
+                        gridLinesVisibility: GridLinesVisibility.both,
+                        headerGridLinesVisibility: GridLinesVisibility.both,
+                        columnWidthMode: ColumnWidthMode.fill,
+                        columnSizer: _customColumnSizer,
+                        columns: _buildColumns(controller.visibleColumns.value),
+                        rowHeight: 230, // Restored original row height
+                        headerRowHeight: 60,
                       ),
                     ),
                   ),
+                ),
+              ),
+              // Pagination section with updated design
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF4F7FF),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Obx(
+                        () => SfDataPagerTheme(
+                          data: SfDataPagerThemeData(
+                            itemColor: Colors.white,
+                            selectedItemColor: const Color(0xFF2C3E50),
+                            itemBorderRadius: BorderRadius.circular(50),
+                            backgroundColor: const Color(0xFFF4F7FF),
+                          ),
+                          child: SfDataPager(
+                            delegate: UserAmountDataPagerDelegate(controller),
+                            pageCount: max(
+                              1,
+                              (controller.totalItems.value / controller.pageSize.value)
+                                  .ceilToDouble(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -267,12 +266,10 @@ class _UserAmountScreenBuilderState
       'edit': {'title': 'Edit', 'paddingPercent': 30},
       'details': {'title': 'Details', 'paddingPercent': 30},
     };
-
     return visibleColumns.map((colName) {
       final columnData = columnDefinitions[colName];
       final title = (columnData?['title'] as String?) ?? colName;
       final paddingPercent = (columnData?['paddingPercent'] as int?) ?? 10;
-
       return GridColumn(
         columnName: colName,
         width: columnWidths[colName]!,
@@ -283,7 +280,6 @@ class _UserAmountScreenBuilderState
 
   Widget _buildHeaderCell(String text, int paddingPercent) {
     final double horizontalPadding = paddingPercent.toDouble();
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       alignment: Alignment.center,

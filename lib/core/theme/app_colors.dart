@@ -29,4 +29,5 @@ class AppColors {
   static const projectFontBlue = Color(0xFF2C3E50);
   static const projectHeaderBlue = Color(0xFFEDF7ED);
   static const projectButtonBlue = Color(0xFFBBDEFB);
+  static const projectButtonBlue2 = Color(0xFF4E538A);
 }

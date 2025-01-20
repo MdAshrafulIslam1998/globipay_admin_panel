@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
+import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
 import 'package:globipay_admin_panel/entity/response/level/level_item_response_entity.dart';
 import 'package:globipay_admin_panel/modules/users_section/add_level/controller/add_level_controller.dart';
@@ -11,25 +12,25 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
     controller.onInit();
   }
 
+  static const projectButtonBlue = Color(0xFFBBDEFB);
+  static const projectBlue = Color(0xFFF4F7FF);
+
   @override
   Widget body(BuildContext context) {
-    final ColorScheme colorScheme = ColorScheme.fromSeed(
-      seedColor: const Color(0xFFE0FFF6),
-      brightness: Brightness.light,
-    );
-
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: projectBlue,
       appBar: AppBar(
-        title: Text(
-          'Level Management',
-          style: TextStyle(
-            color: Color(0xB5080007),
-            fontWeight: FontWeight.w600,
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Level Management',
+            style: TextStyle(
+              color: Color(0xB5080007),
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
-        backgroundColor: Color(0xFFE5F7E3),
-        centerTitle: true,
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Padding(
@@ -64,11 +65,10 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: colorScheme.primary,
+                              color: Colors.black,
                             ),
                           ),
                           const SizedBox(height: 16),
-
                           Expanded(
                             child: Obx(() {
                               if (controller.levels.isEmpty) {
@@ -89,14 +89,13 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                   final level = controller.levels[index];
                                   return Container(
                                     decoration: BoxDecoration(
-                                      color: colorScheme.surface,
+                                      color: projectBlue,
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
                                         color: Colors.grey.shade200,
                                       ),
                                     ),
-                                    child:
-                                    ListTile(
+                                    child: ListTile(
                                       contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 16,
                                         vertical: 8,
@@ -105,7 +104,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                         'Level ${level.levelName}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
-                                          color: colorScheme.primary,
+                                          color: Colors.black,
                                         ),
                                       ),
                                       subtitle: Column(
@@ -152,7 +151,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                             ),
                                           ],
                                         ),
-                                      )
+                                      ),
                                     ),
                                   );
                                 },
@@ -164,7 +163,6 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                     ),
                   ),
                 ),
-
                 // Add New Level Column
                 Expanded(
                   flex: 1,
@@ -191,7 +189,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: colorScheme.primary,
+                                color: Colors.black,
                               ),
                             ),
                             const SizedBox(height: 16),
@@ -258,7 +256,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                             ElevatedButton(
                               onPressed: controller.addLevel,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFF79A375),
+                                backgroundColor: AppColors.projectButtonBlue2,
                                 foregroundColor: Colors.white,
                                 minimumSize: const Size(double.infinity, 50),
                                 shape: RoundedRectangleBorder(
