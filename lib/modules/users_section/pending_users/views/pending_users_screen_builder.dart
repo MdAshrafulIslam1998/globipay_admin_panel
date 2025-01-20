@@ -37,6 +37,10 @@ class _PendingUsersScreenBuilderState extends BaseViewState<
     super.initState();
   }
 
+@override
+  EdgeInsets setPagePadding() {
+    return const EdgeInsets.all(0);
+  }
 
 
   @override
@@ -44,9 +48,8 @@ class _PendingUsersScreenBuilderState extends BaseViewState<
     return Container(
       color: const Color(0xFFFFFFFF),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         child: Card(
-          elevation: 6,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -56,8 +59,8 @@ class _PendingUsersScreenBuilderState extends BaseViewState<
               // Header
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 20,
+                  horizontal: 14,
+                  vertical: 10,
                 ),
                 decoration: const BoxDecoration(
                   color: Color(0xFFF4F7FF),
@@ -73,7 +76,7 @@ class _PendingUsersScreenBuilderState extends BaseViewState<
                       'Pending Users',
                       style: TextStyle(
                         fontFamily: 'newyork',
-                        fontSize: 26,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF2C3E50),
                       ),
@@ -131,7 +134,7 @@ class _PendingUsersScreenBuilderState extends BaseViewState<
               // DataGrid
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
                   child: Obx(
                     () => SfDataGridTheme(
                       data: SfDataGridThemeData(

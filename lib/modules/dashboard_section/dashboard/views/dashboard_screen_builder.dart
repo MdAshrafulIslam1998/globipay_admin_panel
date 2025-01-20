@@ -53,6 +53,7 @@ class _DashboardScreenState
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
+                    color: AppColors.projectFontBlue,
                   ),
                 ),
               ],
@@ -69,7 +70,7 @@ class _DashboardScreenState
                     value:
                         '${controller.dashboardBalance.value?.total_transactions.toCurrencyFormat() ?? 0.0}',
                     icon: Icons.account_balance_wallet,
-                    color: Colors.blue,
+                    color: const Color.fromARGB(255, 78, 83, 138),
                   ),
                   SizedBox(width: 20),
                   _buildStatCard(
@@ -77,7 +78,7 @@ class _DashboardScreenState
                     value:
                         '${controller.dashboardBalance.value?.total_primary.toCurrencyFormat() ?? 0.0}',
                     icon: Icons.trending_up,
-                    color: Colors.green,
+                    color: const Color.fromARGB(255, 29, 160, 34),
                   ),
                   SizedBox(width: 20),
                   _buildStatCard(
@@ -85,7 +86,7 @@ class _DashboardScreenState
                     value:
                         '${controller.dashboardBalance.value?.total_secondary.toCurrencyFormat() ?? 0.0}',
                     icon: Icons.trending_down_outlined,
-                    color: Colors.red,
+                    color: const Color.fromARGB(255, 235, 46, 32),
                   ),
                 ],
               ),
@@ -304,7 +305,7 @@ class _DashboardScreenState
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.purple[50],
+              color: AppColors.projectButtonBlue,
               borderRadius: BorderRadius.circular(10),
             ),
             padding: EdgeInsets.all(15),

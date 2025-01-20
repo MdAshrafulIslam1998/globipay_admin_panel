@@ -76,7 +76,6 @@ class Sidebar extends StatelessWidget {
                             BlendMode.srcIn,
                           ),
                         ),
-
                         title: Text(
                           "Users",
                           style: TextStyle(
@@ -305,7 +304,6 @@ class Sidebar extends StatelessWidget {
                                 "assets/icons/ash_textadd_filled.svg",
                             inactiveIconSrc:
                                 "assets/icons/ash_textadd_light.svg",
-                            count: 6,
                             onPressed: () {
                               navigate(RoutePath.messageTemplates);
                             },

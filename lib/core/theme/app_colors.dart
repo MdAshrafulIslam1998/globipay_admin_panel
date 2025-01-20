@@ -22,4 +22,11 @@ class AppColors {
   static const secondaryBabyBlue = Color(0xFFB1E5FC);
   static const secondaryMintGreen = Color(0xFFB5E4CA);
   static const secondaryPaleYellow = Color(0xFFFFD88D);
+
+  // color pallete
+  static const projectWhite = Color(0xFFFFFFFF);
+  static const projectBlue = Color(0xFFF4F7FF);
+  static const projectFontBlue = Color(0xFF2C3E50);
+  static const projectHeaderBlue = Color(0xFFEDF7ED);
+  static const projectButtonBlue = Color(0xFFBBDEFB);
 }
