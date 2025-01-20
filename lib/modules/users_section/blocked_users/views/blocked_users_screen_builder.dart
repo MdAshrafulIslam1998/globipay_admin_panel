@@ -19,8 +19,8 @@ class BlockedUsersScreenBuilder extends StatefulWidget {
       _BlockedUsersScreenBuilderState();
 }
 
-class _BlockedUsersScreenBuilderState extends BaseViewState<
-    BlockedUsersScreenBuilder, BlockedUsersController> {
+class _BlockedUsersScreenBuilderState
+    extends BaseViewState<BlockedUsersScreenBuilder, BlockedUsersController> {
   late Map<String, double> columnWidths = {
     'code': double.nan,
     'name': double.nan,
@@ -36,19 +36,19 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
     super.initState();
   }
 
-  // @override
-  // PreferredSizeWidget? appBar() {
-  //   return AppBar(title: const Text('Inactive Users'));
-  // }
+  @override
+  EdgeInsets setPagePadding() {
+    return const EdgeInsets.all(0);
+  }
 
   @override
   Widget body(BuildContext context) {
     return Container(
       color: const Color(0xFFFFFFFF),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         child: Card(
-          elevation: 6,
+   
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -58,8 +58,8 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
               // Header
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 20,
+                  horizontal: 14,
+                  vertical: 10,
                 ),
                 decoration: const BoxDecoration(
                   color: Color(0xFFF4F7FF),
@@ -75,7 +75,7 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
                       'Inactive Users',
                       style: TextStyle(
                         fontFamily: 'newyork',
-                        fontSize: 26,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF2C3E50),
                       ),
@@ -133,7 +133,7 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
               // DataGrid
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
                   child: Obx(
                     () => SfDataGridTheme(
                       data: SfDataGridThemeData(
@@ -150,9 +150,11 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
                           visibleColumns: controller.visibleColumns.value,
                         ),
                         allowColumnsResizing: true,
-                        onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
+                        onColumnResizeUpdate:
+                            (ColumnResizeUpdateDetails details) {
                           setState(() {
-                            columnWidths[details.column.columnName] = details.width;
+                            columnWidths[details.column.columnName] =
+                                details.width;
                           });
                           return true;
                         },
@@ -169,7 +171,8 @@ class _BlockedUsersScreenBuilderState extends BaseViewState<
               ),
               // Pagination
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 decoration: const BoxDecoration(
                   color: Color(0xFFF4F7FF),
                   borderRadius: BorderRadius.only(

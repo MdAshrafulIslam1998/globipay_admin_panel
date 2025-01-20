@@ -15,10 +15,12 @@ import 'package:syncfusion_flutter_core/theme.dart';
 class UserLevelsScreenBuilder extends StatefulWidget {
   const UserLevelsScreenBuilder({super.key});
   @override
-  State<UserLevelsScreenBuilder> createState() => _UserLevelsScreenBuilderState();
+  State<UserLevelsScreenBuilder> createState() =>
+      _UserLevelsScreenBuilderState();
 }
 
-class _UserLevelsScreenBuilderState extends BaseViewState<UserLevelsScreenBuilder, UserLevelsController> {
+class _UserLevelsScreenBuilderState
+    extends BaseViewState<UserLevelsScreenBuilder, UserLevelsController> {
   late Map<String, double> columnWidths = {
     'name': double.nan,
     'email': double.nan,
@@ -37,13 +39,17 @@ class _UserLevelsScreenBuilderState extends BaseViewState<UserLevelsScreenBuilde
   }
 
   @override
+  EdgeInsets setPagePadding() {
+    return const EdgeInsets.all(0);
+  }
+
+  @override
   Widget body(BuildContext context) {
     return Container(
       color: const Color(0xFFFFFFFF),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         child: Card(
-          elevation: 6,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -53,8 +59,8 @@ class _UserLevelsScreenBuilderState extends BaseViewState<UserLevelsScreenBuilde
               // Header
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 20,
+                  horizontal: 14,
+                  vertical: 10,
                 ),
                 decoration: const BoxDecoration(
                   color: Color(0xFFF4F7FF),
@@ -70,7 +76,7 @@ class _UserLevelsScreenBuilderState extends BaseViewState<UserLevelsScreenBuilde
                       'User Levels',
                       style: TextStyle(
                         fontFamily: 'newyork',
-                        fontSize: 26,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF2C3E50),
                       ),
@@ -150,7 +156,7 @@ class _UserLevelsScreenBuilderState extends BaseViewState<UserLevelsScreenBuilde
               // DataGrid
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
                   child: Obx(
                     () => SfDataGridTheme(
                       data: SfDataGridThemeData(
@@ -169,9 +175,11 @@ class _UserLevelsScreenBuilderState extends BaseViewState<UserLevelsScreenBuilde
                           visibleColumns: controller.visibleColumns.value,
                         ),
                         allowColumnsResizing: true,
-                        onColumnResizeUpdate: (ColumnResizeUpdateDetails details) {
+                        onColumnResizeUpdate:
+                            (ColumnResizeUpdateDetails details) {
                           setState(() {
-                            columnWidths[details.column.columnName] = details.width;
+                            columnWidths[details.column.columnName] =
+                                details.width;
                           });
                           return true;
                         },
@@ -188,7 +196,8 @@ class _UserLevelsScreenBuilderState extends BaseViewState<UserLevelsScreenBuilde
               ),
               // Pagination
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 decoration: const BoxDecoration(
                   color: Color(0xFFF4F7FF),
                   borderRadius: BorderRadius.only(
