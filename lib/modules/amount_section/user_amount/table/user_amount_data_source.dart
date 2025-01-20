@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/entity/response/trans_history_response.dart/transaction_item_entity.dart';
 import 'package:globipay_admin_panel/entity/response/user_response/user_response_item_entity.dart';
+import 'package:globipay_admin_panel/modules/amount_section/user_amount/table/helper/category_visualize_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -64,27 +65,7 @@ class UserAmountDataSource extends DataGridSource {
       color: Colors.white,
       cells: row.getCells().map<Widget>((cell) {
         if (cell.columnName == 'coin') {
-          return Container(
-            alignment: Alignment.center,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: const Color(0xFF237025).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                cell.value.toString(),
-                style: const TextStyle(
-                  fontFamily: 'iAWriterQuattroS',
-                  color: Color(0xFF237025),
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          );
+          return CategoryDisplay(rawData: cell.value.toString());
         }
 
         return Container(
