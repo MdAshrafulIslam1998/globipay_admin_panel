@@ -75,7 +75,7 @@ class TransHistoryDataSource extends DataGridSource {
       cells: row.getCells().map<Widget>((cell) {
         if (cell.columnName == 'coin') {
           return CoinText(
-            rawData: cell.value.toString(),
+            rawData: cell.value,
           );
         }
 
@@ -102,23 +102,27 @@ class CoinText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          flex: 1,
-          child: Center(
-            child: Text(
-              rawData,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-              softWrap: true,
-              textAlign: TextAlign.center,
-            ),
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      constraints: const BoxConstraints(
+        minWidth: 100,  // Minimum width to ensure text has space
+        maxWidth: double.infinity,  // Allow text to take as much width as needed
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,  // Allow horizontal scrolling if text is too long
+        child: Text(
+          rawData,  // Use the actual rawData instead of the test string
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'iAWriterQuattroS',  // Matching the style from your DataGrid
           ),
-        )
-      ],
+          softWrap: true,
+          overflow: TextOverflow.visible,  // Show all text without ellipsis
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }

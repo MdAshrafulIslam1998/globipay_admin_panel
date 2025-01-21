@@ -45,6 +45,57 @@ class ChatMessageController extends BaseController {
 
   List<CategoryItemEntity> categories = List<CategoryItemEntity>.empty(growable: true);
 
+  RxString selectedStatus = "all".obs;
+  RxString selectedCategory = "all".obs;
+
+  // Helper method to get filtered chat list
+  List<ChatSessionResponse> getFilteredChats() {
+    return chatList.where((chat) {
+      bool statusMatch = selectedStatus.value == "all" ||
+          chat.status == selectedStatus.value;
+      bool categoryMatch = selectedCategory.value == "all" ||
+          chat.category == selectedCategory.value;
+      return statusMatch && categoryMatch;
+    }).toList();
+  }
+
+  // Get unique statuses from chat list
+  List<String> getUniqueStatuses() {
+    return ["all", ...chatList.map((c) => c.status ?? "").toSet().toList()];
+  }
+
+  // Get categories for current status
+  List<CategoryItemEntity> getCategoriesForStatus(String status) {
+    var chatsInStatus = status == "all"
+        ? chatList
+        : chatList.where((c) => c.status == status).toList();
+
+    var categoryIds = chatsInStatus.map((c) => c.category ?? "").toSet().toList();
+    return categories.where((c) => categoryIds.contains(c.id.toString())).toList();
+  }
+
+  int getStatusCount(String status) {
+    if (status == "all") {
+      return chatList.length;
+    }
+    return chatList.where((chat) => chat.status == status).length;
+  }
+
+  // Get count for each category within selected status
+  int getCategoryCount(String categoryId) {
+    if (categoryId == "all") {
+      return selectedStatus.value == "all"
+          ? chatList.length
+          : chatList.where((chat) => chat.status == selectedStatus.value).length;
+    }
+
+    return chatList.where((chat) {
+      bool statusMatch = selectedStatus.value == "all" || chat.status == selectedStatus.value;
+      bool categoryMatch = chat.category == categoryId;
+      return statusMatch && categoryMatch;
+    }).length;
+  }
+
   @override
   onInit() async{
     super.onInit();

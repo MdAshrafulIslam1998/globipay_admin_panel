@@ -915,6 +915,7 @@ class ChatController extends BaseController {
       details: message,
       richMediaUrl: "",
       deepLink: "",
+      type: "chat",
     );
   }
 

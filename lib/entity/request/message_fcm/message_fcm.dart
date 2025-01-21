@@ -24,12 +24,15 @@ class MessageFcm {
   @JsonKey(name: "deep_link")
   String? deepLink;
 
+  String? type;
+
   MessageFcm({
     this.userId,
     this.title,
     this.details,
     this.richMediaUrl,
     this.deepLink,
+    this.type,
   });
 
   factory MessageFcm.fromJson(Map<String, dynamic> json) => _$MessageFcmFromJson(json);

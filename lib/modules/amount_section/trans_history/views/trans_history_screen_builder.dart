@@ -265,8 +265,12 @@ class _TransactionHistoryScreenBuilderState extends BaseViewState<
                         headerGridLinesVisibility: GridLinesVisibility.both,
                         columnWidthMode: ColumnWidthMode.fill,
                         columns: _buildColumns(controller.visibleColumns.value),
-                        rowHeight: 50,
+                        rowHeight: double.nan, // This enables auto row height
                         headerRowHeight: 60,
+                        onQueryRowHeight: (details) {
+                          return details.getIntrinsicRowHeight(details.rowIndex);
+                        },
+
                       ),
                     ),
                   ),

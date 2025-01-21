@@ -10,273 +10,13 @@ import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 import 'package:globipay_admin_panel/entity/response/chat_session_response/chat_session_response.dart';
 import '../controller/chat_message_controller.dart';
 import 'package:globipay_admin_panel/core/utils/extensions.dart';
+import 'package:shimmer/shimmer.dart';
+import 'dart:ui';
 
 /**
  * Created by Abdullah on 16/10/24 08:01 PM.
  */
 
-/*
-class ChatMessageListScreenBuilder extends StatefulWidget {
-  const ChatMessageListScreenBuilder({super.key});
-
-  @override
-  State<ChatMessageListScreenBuilder> createState() =>
-      _ChatMessageListScreenBuilderState();
-}
-
-class _ChatMessageListScreenBuilderState
-    extends BaseViewState<ChatMessageListScreenBuilder, ChatMessageController> {
-  @override
-  void initState() {
-    controller.onInit();
-    super.initState();
-  }
-
-  @override
-  EdgeInsets setPagePadding() {
-    return const EdgeInsets.all(18);
-  }
-
-  @override
-  Widget body(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-
-        AppSpaces.spaceBetweenChild,
-
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-          child: Text(
-            'Messages',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Expanded(
-          child: Obx(
-            () => ListView.builder(
-              itemCount: controller.chatList.value.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final chat = controller.chatList[index];
-                return ChatListItem(chat, controller);
-              },
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class ChatListItem extends StatelessWidget {
-  final ChatSessionResponse chat;
-  ChatMessageController controller;
-  ChatListItem(this.chat, this.controller);
-
-  bool isChatActive (ChatSessionResponse chat){
-    return chat.status == 'closed' ? false : true;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: !isChatActive(chat) ? null : (){
-        controller.onMessageItemClicked(chat);
-      } ,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          color: getBackgroundColor(chat),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 8),
-                  child: CircleAvatar(
-                    radius: 24,
-                    backgroundColor: Colors.grey[200],
-                    child: Image.network(
-                      chat.avatar_url ?? '',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: getUserMessage(chat),
-                          ),
-                          getTrailingWidget(chat)
-                        ],
-                      ),
-                      AppSpaces.spaceBetweenChild,
-                      const Divider(height: 2, color: Colors.black12),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-
-  Color getBackgroundColor(ChatSessionResponse chat) {
-    return chat.status == 'closed'
-        ? ColorPalettes.colorError.withOpacity(0.1)
-        : ColorPalettes.colorPrimary.withOpacity(0.1);
-  }
-
-  Widget getTrailingWidget(ChatSessionResponse chat) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        AppText(
-           chat.last_message_timestamp?.chatMessageTimestamp() ?? '',
-          style: const TextStyle(fontSize: 14),
-        ),
-       */
-/* if (chat.status != null)*//*
-
-        StatusBadge(status: chat.status ?? ""),
-
-      ],
-    );
-  }
-
-  Widget getUserMessage(ChatSessionResponse chat) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AppText(chat.user_name ?? '',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-        Row(
-          children: [
-            if (chat.isTyping ?? false)
-              AppText(
-                "Typing...",
-                style: const TextStyle(
-                  fontStyle: FontStyle.italic,
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
-              )
-            else ...[
-              if (chat.message_type != null)
-                AttachmentIcon(type: chat.message_type!),
-              AppText(
-                chat.last_message ?? '',
-                style: const TextStyle(fontSize: 14),
-                maxLength: 30,
-                maxLine: 1,
-              ),
-            ]
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-
-class StatusBadge extends StatelessWidget {
-  final String status;
-
-  const StatusBadge({required this.status});
-
-  @override
-  Widget build(BuildContext context) {
-    Color backgroundColor;
-    Color textColor;
-
-    switch (status.toLowerCase()) {
-      case 'new':
-        backgroundColor = ColorPalettes.colorPrimary;
-        textColor = Colors.white;
-        break;
-      case 'closed':
-        backgroundColor = ColorPalettes.colorPrimary;
-        textColor = Colors.white;
-        break;
-      default:
-        backgroundColor = Colors.grey.shade200;
-        textColor = Colors.black;
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: AppText(
-        status,
-        style: TextStyle(
-            color: textColor, fontSize: 12, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-}
-
-class AttachmentIcon extends StatelessWidget {
-  final String type;
-
-  AttachmentIcon({required this.type});
-
-  @override
-  Widget build(BuildContext context) {
-    IconData? iconData;
-    switch (type.toLowerCase()) {
-      case 'voice':
-        iconData = Icons.mic;
-        break;
-      case 'video':
-        iconData = Icons.videocam;
-        break;
-      case 'file':
-        iconData = Icons.insert_drive_file;
-        break;
-      case 'image':
-        iconData = CupertinoIcons.photo;
-        break;
-      default:
-        iconData = null;
-    }
-
-    return iconData == null ? SizedBox() : Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: Icon(iconData, size: 16, color: Theme.of(context).hintColor),
-    );
-  }
-}
-
-
-*/
-
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ChatMessageListScreenBuilder extends StatefulWidget {
   const ChatMessageListScreenBuilder({super.key});
@@ -308,45 +48,204 @@ class _ChatMessageListScreenBuilderState
       children: [
         _buildHeader(),
         AppSpaces.spaceBetweenChild,
+        _buildStatusTabs(),
+        AppSpaces.spaceBetweenChild,
+        _buildCategoryChips(),
+        AppSpaces.spaceBetweenChild,
         Expanded(
-          child: Obx(
-                () =>
-                controller.chatList.value.length == 0
-                    ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.messenger_outline_rounded,
-                        size: 48,
-                        color: Colors.grey.shade400,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'No messages found',
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ) :
-                ListView.builder(
-              controller: _scrollController,
-              physics: const BouncingScrollPhysics(),
-              itemCount: controller.chatList.value.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final chat = controller.chatList[index];
-                return _buildAnimatedChatItem(chat, index);
-
-              },
-            ),
-          ),
-        )
+          child: Obx(() => _buildChatList()),
+        ),
       ],
     );
+  }
+  Widget _buildStatusTabs() {
+    return Obx(() => SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: controller.getUniqueStatuses().map((status) {
+          bool isSelected = controller.selectedStatus.value == status;
+          int count = controller.getStatusCount(status);
+
+          return Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: FilterChip(
+              selected: isSelected,
+              label: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(status.capitalize ?? 'All'),
+                  const SizedBox(width: 4),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: isSelected ? Colors.white.withOpacity(0.2) : Colors.grey.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      count.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: isSelected ? Colors.white : Colors.black87,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              onSelected: (selected) {
+                controller.selectedStatus.value = status;
+                controller.selectedCategory.value = "all";
+              },
+              backgroundColor: Colors.grey[200],
+              selectedColor: _getStatusColor(status),
+              labelStyle: TextStyle(
+                color: isSelected ? Colors.white : Colors.black87,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            ),
+          );
+        }).toList(),
+      ),
+    ));
+  }
+
+  Widget _buildCategoryChips() {
+    return Obx(() => SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          _buildCategoryChip(
+            isAll: true,
+            name: 'All Categories',
+            count: controller.getCategoryCount("all"),
+            onSelected: (_) => controller.selectedCategory.value = "all",
+            isSelected: controller.selectedCategory.value == "all",
+          ),
+          ...controller
+              .getCategoriesForStatus(controller.selectedStatus.value)
+              .map((category) {
+            bool isSelected = controller.selectedCategory.value == category.id.toString();
+            int count = controller.getCategoryCount(category.id.toString());
+
+            return Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: _buildCategoryChip(
+                name: category.name ?? '',
+                count: count,
+                onSelected: (_) {
+                  controller.selectedCategory.value = category.id.toString();
+                },
+                isSelected: isSelected,
+                imageUrl: category.image,
+              ),
+            );
+          }).toList(),
+        ],
+      ),
+    ));
+  }
+
+
+  Widget _buildCategoryChip({
+    bool isAll = false,
+    required String name,
+    required int count,
+    required Function(bool) onSelected,
+    required bool isSelected,
+    String? imageUrl,
+  }) {
+    return FilterChip(
+      selected: isSelected,
+      label: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(name),
+          const SizedBox(width: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? Colors.white.withOpacity(0.2)
+                  : Colors.grey.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              count.toString(),
+              style: TextStyle(
+                fontSize: 12,
+                color: isSelected ? Colors.white : Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+      onSelected: onSelected,
+      avatar: !isAll && imageUrl != null && imageUrl.isNotEmpty
+          ? CircleAvatar(
+        backgroundImage: NetworkImage(imageUrl),
+      )
+          : null,
+      backgroundColor: Colors.grey[200],
+      selectedColor: Theme.of(context).primaryColor,
+      labelStyle: TextStyle(
+        color: isSelected ? Colors.white : Colors.black87,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    );
+  }
+
+
+  Widget _buildChatList() {
+    final filteredChats = controller.getFilteredChats();
+
+    if (filteredChats.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.messenger_outline_rounded,
+              size: 48,
+              color: Colors.grey.shade400,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No messages found for selected filters',
+              style: TextStyle(
+                color: Colors.grey.shade600,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ListView.builder(
+      controller: _scrollController,
+      physics: const BouncingScrollPhysics(),
+      itemCount: filteredChats.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        final chat = filteredChats[index];
+        return _buildAnimatedChatItem(chat, index);
+      },
+    );
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return Colors.orange;
+      case 'open':
+        return Colors.green;
+      case 'closed':
+        return Colors.red;
+      default:
+        return Colors.blue;
+    }
   }
 
   Widget _buildHeader() {

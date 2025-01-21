@@ -205,8 +205,7 @@ class _UserAmountScreenBuilderState extends BaseViewState<UserAmountScreenBuilde
                         columnWidthMode: ColumnWidthMode.fill,
                         columnSizer: _customColumnSizer,
                         columns: _buildColumns(controller.visibleColumns.value),
-                        rowHeight: 230, // Restored original row height
-                        headerRowHeight: 60,
+                        rowHeight: 200,
                       ),
                     ),
                   ),

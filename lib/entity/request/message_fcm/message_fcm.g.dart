@@ -12,6 +12,7 @@ MessageFcm _$MessageFcmFromJson(Map<String, dynamic> json) => MessageFcm(
       details: json['details'] as String?,
       richMediaUrl: json['rich_media_url'] as String?,
       deepLink: json['deep_link'] as String?,
+      type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$MessageFcmToJson(MessageFcm instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$MessageFcmToJson(MessageFcm instance) =>
       'details': instance.details,
       'rich_media_url': instance.richMediaUrl,
       'deep_link': instance.deepLink,
+      'type': instance.type,
     };
