@@ -62,20 +62,34 @@ class NotificationsTab extends StatelessWidget {
           backgroundColor: Colors.grey.withOpacity(0.1),
           child: Icon(Icons.notifications_outlined, color: Colors.grey, size: 20),
         ),
-        title: Text(
-          notification.details ?? "",
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-          ),
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: Text(
-          notification.createdAt.toString(),
-          style: GoogleFonts.poppins(
-            color: Colors.grey,
-            fontSize: 12,
-          ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              notification.title ?? "",
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              notification.details ?? "",
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w300,
+                fontSize: 12,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              notification.createdAt.toString(),
+              style: GoogleFonts.poppins(
+                color: Colors.grey,
+                fontSize: 12,
+              ),
+            ),
+          ],
         ),
         trailing: Icon(
           Icons.circle,
