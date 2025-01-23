@@ -299,4 +299,10 @@ Future<ActivityLogResponseEntity> requestActivityLogs(
     Future sendMessageFCM(MessageFcm req) {
       return remoteDataSource.sendMessageFCM(req);
     }
+
+  @override
+  Future requestToEditLevel(AddLevelRequestEntity req, String id) {
+    return remoteDataSource.requestToEditLevel(req, id);
+  }
+
 }

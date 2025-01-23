@@ -751,4 +751,20 @@ class AppRemoteDataSourceImpl extends BaseRemoteSource
       rethrow;
     }
   }
+
+  @override
+  Future requestToEditLevel(AddLevelRequestEntity req , String id) {
+    var endpoint = '$BASE_URL/${AppApi.editLevel}/$id';
+    var dioCall = dioClientWithAuth.put(
+      endpoint,
+      data: req.toJson(),
+    );
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
 }

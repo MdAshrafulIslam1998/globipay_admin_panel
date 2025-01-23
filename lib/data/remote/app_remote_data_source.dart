@@ -102,4 +102,5 @@ abstract class AppRemoteDataSource {
 
   Future sendMessageFCM(MessageFcm req);
 
+  Future requestToEditLevel(AddLevelRequestEntity req, String id);
 }

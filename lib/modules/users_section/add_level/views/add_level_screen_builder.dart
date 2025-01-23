@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:globipay_admin_panel/core/base/base_view.dart';
 import 'package:globipay_admin_panel/core/theme/app_colors.dart';
 import 'package:globipay_admin_panel/core/theme/color_palettes.dart';
+import 'package:globipay_admin_panel/core/widgets/app_print.dart';
 import 'package:globipay_admin_panel/entity/response/level/level_item_response_entity.dart';
 import 'package:globipay_admin_panel/modules/users_section/add_level/controller/add_level_controller.dart';
 import 'package:intl/intl.dart';
@@ -123,13 +124,7 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
                                               color: Colors.grey.shade700,
                                             ),
                                           ),
-                                          Text(
-                                            'Created: ${DateFormat('dd MMM yyyy HH:mm').tryParse(level.date ?? DateTime.now().toString())}',
-                                            style: TextStyle(
-                                              color: Colors.grey.shade600,
-                                              fontSize: 12,
-                                            ),
-                                          ),
+
                                         ],
                                       ),
                                       trailing: Container(
@@ -335,7 +330,14 @@ class AddLevelScreenBuilder extends BaseView<AddLevelController> {
             ElevatedButton(
               onPressed: () {
                 // Simulated API Call
-                print({
+                controller.levelEdit(
+                  level.levid.toString(),
+                  nameController.text,
+                  valueController.text,
+                  minThreshController.text,
+                  maxThreshController.text,
+                );
+                appPrint({
                   "level_name": nameController.text,
                   "level_value": int.parse(valueController.text),
                   "min_thresh": double.parse(minThreshController.text),

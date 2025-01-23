@@ -61,6 +61,24 @@ class AddLevelController extends BaseController {
     );
   }
 
+  AddLevelRequestEntity generateEditLevelRequest({
+    required String sId,
+    required String levelName,
+    required int levelValue,
+    required double minThresh,
+    required double maxThresh,
+
+  }) {
+    return AddLevelRequestEntity(
+      levelName: levelName,
+      levelValue: levelValue,
+      minThresh: minThresh,
+      maxThresh: maxThresh,
+      createdBy: sId,
+    );
+  }
+
+
   levelRemove(LevelItemResponseEntity model){
     askForConfirmation(
         message: 'Do you want to remove this level?',
@@ -93,6 +111,31 @@ class AddLevelController extends BaseController {
     });
   }
 
+  void levelEdit(String id, String name, String value, String min, String max) async{
+    int lValue = int.tryParse(value ) ?? 0;
+    double lMin = double.tryParse(min, ) ?? 0.0;
+    double lMax = double.tryParse(max, ) ?? 0.0;
+
+    final sId = await tokenRepository.getStuffId();
+
+
+    final req = generateEditLevelRequest(
+        sId: sId,
+        levelName: name,
+        levelValue: lValue,
+        minThresh: lMin,
+        maxThresh: lMax
+    );
+
+    final repo = appRepository.requestToEditLevel(req, id);
+    callService(repo, onSuccess: (response) {
+      showSnackBar(message: 'Level updated successfully', status: SnackBarStatus.SUCCESS);
+      fetchLevels();
+    });
+
+  }
+
+
   // Fetch existing levels from API
   Future<void> fetchLevels() async {
     final repo = appRepository.requestForAllLevel();
@@ -118,6 +161,7 @@ class AddLevelController extends BaseController {
     maxThreshController.dispose();
     super.onClose();
   }
+
 
 
 }
