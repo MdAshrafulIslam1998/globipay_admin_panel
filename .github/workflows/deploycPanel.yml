@@ -21,7 +21,9 @@ jobs:
         run: flutter pub get
 
       - name: Build Flutter Web Project
-        run: flutter build web
+        run: |
+          flutter build web
+          mkdir -p build/web/assets  # ✅ Ensure assets folder exists
 
       - name: Deploy to Namecheap FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -31,8 +33,9 @@ jobs:
           password: ${{ secrets.PROD_FTP_PASSWORD }}
           local-dir: build/web/
           server-dir: /admin/
-          protocol: ftps  # ✅ Use FTPS instead of plain FTP
-          passive: true   # ✅ Required for shared hosting
-          security: loose # ✅ Prevents strict SSL verification issues
-          timeout: 60000  # ✅ Prevents timeout issues
-          concurrency: 1  # ✅ Prevents connection limits from causing failures
+          protocol: ftps
+          passive: true
+          security: loose
+          timeout: 60000
+          concurrency: 1
+          force: true  # ✅ Forces directory creation on FTP server
