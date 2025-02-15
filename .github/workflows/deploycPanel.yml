@@ -1,31 +1,53 @@
-name: Publish Website to CPanel
+name: Deploy Flutter Web to CPanel
 on:
   push:
     branches:
       - production
+
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  deploy:
+    name: Deploy to CPanel
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Check if deployment state exists
+      - name: Check deployment state
+        id: check_state
+        run: |
+          mkdir -p /tmp/deployment
+          if curl --silent -u "${{ secrets.PROD_FTP_USERNAME }}:${{ secrets.PROD_FTP_PASSWORD }}" \
+            "ftps://${{ secrets.PROD_FTP_SERVER }}/.deployment-state.json" \
+            -o "/tmp/deployment/.deployment-state.json"; then
+            echo "first_deployment=false" >> $GITHUB_OUTPUT
+          else
+            echo "first_deployment=true" >> $GITHUB_OUTPUT
+          fi
+
+      # Step 2: Checkout repository
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: ${{ steps.check_state.outputs.first_deployment == 'true' && '0' || '1' }}
 
-      - name: Set up Flutter environment
+      # Step 3: Setup Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.24.3'
           channel: 'stable'
 
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Flutter Web Project
+      # Step 5: Build web project
+      - name: Build Flutter Web
         run: |
           flutter build web
-          mkdir -p build/web/assets  # ✅ Ensure assets folder exists
+          mkdir -p build/web/assets
+          touch build/web/.deployment-state.json
 
-      - name: Deploy to Namecheap FTP
+      # Step 6: Deploy to CPanel
+      - name: Deploy to CPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.PROD_FTP_SERVER }}
@@ -35,7 +57,14 @@ jobs:
           server-dir: /
           protocol: ftps
           passive: true
-          security: loose
-          timeout: 60000
+          security: strict
+          timeout: 360000  # 6 minutes
           concurrency: 1
-          force: true  # ✅ Forces directory creation on FTP server
+          dangerous-clean-slate: ${{ steps.check_state.outputs.first_deployment == 'true' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.dart_tool/**
+            **/.idea/**
+            **/.vscode/**
