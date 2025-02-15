@@ -4,35 +4,34 @@ on:
     branches:
       - production
 jobs:
-  SFTP-Deploy-Action:
-    name: SFTP-Deploy-Action
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
       # Set up Flutter environment with the recommended version
       - name: Set up Flutter environment
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'
+          flutter-version: '3.24.3'  # Updated to the version that includes Dart 3.5.3
           channel: 'stable'
-      
+
       # Install Flutter dependencies
       - name: Install dependencies
         run: flutter pub get
-        
+
       # Build the Flutter project for the web
       - name: Build Flutter Web Project
         run: flutter build web
-        
-      # Deploy using SFTP
-      - name: SFTP Deploy
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+
+      # Deploy to FTP server
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          username: ${{ secrets.PROD_FTP_USERNAME }}
           server: ${{ secrets.PROD_FTP_SERVER }}
+          username: ${{ secrets.PROD_FTP_USERNAME }}
           password: ${{ secrets.PROD_FTP_PASSWORD }}
-          local_path: './build/web/*'
-          remote_path: '/admin.globalfreelancepay.com'
-          sftpArgs: '-o StrictHostKeyChecking=no'
+          local-dir: build/web/
+          server-dir: /admin
