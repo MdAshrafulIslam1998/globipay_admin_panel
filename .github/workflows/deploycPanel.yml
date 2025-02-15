@@ -36,7 +36,7 @@ jobs:
         with:
           server: ftp.globalfreelancepay.com
           username: globipay@admin.globalfreelancepay.com
-          password: ${{ secrets.FTP_PASSWORD }}
+          password: ${{ secrets.PROD_FTP_PASSWORD }}
           local-dir: ./build/web/
           server-dir: /
           protocol: ftp
