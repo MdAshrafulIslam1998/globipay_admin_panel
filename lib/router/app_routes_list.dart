@@ -15,6 +15,7 @@ import 'package:globipay_admin_panel/modules/media_section/miscellaneous/add_mis
 import 'package:globipay_admin_panel/modules/media_section/miscellaneous/views/miscellaneous_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/add_notifications/add_notification_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/promo_banner/views/add_promotional_banner_view.dart';
+import 'package:globipay_admin_panel/modules/meta/maintaincence.dart';
 import 'package:globipay_admin_panel/modules/splash/splash_screen.dart';
 import 'package:globipay_admin_panel/modules/amount_section/edit_coin/views/edit_coin_screen.dart';
 import 'package:globipay_admin_panel/modules/media_section/notification_setter/notification_list/views/notification_setter_screen.dart';
@@ -189,6 +190,12 @@ abstract class AppRoutesList {
             name: RoutePath.staffSection,
             builder: (context, state) => StaffSectionScreen(),
           ),
+          GoRoute(
+            path: RoutePath.meta,
+            name: RoutePath.meta,
+            builder: (context, state) => MaintenanceScreen(),
+          ),
+
 
         ],
       ),

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:globipay_admin_panel/core/data/local/repository/token_repository.dart';
 import 'package:globipay_admin_panel/core/di/injector.dart';
@@ -43,13 +46,30 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _initializeApp() async {
     await Future.delayed(const Duration(seconds: 2));
+    _checkMaintenanceMode();
 
-    // Navigate based on token presence
-    final token = await _tokenRepository.getToken();
-    if (token != null && token.isNotEmpty) {
-      AppRoutes.pushAndPopAll(RoutePath.dashboard); // Navigate to dashboard
-    } else {
-      AppRoutes.pushAndPopAll(RoutePath.login); // Adjust for login if needed
+  }
+
+  Future<void> _checkMaintenanceMode() async {
+    const url =
+        'https://raw.githubusercontent.com/MdAbdullahAlMahmud/AppMetaRepo/refs/heads/main/app_meta_repo.json';
+
+    try {
+      final dio = Dio();
+      final response = await dio.get(url);
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        dynamic jsonData = jsonDecode(data);
+        if (jsonData['globi_admin'] != 'ACTIVE') {
+          AppRoutes.pushNamed(RoutePath.meta);
+        } else {
+          // Navigate based on token presence
+          navigateTo();
+        }
+      }
+    } catch (e) {
+      debugPrint('Error fetching data: $e');
     }
   }
 
@@ -124,5 +144,15 @@ class _SplashScreenState extends State<SplashScreen>
         ],
       ),
     );
+  }
+
+  void navigateTo() async{
+    // Navigate based on token presence
+    final token = await _tokenRepository.getToken();
+    if (token != null && token.isNotEmpty) {
+      AppRoutes.pushAndPopAll(RoutePath.dashboard); // Navigate to dashboard
+    } else {
+      AppRoutes.pushAndPopAll(RoutePath.login); // Adjust for login if needed
+    }
   }
 }
