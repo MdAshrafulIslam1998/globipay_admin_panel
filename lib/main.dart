@@ -17,7 +17,7 @@ Future<void> main() async {
   FlavorConfig.instantiate(
       flavor: Flavor.DEV,
       name: AppProperties.title,
-      url: "https://www.projectzerotwofour.cloudns.ch"
+      url: "https://api.globalfreelancepay.com"
   );
 
   setupDependencies();

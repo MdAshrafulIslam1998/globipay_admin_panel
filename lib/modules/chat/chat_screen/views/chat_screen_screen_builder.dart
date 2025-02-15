@@ -67,7 +67,7 @@ class _ChatScreenScreenBuilderState
 
       ),
       actions: [
-        IconButton(
+        /*IconButton(
           color: ColorPalettes.colorPrimary,
           icon: const Icon(CupertinoIcons.phone_solid),
           onPressed: () {
@@ -81,7 +81,7 @@ class _ChatScreenScreenBuilderState
             controller.onVideoCall();
           },
           iconSize: 34,
-        ),
+        ),*/
       ],
     ):
     AppBar(
@@ -222,6 +222,7 @@ class _ChatScreenScreenBuilderState
           seen: chat.sender_id == controller.sharedController.currentUserId ? chat.isSeen  : false,
           textStyle: const TextStyle(color: Colors.white, fontSize: 16),
           time: chat.created_at,
+          adminName: chat.admin_name,
         )
       ],
     );

@@ -19,6 +19,7 @@ class Message {
   String? delivered_at; // Timestamp for when the message was delivered
   String? seen_at; // Timestamp for when the message was seen
   String? message_from;
+  String? admin_name;
   Map<String, dynamic>? delivery_status;
 
   Message({
@@ -35,6 +36,7 @@ class Message {
     this.seen_at,
     this.message_from,
     this.delivery_status,
+    this.admin_name,
   });
 
   bool get isSent => delivery_status?['sent'] != null;

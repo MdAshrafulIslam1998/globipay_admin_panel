@@ -47,7 +47,6 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _initializeApp() async {
     await Future.delayed(const Duration(seconds: 2));
     _checkMaintenanceMode();
-
   }
 
   Future<void> _checkMaintenanceMode() async {

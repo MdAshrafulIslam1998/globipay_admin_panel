@@ -194,6 +194,7 @@ class ChatController extends BaseController {
       'created_at': DateTime.now().toIso8601String(),
       'updated_at': DateTime.now().toIso8601String(),
       'message_from': UserType.Admin.name,
+      'admin_name':"Admin",
       'delivery_status': {
         'sent': DateTime.now().toIso8601String(),
       } // Corrected structure

@@ -113,6 +113,7 @@ class ActiveUsersNewController extends BaseController {
   }*/
   void onUserMessageClicked(UserResponseItemEntity user) async {
 
+    showLoader();
     // Query to check if a session exists
     final response = await SupabaseService()
         .client
@@ -135,6 +136,7 @@ class ActiveUsersNewController extends BaseController {
             ChatSessionResponse.fromJson(e)).toList();
         sessions = list;
       } catch (e) {
+        hideLoader();
         sessions = [];
         appPrint("Error to parse session to List<ChatSessionResponse> : $e");
       }
@@ -148,10 +150,12 @@ class ActiveUsersNewController extends BaseController {
         sharedController.setCurrentUserId(userID);
         sharedController.setChatSessionId(sessionId);
         sharedController.setCustomerID(user.userId);
+        hideLoader();
         AppRoutes.pushNamed(RoutePath.chat);
       } else {
         appPrint("Is Session Found : No .. Creating One");
         newChatSession(user); // Trigger the newChatSession function
+
       }
     }
   }
@@ -169,7 +173,7 @@ class ActiveUsersNewController extends BaseController {
 
       sharedController.setChatSessionId(sessionId);
       sharedController.setCustomerID(user.userId);
-
+      hideLoader();
       AppRoutes.pushNamed(RoutePath.chat);
     }
   }

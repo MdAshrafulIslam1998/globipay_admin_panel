@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:globipay_admin_panel/core/utils/app_utils.dart';
+import 'package:globipay_admin_panel/core/widgets/text/app_text.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ///iMessage's chat bubble type
@@ -27,6 +28,7 @@ class BubbleSpecialThree extends StatelessWidget {
   final TextStyle textStyle;
   final BoxConstraints? constraints;
   final String? time;
+  final String? adminName;
 
   const BubbleSpecialThree({
     Key? key,
@@ -43,6 +45,7 @@ class BubbleSpecialThree extends StatelessWidget {
       fontSize: 16,
     ),
     this.time,
+    this.adminName,
   }) : super(key: key);
 
   ///chat bubble builder method
@@ -104,45 +107,61 @@ class BubbleSpecialThree extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child:
-                        SelectableText(
-                          text,
-                          style: textStyle,
-                          textAlign: TextAlign.left,
-                          showCursor: true, // Shows the cursor when interacting with the text
-                          cursorColor: Colors.orange, // Sets the cursor color
-                          cursorWidth: 2.0, // Adjusts the cursor width
-                          selectionControls: MaterialTextSelectionControls(
-                            // Overrides the Material text selection controls
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child:
+                            SelectableText(
+                              text,
+                              style: textStyle,
+                              textAlign: TextAlign.left,
+                              showCursor: true, // Shows the cursor when interacting with the text
+                              cursorColor: Colors.orange, // Sets the cursor color
+                              cursorWidth: 2.0, // Adjusts the cursor width
+                              selectionControls: MaterialTextSelectionControls(
+                                // Overrides the Material text selection controls
+
+                              ),
+                              contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+                                return AdaptiveTextSelectionToolbar(
+                                  anchors: editableTextState.contextMenuAnchors,
+                                  children: [
+                                    TextSelectionToolbarTextButton(
+                                      onPressed: () {
+                                        Clipboard.setData(
+                                          ClipboardData(text: editableTextState.textEditingValue.text),
+                                        );
+                                        Navigator.of(context).pop(); // Closes the context menu
+                                      },
+                                      padding: EdgeInsets.zero,
+                                      child: const Text('Copy'),
+                                    ),
+                                    TextSelectionToolbarTextButton(
+                                      onPressed: () {
+                                        editableTextState.selectAll(SelectionChangedCause.toolbar);
+                                      },
+                                      padding: EdgeInsets.zero,
+                                      child: const Text('Select All'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
 
                           ),
-                          contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
-                            return AdaptiveTextSelectionToolbar(
-                              anchors: editableTextState.contextMenuAnchors,
-                              children: [
-                                TextSelectionToolbarTextButton(
-                                  onPressed: () {
-                                    Clipboard.setData(
-                                      ClipboardData(text: editableTextState.textEditingValue.text),
-                                    );
-                                    Navigator.of(context).pop(); // Closes the context menu
-                                  },
-                                  padding: EdgeInsets.zero,
-                                  child: const Text('Copy'),
-                                ),
-                                TextSelectionToolbarTextButton(
-                                  onPressed: () {
-                                    editableTextState.selectAll(SelectionChangedCause.toolbar);
-                                  },
-                                  padding: EdgeInsets.zero,
-                                  child: const Text('Select All'),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-
+                          Visibility(
+                            visible: adminName != null,
+                            child: AppText(
+                              adminName ?? '',
+                              style: GoogleFonts.roboto(
+                                fontSize: 10,
+                                color: Colors.white70,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                       const SizedBox(
                         width: 15,
