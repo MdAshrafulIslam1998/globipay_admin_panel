@@ -11,31 +11,28 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Set up Flutter environment with the recommended version
       - name: Set up Flutter environment
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'  # Updated to the version that includes Dart 3.5.3
+          flutter-version: '3.24.3'
           channel: 'stable'
 
-      # Install Flutter dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # Build the Flutter project for the web
       - name: Build Flutter Web Project
         run: flutter build web
 
-      # Deploy to FTP server
-      - name: FTP-Deploy-Action
+      - name: Deploy to Namecheap FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.PROD_FTP_SERVER }}
           username: ${{ secrets.PROD_FTP_USERNAME }}
           password: ${{ secrets.PROD_FTP_PASSWORD }}
           local-dir: build/web/
-          server-dir: /
-          passive: true  # Try enabling passive mode
-          protocol: ftps  # Use FTPS instead of FTP
-
-
+          server-dir: /admin/
+          protocol: ftps  # ✅ Use FTPS instead of plain FTP
+          passive: true   # ✅ Required for shared hosting
+          security: loose # ✅ Prevents strict SSL verification issues
+          timeout: 60000  # ✅ Prevents timeout issues
+          concurrency: 1  # ✅ Prevents connection limits from causing failures
