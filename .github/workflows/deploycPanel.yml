@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.PROD_FTP_USERNAME }}
           password: ${{ secrets.PROD_FTP_PASSWORD }}
           local-dir: build/web/
-          server-dir: /admin/
+          server-dir: /
           passive: true  # Try enabling passive mode
           protocol: ftps  # Explicit FTPS
 
