@@ -36,6 +36,6 @@ jobs:
           local-dir: build/web/
           server-dir: /
           passive: true  # Try enabling passive mode
-          protocol: ftps  # Explicit FTPS
+          protocol: ftps  # Use FTPS instead of FTP
 
 
