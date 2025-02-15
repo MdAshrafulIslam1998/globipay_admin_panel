@@ -29,6 +29,7 @@ abstract class RoutePath {
   static const String addMisc = _RoutePath._addMisc;
   static const String addMessageTemplates = _RoutePath._addMessageTemplates;
   static const String messageTemplates = _RoutePath._messageTemplates;
+  static const String meta = _RoutePath._meta;
 
 
 }
@@ -66,6 +67,7 @@ class _RoutePath {
   static const String _addMisc = '/addMisc';
   static const String _addMessageTemplates = '/addMessageTemplates';
   static const String _messageTemplates = '/messageTemplates';
+  static const String _meta = '/meta';
 
 
 }
