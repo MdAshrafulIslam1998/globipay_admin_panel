@@ -1,53 +1,73 @@
-name: Deploy Flutter Web to Namecheap
+name: Deploy Flutter Web App to cPanel
+
 on:
   push:
     branches:
-      - production
+      - production  # Match this to your Flutter repo’s branch, e.g., main or releases/flutter
 
 jobs:
   deploy:
-    name: Deploy to Namecheap
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout repository
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Setup Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.24.3'
           channel: 'stable'
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # Step 4: Build web project
       - name: Build Flutter Web
-        run: |
-          flutter build web
-          mkdir -p build/web/assets
+        run: flutter build web --release  # Builds to `build/web` directory
 
-      # Step 5: Deploy to Namecheap FTP
-      - name: Deploy to Namecheap
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ftp.globalfreelancepay.com
-          username: globipay@admin.globalfreelancepay.com
-          password: ${{ secrets.PROD_FTP_PASSWORD }}
-          local-dir: ./build/web/
-          server-dir: /
-          protocol: ftp
-          port: 21
-          security: loose
-          timeout: 90000
-          dry-run: false
-          dangerous-clean-slate: false
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.dart_tool/**
-            **/.idea/**
-            **/.vscode/**
+      - name: Set up SSH Agent and Known Hosts
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          eval $(ssh-agent -s -a "$SSH_AUTH_SOCK")
+          echo "${{ secrets.SSH_KEY }}" > deploy_key
+          chmod 600 deploy_key
+          echo "${{ secrets.SSH_PASSPHRASE }}" > passphrase_file
+          chmod 600 passphrase_file
+          ssh-add deploy_key < passphrase_file
+          rm passphrase_file
+          ssh-add -l || echo "No keys loaded in agent"
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Copy Built Files to Server
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          scp -v -i deploy_key -P ${{ secrets.SSH_PORT }} -r \
+            build/web/* \
+            ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/globhucb/public_html/flutterapp
+
+      - name: Verify Deployment
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          ssh -i deploy_key -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
+            echo "Verifying deployment"
+            cd /home/globhucb/public_html/flutterapp || { echo "Failed to cd"; exit 1; }
+            ls -la  # Debugging: see what’s there
+            # Optional: Adjust permissions if needed
+            chmod -R 755 .
+            echo "Deployment completed"
+          EOF
+
+      - name: Clean up
+        if: always()
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          if [ -n "$SSH_AGENT_PID" ]; then
+            ssh-agent -k
+          else
+            echo "No SSH_AGENT_PID set, skipping agent cleanup"
+          fi
+          rm -f deploy_key
