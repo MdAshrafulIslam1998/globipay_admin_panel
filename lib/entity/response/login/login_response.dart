@@ -11,8 +11,9 @@ class LoginResponse {
   String? token;
   int? role;
   String? staff_id;
+  String? name;
 
-  LoginResponse({this.token, this.role, this.staff_id});
+  LoginResponse({this.token, this.role, this.staff_id, this.name});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(json);

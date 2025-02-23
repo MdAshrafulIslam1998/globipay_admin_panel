@@ -185,6 +185,9 @@ class ChatController extends BaseController {
 
   // Method to send a text message
   Future<void> sendTextMessage(String text, {String? textType}) async {
+
+    final String name = await tokenRepository.getStuffName();
+
     final response = await supabase.from('messages').insert({
       'session_id': sharedController.chatSessionId,
       'sender_id': sharedController.currentUserId,
@@ -194,7 +197,7 @@ class ChatController extends BaseController {
       'created_at': DateTime.now().toIso8601String(),
       'updated_at': DateTime.now().toIso8601String(),
       'message_from': UserType.Admin.name,
-      'admin_name':"Admin",
+      'admin_name':name,
       'delivery_status': {
         'sent': DateTime.now().toIso8601String(),
       } // Corrected structure

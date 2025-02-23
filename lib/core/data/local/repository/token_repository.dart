@@ -13,5 +13,8 @@ abstract class TokenRepository {
 
   Future<void> saveStuffId(String id);
   Future<String> getStuffId();
+  Future<String> getStuffName();
+  Future<void> saveStuffName(String name);
+
 
 }

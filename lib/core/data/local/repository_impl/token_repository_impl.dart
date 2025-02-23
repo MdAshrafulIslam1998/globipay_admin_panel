@@ -10,6 +10,7 @@ class TokenRepositoryImpl implements TokenRepository {
   final userKey = "USER_ID";
   final role = "USER_ROLE";
   final stuff = "STUFF_ID";
+  final stuffName = "STUFF_NAME";
 
   AppSecureStorage storage;
 
@@ -83,6 +84,22 @@ class TokenRepositoryImpl implements TokenRepository {
       key: stuff,
     ) ??
         '';
+  }
+
+  @override
+  Future<String> getStuffName() async{
+    return await storage.read(
+      key: stuffName,
+    ) ??
+        '';
+  }
+
+  @override
+  Future<void> saveStuffName(String name) async {
+    await storage.write(
+      key: stuffName,
+      value: name,
+    );
   }
 
 
